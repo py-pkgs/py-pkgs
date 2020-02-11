@@ -7,7 +7,7 @@ output: bookdown::gitbook
 documentclass: book
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: ttimbers/py-pkgs
 description: "A simple and practical introduction to creating and distributing Python code via Python packages"
 ---
 
