@@ -1,6 +1,6 @@
 # The Whole Game {#whole-game}
 
-This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. 
+This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. This chapter is a Pythonified version of [the Whole Game chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the the [R packages book](https://r-pkgs.org/).
 
 ## Use Poetry to create a Python project {#poetry-to-create-project}
 
@@ -17,7 +17,7 @@ Created package foocategoricals in foocategoricals
 When we do this, Poetry creates a directory with the following structure:
 
 ```
-/foocategoricals
+foocategoricals
 ├── README.md
 ├── foocategoricals
 │   └── __init__.py
@@ -95,4 +95,81 @@ $ git push -u origin master
 > Note: the example above uses SSH authentication with GitHub, HTTPS authentication works as well and would use this url in place of the one shown above to set the remote: `https://github.com/ttimbers/foocategoricals.git`.
 
 ## Write the first function {#first-function}
+
+Pandas categoricals are a very useful datatype for modeling (and were inspired by R's factors), but certain manipulations of this data type can be tricky in data wrangling. One such challenge is concatenation of Pandas categoricals. Let's observe the result of trying to concatenate two Pandas categoricals objects:
+
+```{python cat-pandas-cat-error, error = TRUE}
+import pandas as pd
+
+a = pd.Categorical(["character", "hits", "your", "eyeballs"])
+b = pd.Categorical(["but", "integer", "where it", "counts"])
+
+pd.concat([a, b])
+```
+
+This occurs because the categoricals are represented as integers in memory, and in `a` the integer 0 corresponds to the word "character" while in `b`, the integer 0 corresponds to the word "but". Thus, when we ask Python to concatenate these two Pandas categorical options it doesn't know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a `str` type, then do the concatenation, and finally convert the concatenated Pandas obeject to a categorical again. We demonstrate that approach below:
+
+```{python cat-pandas-cat}
+concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
+pd.Categorical(concatenated)
+```
+
+That seems to work 🎉, but its quite a bit of typing everytime we want to do this... Let's turn this into a function called `catbind`!
+
+```{python cat-pandas-cat-function}
+def catbind(a, b):
+  concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
+  return pd.Categorical(concatenated)
+```
+
+> Note - this book assumes you know how to write, document and test functions in Python. To learn more about this see [Think Python, Chapter 3: Functions](http://greenteapress.com/thinkpython/html/thinkpython004.html) by Allen Downey.
+
+Where do we save this function if we want it to be a part of our foocategorical Python package? Let's review the landscape of our Python project so far:
+
+```
+foocategoricals
+├── README.md
+├── foocategoricals
+│   └── __init__.py
+├── pyproject.toml
+└── tests
+    ├── __init__.py
+    └── test_foocategoricals.py
+```
+
+All the code that we would like the user to run as part of our package should live inside the `foocategoricals` directory. Typically, inside this directory, we would create a sub-directory containing a python script to house the function. Let's do that now:
+
+First we create a subdirectory inside foocategoricals called `cat` using `mkdir` in the terminal:
+
+```
+$ mkdir foocategoricals/cat
+```
+
+> Note: `mkdir` is a command in the bash shell that we can use to create new directories. You are welcome to create directories using the RStudio IDE, or your computer's OS if you prefer that workflow.
+
+Next we create a python script called `cat.py` that lives inside the cat directory and save our `catbind` function there. Our project directory structure should now look like this:
+
+```
+foocategoricals
+├── README.md
+├── foocategoricals
+│   ├── __init__.py
+|   └── cat
+|       ├── cat.py
+├── pyproject.toml
+└── tests
+    ├── __init__.py
+    └── test_foocategoricals.py
+```
+
+Now, inside `foocategoricals/__init__.py` we need to add one line of Python code (below the line of code that Poetry wrote there when we set up the project, which is something like `__version__ = '0.1.0'`) to import the `catbind` function from `cat.py`:
+
+```
+from .cat import catbind
+```
+
+
+
+
+
 
