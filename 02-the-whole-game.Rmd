@@ -165,10 +165,10 @@ foocategoricals
 Now, inside `foocategoricals/__init__.py` we need to add one line of Python code (below the line of code that Poetry wrote there when we set up the project, which is something like `__version__ = '0.1.0'`) to import the `catbind` function from `cat.py`:
 
 ```
-from .cat import catbind
+from cat.cat import catbind
 ```
 
-
+TO DO: deal with Pandas dependency
 
 
 
