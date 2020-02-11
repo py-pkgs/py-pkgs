@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 System setup | Python packages</title>
+  <title>3 The Whole Game | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 System setup | Python packages" />
+  <meta property="og:title" content="3 The Whole Game | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 System setup | Python packages" />
+  <meta name="twitter:title" content="3 The Whole Game | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="whole-game.html"/>
+<link rel="prev" href="setup.html"/>
+
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -165,53 +165,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setup" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> System setup</h1>
-<div id="python-setup" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Installing and updating Python</h2>
-<p>In order to start off on a good footing, we recommend you follow these system set-up instructions so you will run into fewer technical issues (compared to not using the same system this book was designed for).</p>
-<p>We recommend installing Python <strong>3.7</strong> via the Anaconda distribution, following the instructions here: <a href="https://docs.anaconda.com/anaconda/install/" class="uri">https://docs.anaconda.com/anaconda/install/</a>. If you already have installed this distribution, ensure Python, and the <code>conda</code> package manager is up to date by running the following commands:</p>
-<pre><code>conda update --all</code></pre>
-<p>Next, use conda to install <a href="https://python-poetry.org/">Python poetry</a> - a python package that will help us more efficiently build our Python packages:</p>
-<pre><code>conda install -c conda-forge poetry</code></pre>
-</div>
-<div id="rstudio-python-setup" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Setting up the RStudio IDE with Python</h2>
-<p>This book will use the RStudio integrated development environment (IDE) to develop packages, although any Python IDE should work. <em>Note - we do this because in the <a href="https://ubc-mds.github.io/about/">UBC Master of Data Science program</a> we use both the R and Python programming languages and prefer to use an IDE that works well with both.</em> If you would like to use the RStudio IDE we recommend installing the most recent version of the IDE from the preview site: <a href="https://rstudio.com/products/rstudio/download/preview/" class="uri">https://rstudio.com/products/rstudio/download/preview/</a> and then <a href="https://cran.r-project.org/">installing R from CRAN</a>, and the <code>reticulate</code> R package via <code>install.package("reticulate")</code> from the R console inside RStudio. When installing reticulate, you will be prompted to install miniconda, if you have already installed the Anaconda distribution of Python, answer “no” to installing miniconda at this prompt.</p>
-<div id="find-where-anaconda-is-installed-on-your-machine" class="section level3" number="2.2.1">
-<h3 number="2.2.1"><span class="header-section-number">2.2.1</span> Find where Anaconda is installed on your machine</h3>
-<div id="mac-os-linux" class="section level4" number="2.2.1.1">
-<h4 number="2.2.1.1"><span class="header-section-number">2.2.1.1</span> Mac OS &amp; Linux</h4>
-<p>In terminal, type: <code>which Python</code></p>
-</div>
-<div id="windows" class="section level4" number="2.2.1.2">
-<h4 number="2.2.1.2"><span class="header-section-number">2.2.1.2</span> Windows</h4>
-<p>In the Anaconda Prompt type: <code>where python</code>.</p>
-</div>
-</div>
-<div id="configuring-reticulate-for-to-use-the-python-repl-inside-rstudio" class="section level3" number="2.2.2">
-<h3 number="2.2.2"><span class="header-section-number">2.2.2</span> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</h3>
-<p>Create a file named <code>.Rprofile</code> in your <code>$HOME</code> directory that contains the following:</p>
-<pre><code>Sys.setenv(RETICULATE_PYTHON = &quot;path_to_the_folder_containing_anaconda&#39;s_python&quot;)</code></pre>
-<p>For me the <code>"path_to_the_folder_containing_anaconda's_python"</code> was <code>'//anaconda3/bin/'</code>.</p>
-<p>Restart RStudio for this to take effect.</p>
-</div>
-<div id="configuring-the-rstudio-terminal" class="section level3" number="2.2.3">
-<h3 number="2.2.3"><span class="header-section-number">2.2.3</span> Configuring the RStudio terminal</h3>
-<div id="mac-os-linux-1" class="section level4" number="2.2.3.1">
-<h4 number="2.2.3.1"><span class="header-section-number">2.2.3.1</span> Mac OS &amp; Linux</h4>
-<p>Open (or create) the file called <code>.bash_profile</code> in your <code>$HOME</code> directory and add the following to the last line of that file:</p>
-<pre><code>export PATH=&quot;path_to_the_folder_containing_anaconda&#39;s_python:$PATH&quot;</code></pre>
-<p>For me that line is <code>export PATH="//anaconda3/bin:$PATH"</code>.</p>
-<p>Restart RStudio for this to take effect.</p>
-</div>
-<div id="windows-1" class="section level4" number="2.2.3.2">
-<h4 number="2.2.3.2"><span class="header-section-number">2.2.3.2</span> Windows</h4>
-<p>The default terminal in RStudio on Windows is PowerShell. This causes some unexpected problems as its not a true bash shell. You <strong>should</strong> change this using the following menu selections inside RStudio: Global Options -&gt; Terminal -&gt; Shell -&gt; Git Bash</p>
-<p><img src="img/git_bash_windows.jpeg" width=500></p>
+<div id="whole-game" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> The Whole Game</h1>
+<p>This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It’s purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics.</p>
+<div id="poetry-to-create-project" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Use Poetry to create a Python project</h2>
+<p>To create a new Python project with Poetry named <code>foo-categoricals</code>, using the terminal navigate to the parent directory that you wish the project directory to live in and type:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="whole-game.html#cb5-1"></a>$ poetry new foocategoricals</span></code></pre></div>
+<pre><code>Created package foocategoricals in foocategoricals</code></pre>
+<p>When we do this, Poetry creates a directory with the following structure:</p>
+<pre><code>/foocategoricals
+├── README.md
+├── foocategoricals
+│   └── __init__.py
+├── pyproject.toml
+└── tests
+    ├── __init__.py
+    └── test_foocategoricals.py</code></pre>
+<p>It gives us a boilerplate file and directory structure suitable for building a Python package, including a file for us to write out Python functions that our package will distribute (<code>foocategoricals/__init__.py</code>), a home for our tests to ensure that our package functions work as we expect they should (<code>tests/__init__.py</code>), as well as a <code>pyproject.toml</code> file that we will use to define our project’s metadata.</p>
 
-</div>
-</div>
 </div>
 </div>
             </section>
@@ -219,8 +191,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="whole-game.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="setup.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -250,7 +222,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ttimbers/py-pkgs/edit/master/01-setup.Rmd",
+"link": "https://github.com/ttimbers/py-pkgs/edit/master/02-the-whole-game.Rmd",
 "text": "Edit"
 },
 "history": {

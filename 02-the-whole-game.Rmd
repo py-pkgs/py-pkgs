@@ -1,3 +1,30 @@
-# The Whole Game
+# The Whole Game {#whole-game}
 
+This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. 
 
+## Use Poetry to create a Python project {#poetry-to-create-project}
+
+To create a new Python project with Poetry named `foo-categoricals`, using the terminal navigate to the parent directory that you wish the project directory to live in and type:
+
+```{python create-project-fake, eval = FALSE}
+$ poetry new foocategoricals
+```
+
+```
+Created package foocategoricals in foocategoricals
+```
+
+When we do this, Poetry creates a directory with the following structure:
+
+```
+/foocategoricals
+├── README.md
+├── foocategoricals
+│   └── __init__.py
+├── pyproject.toml
+└── tests
+    ├── __init__.py
+    └── test_foocategoricals.py
+```
+
+It gives us a boilerplate file and directory structure suitable for building a Python package, including a file for us to write out Python functions that our package will distribute (`foocategoricals/__init__.py`), a home for our tests to ensure that our package functions work as we expect they should (`tests/__init__.py`), as well as a `pyproject.toml` file that we will use to define our project's metadata.
