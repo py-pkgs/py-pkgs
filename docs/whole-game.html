@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3 The Whole Game | Python packages</title>
+  <title>Chapter 3 The Whole Game | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3 The Whole Game | Python packages" />
+  <meta property="og:title" content="Chapter 3 The Whole Game | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3 The Whole Game | Python packages" />
+  <meta name="twitter:title" content="Chapter 3 The Whole Game | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers" />
 
 
-<meta name="date" content="2020-02-11" />
+<meta name="date" content="2020-02-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,6 @@
   
 <link rel="prev" href="setup.html"/>
 
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -51,17 +50,18 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -81,7 +81,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -131,25 +131,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
-<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> System setup</a>
-<ul>
+<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> System setup</a><ul>
 <li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>2.1</b> Installing and updating Python</a></li>
-<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>2.2</b> Setting up the RStudio IDE with Python</a>
-<ul>
+<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>2.2</b> Setting up the RStudio IDE with Python</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>2.2.1</b> Find where Anaconda is installed on your machine</a></li>
 <li class="chapter" data-level="2.2.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>2.2.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
 <li class="chapter" data-level="2.2.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>2.2.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>3</b> The Whole Game</a>
-<ul>
+<li class="chapter" data-level="3" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>3</b> The Whole Game</a><ul>
 <li class="chapter" data-level="3.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>3.1</b> Use Poetry to create a Python project</a></li>
-<li class="chapter" data-level="3.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>3.2</b> Put your project under version control</a>
-<ul>
+<li class="chapter" data-level="3.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>3.2</b> Put your project under version control</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>3.2.1</b> Set-up local version control</a></li>
 <li class="chapter" data-level="3.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>3.2.2</b> Set-up remote version control</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>3.3</b> Write the first function</a></li>
+<li class="chapter" data-level="3.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>3.4</b> Test drive your package code</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -171,13 +168,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="whole-game" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> The Whole Game</h1>
+<div id="whole-game" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> The Whole Game</h1>
 <p>This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It’s purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. This chapter is a Pythonified version of <a href="https://r-pkgs.org/whole-game.html">the Whole Game chapter</a> written by Jenny Bryan that can be found in the the <a href="https://r-pkgs.org/">R packages book</a>.</p>
-<div id="poetry-to-create-project" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Use Poetry to create a Python project</h2>
+<div id="poetry-to-create-project" class="section level2">
+<h2><span class="header-section-number">3.1</span> Use Poetry to create a Python project</h2>
 <p>To create a new Python project with Poetry named <code>foo-categoricals</code>, using the terminal navigate to the parent directory that you wish the project directory to live in and type:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="whole-game.html#cb5-1"></a>$ poetry new foocategoricals</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="whole-game.html#cb1-1"></a>$ poetry new foocategoricals</span></code></pre></div>
 <pre><code>Created package foocategoricals in foocategoricals</code></pre>
 <p>When we do this, Poetry creates a directory with the following structure:</p>
 <pre><code>foocategoricals
@@ -194,11 +191,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Users of the RStudio IDE may also want to make this Python project directory an RStudio project. Why might you ask? Well, once you have an <code>*.Rproj</code> file, you can use that file to quickly open the RStudio IDE (which has a terminal and an interactive Python REPL, assuming you have set this up with <code>reticulate</code>) to the project’s root directory.</p>
 </blockquote>
 </div>
-<div id="versio-control" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Put your project under version control</h2>
+<div id="versio-control" class="section level2">
+<h2><span class="header-section-number">3.2</span> Put your project under version control</h2>
 <p>It is in our opinion that every data science project should put under local and remote version control. The tools we recommend using for this are Git &amp; GitHub. For this book, we assume Git is installed on their machine, have novice Git skills, and that users have a <a href="https://github.com/">GitHub.com</a> account.</p>
-<div id="set-up-local-version-control" class="section level3" number="3.2.1">
-<h3 number="3.2.1"><span class="header-section-number">3.2.1</span> Set-up local version control</h3>
+<div id="set-up-local-version-control" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Set-up local version control</h3>
 <p>From the terminal and in the root of this project directory, initialize the repository to be tracked by Git:</p>
 <pre><code>$ git init</code></pre>
 <pre><code>Initialized empty Git repository in /Users/tiffany/Documents/ubc-mds/foocategoricals/.git/</code></pre>
@@ -219,8 +216,8 @@ $ git commit -m &quot;initial project set-up&quot;</code></pre>
 You may want to create a <code>.gitignore</code> file where you tell Git to ignore RStudio-specific files such as <code>.Rproj.user</code> and <code>foocategoricals.Rproj</code> that are typically not found in a Python package.</p>
 </blockquote>
 </div>
-<div id="set-up-remote-version-control" class="section level3" number="3.2.2">
-<h3 number="3.2.2"><span class="header-section-number">3.2.2</span> Set-up remote version control</h3>
+<div id="set-up-remote-version-control" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Set-up remote version control</h3>
 <p>Now that we have set up our local version control, let’s create a repository on <a href="https://github.com/">GitHub.com</a> and set that as the remote version control home for this project:</p>
 <p><img src="img/set-up-github1.png"></p>
 <p>The options we recommend for setting up a repository for a Python package using the workflow we present in this book include:</p>
@@ -238,25 +235,32 @@ $ git push -u origin master</code></pre>
 </blockquote>
 </div>
 </div>
-<div id="first-function" class="section level2" number="3.3">
-<h2 number="3.3"><span class="header-section-number">3.3</span> Write the first function</h2>
+<div id="first-function" class="section level2">
+<h2><span class="header-section-number">3.3</span> Write the first function</h2>
 <p>Pandas categoricals are a very useful datatype for modeling (and were inspired by R’s factors), but certain manipulations of this data type can be tricky in data wrangling. One such challenge is concatenation of Pandas categoricals. Let’s observe the result of trying to concatenate two Pandas categoricals objects:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="whole-game.html#cb13-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb13-2"><a href="whole-game.html#cb13-2"></a></span>
-<span id="cb13-3"><a href="whole-game.html#cb13-3"></a>a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
-<span id="cb13-4"><a href="whole-game.html#cb13-4"></a>b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
-<span id="cb13-5"><a href="whole-game.html#cb13-5"></a></span>
-<span id="cb13-6"><a href="whole-game.html#cb13-6"></a>pd.concat([a, b])</span></code></pre></div>
-<pre><code>## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: cannot concatenate object of type &#39;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&#39;; only Series and DataFrame objs are valid</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="whole-game.html#cb9-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb9-2"><a href="whole-game.html#cb9-2"></a><span class="op">&gt;&gt;&gt;</span> </span>
+<span id="cb9-3"><a href="whole-game.html#cb9-3"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
+<span id="cb9-4"><a href="whole-game.html#cb9-4"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
+<span id="cb9-5"><a href="whole-game.html#cb9-5"></a><span class="op">&gt;&gt;&gt;</span> </span>
+<span id="cb9-6"><a href="whole-game.html#cb9-6"></a><span class="op">&gt;&gt;&gt;</span> pd.concat([a, b])</span></code></pre></div>
+<pre><code>## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: cannot concatenate object of type &#39;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&#39;; only Series and DataFrame objs are valid
+## 
+## Detailed traceback: 
+##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
+##   File &quot;/opt/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/concat.py&quot;, line 281, in concat
+##     sort=sort,
+##   File &quot;/opt/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/concat.py&quot;, line 357, in __init__
+##     raise TypeError(msg)</code></pre>
 <p>This occurs because the categoricals are represented as integers in memory, and in <code>a</code> the integer 0 corresponds to the word “character” while in <code>b</code>, the integer 0 corresponds to the word “but”. Thus, when we ask Python to concatenate these two Pandas categorical options it doesn’t know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a <code>str</code> type, then do the concatenation, and finally convert the concatenated Pandas obeject to a categorical again. We demonstrate that approach below:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="whole-game.html#cb15-1"></a>concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
-<span id="cb15-2"><a href="whole-game.html#cb15-2"></a>pd.Categorical(concatenated)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="whole-game.html#cb11-1"></a>concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
+<span id="cb11-2"><a href="whole-game.html#cb11-2"></a>pd.Categorical(concatenated)</span></code></pre></div>
 <pre><code>## [character, hits, your, eyeballs, but, integer, where it, counts]
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <p>That seems to work 🎉, but its quite a bit of typing everytime we want to do this… Let’s turn this into a function called <code>catbind</code>!</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="whole-game.html#cb17-1"></a><span class="kw">def</span> catbind(a, b):</span>
-<span id="cb17-2"><a href="whole-game.html#cb17-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
-<span id="cb17-3"><a href="whole-game.html#cb17-3"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="whole-game.html#cb13-1"></a><span class="kw">def</span> catbind(a, b):</span>
+<span id="cb13-2"><a href="whole-game.html#cb13-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
+<span id="cb13-3"><a href="whole-game.html#cb13-3"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span></code></pre></div>
 <blockquote>
 <p>Note - this book assumes you know how to write, document and test functions in Python. To learn more about this see <a href="http://greenteapress.com/thinkpython/html/thinkpython004.html">Think Python, Chapter 3: Functions</a> by Allen Downey.</p>
 </blockquote>
@@ -286,9 +290,26 @@ $ git push -u origin master</code></pre>
 └── tests
     ├── __init__.py
     └── test_foocategoricals.py</code></pre>
-<p>Now, inside <code>foocategoricals/__init__.py</code> we need to add one line of Python code (below the line of code that Poetry wrote there when we set up the project, which is something like <code>__version__ = '0.1.0'</code>) to import the <code>catbind</code> function from <code>cat.py</code>:</p>
-<pre><code>from cat.cat import catbind</code></pre>
-<p>TO DO: deal with Pandas dependency</p>
+<p>Given that our package depends on the Pandas Python package, we should import Pandas at the top of the <code>cat.py</code> file. here’s what <code>cat.py</code> should now look like:</p>
+<pre><code>import pandas as pd
+
+def catbind(a, b):
+  concatenated = pd.concat([pd.Series(a.astype(&quot;string&quot;)), pd.Series(b.astype(&quot;string&quot;))])
+  return pd.Categorical(concatenated)
+</code></pre>
+</div>
+<div id="test-drive-your-package-code" class="section level2">
+<h2><span class="header-section-number">3.4</span> Test drive your package code</h2>
+<p>To test drive the function we just wrote we can import it into an interactive Python session as shown:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="whole-game.html#cb18-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocategoricals.cat <span class="im">import</span> cat</span></code></pre></div>
+<p>By doing this we can access the the function in our Python session via <code>cat.catbind</code>. Let’s now try to use this function to concatenate two Pandas categoricals:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="whole-game.html#cb19-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="whole-game.html#cb19-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
+<span id="cb19-3"><a href="whole-game.html#cb19-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
+<span id="cb19-4"><a href="whole-game.html#cb19-4"></a><span class="op">&gt;&gt;&gt;</span> cat.catbind(a, b)</span></code></pre></div>
+<pre><code>[character, hits, your, eyeballs, but, integer, where it, counts]
+Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
+<p>Hurray again! This seems to work as expected!</p>
 
 </div>
 </div>

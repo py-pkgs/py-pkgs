@@ -7,13 +7,19 @@ In order to start off on a good footing, we recommend you follow these system se
 We recommend installing Python **3.7** via the Anaconda distribution, following the instructions here: <https://docs.anaconda.com/anaconda/install/>. If you already have installed this distribution, ensure Python, and the `conda` package manager is up to date by running the following commands:
 
 ```
-conda update --all
+$ conda update --all
 ```
 
 Next, use conda to install [Python poetry](https://python-poetry.org/) - a python package that will help us more efficiently build our Python packages:
 
 ```
-conda install -c conda-forge poetry
+$ conda install -c conda-forge poetry
+```
+
+Finally, we install `cookiecutter` - a python package that will create Python projects from project templates
+
+```
+$ conda install -c conda-forge cookiecutter
 ```
 
 ## Setting up the RStudio IDE with Python {#rstudio-python-setup}

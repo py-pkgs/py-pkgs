@@ -1,5 +1,10 @@
 # The Whole Game {#whole-game}
 
+```{r setup-whole-game, include = FALSE}
+options(prompt = '>>> ')
+options(continue = '>>> ')
+```
+
 This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. This chapter is a Pythonified version of [the Whole Game chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the the [R packages book](https://r-pkgs.org/).
 
 ## Use Poetry to create a Python project {#poetry-to-create-project}
@@ -98,18 +103,16 @@ $ git push -u origin master
 
 Pandas categoricals are a very useful datatype for modeling (and were inspired by R's factors), but certain manipulations of this data type can be tricky in data wrangling. One such challenge is concatenation of Pandas categoricals. Let's observe the result of trying to concatenate two Pandas categoricals objects:
 
-```{python cat-pandas-cat-error, error = TRUE}
+```{python cat-pandas-cat-error, error = TRUE, prompt=TRUE}
 import pandas as pd
-
 a = pd.Categorical(["character", "hits", "your", "eyeballs"])
 b = pd.Categorical(["but", "integer", "where it", "counts"])
-
 pd.concat([a, b])
 ```
 
 This occurs because the categoricals are represented as integers in memory, and in `a` the integer 0 corresponds to the word "character" while in `b`, the integer 0 corresponds to the word "but". Thus, when we ask Python to concatenate these two Pandas categorical options it doesn't know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a `str` type, then do the concatenation, and finally convert the concatenated Pandas obeject to a categorical again. We demonstrate that approach below:
 
-```{python cat-pandas-cat}
+```{python cat-pandas-cat, prompt=TRUE}
 concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
 pd.Categorical(concatenated)
 ```
@@ -120,6 +123,8 @@ That seems to work 🎉, but its quite a bit of typing everytime we want to do t
 def catbind(a, b):
   concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
   return pd.Categorical(concatenated)
+
+catbind(a, b)
 ```
 
 > Note - this book assumes you know how to write, document and test functions in Python. To learn more about this see [Think Python, Chapter 3: Functions](http://greenteapress.com/thinkpython/html/thinkpython004.html) by Allen Downey.
@@ -162,14 +167,38 @@ foocategoricals
     └── test_foocategoricals.py
 ```
 
-Now, inside `foocategoricals/__init__.py` we need to add one line of Python code (below the line of code that Poetry wrote there when we set up the project, which is something like `__version__ = '0.1.0'`) to import the `catbind` function from `cat.py`:
+Given that our package depends on the Pandas Python package, we should import Pandas at the top of the `cat.py` file. here's what `cat.py` should now look like:
 
 ```
-from cat.cat import catbind
+import pandas as pd
+
+def catbind(a, b):
+  concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
+  return pd.Categorical(concatenated)
+
 ```
 
-TO DO: deal with Pandas dependency
+## Test drive your package code
 
+To test drive the function we just wrote we can import it into an interactive Python session as shown:
 
+```{python import-catbind, eval = FALSE}
+>>> from foocategoricals.cat import cat
+```
 
+By doing this we can access the the function in our Python session via `cat.catbind`. Let's now try to use this function to concatenate two Pandas categoricals:
+
+```{python test-drive-catbind, eval = FALSE}
+>>> import pandas as pd
+>>> a = pd.Categorical(["character", "hits", "your", "eyeballs"])
+>>> b = pd.Categorical(["but", "integer", "where it", "counts"])
+>>> cat.catbind(a, b)
+```
+
+```
+[character, hits, your, eyeballs, but, integer, where it, counts]
+Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]
+```
+
+Hurray again! This seems to work as expected! 
 
