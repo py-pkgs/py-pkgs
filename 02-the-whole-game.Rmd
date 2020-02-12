@@ -7,19 +7,92 @@ options(continue = '>>> ')
 
 This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. This chapter is a Pythonified version of [the Whole Game chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the the [R packages book](https://r-pkgs.org/).
 
-## Use Poetry to create a Python project {#poetry-to-create-project}
+## Use Cookiecutter & Poetry to create a Python project {#poetry-to-create-project}
 
-To create a new Python project with Poetry named `foo-categoricals`, using the terminal navigate to the parent directory that you wish the project directory to live in and type:
+So that we do not have to create a complicated file and directory structure ourselves, we will use Cookiecutter & Poetry to do this for us! First we start with using Cookiecutter to create the project file and directory structure for our Python project (which will be a Python package). We will use the template created by the [PyOpenSci](https://www.pyopensci.org/) organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages. 
+
+To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live. 
+
+```{python create-file-dir-structure, eval = FALSE}
+$ cookiecutter https://github.com/pyOpenSci/cookiecutter-pyopensci.git
+```
+
+You will be prompted to provide information that will help customize the project. Here is a example of how to respond the the prompts:
+
+```
+full_name [Audrey Roy Greenfeld]: Tiffany Timbers
+email [audreyr@example.com]: tiffany.timbers@stat.ubc.ca
+github_username [audreyr]: ttimbers
+project_name [Python Boilerplate]: foocategoricals
+project_slug [foocategoricals]: foocategoricals       
+project_short_description [Python Boilerplate contains all the boilerplate you need to create a Python package.]: Python package that eases the pain concatenating Pandas categoricals!
+pypi_username [ttimbers]: ttimbers
+version [0.1.0]: 0.1.0
+use_pypi_deployment_with_travis [n]: n
+add_pyup_badge [n]: n
+Select open_source_license:
+1 - MIT license
+2 - BSD license
+3 - ISC license
+4 - Apache Software License 2.0
+5 - GNU General Public License v3
+Choose from 1, 2, 3, 4, 5 [1]: 1
+```
+
+Next we initialize the project as a Poetry project so that we can take advantage of the package management and building tools provided by Poetry:
 
 ```{python create-project-fake, eval = FALSE}
-$ poetry new foocategoricals
+$ poetry init foocategoricals
 ```
 
+Again we are prompted for more information. We are provided with some suggestions for the information (which I think is gleaned from the Cookiecutter template that we just set up), and if we agree we can simply click enter at the prompt. Here is a example of how to respond the the prompts:
+
 ```
-Created package foocategoricals in foocategoricals
+This command will guide you through creating your pyproject.toml config.
+
+Package name [foocategoricals]:  
+Version [0.1.0]: 
+Description []:  Python package that eases the pain concatenating Pandas categoricals!
+Author [ttimbers <tiffany.timbers@stat.ubc.ca>, n to skip]:  
+License []:  MIT
+Compatible Python versions [^3.7]:  
+
+Would you like to define your main dependencies interactively? (yes/no) [yes] no
+Would you like to define your dev dependencies (require-dev) interactively (yes/no) [yes] no
+Generated file
+
+[tool.poetry]
+name = "foocategoricals"
+version = "0.1.0"
+description = "Python package that eases the pain concatenating Pandas categoricals!"
+authors = ["ttimbers <tiffany.timbers@stat.ubc.ca>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+
+Do you confirm generation? (yes/no) [yes] yes
+(base) dhcp-206-87-122-46:foocategoricals tiffany$ poerty build
+bash: poerty: command not found
+(base) dhcp-206-87-122-46:foocategoricals tiffany$ poetry build
+Creating virtualenv foocategoricals-lqqH1SDF-py3.7 in /Users/tiffany/Library/Caches/pypoetry/virtualenvs
+Building foocategoricals (0.1.0)
+ - Building sdist
+ - Built foocategoricals-0.1.0.tar.gz
+
+ - Building wheel
+ - Built foocategoricals-0.1.0-py3-none-any.whl
 ```
 
-When we do this, Poetry creates a directory with the following structure:
+
+After using Cookiecutter and Poetry, we end up with the following directory structure:
 
 ```
 foocategoricals

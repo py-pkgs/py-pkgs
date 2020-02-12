@@ -33,7 +33,6 @@
   
 
 <link rel="next" href="setup.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -68,25 +67,23 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
-<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> System setup</a>
-<ul>
+<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> System setup</a><ul>
 <li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>2.1</b> Installing and updating Python</a></li>
-<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>2.2</b> Setting up the RStudio IDE with Python</a>
-<ul>
-<li class="chapter" data-level="2.2.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>2.2.1</b> Find where Anaconda is installed on your machine</a></li>
-<li class="chapter" data-level="2.2.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>2.2.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
-<li class="chapter" data-level="2.2.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>2.2.3</b> Configuring the RStudio terminal</a></li>
+<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>2.2</b> Register for a PyPI account</a></li>
+<li class="chapter" data-level="2.3" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>2.3</b> Setting up the RStudio IDE with Python</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>2.3.1</b> Find where Anaconda is installed on your machine</a></li>
+<li class="chapter" data-level="2.3.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
+<li class="chapter" data-level="2.3.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>2.3.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>3</b> The Whole Game</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>3.1</b> Use Poetry to create a Python project</a></li>
-<li class="chapter" data-level="3.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>3.2</b> Put your project under version control</a>
-<ul>
+<li class="chapter" data-level="3" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>3</b> The Whole Game</a><ul>
+<li class="chapter" data-level="3.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>3.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
+<li class="chapter" data-level="3.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>3.2</b> Put your project under version control</a><ul>
 <li class="chapter" data-level="3.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>3.2.1</b> Set-up local version control</a></li>
 <li class="chapter" data-level="3.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>3.2.2</b> Set-up remote version control</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>3.3</b> Write the first function</a></li>
+<li class="chapter" data-level="3.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>3.4</b> Test drive your package code</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -113,8 +110,8 @@
 <p class="author"><em>Tiffany Timbers</em></p>
 <p class="date"><em>2020-02-12</em></p>
 </div>
-<div id="preface" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Preface</h1>
+<div id="preface" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Preface</h1>
 <p>This book is aimed at Python intermediate users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It’s scope and intent is inspired by the <a href="https://r-pkgs.org/">R packages</a> book written by Hadley Wickham and Jenny Bryan.</p>
 
 </div>
