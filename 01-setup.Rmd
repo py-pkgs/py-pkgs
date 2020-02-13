@@ -26,6 +26,8 @@ $ conda install -c conda-forge cookiecutter
 
 To publish a Python package on PyPI to share with others, you will need to register for a PyPI account. You can do so freely by clicking here: <https://pypi.org/account/register/>
 
+Before we are ready to publish our packages on PyPI, it is advisable that we test drive them on TestPyPI first. To do so, you need to also register for a TestPyPI account. You can do so freely by clicking here: <https://test.pypi.org/account/register/>
+
 ## Setting up the RStudio IDE with Python {#rstudio-python-setup}
 
 This book will use the RStudio integrated development environment (IDE) to develop packages, although any Python IDE should work. *Note - we do this because in the [UBC Master of Data Science program](https://ubc-mds.github.io/about/) we use both the R and Python programming languages and prefer to use an IDE that works well with both.* If you would like to use the RStudio IDE we recommend installing the most recent version of the IDE from the preview site: <https://rstudio.com/products/rstudio/download/preview/> and then [installing R from CRAN](https://cran.r-project.org/), and the `reticulate` R package via `install.package("reticulate")` from the R console inside RStudio. When installing reticulate, you will be prompted to install miniconda, if you have already installed the Anaconda distribution of Python, answer "no" to installing miniconda at this prompt. 

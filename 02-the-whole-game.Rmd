@@ -9,12 +9,12 @@ This chapter demonstrates how to develop an entire small toy Python package from
 
 ## Use Cookiecutter & Poetry to create a Python project {#poetry-to-create-project}
 
-So that we do not have to create a complicated file and directory structure ourselves, we will use Cookiecutter & Poetry to do this for us! First we start with using Cookiecutter to create the project file and directory structure for our Python project (which will be a Python package). We will use the template created by the [PyOpenSci](https://www.pyopensci.org/) organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages. 
+So that we do not have to create a complicated file and directory structure ourselves, we will use Cookiecutter & Poetry to do this for us! First we start with using Cookiecutter to create the project file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the [PyOpenSci](https://www.pyopensci.org/) organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages. 
 
 To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live. 
 
 ```{python create-file-dir-structure, eval = FALSE}
-$ cookiecutter https://github.com/pyOpenSci/cookiecutter-pyopensci.git
+$ cookiecutter https://github.com/UBC-MDS/cookiecutter-pyopensci.git
 ```
 
 You will be prompted to provide information that will help customize the project. Here is a example of how to respond the the prompts:
