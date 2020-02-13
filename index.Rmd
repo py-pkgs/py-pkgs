@@ -1,6 +1,6 @@
 --- 
 title: "Python packages"
-author: "Tiffany Timbers"
+author: "Tiffany Timbers & Tomas Beuzen"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook

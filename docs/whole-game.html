@@ -21,10 +21,10 @@
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
 
-<meta name="author" content="Tiffany Timbers" />
+<meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-02-12" />
+<meta name="date" content="2020-02-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -139,6 +139,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>2.3.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
 <li class="chapter" data-level="2.3.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>2.3.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
+<li class="chapter" data-level="2.4" data-path="setup.html"><a href="setup.html#alternative-python-ides"><i class="fa fa-check"></i><b>2.4</b> Alternative Python IDEs</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="setup.html"><a href="setup.html#pycharm-community-edition"><i class="fa fa-check"></i><b>2.4.1</b> PyCharm Community Edition</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>3</b> The Whole Game</a><ul>
 <li class="chapter" data-level="3.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>3.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
@@ -176,7 +179,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
 <p>So that we do not have to create a complicated file and directory structure ourselves, we will use Cookiecutter &amp; Poetry to do this for us! First we start with using Cookiecutter to create the project file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the <a href="https://www.pyopensci.org/">PyOpenSci</a> organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages.</p>
 <p>To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="whole-game.html#cb1-1"></a>$ cookiecutter https:<span class="op">//</span>github.com<span class="op">/</span>UBC<span class="op">-</span>MDS<span class="op">/</span>cookiecutter<span class="op">-</span>pyopensci.git</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="whole-game.html#cb6-1"></a>$ cookiecutter https:<span class="op">//</span>github.com<span class="op">/</span>UBC<span class="op">-</span>MDS<span class="op">/</span>cookiecutter<span class="op">-</span>pyopensci.git</span></code></pre></div>
 <p>You will be prompted to provide information that will help customize the project. Here is a example of how to respond the the prompts:</p>
 <pre><code>full_name [Audrey Roy Greenfeld]: Tiffany Timbers
 email [audreyr@example.com]: tiffany.timbers@stat.ubc.ca
@@ -196,7 +199,7 @@ Select open_source_license:
 5 - GNU General Public License v3
 Choose from 1, 2, 3, 4, 5 [1]: 1</code></pre>
 <p>Next we initialize the project as a Poetry project so that we can take advantage of the package management and building tools provided by Poetry:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="whole-game.html#cb3-1"></a>$ poetry init foocategoricals</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="whole-game.html#cb8-1"></a>$ poetry init foocategoricals</span></code></pre></div>
 <p>Again we are prompted for more information. We are provided with some suggestions for the information (which I think is gleaned from the Cookiecutter template that we just set up), and if we agree we can simply click enter at the prompt. Here is a example of how to respond the the prompts:</p>
 <pre><code>This command will guide you through creating your pyproject.toml config.
 
@@ -301,29 +304,22 @@ $ git push -u origin master</code></pre>
 <div id="first-function" class="section level2">
 <h2><span class="header-section-number">3.3</span> Write the first function</h2>
 <p>Pandas categoricals are a very useful datatype for modeling (and were inspired by R’s factors), but certain manipulations of this data type can be tricky in data wrangling. One such challenge is concatenation of Pandas categoricals. Let’s observe the result of trying to concatenate two Pandas categoricals objects:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="whole-game.html#cb11-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb11-2"><a href="whole-game.html#cb11-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
-<span id="cb11-3"><a href="whole-game.html#cb11-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
-<span id="cb11-4"><a href="whole-game.html#cb11-4"></a><span class="op">&gt;&gt;&gt;</span> pd.concat([a, b])</span></code></pre></div>
-<pre><code>## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: cannot concatenate object of type &#39;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&#39;; only Series and DataFrame objs are valid
-## 
-## Detailed traceback: 
-##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;
-##   File &quot;/opt/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/concat.py&quot;, line 281, in concat
-##     sort=sort,
-##   File &quot;/opt/anaconda3/lib/python3.7/site-packages/pandas/core/reshape/concat.py&quot;, line 357, in __init__
-##     raise TypeError(msg)</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="whole-game.html#cb16-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb16-2"><a href="whole-game.html#cb16-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
+<span id="cb16-3"><a href="whole-game.html#cb16-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
+<span id="cb16-4"><a href="whole-game.html#cb16-4"></a><span class="op">&gt;&gt;&gt;</span> pd.concat([a, b])</span></code></pre></div>
+<pre><code>## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: cannot concatenate object of type &#39;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&#39;; only Series and DataFrame objs are valid</code></pre>
 <p>This occurs because the categoricals are represented as integers in memory, and in <code>a</code> the integer 0 corresponds to the word “character” while in <code>b</code>, the integer 0 corresponds to the word “but”. Thus, when we ask Python to concatenate these two Pandas categorical options it doesn’t know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a <code>str</code> type, then do the concatenation, and finally convert the concatenated Pandas obeject to a categorical again. We demonstrate that approach below:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="whole-game.html#cb13-1"></a><span class="op">&gt;&gt;&gt;</span> concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
-<span id="cb13-2"><a href="whole-game.html#cb13-2"></a><span class="op">&gt;&gt;&gt;</span> pd.Categorical(concatenated)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="whole-game.html#cb18-1"></a><span class="op">&gt;&gt;&gt;</span> concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
+<span id="cb18-2"><a href="whole-game.html#cb18-2"></a><span class="op">&gt;&gt;&gt;</span> pd.Categorical(concatenated)</span></code></pre></div>
 <pre><code>## [character, hits, your, eyeballs, but, integer, where it, counts]
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <p>That seems to work 🎉, but its quite a bit of typing everytime we want to do this… Let’s turn this into a function called <code>catbind</code>!</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="whole-game.html#cb15-1"></a><span class="kw">def</span> catbind(a, b):</span>
-<span id="cb15-2"><a href="whole-game.html#cb15-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
-<span id="cb15-3"><a href="whole-game.html#cb15-3"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span>
-<span id="cb15-4"><a href="whole-game.html#cb15-4"></a></span>
-<span id="cb15-5"><a href="whole-game.html#cb15-5"></a>catbind(a, b)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="whole-game.html#cb20-1"></a><span class="kw">def</span> catbind(a, b):</span>
+<span id="cb20-2"><a href="whole-game.html#cb20-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;string&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;string&quot;</span>))])</span>
+<span id="cb20-3"><a href="whole-game.html#cb20-3"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span>
+<span id="cb20-4"><a href="whole-game.html#cb20-4"></a></span>
+<span id="cb20-5"><a href="whole-game.html#cb20-5"></a>catbind(a, b)</span></code></pre></div>
 <pre><code>## [character, hits, your, eyeballs, but, integer, where it, counts]
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <blockquote>
@@ -366,12 +362,12 @@ def catbind(a, b):
 <div id="test-drive-your-package-code" class="section level2">
 <h2><span class="header-section-number">3.4</span> Test drive your package code</h2>
 <p>To test drive the function we just wrote we can import it into an interactive Python session as shown:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="whole-game.html#cb21-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocategoricals.cat <span class="im">import</span> cat</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="whole-game.html#cb26-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocategoricals.cat <span class="im">import</span> cat</span></code></pre></div>
 <p>By doing this we can access the the function in our Python session via <code>cat.catbind</code>. Let’s now try to use this function to concatenate two Pandas categoricals:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="whole-game.html#cb22-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb22-2"><a href="whole-game.html#cb22-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
-<span id="cb22-3"><a href="whole-game.html#cb22-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
-<span id="cb22-4"><a href="whole-game.html#cb22-4"></a><span class="op">&gt;&gt;&gt;</span> cat.catbind(a, b)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="whole-game.html#cb27-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb27-2"><a href="whole-game.html#cb27-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
+<span id="cb27-3"><a href="whole-game.html#cb27-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
+<span id="cb27-4"><a href="whole-game.html#cb27-4"></a><span class="op">&gt;&gt;&gt;</span> cat.catbind(a, b)</span></code></pre></div>
 <pre><code>[character, hits, your, eyeballs, but, integer, where it, counts]
 Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <p>Hurray again! This seems to work as expected!</p>
