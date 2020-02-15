@@ -186,7 +186,7 @@ pd.concat([a, b])
 This occurs because the categoricals are represented as integers in memory, and in `a` the integer 0 corresponds to the word "character" while in `b`, the integer 0 corresponds to the word "but". Thus, when we ask Python to concatenate these two Pandas categorical options it doesn't know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a `str` type, then do the concatenation, and finally convert the concatenated Pandas obeject to a categorical again. We demonstrate that approach below:
 
 ```{python cat-pandas-cat, prompt=TRUE}
-concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
+concatenated = pd.concat([pd.Series(a.astype("str")), pd.Series(b.astype("str"))])
 pd.Categorical(concatenated)
 ```
 
@@ -194,7 +194,7 @@ That seems to work 🎉, but its quite a bit of typing everytime we want to do t
 
 ```{python cat-pandas-cat-function}
 def catbind(a, b):
-  concatenated = pd.concat([pd.Series(a.astype("string")), pd.Series(b.astype("string"))])
+  concatenated = pd.concat([pd.Series(a.astype("str")), pd.Series(b.astype("str"))])
   return pd.Categorical(concatenated)
 
 catbind(a, b)
