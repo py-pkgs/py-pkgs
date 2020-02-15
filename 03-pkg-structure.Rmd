@@ -1,0 +1,20 @@
+# Package structure and state {#package-structure}
+
+```{r setup-package-structure, include = FALSE}
+options(prompt = '>>> ')
+options(continue = '>>> ')
+```
+
+The previous chapter gave a high level overview of how a Python package can be developed. This chapter now takes a more detailed look at Python’s range of packaging options. You’ll learn about the various different kinds of Python package states and why these are important. Often, people don't think about packaging until their code is actually written - but we'll learn that thinking about packaging before even creating your package can be very useful! This chapter is a Pythonified version of [the Package structure and state chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the [R packages book](https://r-pkgs.org/).
+
+## Package states
+
+## Modules
+
+## Source packages
+
+## Binary packages
+
+## Installed packages
+
+## Libraries
