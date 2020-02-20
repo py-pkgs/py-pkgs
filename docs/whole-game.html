@@ -152,7 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>3.3</b> Write the first function</a></li>
 <li class="chapter" data-level="3.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>3.4</b> Test drive your package code</a></li>
 <li class="chapter" data-level="3.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>3.5</b> Add package function dependencies</a></li>
-<li class="chapter" data-level="3.6" data-path="whole-game.html"><a href="whole-game.html#package-documentation"><i class="fa fa-check"></i><b>3.6</b> Package documentation</a></li>
+<li class="chapter" data-level="3.6" data-path="whole-game.html"><a href="whole-game.html#package-documentation"><i class="fa fa-check"></i><b>3.6</b> Package documentation</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="whole-game.html"><a href="whole-game.html#reading-and-rendering-the-docs-locally"><i class="fa fa-check"></i><b>3.6.1</b> Reading and rendering the docs locally</a></li>
+<li class="chapter" data-level="3.6.2" data-path="whole-game.html"><a href="whole-game.html#reading-and-rendering-the-docs-remotely"><i class="fa fa-check"></i><b>3.6.2</b> Reading and rendering the docs remotely</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>4</b> Package structure and state</a><ul>
 <li class="chapter" data-level="4.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>4.1</b> Package states</a></li>
@@ -482,6 +485,8 @@ $ git commit -m &quot;added pandas as a dependency&quot;</code></pre>
 </div>
 <div id="package-documentation" class="section level2">
 <h2><span class="header-section-number">3.6</span> Package documentation</h2>
+<div id="reading-and-rendering-the-docs-locally" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Reading and rendering the docs locally</h3>
 <p>For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - <a href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">Sphinx</a>. In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran <code>cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git</code>. These files live in the <code>doc</code> directory and are <code>.rst</code> (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this <a href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">CheatsSheet</a> to get started.</p>
 <p>First, we need to install <code>sphinx</code> as a development dependency using <code>poetry</code>.</p>
 <pre><code>$ poetry add --dev sphinx</code></pre>
@@ -498,8 +503,82 @@ $ poetry run make html</code></pre>
 <p>Note 2: Expect many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.</p>
 </blockquote>
 <p>If we now look inside our <code>docs</code> directory we see that it has expanded, and the rendered <code>.html</code> files live in <code>_build/html</code>. We can open <code>_build/html/index.html</code> to view our docs locally on our laptop, they should look something like this:</p>
-<p><img src="img/sphinx-docs1.png" width=750></p>
+<p><img src="img/sphinx-docs1.png" width=600></p>
+<p>If we click on the “Module Index” link under the heading “Indices and tables” we get a “Your file was not found message”:</p>
+<p><img src="img/sphinx-docs2.png" width=600></p>
+<p>This is because we haven’t written any documentation for our package function. Let’s do that now by adding a <code>numpy</code>-style docstring to the <code>catbind</code> function in <code>foocat/foocat.py</code> as shown below:</p>
+<pre><code>import pandas as pd
 
+
+def catbind(a, b):
+    &quot;&quot;&quot;
+    Concatenates two pandas categoricals.
+
+    Parameters
+    ----------
+    a : pandas.core.arrays.categorical.Categorical
+      A pandas categorical.
+    b : pandas.core.arrays.categorical.Categorical
+      A pandas categorical that you wish to concatenate to a.
+
+    Returns
+    -------
+    pandas.core.arrays.categorical.Categorical
+      The new concatenated pandas categorical.
+
+    Examples
+    --------
+    &gt;&gt;&gt; a = pd.Categorical([&quot;character&quot;, &quot;hits&quot;, &quot;your&quot;, &quot;eyeballs&quot;])
+    &gt;&gt;&gt; b = pd.Categorical([&quot;but&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;counts&quot;])
+    &gt;&gt;&gt; foocat2.catbind(a, b)
+    [character, hits, your, eyeballs, but, integer, where it, counts]
+    Categories (8, object): [but, character, counts,
+    eyeballs, hits, integer, where it, your]
+    &quot;&quot;&quot;
+    concatenated = pd.concat([pd.Series(a.astype(&quot;str&quot;)),
+                   pd.Series(b.astype(&quot;str&quot;))])
+    return pd.Categorical(concatenated)</code></pre>
+<p>Now we can use a <code>sphinx</code> extension (<code>napolean</code>) in combination with <code>autodoc</code> to render our <code>numpy</code>-styled docstring into a modules page on our docs. To do this we need to install another dev dependency:</p>
+<pre><code>$ poetry add --dev sphinxcontrib-napoleon</code></pre>
+<blockquote>
+<p>Note - to use this, we also have to add <code>extensions = ['sphinx.ext.napoleon']</code> in the <code>conf.py</code> file in the <code>docs</code> directory, but we have taken care of this for you with our Cookiecutter template.</p>
+</blockquote>
+<p>Then we can <code>sphinx-apidoc</code>, followed by re-rending of the docs directory to complete the rendering of the package function (i.e., module) docs:</p>
+<pre><code>$ poetry run sphinx-apidoc -f -o docs/source foocat
+$ cd docs
+$ poetry run make html</code></pre>
+<p>Now when we click on the “Module Index” link under the heading “Indices and tables” we see a webpage that has a link to our module, <code>foocat.foocat</code>:</p>
+<p><img src="img/sphinx-docs3.png" width=600></p>
+<p>And we can click on that to see the docs for <code>foocat.foocat.catbind</code>. Which should look roughly like this:</p>
+<p><img src="img/sphinx-docs4.png" width=600></p>
+<p>Another hurray! 🎉🎉🎉 Let’s commit this to version control to:</p>
+<pre><code>cd ..
+$ git add .
+$ git commit -m &quot;generated and render docs for local viewing&quot;</code></pre>
+<pre><code>[master ae68b4e] generated and render docs for local viewing
+ 5 files changed, 471 insertions(+), 8 deletions(-)
+ rewrite foocat/foocat.py (77%)
+ create mode 100644 docs/source/foocat.rst
+ create mode 100644 docs/source/modules.rst</code></pre>
+</div>
+<div id="reading-and-rendering-the-docs-remotely" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> Reading and rendering the docs remotely</h3>
+<p>To share these docs online, we need to link our GitHub repository to <a href="https://readthedocs.org/">Read the Docs</a> (where we will build and host our docs remotely). To do this:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Push your local changes to GitHub.com via <code>git push</code>.</li>
+<li>visit <a href="https://readthedocs.org/" class="uri">https://readthedocs.org/</a> and click on “Sign up”.</li>
+<li>On the following page, select “Sign up with GitHub”.</li>
+<li>Click “Import a Project”.</li>
+<li>Click “Import Manually”.</li>
+<li>Fill in the project details (package name and Repository URL, leave the rest as is) and click “Next”.</li>
+<li>Click “Build version”.</li>
+</ol>
+<p>After following the steps above, your docs should get successfully built on <a href="https://readthedocs.org/">Read the Docs</a> and you should be able to access them via the “View Docs” button on the build page, or from the link that Cookiecutter created for your on your repositories <code>README.md</code> file.</p>
+<blockquote>
+<p>Note: for <a href="https://readthedocs.org/">Read the Docs</a> to work with the <code>poetry</code> package workflow you need to have a <code>.readthedocs.yml</code> in the root of your Python package. We have created this for you using Cookiecutter and you can view it <a href="https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml">here</a>.</p>
+</blockquote>
+
+</div>
 </div>
 </div>
             </section>

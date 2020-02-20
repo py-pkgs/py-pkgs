@@ -400,6 +400,8 @@ $ git commit -m "added pandas as a dependency"
 
 ## Package documentation
 
+### Reading and rendering the docs locally
+
 For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html). In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran `cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git`. These files live in the `doc` directory and are `.rst` (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this [CheatsSheet](https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html) to get started.
 
 First, we need to install `sphinx` as a development dependency using `poetry`. 
@@ -423,4 +425,100 @@ $ poetry run make html
 
 If we now look inside our `docs` directory we see that it has expanded, and the rendered `.html` files live in `_build/html`. We can open `_build/html/index.html` to view our docs locally on our laptop, they should look something like this:
 
-<img src="img/sphinx-docs1.png" width=750>
+<img src="img/sphinx-docs1.png" width=600>
+
+If we click on the "Module Index" link under the heading "Indices and tables" we get a "Your file was not found message":
+
+<img src="img/sphinx-docs2.png" width=600>
+
+This is because we haven't written any documentation for our package function. Let's do that now by adding a `numpy`-style docstring to the `catbind` function in `foocat/foocat.py` as shown below:
+
+```
+import pandas as pd
+
+
+def catbind(a, b):
+    """
+    Concatenates two pandas categoricals.
+
+    Parameters
+    ----------
+    a : pandas.core.arrays.categorical.Categorical
+      A pandas categorical.
+    b : pandas.core.arrays.categorical.Categorical
+      A pandas categorical that you wish to concatenate to a.
+
+    Returns
+    -------
+    pandas.core.arrays.categorical.Categorical
+      The new concatenated pandas categorical.
+
+    Examples
+    --------
+    >>> a = pd.Categorical(["character", "hits", "your", "eyeballs"])
+    >>> b = pd.Categorical(["but", "integer", "where it", "counts"])
+    >>> foocat2.catbind(a, b)
+    [character, hits, your, eyeballs, but, integer, where it, counts]
+    Categories (8, object): [but, character, counts,
+    eyeballs, hits, integer, where it, your]
+    """
+    concatenated = pd.concat([pd.Series(a.astype("str")),
+                   pd.Series(b.astype("str"))])
+    return pd.Categorical(concatenated)
+```
+
+Now we can use a `sphinx` extension (`napolean`) in combination with `autodoc` to render our `numpy`-styled docstring into a modules page on our docs. To do this we need to install another dev dependency:
+
+```
+$ poetry add --dev sphinxcontrib-napoleon
+```
+
+> Note - to use this, we also have to add `extensions = ['sphinx.ext.napoleon']` in the `conf.py` file in the `docs` directory, but we have taken care of this for you with our Cookiecutter template.
+
+Then we can `sphinx-apidoc`, followed by re-rending of the docs directory to complete the rendering of the package function (i.e., module) docs:
+
+```
+$ poetry run sphinx-apidoc -f -o docs/source foocat
+$ cd docs
+$ poetry run make html
+```
+
+Now when we click on the "Module Index" link under the heading "Indices and tables" we see a webpage that has a link to our module, `foocat.foocat`:
+
+<img src="img/sphinx-docs3.png" width=600>
+
+And we can click on that to see the docs for `foocat.foocat.catbind`. Which should look roughly like this:
+
+<img src="img/sphinx-docs4.png" width=600>
+
+Another hurray! 🎉🎉🎉 Let's commit this to version control to:
+
+```
+cd ..
+$ git add .
+$ git commit -m "generated and render docs for local viewing"
+```
+
+```
+[master ae68b4e] generated and render docs for local viewing
+ 5 files changed, 471 insertions(+), 8 deletions(-)
+ rewrite foocat/foocat.py (77%)
+ create mode 100644 docs/source/foocat.rst
+ create mode 100644 docs/source/modules.rst
+```
+
+### Reading and rendering the docs remotely
+
+To share these docs online, we need to link our GitHub repository to [Read the Docs](https://readthedocs.org/) (where we will build and host our docs remotely). To do this:
+
+0. Push your local changes to GitHub.com via `git push`.
+1. visit <https://readthedocs.org/> and click on "Sign up".
+2. On the following page, select "Sign up with GitHub".
+3. Click "Import a Project".
+4. Click "Import Manually".
+5. Fill in the project details (package name and Repository URL, leave the rest as is) and click "Next".
+6. Click "Build version".
+
+After following the steps above, your docs should get successfully built on [Read the Docs](https://readthedocs.org/) and you should be able to access them via the "View Docs" button on the build page, or from the link that Cookiecutter created for your on your repositories `README.md` file.
+
+> Note: for [Read the Docs](https://readthedocs.org/) to work with the `poetry` package workflow you need to have a `.readthedocs.yml` in the root of your Python package. We have created this for you using Cookiecutter and you can view it [here](https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml).
