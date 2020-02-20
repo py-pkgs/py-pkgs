@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-02-19" />
+<meta name="date" content="2020-02-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,6 +152,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>3.3</b> Write the first function</a></li>
 <li class="chapter" data-level="3.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>3.4</b> Test drive your package code</a></li>
 <li class="chapter" data-level="3.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>3.5</b> Add package function dependencies</a></li>
+<li class="chapter" data-level="3.6" data-path="whole-game.html"><a href="whole-game.html#package-documentation"><i class="fa fa-check"></i><b>3.6</b> Package documentation</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>4</b> Package structure and state</a><ul>
 <li class="chapter" data-level="4.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>4.1</b> Package states</a></li>
@@ -344,10 +345,11 @@ $ git push -u origin master</code></pre>
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <p>That seems to work 🎉, but its quite a bit of typing every time we want to do this… Let’s turn this into a function called <code>catbind</code>!</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="whole-game.html#cb20-1"></a><span class="kw">def</span> catbind(a, b):</span>
-<span id="cb20-2"><a href="whole-game.html#cb20-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</span>
-<span id="cb20-3"><a href="whole-game.html#cb20-3"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span>
-<span id="cb20-4"><a href="whole-game.html#cb20-4"></a></span>
-<span id="cb20-5"><a href="whole-game.html#cb20-5"></a>catbind(a, b)</span></code></pre></div>
+<span id="cb20-2"><a href="whole-game.html#cb20-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)),</span>
+<span id="cb20-3"><a href="whole-game.html#cb20-3"></a>                 pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</span>
+<span id="cb20-4"><a href="whole-game.html#cb20-4"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span>
+<span id="cb20-5"><a href="whole-game.html#cb20-5"></a></span>
+<span id="cb20-6"><a href="whole-game.html#cb20-6"></a>catbind(a, b)</span></code></pre></div>
 <pre><code>## [character, hits, your, eyeballs, but, integer, where it, counts]
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <blockquote>
@@ -385,7 +387,8 @@ $ git push -u origin master</code></pre>
 
 
 def catbind(a, b):
-  concatenated = pd.concat([pd.Series(a.astype(&quot;str&quot;)), pd.Series(b.astype(&quot;str&quot;))])
+  concatenated = pd.concat([pd.Series(a.astype(&quot;str&quot;)), 
+                 pd.Series(b.astype(&quot;str&quot;))])
   return pd.Categorical(concatenated)
 </code></pre>
 </div>
@@ -409,7 +412,11 @@ No dependencies to install or update
 <span id="cb27-4"><a href="whole-game.html#cb27-4"></a><span class="op">&gt;&gt;&gt;</span> foocat.catbind(a, b)</span></code></pre></div>
 <pre><code>[character, hits, your, eyeballs, but, integer, where it, counts]
 Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
-<p>Hurray again! This seems to work as expected!</p>
+<p>Hurray again! This seems to work as expected! Now that we have something working, let’s commit this to version control:</p>
+<pre><code>$ git add .
+$ git commit -m &quot;First working version of catbind function&quot;</code></pre>
+<pre><code>[master b80dea8] First working version of catbind function
+ 1 file changed, 7 insertions(+)</code></pre>
 </div>
 <div id="pkg-func-deps" class="section level2">
 <h2><span class="header-section-number">3.5</span> Add package function dependencies</h2>
@@ -463,6 +470,35 @@ pandas = &quot;^1.0.1&quot;
 [build-system]
 requires = [&quot;poetry&gt;=0.12&quot;]
 build-backend = &quot;poetry.masonry.api&quot;</code></pre>
+<p>This changed two files, <code>pyrpoject.toml</code> (which we printed above) and <code>poetry.lock</code> (a record of all the packages and exact versions of them that poetry downloaded for this project). These changes are important for our package, so let’s commit them to version control as well:</p>
+<pre><code>$ git add .
+$ git commit -m &quot;added pandas as a dependency&quot;</code></pre>
+<pre><code>[master f5c146d] added pandas as a dependency
+ 2 files changed, 108 insertions(+)
+ create mode 100644 poetry.lock</code></pre>
+<blockquote>
+<p>For those of you who have used <code>requirements.txt</code> before with <code>pip</code>, you can think of <code>poetry.lock</code> as the <code>poetry</code> equivalent of that file. You can even generate a <code>requirements.txt</code> from poetry via <code>poetry export -f requirements.txt &gt; requirements.txt</code> if needed.</p>
+</blockquote>
+</div>
+<div id="package-documentation" class="section level2">
+<h2><span class="header-section-number">3.6</span> Package documentation</h2>
+<p>For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - <a href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">Sphinx</a>. In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran <code>cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git</code>. These files live in the <code>doc</code> directory and are <code>.rst</code> (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this <a href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">CheatsSheet</a> to get started.</p>
+<p>First, we need to install <code>sphinx</code> as a development dependency using <code>poetry</code>.</p>
+<pre><code>$ poetry add --dev sphinx</code></pre>
+<blockquote>
+<p>Note the use of <code>--dev</code> to specify a development, rather than a package function dependency. If you look in <code>pyproject.toml</code> you will see that <code>sphinx</code> gets added under the <code>[tool.poetry.dev-dependencies]</code> section as opposed to the <code>[tool.poetry.dependencies]</code> section (where package function dependencies get installed, such as pandas in this example).</p>
+</blockquote>
+<p>Next, to render the help documents locally from <code>.rst</code> to <code>.html</code> we navigate into the <code>docs</code> directory and then run the <code>Makefile</code> there, directing it to run the <code>.html</code> target:</p>
+<pre><code>$ cd docs
+$ poetry run make html</code></pre>
+<blockquote>
+<p>Note 1: we append <code>poetry run</code> infront of most of our commands in this Python package workflow so that we ensure we are using the software tools installed in the <code>poetry</code> virtual environment.</p>
+</blockquote>
+<blockquote>
+<p>Note 2: Expect many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.</p>
+</blockquote>
+<p>If we now look inside our <code>docs</code> directory we see that it has expanded, and the rendered <code>.html</code> files live in <code>_build/html</code>. We can open <code>_build/html/index.html</code> to view our docs locally on our laptop, they should look something like this:</p>
+<p><img src="img/sphinx-docs1.png" width=750></p>
 
 </div>
 </div>

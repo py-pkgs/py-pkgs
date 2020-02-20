@@ -213,7 +213,8 @@ That seems to work 🎉, but its quite a bit of typing every time we want to do 
 
 ```{python cat-pandas-cat-function}
 def catbind(a, b):
-  concatenated = pd.concat([pd.Series(a.astype("str")), pd.Series(b.astype("str"))])
+  concatenated = pd.concat([pd.Series(a.astype("str")),
+                 pd.Series(b.astype("str"))])
   return pd.Categorical(concatenated)
 
 catbind(a, b)
@@ -259,7 +260,8 @@ import pandas as pd
 
 
 def catbind(a, b):
-  concatenated = pd.concat([pd.Series(a.astype("str")), pd.Series(b.astype("str"))])
+  concatenated = pd.concat([pd.Series(a.astype("str")), 
+                 pd.Series(b.astype("str"))])
   return pd.Categorical(concatenated)
 
 ```
@@ -302,8 +304,18 @@ By doing this we can access the the function in our Python session via `foocat.c
 Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]
 ```
 
-Hurray again! This seems to work as expected! 
+Hurray again! This seems to work as expected! Now that we have something working, let's commit this to version control:
 
+```
+$ git add .
+$ git commit -m "First working version of catbind function"
+```
+
+```
+[master b80dea8] First working version of catbind function
+ 1 file changed, 7 insertions(+)
+```
+ 
 ## Add package function dependencies {#pkg-func-deps}
 
 Our function depends on the pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our pacakged code this important information (and the mechanism for making it work) will be shipped along with it. We again use `poetry` to do this, using the `add` command. This command will update the `[tool.poetry.dependencies]` section of the `pyproject.toml` file which currently looks like this and lists only Python as a project dependency:
@@ -371,3 +383,44 @@ requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 ```
 
+This changed two files, `pyrpoject.toml` (which we printed above) and `poetry.lock` (a record of all the packages and exact versions of them that poetry downloaded for this project). These changes are important for our package, so let's commit them to version control as well:
+
+```
+$ git add .
+$ git commit -m "added pandas as a dependency"
+```
+
+```
+[master f5c146d] added pandas as a dependency
+ 2 files changed, 108 insertions(+)
+ create mode 100644 poetry.lock
+```
+
+> For those of you who have used `requirements.txt` before with `pip`, you can think of `poetry.lock` as the `poetry` equivalent of that file. You can even generate a `requirements.txt` from poetry via `poetry export -f requirements.txt > requirements.txt` if needed.
+
+## Package documentation
+
+For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html). In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran `cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git`. These files live in the `doc` directory and are `.rst` (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this [CheatsSheet](https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html) to get started.
+
+First, we need to install `sphinx` as a development dependency using `poetry`. 
+
+```
+$ poetry add --dev sphinx
+```
+
+> Note the use of `--dev` to specify a development, rather than a package function dependency. If you look in `pyproject.toml` you will see that `sphinx` gets added under the `[tool.poetry.dev-dependencies]` section as opposed to the `[tool.poetry.dependencies]` section (where package function dependencies get installed, such as pandas in this example).
+
+Next, to render the help documents locally from `.rst` to `.html` we navigate into the `docs` directory and then run the `Makefile` there, directing it to run the `.html` target:
+
+```
+$ cd docs
+$ poetry run make html
+```
+
+> Note 1: we append `poetry run` infront of most of our commands in this Python package workflow so that we ensure we are using the software tools installed in the `poetry` virtual environment.
+
+> Note 2: Expect many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.
+
+If we now look inside our `docs` directory we see that it has expanded, and the rendered `.html` files live in `_build/html`. We can open `_build/html/index.html` to view our docs locally on our laptop, they should look something like this:
+
+<img src="img/sphinx-docs1.png" width=750>
