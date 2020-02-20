@@ -585,6 +585,6 @@ To github.com:ttimbers/foocat.git
    154aacc..6fe4b6c  master -> master
 ```
 
-## Publishing to test PyPI
+## Publishing to testPyPI
 
-TO DO.
+Python packages are generally shared via the [PyPI package Index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our pacakge, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/).
