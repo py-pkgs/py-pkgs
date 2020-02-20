@@ -14,7 +14,7 @@ class: center
 
 # Preface
 
-This book is aimed at Python intermediate users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It's scope and intent is inspired by the [R packages](https://r-pkgs.org/) book written by Hadley Wickham and Jenny Bryan. 
+This book is aimed at intermediate Python users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It's scope and intent is inspired by the [R packages](https://r-pkgs.org/) book written by Hadley Wickham and Jenny Bryan. 
 
 ```{r knitr-logo, out.width = '50%', fig.align = 'center', echo = FALSE}
 knitr::include_graphics('img/py-pkgs-hex.png')
