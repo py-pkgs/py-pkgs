@@ -522,3 +522,69 @@ To share these docs online, we need to link our GitHub repository to [Read the D
 After following the steps above, your docs should get successfully built on [Read the Docs](https://readthedocs.org/) and you should be able to access them via the "View Docs" button on the build page, or from the link that Cookiecutter created for your on your repositories `README.md` file.
 
 > Note: for [Read the Docs](https://readthedocs.org/) to work with the `poetry` package workflow you need to have a `.readthedocs.yml` in the root of your Python package. We have created this for you using Cookiecutter and you can view it [here](https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml).
+
+## Testing
+
+We have interactively taken `catbind` for a test drive, but to prove to our future selves and others that our code does in fact do what it is supposed to do, let's write some formal unit tests. In Python packages, our tests live inside the `test` directory, typically in a file called `test_<module_name>.py`, thus for this package this is `tests/test_foocat.py`. Let's add a unit test (as a function named `test_catbind`) for our `catbind` function there now:
+
+```
+from foocat import foocat
+import pandas as pd
+
+
+def test_catbind():
+    a = pd.Categorical(["character", "hits", "your", "eyeballs"])
+    b = pd.Categorical(["but", "integer", "where it", "counts"])
+    assert ((foocat.catbind(a, b)).codes == [1, 4, 7, 3, 0, 5, 6, 2]).all()
+    assert ((foocat.catbind(a, b)).categories == ["but", "character",
+            "counts", "eyeballs", "hits", "integer", "where it", "your"]).all()
+
+```
+
+> Note - given that we use `pd.Categorical` to create objects to test on, we have to import the `pandas` package in our test file.
+
+We only have a single function to test for this package, and so we could run this file by opening up an interactive Python session, importing the file, and then calling the `test_catbind` function. But as our packages have more and more functions, and more and more modules (or submodules) then we want to automate this workflow. In the Python package ecosystem one way we can do this is to use `pytest`. A single call to `pytest` from the root of a project will look for all files in the `tests` directory, import all files prefixed with `test*` and then call all functions prefixed with `test*`. Pretty nice eh? 
+
+To do this, we first add `pytest` as a dev dependency via `poetry`:
+
+```
+$ poetry add --dev pytest
+```
+
+Then to run the tests, we use `poetry` to run `pytest` in our virtual environment:
+
+```
+$ poetry run pytest
+```
+
+We get no error returned to us, indicating that our tests passed, Hurray! This suggests that the code we wrote is correct (at least to our test specifications)! Now we can share this with the world by putting these under local and remote version control:
+
+```
+$ git add .
+$ git commit -m "added unit tests for catbind"
+```
+
+```
+[master 6fe4b6c] added unit tests for catbind
+ 3 files changed, 165 insertions(+), 1 deletion(-) 
+```
+
+```
+$ git push
+```
+
+```
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 2.74 KiB | 2.74 MiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:ttimbers/foocat.git
+   154aacc..6fe4b6c  master -> master
+```
+
+## Publishing to test PyPI
+
+TO DO.

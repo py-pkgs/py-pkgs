@@ -156,6 +156,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6.1" data-path="whole-game.html"><a href="whole-game.html#reading-and-rendering-the-docs-locally"><i class="fa fa-check"></i><b>3.6.1</b> Reading and rendering the docs locally</a></li>
 <li class="chapter" data-level="3.6.2" data-path="whole-game.html"><a href="whole-game.html#reading-and-rendering-the-docs-remotely"><i class="fa fa-check"></i><b>3.6.2</b> Reading and rendering the docs remotely</a></li>
 </ul></li>
+<li class="chapter" data-level="3.7" data-path="whole-game.html"><a href="whole-game.html#testing"><i class="fa fa-check"></i><b>3.7</b> Testing</a></li>
+<li class="chapter" data-level="3.8" data-path="whole-game.html"><a href="whole-game.html#publishing-to-test-pypi"><i class="fa fa-check"></i><b>3.8</b> Publishing to test PyPI</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>4</b> Package structure and state</a><ul>
 <li class="chapter" data-level="4.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>4.1</b> Package states</a></li>
@@ -577,8 +579,50 @@ $ git commit -m &quot;generated and render docs for local viewing&quot;</code></
 <blockquote>
 <p>Note: for <a href="https://readthedocs.org/">Read the Docs</a> to work with the <code>poetry</code> package workflow you need to have a <code>.readthedocs.yml</code> in the root of your Python package. We have created this for you using Cookiecutter and you can view it <a href="https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml">here</a>.</p>
 </blockquote>
-
 </div>
+</div>
+<div id="testing" class="section level2">
+<h2><span class="header-section-number">3.7</span> Testing</h2>
+<p>We have interactively taken <code>catbind</code> for a test drive, but to prove to our future selves and others that our code does in fact do what it is supposed to do, let’s write some formal unit tests. In Python packages, our tests live inside the <code>test</code> directory, typically in a file called <code>test_&lt;module_name&gt;.py</code>, thus for this package this is <code>tests/test_foocat.py</code>. Let’s add a unit test (as a function named <code>test_catbind</code>) for our <code>catbind</code> function there now:</p>
+<pre><code>from foocat import foocat
+import pandas as pd
+
+
+def test_catbind():
+    a = pd.Categorical([&quot;character&quot;, &quot;hits&quot;, &quot;your&quot;, &quot;eyeballs&quot;])
+    b = pd.Categorical([&quot;but&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;counts&quot;])
+    assert ((foocat.catbind(a, b)).codes == [1, 4, 7, 3, 0, 5, 6, 2]).all()
+    assert ((foocat.catbind(a, b)).categories == [&quot;but&quot;, &quot;character&quot;,
+            &quot;counts&quot;, &quot;eyeballs&quot;, &quot;hits&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;your&quot;]).all()
+</code></pre>
+<blockquote>
+<p>Note - given that we use <code>pd.Categorical</code> to create objects to test on, we have to import the <code>pandas</code> package in our test file.</p>
+</blockquote>
+<p>We only have a single function to test for this package, and so we could run this file by opening up an interactive Python session, importing the file, and then calling the <code>test_catbind</code> function. But as our packages have more and more functions, and more and more modules (or submodules) then we want to automate this workflow. In the Python package ecosystem one way we can do this is to use <code>pytest</code>. A single call to <code>pytest</code> from the root of a project will look for all files in the <code>tests</code> directory, import all files prefixed with <code>test*</code> and then call all functions prefixed with <code>test*</code>. Pretty nice eh?</p>
+<p>To do this, we first add <code>pytest</code> as a dev dependency via <code>poetry</code>:</p>
+<pre><code>$ poetry add --dev pytest</code></pre>
+<p>Then to run the tests, we use <code>poetry</code> to run <code>pytest</code> in our virtual environment:</p>
+<pre><code>$ poetry run pytest</code></pre>
+<p>We get no error returned to us, indicating that our tests passed, Hurray! This suggests that the code we wrote is correct (at least to our test specifications)! Now we can share this with the world by putting these under local and remote version control:</p>
+<pre><code>$ git add .
+$ git commit -m &quot;added unit tests for catbind&quot;</code></pre>
+<pre><code>[master 6fe4b6c] added unit tests for catbind
+ 3 files changed, 165 insertions(+), 1 deletion(-) </code></pre>
+<pre><code>$ git push</code></pre>
+<pre><code>Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 2.74 KiB | 2.74 MiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:ttimbers/foocat.git
+   154aacc..6fe4b6c  master -&gt; master</code></pre>
+</div>
+<div id="publishing-to-test-pypi" class="section level2">
+<h2><span class="header-section-number">3.8</span> Publishing to test PyPI</h2>
+<p>TO DO.</p>
+
 </div>
 </div>
             </section>
