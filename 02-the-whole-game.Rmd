@@ -398,9 +398,9 @@ $ git commit -m "added pandas as a dependency"
 
 > For those of you who have used `requirements.txt` before with `pip`, you can think of `poetry.lock` as the `poetry` equivalent of that file. You can even generate a `requirements.txt` from poetry via `poetry export -f requirements.txt > requirements.txt` if needed.
 
-## Package documentation
+## Package documentation {pkg-docs}
 
-### Reading and rendering the docs locally
+### Reading and rendering the docs locally {#local-docs}
 
 For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html). In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran `cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git`. These files live in the `doc` directory and are `.rst` (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this [CheatsSheet](https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html) to get started.
 
@@ -507,7 +507,7 @@ $ git commit -m "generated and render docs for local viewing"
  create mode 100644 docs/source/modules.rst
 ```
 
-### Reading and rendering the docs remotely
+### Reading and rendering the docs remotely {#remote-docs}
 
 To share these docs online, we need to link our GitHub repository to [Read the Docs](https://readthedocs.org/) (where we will build and host our docs remotely). To do this:
 
@@ -523,7 +523,7 @@ After following the steps above, your docs should get successfully built on [Rea
 
 > Note: for [Read the Docs](https://readthedocs.org/) to work with the `poetry` package workflow you need to have a `.readthedocs.yml` in the root of your Python package. We have created this for you using Cookiecutter and you can view it [here](https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml).
 
-## Testing
+## Testing {#testing}
 
 We have interactively taken `catbind` for a test drive, but to prove to our future selves and others that our code does in fact do what it is supposed to do, let's write some formal unit tests. In Python packages, our tests live inside the `test` directory, typically in a file called `test_<module_name>.py`, thus for this package this is `tests/test_foocat.py`. Let's add a unit test (as a function named `test_catbind`) for our `catbind` function there now:
 
@@ -585,6 +585,28 @@ To github.com:ttimbers/foocat.git
    154aacc..6fe4b6c  master -> master
 ```
 
-## Publishing to testPyPI
+## Building your package & publishing to testPyPI {#build-n-publish}
 
-Python packages are generally shared via the [PyPI package Index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our pacakge, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/).
+Python packages are generally shared via the [PyPI package Index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/). `poetry` has a command called `publish` which we can use to do this, however it's default is to publish to PyPI. We can add this to the list of repositories `poestry` knows about via `poetry config repositories.<your_project> https://test.pypi.org/legacy/` as shown below:
+
+```
+$ poetry config repositories.foocat https://test.pypi.org/legacy/
+```
+
+Before we send our package, we first need to build it to source and wheels archives (the format that PyPI distributes it via) using `poetry build`:
+
+```
+$ poetry build
+```
+
+And, finally, now to publish to testPyPI we can use `poetry publish` (you will be prompted for your testPyPI username and password, sign up for one if you have not already done so):
+
+```
+$ poetry publish -r test-pypi
+```
+
+Now you should be able to visit your package on testPyPI (e.g., <https://test.pypi.org/project/foocat/>) and download it from there using `pip` via:
+
+```
+pip install -i https://test.pypi.org/simple/ foocat
+```
