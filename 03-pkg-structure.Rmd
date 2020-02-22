@@ -5,16 +5,193 @@ options(prompt = '>>> ')
 options(continue = '>>> ')
 ```
 
-The previous chapter gave a high level overview of how a Python package can be developed. This chapter now takes a more detailed look at Python’s range of packaging options. You’ll learn about the various different kinds of Python package states and why these are important. Often, people don't think about packaging until their code is actually written - but we'll learn that thinking about packaging before even creating your package can be very useful! This chapter is a Pythonified version of [the Package structure and state chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the [R packages book](https://r-pkgs.org/).
+The previous chapter demonstrated how to develop a Python package from scratch with the help of Python Poetry. This chapter now takes a more in-depth look at packaging in Python. Often, developers don't think about packaging until their code is actually written - but we'll learn that thinking about packaging before even writing any code is very useful! This chapter is a somewhat Pythonified version of [the Package structure and state chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the [R packages book](https://r-pkgs.org/) and also draws on information from the [Python Packaging Authority](https://www.pypa.io/en/latest/).
 
-## Package states
+## Package states {#package-states}
 
-## Modules
+By "package" here we mean the code that you wish to bundle up and distribute. In Python, your package can be in several different states depending on its complexity, target audience, and stage of development. The ones we'll talk about here are:
 
-## Source packages
+- modules
+- packages
+- source distributions
+- binary distributions
+- installed packages
+- in-memory packages
 
-## Binary packages
+You've already seen some of the commands that put packages into these various states. For example, `poetry build` at the CL or `import` in a Python session. In the following sections, we'll be giving those operations some context.
 
-## Installed packages
+<img src="img/py_flowchart.png" width=600>
 
-## Libraries
+*The Python packaging workflow.*
+
+## Modules {#python-modules}
+
+A module is simply a Python `.py.` file consisting of Python code that may include functions, classes, variables, and/or runnable code. Modules can be useful for sharing simple Python code amongst compatible Python versions. A module that relies *only* on the standard Python library can easily be redistributed and reused (on the appropriate version of Python). In this way, a single module can be thought of as a package. For example, consider a module `simple_math.py` that contains the functions `list_range` and `odd_even`:
+
+```{python simple_math, eval = FALSE}
+def list_range(x):
+  return max(x) - min(x)
+  
+def odd_even(x):
+    if x % 2:
+        print('x is odd.')
+    else:
+        print('x is even.')
+```
+
+If the module `simple_math.py` is in your working directory then you can import the module using:
+
+```{python modules, eval = FALSE}
+import simple_math                 # imports the entire module. Functions can then be accessed via dot notation, e.g., simple_math.list_range()
+from simple_math import list_range # import only list_range function
+from simple_math import odd_even   # import only odd_even function
+from simple_math import *          # import all functions
+```
+
+Because modules are single files they can easily be shared by e.g., email, GitHub, Slack, etc. However, this method of distribution does not scale well in cases of multiple files, if your code depends on additional libraries, or needs a specific version of Python.
+
+## Python packages {#python-packages}
+
+Projects consisting of multiple Python `.py` files (i.e., modules) are harder to distribute. If your project consists of multiple files, it is typical to organise it into a directory structure. Any directory containing Python files (or nested directories with Python files) can comprise a Python "package". 
+
+While we've been using the term "package" generically so far, it does have a specific meaning in Python and it's important to make clear the distinction between "modules" and "packages". As described in the previous section, any Python file is a module. In contrast, a package is a directory containing module(s) and/or additional package(s) (sometimes called "nested packages" or "subpackages") along with a `__init__.py`. An `__init__.py` is required to make Python treat a directory as a package; in the simplest case `__init__.py` is an empty file, but it can also execute initialization code for the package (read more [here](https://docs.python.org/3/tutorial/modules.html#importing-from-a-package)). Packages allow us to organise our code and access it using “dotted module names”. Consider having the following two packages in your working directory:
+
+A package containing modules:
+```
+pkg1
+├── __init__.py
+├── simple_math.py
+└── advanced_math.py
+```
+
+A package containing nested packages:
+```
+pkg2
+├── __init__.py
+├── simple
+│   ├── __init__.py
+│   └── simple_math.py
+├── advanced
+    ├── __init__.py
+    └── advanced_math.py
+```
+
+Modules/functions can be accessed using dot notation. For example:
+
+```{python packages, eval = FALSE}
+from pkg1.simple_math import list_range
+from pkg2.simple.simple_math import list_range
+```
+
+It would be possible to share a package by transferring all the files that comprise the package (keeping the directory structure intact) to another user, who could then use the package if it were placed in their working directory. However, just like single modules, this method of distribution does not scale well, makes it hard to support or update your code, and won't work if your code depends on additional libraries, or needs a specific version of Python. We need a more efficient and reliable way to package and distribute our code which leads us to "source distribution packages" and "built distribution packages" described below.
+
+## Source distribution packages {#source-packages}
+
+A "distribution package" (often referred to simply as a "distribution") is a single archive of the Python packages, modules and other files that make up your project. Having a single archive makes it easier to distribute your code to the wild. If your package relies *only* on the standard Python library you can use Python’s native packaging tools to create a source distribution package (`sdist`). An `sdist` is a compressed archives (e.g., `.tar.gz` or `.zip`) of your package. You can read more about source distributions [here](https://docs.python.org/3/distutils/sourcedist.html). The current standard tool in Python for creating `sdists` (and built distributions, which we'll explore in the next section) is `setuptools`. As a very simple example, consider the following directory which now contains a `setup.py` file. The `setup.py` file is a standard file that helps `setuptools` build your `sdist` and it is described in detail [here](https://docs.python.org/3/distutils/setupscript.html#).
+
+```
+root
+├── pkg1
+│   ├── __init__.py
+│   ├── simple_math.py
+│   └── advanced_math.py
+└── setup.py
+```
+
+Your `sdist` can then be built by changing to the `root` directory and running the following command:
+
+```
+$ python setup.py sdist
+```
+
+This will create an archive file (`.tar.gz` by default on MacOS) of your project which can then be shared, for example on [PyPi](https://pypi.org/). If instead you wanted to share and install the archive locally, you could simply run:
+
+```
+$ python setup.py install
+```
+
+In fact, when you download a package from PyPi using the internet and `pip install XXX`, the above command is one of the operations that is run under-the-hood for you. It's important to note that installing in Python using `pip` or the command above actually adds the package to your default installation directory (more on that in section [Installed packages](#installed-packages)) such that it is accessible outside of your working directory - this is a key difference to simply sharing code as a module or package as we explored in the last two sections. We recommend consulting the [The Hitchhiker's Guide to Packaging](https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/creation.html#) and the [Python docs](https://docs.python.org/3/distutils/sourcedist.html) for more information on building and distributing source distributions. Some notable exampls of Python `sdists` include: [Django](https://github.com/django/django), [hyperlink](https://github.com/python-hyper/hyperlink), [requests](https://github.com/psf/requests). Importantly, if you rely on any non-Python code/libraries/packages, a built distribution, described in the next section, is a much better way to package and distribute your code.
+
+## Binary and built distributions {#built-packages}
+
+A built distribution is how you make life as easy as possible for installers of your code. Like a source distribution, a built distribution is a single artefact. However, as the name suggests, built distributions are "pre-built" meaning that, unlike source distributions, they do not require a build step before installation. The main built distribution used by Python is called a "wheel" (more on that later). Python's package installer, `pip`, always prefers `wheels` (if available) because installation is always faster than building and installing from a source distribution.
+
+Binary distributions are a type of built distribution that contain compiled extensions. One of the most powerful features of Python is its ability to interoperate with libraries written in other languages, for example, C, Fortran, etc. Not all end-users will have the tools, experience, or time to build packages containing extensions written in these other languages, so `wheels` provide a method of distributing code with already compiled extensions. As an example, much of the commonly used Python library `NumPy` is implemented as C extensions. The existence of `wheels` means that a user can for example simply run `pip install numpy` to install `NumPy` from `PyPi`, as opposed to having to build it from source with the help of a C compiler, amongst other requirements. If you're feeling particularly masochistic you can try to build `NumPy` from source following [these instructions from the `NumPy` docs](https://numpy.org/devdocs/user/building.html).
+
+Binary distributions are platform specific (i.e., Windows, Mac, Linux). As a result, binary distributions are usually provided with their corresponding source distributions; if you don’t upload `wheels` of your code for every operating system, end-users will still be able to build it from source. Take a look at the downloadable file list of [`NumPy` on `PyPi`](https://pypi.org/project/numpy/#files) - you'll see `wheels` for most common platforms, as well as the source distribution at the bottom of the list. Wheels actually come in three flavours (which you can read more about [here](https://packaging.python.org/guides/distributing-packages-using-setuptools/#wheels):
+
+1. *Universal wheels*: pure Python and support Python 2 and 3. Can be installed anywhere using `pip`.
+2. *Pure Python wheels*: pure Python but don’t support both Python 2 and 3
+3. *Platform wheels*: binary packages specific to certain platforms as a result of containing compiled extensions.
+
+You can actually tell a lot about a `wheel` from the name itself which follows a [strict naming convention](https://www.python.org/dev/peps/pep-0427/#file-name-convention): `{distribution}-{version}(-{build tag})?-{python tag}-{abi tag}-{platform tag}.whl.`. For example, the `NumPy` wheel `numpy-1.18.1-cp37-cp37m-macosx_10_9_x86_64.whl` suggests that:
+
+- The distribution is `NumPy v1.18.1`;
+- It is made for Python 3.7;
+- It is specific to the `macosx_10_9_x86_64` platform (i.e, this is a "platform wheel" because it is platform-specific).
+
+Building `wheels` is similar to building source distributions with `setuptools`. We recommend taking a look at the [Python Packaging User Guide tutorial](https://packaging.python.org/tutorials/packaging-projects/) to learn how to properly build your project. The whole process is really quite easy once your `setup.py` and related files are ready. You can create your `sdist` and `wheel` simultaneously using the following simple command:
+
+```
+$ python setup.py sdist bdist_wheel
+```
+
+In summary, the two key takeaway points from this section are to:
+
+1. Always use wheels to distribute your code whenever possible;
+2. Always create and publish both source distributions (`sdist`) and wheels together.
+
+## Poetry and pyproject.toml {#python-poetry}
+
+The previous sections gave a high level overview of Python's native packaging options. However, in [The Whole Game Chapter](#whole-game) we used Python Poetry to create a toy Python package - so where does this fit into the Python packaging landscape? Well, in the previous sections on [Source distribution packages](#source-packages) and [Built distribution packages](#binary-packages), we really only touched the tip of the iceberg of Python packaging. When creating a package there's a lot of customisation to think about with your `setup.py` file, other files we didn't even talk about (e.g., `requirements.txt`, `setup.cfg`), not to mention that we didn't even touch on dependency management! Needless to say, packaging in Python can be hard to understand, especially for beginners. These words echo the sentiments of Python Poetry's creator Sébastien Eustace and the motivation for creating the tool:
+
+> *"Packaging systems and dependency management in Python are rather convoluted and hard to understand for newcomers. Even for seasoned developers it might be cumbersome at times to create all files needed in a Python project: setup.py, requirements.txt, setup.cfg, MANIFEST.in, and the newly added Pipfile. So I wanted a tool that would limit everything to a single configuration file to do: dependency management, packaging and publishing."*
+
+That "single configuration file" is `pyproject.toml` (you can read more about `.toml` files [here](https://www.python.org/dev/peps/pep-0518/)). Essentially, Python Poetry is based on all the concepts of `sdists` and `wheels` discussed previously - it just simplifies and streamlines the whole packaging process in an intuitive way. In fact, the `poetry build` command you've seen previously, is the one that creates the `sdist` and `wheel` distributions for you (depending on how you've configured your project).
+
+<img src="img/py_pkgs.png" width=500>
+
+*Python packaging gamut. Modified after [The Packaging Gradient by Mahmoud Hashemi](https://www.youtube.com/watch?v=iLVNWfPWAC8).*
+
+## Installed packages {#installed-packages}
+
+An installed package is a distribution that’s been decompressed, built (in the case of an `sdist`) and then copied to your chosen installation directory. The default "chosen installation directory" varies by platform and by how you built/installed Python. For example, I installed Python using the [miniconda](https://docs.conda.io/en/latest/miniconda.html) distribution and my default directory for package installation is `/Users/tbeuzen/miniconda3/lib/python3.7/site-packages`.
+
+"Installing" a distribution (e.g., by `pip install XXX`) is really a two-step process: 1) building the package, and 2) installing the package. Using `wheels` takes out the first step, meaning we only need to install. The install step is simple, all it has to do is copy all the decompressed files to the appropriate directory. In fact, we can manually install a package if we want to by manually decompressing a `wheel` and copying the files to their appropriate locations - there's no real reason to do this because it's far more effort than using a single one-liner at the CL, it does not resolve dependencies so could break your installation, and probably has other unwanted side-effects. However, it's a nice way to learn about the package installation process, so if you'd like to give it a go, you can try the following steps (which assume you're using MacOS and the [`conda` package manager](https://docs.conda.io/en/latest/)):
+
+1. Create a new virtual environment to act as a safe, test playground. As a `conda` user, the CL command for me to create a new empty virtual environment called "manualpkg" and including Python 3.7 is `conda create -name manpkg python=3.7`. Be sure to activate the environment once it has been created (i.e., `conda activate manualpkg`);
+2. You can find a toy `wheel` to download in the GitHub repository of this book [here](https://github.com/UBC-MDS/py-pkgs/tree/master/docs/support/toy-pkg/dist) (although you can try this manual installation procedure with a `wheel` downloaded from any source, e.g., PyPi). Download the `wheel` into the `site-packages` directory of the `manualpkg` environment, which for me was located at `/Users/tbeuzen/miniconda3/envs/manualpkg/lib/python3.7/site-packages/`;
+3. From the CL, `cd` to the `site-packages` directory of the `manualpkg` environment;
+4. At this point, there is no `toy_pkg` package installed for our virtual environment to access. So starting a Python session from the CL (`python`) and trying `import toy_pkg` will fail because even though the `wheel` is there, we haven't decompressed it yet;
+5. From the CL we need to run `unzip toy_pkg-0.0.1-py3-none-any.whl`;
+4. You'll now find two fresh directories: `toy_pkg` and `toy_pkg-0.0.1.dist-info`;
+5. From the CL start a Python session by typing `python` and try the following: 
+
+```{python toy_pkg, eval = FALSE}
+>>> from toy_pkg.toy_module import test_function
+>>> test_function()
+You manually installed the toy_pkg example! Well done!
+```
+
+## Imported Packages {#imported-packages}
+
+We now arrive at our last package state, the "imported package". This state is associated with a command that is familiar to everyone that uses Python:
+
+```{python import1, eval = FALSE}
+import somemodule
+```
+
+You can read about the import system in detail in the [Python documentation](https://docs.python.org/3/reference/import.html). Briefly, the `import` statement comprises two operations:
+
+1. it [searches](https://docs.python.org/3/reference/import.html#searching) for the named module; and,
+2. then binds the results of that search to a name in the local scope.
+
+Note that for efficiency, each module is only imported once per interpreter session. If you modify your module, you can't just re-run your import statement (as that name in the namespace is already populated and won't be re-loaded). Instead, you have to restart your interpreter or force the import using `importlib.reload()`, but this is inefficient when working with multiple modules.
+
+## Packaging Python Applications {#python-applications}
+
+In this chapter we've only talked about packaging and distributing reusable Python code, a process which is really aimed at developers and audiences familiar with Python. While it's outside the scope of this book, it's also possible to package and distribute entire Python applications, that is, software that is not meant to be developed on but rather to use. Some good exmaples of Python-based applications are Sublime Text, EVE online, and Reddit. There are a lot of options available for packaging and distributing Python applications and we recommend watching the excellent talk by Mahmoud Hashemi ["The Packaging Gradient"](https://www.youtube.com/watch?v=iLVNWfPWAC8) to learn more. To give you an idea of the available options, the figure below shows a summary of the different options discussed by Mahmoud for packaging Python applications.
+
+<img src="img/py_apps.png" width=500>
+
+*Python application packaging gamut. Modified after [The Packaging Gradient by Mahmoud Hashemi](https://www.youtube.com/watch?v=iLVNWfPWAC8).*
