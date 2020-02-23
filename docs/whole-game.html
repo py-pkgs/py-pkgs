@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 The Whole Game | Python packages</title>
+  <title>Chapter 2 The Whole Game | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 The Whole Game | Python packages" />
+  <meta property="og:title" content="Chapter 2 The Whole Game | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 The Whole Game | Python packages" />
+  <meta name="twitter:title" content="Chapter 2 The Whole Game | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-02-20" />
+<meta name="date" content="2020-02-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="setup.html"/>
 <link rel="next" href="package-structure.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,6 +41,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -50,18 +54,17 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -81,7 +84,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -130,42 +133,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Python packages</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
-<li class="chapter" data-level="2" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>2</b> System setup</a><ul>
-<li class="chapter" data-level="2.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>2.1</b> Installing and updating Python</a></li>
-<li class="chapter" data-level="2.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>2.2</b> Register for a PyPI account</a></li>
-<li class="chapter" data-level="2.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>2.3</b> Python IDEs</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="setup.html"><a href="setup.html#pycharm"><i class="fa fa-check"></i><b>2.3.1</b> PyCharm</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>1.1</b> Installing and updating Python</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>1.2</b> Register for a PyPI account</a></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#pycharm"><i class="fa fa-check"></i><b>1.3.1</b> PyCharm</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>2.4</b> Setting up the RStudio IDE with Python</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>2.4.1</b> Find where Anaconda is installed on your machine</a></li>
-<li class="chapter" data-level="2.4.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>2.4.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
-<li class="chapter" data-level="2.4.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>2.4.3</b> Configuring the RStudio terminal</a></li>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>1.4.1</b> Find where Anaconda is installed on your machine</a></li>
+<li class="chapter" data-level="1.4.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>1.4.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
+<li class="chapter" data-level="1.4.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>1.4.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>3</b> The Whole Game</a><ul>
-<li class="chapter" data-level="3.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>3.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
-<li class="chapter" data-level="3.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>3.2</b> Put your project under version control</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>3.2.1</b> Set-up local version control</a></li>
-<li class="chapter" data-level="3.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>3.2.2</b> Set-up remote version control</a></li>
+<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>2.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
+<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>2.2.1</b> Set-up local version control</a></li>
+<li class="chapter" data-level="2.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>2.2.2</b> Set-up remote version control</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>3.3</b> Write the first function</a></li>
-<li class="chapter" data-level="3.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>3.4</b> Test drive your package code</a></li>
-<li class="chapter" data-level="3.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>3.5</b> Add package function dependencies</a></li>
-<li class="chapter" data-level="3.6" data-path="whole-game.html"><a href="whole-game.html#package-documentation-pkg-docs"><i class="fa fa-check"></i><b>3.6</b> Package documentation {pkg-docs}</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>3.6.1</b> Reading and rendering the docs locally</a></li>
-<li class="chapter" data-level="3.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>3.6.2</b> Reading and rendering the docs remotely</a></li>
+<li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Write the first function</a></li>
+<li class="chapter" data-level="2.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>2.4</b> Test drive your package code</a></li>
+<li class="chapter" data-level="2.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>2.5</b> Add package function dependencies</a></li>
+<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#package-documentation-pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation {pkg-docs}</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>2.6.1</b> Reading and rendering the docs locally</a></li>
+<li class="chapter" data-level="2.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>2.6.2</b> Reading and rendering the docs remotely</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="whole-game.html"><a href="whole-game.html#testing"><i class="fa fa-check"></i><b>3.7</b> Testing</a></li>
-<li class="chapter" data-level="3.8" data-path="whole-game.html"><a href="whole-game.html#build-n-publish"><i class="fa fa-check"></i><b>3.8</b> Building your package &amp; publishing to testPyPI</a></li>
+<li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
+<li class="chapter" data-level="2.8" data-path="whole-game.html"><a href="whole-game.html#build-n-publish"><i class="fa fa-check"></i><b>2.8</b> Building your package &amp; publishing to testPyPI</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>4</b> Package structure and state</a><ul>
-<li class="chapter" data-level="4.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>4.1</b> Package states</a></li>
-<li class="chapter" data-level="4.2" data-path="package-structure.html"><a href="package-structure.html#modules"><i class="fa fa-check"></i><b>4.2</b> Modules</a></li>
-<li class="chapter" data-level="4.3" data-path="package-structure.html"><a href="package-structure.html#source-packages"><i class="fa fa-check"></i><b>4.3</b> Source packages</a></li>
-<li class="chapter" data-level="4.4" data-path="package-structure.html"><a href="package-structure.html#binary-packages"><i class="fa fa-check"></i><b>4.4</b> Binary packages</a></li>
-<li class="chapter" data-level="4.5" data-path="package-structure.html"><a href="package-structure.html#installed-packages"><i class="fa fa-check"></i><b>4.5</b> Installed packages</a></li>
-<li class="chapter" data-level="4.6" data-path="package-structure.html"><a href="package-structure.html#libraries"><i class="fa fa-check"></i><b>4.6</b> Libraries</a></li>
+<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>3.1</b> Package states</a></li>
+<li class="chapter" data-level="3.2" data-path="package-structure.html"><a href="package-structure.html#python-modules"><i class="fa fa-check"></i><b>3.2</b> Modules</a></li>
+<li class="chapter" data-level="3.3" data-path="package-structure.html"><a href="package-structure.html#python-packages"><i class="fa fa-check"></i><b>3.3</b> Python packages</a></li>
+<li class="chapter" data-level="3.4" data-path="package-structure.html"><a href="package-structure.html#source-packages"><i class="fa fa-check"></i><b>3.4</b> Source distribution packages</a></li>
+<li class="chapter" data-level="3.5" data-path="package-structure.html"><a href="package-structure.html#built-packages"><i class="fa fa-check"></i><b>3.5</b> Binary and built distributions</a></li>
+<li class="chapter" data-level="3.6" data-path="package-structure.html"><a href="package-structure.html#python-poetry"><i class="fa fa-check"></i><b>3.6</b> Poetry and pyproject.toml</a></li>
+<li class="chapter" data-level="3.7" data-path="package-structure.html"><a href="package-structure.html#installed-packages"><i class="fa fa-check"></i><b>3.7</b> Installed packages</a></li>
+<li class="chapter" data-level="3.8" data-path="package-structure.html"><a href="package-structure.html#imported-packages"><i class="fa fa-check"></i><b>3.8</b> Imported Packages</a></li>
+<li class="chapter" data-level="3.9" data-path="package-structure.html"><a href="package-structure.html#python-applications"><i class="fa fa-check"></i><b>3.9</b> Packaging Python Applications</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -187,11 +200,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="whole-game" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> The Whole Game</h1>
+<div id="whole-game" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> The Whole Game</h1>
 <p>This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It’s purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. This chapter is a Pythonified version of <a href="https://r-pkgs.org/whole-game.html">the Whole Game chapter</a> written by Jenny Bryan that can be found in the the <a href="https://r-pkgs.org/">R packages book</a>.</p>
-<div id="poetry-to-create-project" class="section level2">
-<h2><span class="header-section-number">3.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
+<div id="poetry-to-create-project" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
 <p>So that we do not have to create a complicated file and directory structure ourselves, we will use Cookiecutter &amp; Poetry to do this for us! First we start with using Cookiecutter to create the project file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the <a href="https://www.pyopensci.org/">PyOpenSci</a> organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages.</p>
 <p>To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="whole-game.html#cb6-1"></a>$ cookiecutter https:<span class="op">//</span>github.com<span class="op">/</span>UBC<span class="op">-</span>MDS<span class="op">/</span>cookiecutter<span class="op">-</span>ubc<span class="op">-</span>mds.git</span></code></pre></div>
@@ -280,11 +293,11 @@ Do you confirm generation? (yes/no) [yes]</code></pre>
 Users of the RStudio IDE may also want to make this Python project directory an RStudio project. Why might you ask? Well, once you have an <code>*.Rproj</code> file, you can use that file to quickly open the RStudio IDE (which has a terminal and an interactive Python REPL, assuming you have set this up with <code>reticulate</code>) to the project’s root directory.</p>
 </blockquote>
 </div>
-<div id="versio-control" class="section level2">
-<h2><span class="header-section-number">3.2</span> Put your project under version control</h2>
+<div id="versio-control" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Put your project under version control</h2>
 <p>It is in our opinion that every data science project should put under local and remote version control. The tools we recommend using for this are Git &amp; GitHub. For this book, we assume Git is installed on their machine, have novice Git skills, and that users have a <a href="https://github.com/">GitHub.com</a> account.</p>
-<div id="set-up-local-version-control" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Set-up local version control</h3>
+<div id="set-up-local-version-control" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Set-up local version control</h3>
 <p>From the terminal and in the root of this project directory, initialize the repository to be tracked by Git:</p>
 <pre><code>$ git init</code></pre>
 <pre><code>Initialized empty Git repository in /Users/tiffany/Documents/ubc-mds/foocat/.git/</code></pre>
@@ -316,8 +329,8 @@ $ git commit -m &quot;initial project set-up&quot;</code></pre>
  create mode 100644 tests/__init__.py
  create mode 100644 tests/test_foocat.py</code></pre>
 </div>
-<div id="set-up-remote-version-control" class="section level3">
-<h3><span class="header-section-number">3.2.2</span> Set-up remote version control</h3>
+<div id="set-up-remote-version-control" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Set-up remote version control</h3>
 <p>Now that we have set up our local version control, let’s create a repository on <a href="https://github.com/">GitHub.com</a> and set that as the remote version control home for this project:</p>
 <p><img src="img/set-up-github1.png"></p>
 <p>The options we recommend for setting up a repository for a Python package using the workflow we present in this book include:</p>
@@ -335,8 +348,8 @@ $ git push -u origin master</code></pre>
 </blockquote>
 </div>
 </div>
-<div id="first-function" class="section level2">
-<h2><span class="header-section-number">3.3</span> Write the first function</h2>
+<div id="first-function" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Write the first function</h2>
 <p>Pandas categoricals are a very useful data type for modeling (and were inspired by R’s factors), but certain manipulations of this data type can be tricky in data wrangling. One such challenge is concatenation of Pandas categoricals. Let’s observe the result of trying to concatenate two Pandas categoricals objects:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="whole-game.html#cb16-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="whole-game.html#cb16-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
@@ -397,8 +410,8 @@ def catbind(a, b):
   return pd.Categorical(concatenated)
 </code></pre>
 </div>
-<div id="test-drive-your-package-code" class="section level2">
-<h2><span class="header-section-number">3.4</span> Test drive your package code</h2>
+<div id="test-drive-your-package-code" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Test drive your package code</h2>
 <p>To test drive the function we just wrote we first install the package locally using Python poetry. We choose to do this with Python <code>poetry</code> as opposed to using <code>pip</code> because <code>poetry</code> automatically creates a virtual environment for us and will perform tricky tasks like package solving that can sometimes trip us up when we use pip alone.</p>
 <pre><code>$ poetry install</code></pre>
 <pre><code>Creating virtualenv foocat-z0_J6H1I-py3.7 in /Users/tiffany/Library/Caches/pypoetry/virtualenvs
@@ -423,8 +436,8 @@ $ git commit -m &quot;First working version of catbind function&quot;</code></pr
 <pre><code>[master b80dea8] First working version of catbind function
  1 file changed, 7 insertions(+)</code></pre>
 </div>
-<div id="pkg-func-deps" class="section level2">
-<h2><span class="header-section-number">3.5</span> Add package function dependencies</h2>
+<div id="pkg-func-deps" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Add package function dependencies</h2>
 <p>Our function depends on the pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our pacakged code this important information (and the mechanism for making it work) will be shipped along with it. We again use <code>poetry</code> to do this, using the <code>add</code> command. This command will update the <code>[tool.poetry.dependencies]</code> section of the <code>pyproject.toml</code> file which currently looks like this and lists only Python as a project dependency:</p>
 <pre><code>[tool.poetry]
 name = &quot;foocat&quot;
@@ -485,10 +498,10 @@ $ git commit -m &quot;added pandas as a dependency&quot;</code></pre>
 <p>For those of you who have used <code>requirements.txt</code> before with <code>pip</code>, you can think of <code>poetry.lock</code> as the <code>poetry</code> equivalent of that file. You can even generate a <code>requirements.txt</code> from poetry via <code>poetry export -f requirements.txt &gt; requirements.txt</code> if needed.</p>
 </blockquote>
 </div>
-<div id="package-documentation-pkg-docs" class="section level2">
-<h2><span class="header-section-number">3.6</span> Package documentation {pkg-docs}</h2>
-<div id="local-docs" class="section level3">
-<h3><span class="header-section-number">3.6.1</span> Reading and rendering the docs locally</h3>
+<div id="package-documentation-pkg-docs" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Package documentation {pkg-docs}</h2>
+<div id="local-docs" class="section level3" number="2.6.1">
+<h3><span class="header-section-number">2.6.1</span> Reading and rendering the docs locally</h3>
 <p>For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - <a href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">Sphinx</a>. In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran <code>cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git</code>. These files live in the <code>doc</code> directory and are <code>.rst</code> (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this <a href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">CheatsSheet</a> to get started.</p>
 <p>First, we need to install <code>sphinx</code> as a development dependency using <code>poetry</code>.</p>
 <pre><code>$ poetry add --dev sphinx</code></pre>
@@ -563,8 +576,8 @@ $ git commit -m &quot;generated and render docs for local viewing&quot;</code></
  create mode 100644 docs/source/foocat.rst
  create mode 100644 docs/source/modules.rst</code></pre>
 </div>
-<div id="remote-docs" class="section level3">
-<h3><span class="header-section-number">3.6.2</span> Reading and rendering the docs remotely</h3>
+<div id="remote-docs" class="section level3" number="2.6.2">
+<h3><span class="header-section-number">2.6.2</span> Reading and rendering the docs remotely</h3>
 <p>To share these docs online, we need to link our GitHub repository to <a href="https://readthedocs.org/">Read the Docs</a> (where we will build and host our docs remotely). To do this:</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Push your local changes to GitHub.com via <code>git push</code>.</li>
@@ -581,8 +594,8 @@ $ git commit -m &quot;generated and render docs for local viewing&quot;</code></
 </blockquote>
 </div>
 </div>
-<div id="testing" class="section level2">
-<h2><span class="header-section-number">3.7</span> Testing</h2>
+<div id="testing" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> Testing</h2>
 <p>We have interactively taken <code>catbind</code> for a test drive, but to prove to our future selves and others that our code does in fact do what it is supposed to do, let’s write some formal unit tests. In Python packages, our tests live inside the <code>test</code> directory, typically in a file called <code>test_&lt;module_name&gt;.py</code>, thus for this package this is <code>tests/test_foocat.py</code>. Let’s add a unit test (as a function named <code>test_catbind</code>) for our <code>catbind</code> function there now:</p>
 <pre><code>from foocat import foocat
 import pandas as pd
@@ -619,8 +632,8 @@ remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
 To github.com:ttimbers/foocat.git
    154aacc..6fe4b6c  master -&gt; master</code></pre>
 </div>
-<div id="build-n-publish" class="section level2">
-<h2><span class="header-section-number">3.8</span> Building your package &amp; publishing to testPyPI</h2>
+<div id="build-n-publish" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> Building your package &amp; publishing to testPyPI</h2>
 <p>Python packages are generally shared via the <a href="https://pypi.org/">PyPI package Index</a>. However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to <a href="https://test.pypi.org/">testPyPi</a>. <code>poetry</code> has a command called <code>publish</code> which we can use to do this, however it’s default is to publish to PyPI. We can add this to the list of repositories <code>poestry</code> knows about via <code>poetry config repositories.&lt;your_project&gt; https://test.pypi.org/legacy/</code> as shown below:</p>
 <pre><code>$ poetry config repositories.foocat https://test.pypi.org/legacy/</code></pre>
 <p>Before we send our package, we first need to build it to source and wheels archives (the format that PyPI distributes it via) using <code>poetry build</code>:</p>
@@ -643,11 +656,13 @@ To github.com:ttimbers/foocat.git
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -655,12 +670,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -672,6 +686,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
