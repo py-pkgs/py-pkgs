@@ -5,11 +5,11 @@ options(prompt = '>>> ')
 options(continue = '>>> ')
 ```
 
-This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose it to motivate and give a high level overview of how a Python package can and should be developed. Later chapters will delve deeper into important package specifics. This chapter is a Pythonified version of [the Whole Game chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the the [R packages book](https://r-pkgs.org/).
+This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It's purpose is to give a high level overview of how a Python package can and should be developed. Later chapters will explore packaging in Python in more detail. This chapter is a Pythonified version of [the Whole Game chapter](https://r-pkgs.org/whole-game.html) written by Jenny Bryan that can be found in the the [R packages book](https://r-pkgs.org/).
 
 ## Use Cookiecutter & Poetry to create a Python project {#poetry-to-create-project}
 
-So that we do not have to create a complicated file and directory structure ourselves, we will use Cookiecutter & Poetry to do this for us! First we start with using Cookiecutter to create the project file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the [PyOpenSci](https://www.pyopensci.org/) organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages. 
+So that we do not have to create a file and directory structure for our project from scratch, we will use Cookiecutter & Poetry to do this for us (which you installed back in [1.1 Installing and updating Python](#python-setup). First, we use Cookiecutter to create the file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the [PyOpenSci](https://www.pyopensci.org/) organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages. 
 
 To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live. 
 
@@ -17,7 +17,11 @@ To use Cookiecutter to set up the structure of your Python package, run the line
 $ cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git
 ```
 
-You will be prompted to provide information that will help customize the project. Here is a example of how to respond the the prompts:
+You will be prompted to provide information that will help customize the project.
+
+> In this tutorial we will be calling our package `foocat`. However, we will eventually be publishing our package to [testPyPI](https://test.pypi.org/) which is a testing version of Python's main package index [PyPI](https://pypi.org/). Package names on testPyPI and PyPI must be unique. As a result, you will need to choose a **unique name for your package** while following this tutorial. Something like `foocat_[your intials]` might be appropriate, but you can always check if your chosen name is already taken by visitng testPyPI and searching that name.
+
+Below is an example of how to respond to the Cookiecutter prompts (default values for each attribute are shown in square brackets, hitting enter will accept the default attribute value):
 
 ```
 full_name [Audrey Roy Greenfeld]: Tiffany Timbers
@@ -37,14 +41,14 @@ Select open_source_license:
 Choose from 1, 2, 3, 4, 5 [1]: 1
 ```
 
-Next we navigate into the project directory we just created and initialize the project as a Poetry project so that we can take advantage of the package management and building tools provided by Poetry:
+You will now have a new directory called `foocat`. Navigate into the `foocat` directory and initialize the project as a Poetry project so that we can take advantage of the package management and building tools of Poetry:
 
 ```{python create-project-fake, eval = FALSE}
 $ cd foocat
 $ poetry init
 ```
 
-Again we are prompted for more information. We are provided with some suggestions for the information (which I think is gleaned from the Cookiecutter template that we just set up), and if we agree we can simply click enter at the prompt. Here is a example of how to respond the the prompts:
+Again we are prompted for more information. Once again, default values are shown in square brackets and have been populated where possible from our Cookiecutter template. Here is an example of how to respond the the prompts:
 
 ```
 This command will guide you through creating your pyproject.toml config.
@@ -80,7 +84,7 @@ build-backend = "poetry.masonry.api"
 Do you confirm generation? (yes/no) [yes]
 ```
 
-*Note - we said no to defining our dependencies interactively because it is more efficient to define them using `poetry add` at a later time point.*
+*Note - we said no to defining our dependencies interactively because it is more efficient to define them using `poetry add` which we will explore a bit later on.*
 
 After using Cookiecutter and Poetry, we end up with the following directory structure:
 
@@ -113,18 +117,25 @@ foocat
     └── test_foocat.py
 ```
 
-It gives us a boilerplate file and directory structure suitable for building a Python package. It indeed looks like a lot, however, at this point we need only to worry about a few of these files and directories to get a working package together, specifically a file for us to write out Python functions that our package will distribute (`foocat/foocat.py`), a home for our tests to ensure that our package functions work as we expect they should (`tests/test_foocat.py`), as well as a `pyproject.toml` file that we will use to define our project's metadata and dependencies. We will focus on these in this chapter. Later chapters will focus on the rest, whose aim is to make your package one of high quality (in respect to documentation, continuous integration testing, and version bumping).
+These two simple steps (Cookiecutter + Poetry) have given us a boilerplate file and directory structure suitable for building our Python package. While there are quite a few files in our boilerplate, at this point we only need to worry about a few of these files and directories to get a working package together. Specifically, we'll be working on:
+
+- the file for us to write out Python functions that our package will distribute (`foocat/foocat.py`);
+- the home for our tests to ensure that our package functions work as we expect they should (`tests/test_foocat.py`); and,
+- the `pyproject.toml` file that defines our project's metadata and dependencies and how it will eventually be built and distributed.
+
+Later chapters will focus on the oter components of the boilerplate, which can be used to refine your package and packaging process with, for example, quality documentation, continuous integration testing, version bumping, etc.
 
 > **Optional for RStudio IDE users**
+> 
 > Users of the RStudio IDE may also want to make this Python project directory an RStudio project. Why might you ask? Well, once you have an `*.Rproj` file, you can use that file to quickly open the RStudio IDE (which has a terminal and an interactive Python REPL, assuming you have set this up with `reticulate`) to the project's root directory.
 
-## Put your project under version control {#versio-control}
+## Put your project under version control {#version-control}
 
-It is in our opinion that every data science project should put under local and remote version control. The tools we recommend using for this are Git & GitHub. For this book, we assume Git is installed on their machine, have novice Git skills, and that users have a [GitHub.com](https://github.com/) account.
+It is good practice to put your data science projects under local and remote version control. The tools we recommend using for this are Git & GitHub. For this book, we assume readers have [Git](https://git-scm.com/) installed on their machine, have novice Git skills, and that have a [GitHub.com](https://github.com/) account.
 
 ### Set-up local version control
 
-From the terminal and in the root of this project directory, initialize the repository to be tracked by Git:
+From the terminal and in the root `foocat` directory, we will initialize the repository to be tracked by Git using:
 
 ```
 $ git init
@@ -134,7 +145,7 @@ $ git init
 Initialized empty Git repository in /Users/tiffany/Documents/ubc-mds/foocat/.git/
 ```
 
-Next, tell Git which files to track (all of them at this point) and commit these changes locally:
+Next, we need to tell Git which files to track (which will be all of them at this point) and commit these changes locally:
 
 ```
 $ git add .
@@ -191,9 +202,9 @@ $ git push -u origin master
 
 > Note: the example above uses SSH authentication with GitHub, HTTPS authentication works as well and would use this url in place of the one shown above to set the remote: `https://github.com/ttimbers/foocat.git`.
 
-## Write the first function {#first-function}
+## Writing our first function {#first-function}
 
-Pandas categoricals are a very useful data type for modeling (and were inspired by R's factors), but certain manipulations of this data type can be tricky in data wrangling. One such challenge is concatenation of Pandas categoricals. Let's observe the result of trying to concatenate two Pandas categoricals objects:
+Pandas categoricals are a very useful data type for modeling (and were inspired by R's factors), but certain manipulations of this data type can be tricky during data wrangling. One such challenge is concatenation (joining) of Pandas categoricals. Let's observe the result of trying to concatenate two Pandas categoricals objects:
 
 ```{python cat-pandas-cat-error, error = TRUE, prompt=TRUE}
 import pandas as pd
@@ -209,7 +220,7 @@ concatenated = pd.concat([pd.Series(a.astype("str")), pd.Series(b.astype("str"))
 pd.Categorical(concatenated)
 ```
 
-That seems to work 🎉, but its quite a bit of typing every time we want to do this... Let's turn this into a function called `catbind`!
+That seems to work 🎉, but it's quite a bit of typing every time we want to do this... So let's turn this code into a function called `catbind`!
 
 ```{python cat-pandas-cat-function}
 def catbind(a, b):
@@ -222,7 +233,7 @@ catbind(a, b)
 
 > Note - this book assumes you know how to write, document and test functions in Python. To learn more about this see [Think Python, Chapter 3: Functions](http://greenteapress.com/thinkpython/html/thinkpython004.html) by Allen Downey.
 
-Where do we save this function if we want it to be a part of our foocat Python package? Let's review the landscape of our Python project so far:
+Where do we save this function if we want it to be a part of our `foocat` Python package? Let's review the landscape of our Python project so far:
 
 ```
 foocat
@@ -253,22 +264,22 @@ foocat
     └── test_foocat.py
 ```
 
-All the code that we would like the user to run as part of our package should live inside the `foocat` directory. Typically, with a relatively small package with just a few functions, we would house them inside a single python script inside this directory. Our template project directory structure already created and named such a place for us, `foocat/foocat.py`. Let's save our function there. Additionally, given that our package depends on the Pandas Python package, we should import Pandas at the top of the `foocat.py` file. Here's what `foocat.py` should now look like:
+All the code that we would like the user to run as part of our package should live inside the `foocat` directory. Typically, with a relatively small package with just a few functions, we would house them inside a single python module (i.e., a `.py` file). Our template project directory structure already created and named such a module for us: `foocat/foocat.py`. Let's save our function there. Additionally, given that our package depends on the Pandas Python package, we should import Pandas at the top of the `foocat.py` file. Here's what `foocat.py` should now look like:
 
 ```
 import pandas as pd
 
 
 def catbind(a, b):
-  concatenated = pd.concat([pd.Series(a.astype("str")), 
-                 pd.Series(b.astype("str"))])
-  return pd.Categorical(concatenated)
+    concatenated = pd.concat([pd.Series(a.astype("str")),
+                              pd.Series(b.astype("str"))])
+    return pd.Categorical(concatenated)
 
 ```
 
 ## Test drive your package code
 
-To test drive the function we just wrote we first install the package locally using Python poetry. We choose to do this with Python `poetry` as opposed to using `pip` because `poetry` automatically creates a virtual environment for us and will perform tricky tasks like package solving that can sometimes trip us up when we use pip alone. 
+To test drive the function we just wrote we first install the package locally using Python poetry. We choose to do this with Python Poetry as opposed to using Python's native package manager `pip` because Poetry automatically creates a virtual environment for us and will perform tricky tasks like package solving that can sometimes trip us up when we use `pip` alone. 
 
 ```
 $ poetry install
@@ -284,13 +295,13 @@ No dependencies to install or update
   - Installing foocat (0.1.0)
 ```
 
-Now, inside this project directory, we can open an interactive Python session and import our function as shown:
+Now, inside this project directory, we can open an interactive Python session (using `python` at the CL) and import our `foocat` module which contains our `catbind` function as shown:
 
 ```{python import-catbind, eval = FALSE}
 >>> from foocat import foocat
 ```
 
-By doing this we can access the the function in our Python session via `foocat.catbind`. Let's now try to use this function to concatenate two Pandas categoricals:
+The `foocat` module has now been mapped to the current session's namespace and we can access the `catbind` function in our Python session using dot notation: `foocat.catbind` (note that if you wanted to import a specific function, rather than the whole module, you could do `from foocat.foocat import catbind`, in which case "dot notation" would not be required to use the function). Let's try to use the function to concatenate two Pandas categoricals:
 
 ```{python test-drive-catbind, eval = FALSE}
 >>> import pandas as pd
@@ -318,7 +329,7 @@ $ git commit -m "First working version of catbind function"
  
 ## Add package function dependencies {#pkg-func-deps}
 
-Our function depends on the pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our pacakged code this important information (and the mechanism for making it work) will be shipped along with it. We again use `poetry` to do this, using the `add` command. This command will update the `[tool.poetry.dependencies]` section of the `pyproject.toml` file which currently looks like this and lists only Python as a project dependency:
+Our function depends on the Pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our pacakged code this important information (and the mechanism for making it work) will be shipped along with it. We again use `poetry` to do this, using the `add` command. This command will update the `[tool.poetry.dependencies]` section of the `pyproject.toml` file which currently looks like this and lists only Python as a project dependency:
 
 ```
 [tool.poetry]
@@ -338,7 +349,7 @@ requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 ```
 
-Let's add our pandas dependency now:
+Let's add our Pandas dependency now:
 
 ```
 $ poetry add pandas
@@ -398,11 +409,11 @@ $ git commit -m "added pandas as a dependency"
 
 > For those of you who have used `requirements.txt` before with `pip`, you can think of `poetry.lock` as the `poetry` equivalent of that file. You can even generate a `requirements.txt` from poetry via `poetry export -f requirements.txt > requirements.txt` if needed.
 
-## Package documentation {pkg-docs}
+## Package documentation {#pkg-docs}
 
 ### Reading and rendering the docs locally {#local-docs}
 
-For your collaborators (other people, and most importantly yourself in the future) we would like to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html). In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran `cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git`. These files live in the `doc` directory and are `.rst` (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the RST formatting, however if you are interested in doing so, you can see this [CheatsSheet](https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html) to get started.
+For the users of your code (include your future self!) we need to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - [Sphinx](https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html). In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran `cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git`. These files live in the `doc` directory and are `.rst` (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the `.rst` formatting, however if you are interested in doing so, you can see this [CheatsSheet](https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html) to get started.
 
 First, we need to install `sphinx` as a development dependency using `poetry`. 
 
@@ -421,7 +432,7 @@ $ poetry run make html
 
 > Note 1: we append `poetry run` infront of most of our commands in this Python package workflow so that we ensure we are using the software tools installed in the `poetry` virtual environment.
 
-> Note 2: Expect many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.
+> Note 2: yuo may see many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.
 
 If we now look inside our `docs` directory we see that it has expanded, and the rendered `.html` files live in `_build/html`. We can open `_build/html/index.html` to view our docs locally on our laptop, they should look something like this:
 
@@ -455,9 +466,10 @@ def catbind(a, b):
 
     Examples
     --------
+    >>> from foocat.foocat import catbind
     >>> a = pd.Categorical(["character", "hits", "your", "eyeballs"])
     >>> b = pd.Categorical(["but", "integer", "where it", "counts"])
-    >>> foocat2.catbind(a, b)
+    >>> catbind(a, b)
     [character, hits, your, eyeballs, but, integer, where it, counts]
     Categories (8, object): [but, character, counts,
     eyeballs, hits, integer, where it, your]
@@ -475,9 +487,10 @@ $ poetry add --dev sphinxcontrib-napoleon
 
 > Note - to use this, we also have to add `extensions = ['sphinx.ext.napoleon']` in the `conf.py` file in the `docs` directory, but we have taken care of this for you with our Cookiecutter template.
 
-Then we can `sphinx-apidoc`, followed by re-rending of the docs directory to complete the rendering of the package function (i.e., module) docs:
+Then we can change back to our root `foocat` directory, use `sphinx-apidoc` and `poetry` to re-render our docs:
 
 ```
+$ cd ..
 $ poetry run sphinx-apidoc -f -o docs/source foocat
 $ cd docs
 $ poetry run make html
@@ -491,12 +504,13 @@ And we can click on that to see the docs for `foocat.foocat.catbind`. Which shou
 
 <img src="img/sphinx-docs4.png" width=600>
 
-Another hurray! 🎉🎉🎉 Let's commit this to version control to:
+Another hurray! 🎉🎉🎉 Let's commit this to version control and push to our remote:
 
 ```
-cd ..
+$ cd ..
 $ git add .
 $ git commit -m "generated and render docs for local viewing"
+$ git push
 ```
 
 ```
@@ -511,12 +525,11 @@ $ git commit -m "generated and render docs for local viewing"
 
 To share these docs online, we need to link our GitHub repository to [Read the Docs](https://readthedocs.org/) (where we will build and host our docs remotely). To do this:
 
-0. Push your local changes to GitHub.com via `git push`.
-1. visit <https://readthedocs.org/> and click on "Sign up".
-2. On the following page, select "Sign up with GitHub".
-3. Click "Import a Project".
-4. Click "Import Manually".
-5. Fill in the project details (package name and Repository URL, leave the rest as is) and click "Next".
+1. Visit <https://readthedocs.org/> and click on "Sign up";
+2. Select "Sign up with GitHub";
+3. Click "Import a Project";
+4. Click "Import Manually";
+5. Fill in the project details by providing a package name (this must be a unique name, we've already taken "foocat" so perhaps try "foocat[your initials]"), the repository URL, and leave the rest as is. Click "Next";
 6. Click "Build version".
 
 After following the steps above, your docs should get successfully built on [Read the Docs](https://readthedocs.org/) and you should be able to access them via the "View Docs" button on the build page, or from the link that Cookiecutter created for your on your repositories `README.md` file.
@@ -525,7 +538,7 @@ After following the steps above, your docs should get successfully built on [Rea
 
 ## Testing {#testing}
 
-We have interactively taken `catbind` for a test drive, but to prove to our future selves and others that our code does in fact do what it is supposed to do, let's write some formal unit tests. In Python packages, our tests live inside the `test` directory, typically in a file called `test_<module_name>.py`, thus for this package this is `tests/test_foocat.py`. Let's add a unit test (as a function named `test_catbind`) for our `catbind` function there now:
+We have interactively taken `catbind` for a test drive, but to prove to our future self and others that our code does in fact do what it is supposed to do, let's write some formal unit tests. In Python packages, our tests live inside the `test` directory, typically in a file called `test_<module_name>.py`, thus for this package this is `tests/test_foocat.py`. Let's add a unit test (as a function named `test_catbind`) for our `catbind` function there now:
 
 ```
 from foocat import foocat
@@ -562,38 +575,18 @@ We get no error returned to us, indicating that our tests passed, Hurray! This s
 ```
 $ git add .
 $ git commit -m "added unit tests for catbind"
-```
-
-```
-[master 6fe4b6c] added unit tests for catbind
- 3 files changed, 165 insertions(+), 1 deletion(-) 
-```
-
-```
 $ git push
 ```
 
-```
-Enumerating objects: 11, done.
-Counting objects: 100% (11/11), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (6/6), done.
-Writing objects: 100% (6/6), 2.74 KiB | 2.74 MiB/s, done.
-Total 6 (delta 3), reused 0 (delta 0)
-remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
-To github.com:ttimbers/foocat.git
-   154aacc..6fe4b6c  master -> master
-```
+## Building your package and publishing to testPyPI {#build-and-publish}
 
-## Building your package & publishing to testPyPI {#build-n-publish}
-
-Python packages are generally shared via the [PyPI package Index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/). `poetry` has a command called `publish` which we can use to do this, however it's default is to publish to PyPI. We can add this to the list of repositories `poestry` knows about via `poetry config repositories.<your_project> https://test.pypi.org/legacy/` as shown below:
+Python packages are generally shared via the [PyPI package index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/). `poetry` has a command called `publish` which we can use to do this, however it's default is to publish to PyPI. We can add this to the list of repositories `poetry` knows about via `poetry config repositories.<your_project> https://test.pypi.org/legacy/` as shown below:
 
 ```
 $ poetry config repositories.foocat https://test.pypi.org/legacy/
 ```
 
-Before we send our package, we first need to build it to source and wheels archives (the format that PyPI distributes it via) using `poetry build`:
+Before we send our package, we first need to build it to source and wheel distributions (the format that PyPI distributes and something you'll learn more about in the next chapter [Package structure and state](#package-structure)) using `poetry build`:
 
 ```
 $ poetry build

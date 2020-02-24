@@ -152,21 +152,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>2.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
-<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#versio-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a>
+<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>2.2.1</b> Set-up local version control</a></li>
 <li class="chapter" data-level="2.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>2.2.2</b> Set-up remote version control</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Write the first function</a></li>
+<li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Writing our first function</a></li>
 <li class="chapter" data-level="2.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>2.4</b> Test drive your package code</a></li>
 <li class="chapter" data-level="2.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>2.5</b> Add package function dependencies</a></li>
-<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#package-documentation-pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation {pkg-docs}</a>
+<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a>
 <ul>
 <li class="chapter" data-level="2.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>2.6.1</b> Reading and rendering the docs locally</a></li>
 <li class="chapter" data-level="2.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>2.6.2</b> Reading and rendering the docs remotely</a></li>
 </ul></li>
 <li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
-<li class="chapter" data-level="2.8" data-path="whole-game.html"><a href="whole-game.html#build-n-publish"><i class="fa fa-check"></i><b>2.8</b> Building your package &amp; publishing to testPyPI</a></li>
+<li class="chapter" data-level="2.8" data-path="whole-game.html"><a href="whole-game.html#build-and-publish"><i class="fa fa-check"></i><b>2.8</b> Building your package and publishing to testPyPI</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a>
 <ul>
@@ -221,19 +221,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="python-modules" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Modules</h2>
 <p>A module is simply a Python <code>.py.</code> file consisting of Python code that may include functions, classes, variables, and/or runnable code. Modules can be useful for sharing simple Python code amongst compatible Python versions. A module that relies <em>only</em> on the standard Python library can easily be redistributed and reused (on the appropriate version of Python). In this way, a single module can be thought of as a package. For example, consider a module <code>simple_math.py</code> that contains the functions <code>list_range</code> and <code>odd_even</code>:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="package-structure.html#cb55-1"></a><span class="kw">def</span> list_range(x):</span>
-<span id="cb55-2"><a href="package-structure.html#cb55-2"></a>  <span class="cf">return</span> <span class="bu">max</span>(x) <span class="op">-</span> <span class="bu">min</span>(x)</span>
-<span id="cb55-3"><a href="package-structure.html#cb55-3"></a>  </span>
-<span id="cb55-4"><a href="package-structure.html#cb55-4"></a><span class="kw">def</span> odd_even(x):</span>
-<span id="cb55-5"><a href="package-structure.html#cb55-5"></a>    <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span>:</span>
-<span id="cb55-6"><a href="package-structure.html#cb55-6"></a>        <span class="bu">print</span>(<span class="st">&#39;x is odd.&#39;</span>)</span>
-<span id="cb55-7"><a href="package-structure.html#cb55-7"></a>    <span class="cf">else</span>:</span>
-<span id="cb55-8"><a href="package-structure.html#cb55-8"></a>        <span class="bu">print</span>(<span class="st">&#39;x is even.&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="package-structure.html#cb52-1"></a><span class="kw">def</span> list_range(x):</span>
+<span id="cb52-2"><a href="package-structure.html#cb52-2"></a>  <span class="cf">return</span> <span class="bu">max</span>(x) <span class="op">-</span> <span class="bu">min</span>(x)</span>
+<span id="cb52-3"><a href="package-structure.html#cb52-3"></a>  </span>
+<span id="cb52-4"><a href="package-structure.html#cb52-4"></a><span class="kw">def</span> odd_even(x):</span>
+<span id="cb52-5"><a href="package-structure.html#cb52-5"></a>    <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span>:</span>
+<span id="cb52-6"><a href="package-structure.html#cb52-6"></a>        <span class="bu">print</span>(<span class="st">&#39;x is odd.&#39;</span>)</span>
+<span id="cb52-7"><a href="package-structure.html#cb52-7"></a>    <span class="cf">else</span>:</span>
+<span id="cb52-8"><a href="package-structure.html#cb52-8"></a>        <span class="bu">print</span>(<span class="st">&#39;x is even.&#39;</span>)</span></code></pre></div>
 <p>If the module <code>simple_math.py</code> is in your working directory then you can import the module using:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="package-structure.html#cb56-1"></a><span class="im">import</span> simple_math                 <span class="co"># imports the entire module. Functions can then be accessed via dot notation, e.g., simple_math.list_range()</span></span>
-<span id="cb56-2"><a href="package-structure.html#cb56-2"></a><span class="im">from</span> simple_math <span class="im">import</span> list_range <span class="co"># import only list_range function</span></span>
-<span id="cb56-3"><a href="package-structure.html#cb56-3"></a><span class="im">from</span> simple_math <span class="im">import</span> odd_even   <span class="co"># import only odd_even function</span></span>
-<span id="cb56-4"><a href="package-structure.html#cb56-4"></a><span class="im">from</span> simple_math <span class="im">import</span> <span class="op">*</span>          <span class="co"># import all functions</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="package-structure.html#cb53-1"></a><span class="im">import</span> simple_math                 <span class="co"># imports the entire module. Functions can then be accessed via dot notation, e.g., simple_math.list_range()</span></span>
+<span id="cb53-2"><a href="package-structure.html#cb53-2"></a><span class="im">from</span> simple_math <span class="im">import</span> list_range <span class="co"># import only list_range function</span></span>
+<span id="cb53-3"><a href="package-structure.html#cb53-3"></a><span class="im">from</span> simple_math <span class="im">import</span> odd_even   <span class="co"># import only odd_even function</span></span>
+<span id="cb53-4"><a href="package-structure.html#cb53-4"></a><span class="im">from</span> simple_math <span class="im">import</span> <span class="op">*</span>          <span class="co"># import all functions</span></span></code></pre></div>
 <p>Because modules are single files they can easily be shared by e.g., email, GitHub, Slack, etc. However, this method of distribution does not scale well in cases of multiple files, if your code depends on additional libraries, or needs a specific version of Python.</p>
 </div>
 <div id="python-packages" class="section level2" number="3.3">
@@ -255,8 +255,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     ├── __init__.py
     └── advanced_math.py</code></pre>
 <p>Modules/functions can be accessed using dot notation. For example:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="package-structure.html#cb59-1"></a><span class="im">from</span> pkg1.simple_math <span class="im">import</span> list_range</span>
-<span id="cb59-2"><a href="package-structure.html#cb59-2"></a><span class="im">from</span> pkg2.simple.simple_math <span class="im">import</span> list_range</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="package-structure.html#cb56-1"></a><span class="im">from</span> pkg1.simple_math <span class="im">import</span> list_range</span>
+<span id="cb56-2"><a href="package-structure.html#cb56-2"></a><span class="im">from</span> pkg2.simple.simple_math <span class="im">import</span> list_range</span></code></pre></div>
 <p>It would be possible to share a package by transferring all the files that comprise the package (keeping the directory structure intact) to another user, who could then use the package if it were placed in their working directory. However, just like single modules, this method of distribution does not scale well, makes it hard to support or update your code, and won’t work if your code depends on additional libraries, or needs a specific version of Python. We need a more efficient and reliable way to package and distribute our code which leads us to “source distribution packages” and “built distribution packages” described below.</p>
 </div>
 <div id="source-packages" class="section level2" number="3.4">
@@ -321,14 +321,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>You’ll now find two fresh directories: <code>toy_pkg</code> and <code>toy_pkg-0.0.1.dist-info</code>;</li>
 <li>From the CL start a Python session by typing <code>python</code> and try the following:</li>
 </ol>
-<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="package-structure.html#cb64-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> toy_pkg.toy_module <span class="im">import</span> test_function</span>
-<span id="cb64-2"><a href="package-structure.html#cb64-2"></a><span class="op">&gt;&gt;&gt;</span> test_function()</span>
-<span id="cb64-3"><a href="package-structure.html#cb64-3"></a>You manually installed the toy_pkg example<span class="op">!</span> Well done<span class="op">!</span></span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="package-structure.html#cb61-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> toy_pkg.toy_module <span class="im">import</span> test_function</span>
+<span id="cb61-2"><a href="package-structure.html#cb61-2"></a><span class="op">&gt;&gt;&gt;</span> test_function()</span>
+<span id="cb61-3"><a href="package-structure.html#cb61-3"></a>You manually installed the toy_pkg example<span class="op">!</span> Well done<span class="op">!</span></span></code></pre></div>
 </div>
 <div id="imported-packages" class="section level2" number="3.8">
 <h2><span class="header-section-number">3.8</span> Imported Packages</h2>
 <p>We now arrive at our last package state, the “imported package”. This state is associated with a command that is familiar to everyone that uses Python:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="package-structure.html#cb65-1"></a><span class="im">import</span> somemodule</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="package-structure.html#cb62-1"></a><span class="im">import</span> somemodule</span></code></pre></div>
 <p>You can read about the import system in detail in the <a href="https://docs.python.org/3/reference/import.html">Python documentation</a>. Briefly, the <code>import</code> statement comprises two operations:</p>
 <ol style="list-style-type: decimal">
 <li>it <a href="https://docs.python.org/3/reference/import.html#searching">searches</a> for the named module; and,</li>
