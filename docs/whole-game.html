@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 The Whole Game | Python packages</title>
+  <title>2 The Whole Game | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 The Whole Game | Python packages" />
+  <meta property="og:title" content="2 The Whole Game | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 The Whole Game | Python packages" />
+  <meta name="twitter:title" content="2 The Whole Game | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-02-23" />
+<meta name="date" content="2020-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -41,9 +41,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -201,10 +198,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="whole-game" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> The Whole Game</h1>
+<h1 number="2"><span class="header-section-number">2</span> The Whole Game</h1>
 <p>This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It’s purpose is to give a high level overview of how a Python package can and should be developed. Later chapters will explore packaging in Python in more detail. This chapter is a Pythonified version of <a href="https://r-pkgs.org/whole-game.html">the Whole Game chapter</a> written by Jenny Bryan that can be found in the the <a href="https://r-pkgs.org/">R packages book</a>.</p>
 <div id="poetry-to-create-project" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
+<h2 number="2.1"><span class="header-section-number">2.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
 <p>So that we do not have to create a file and directory structure for our project from scratch, we will use Cookiecutter &amp; Poetry to do this for us (which you installed back in <a href="setup.html#python-setup">1.1 Installing and updating Python</a>. First, we use Cookiecutter to create the file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the <a href="https://www.pyopensci.org/">PyOpenSci</a> organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages.</p>
 <p>To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="whole-game.html#cb6-1"></a>$ cookiecutter https:<span class="op">//</span>github.com<span class="op">/</span>UBC<span class="op">-</span>MDS<span class="op">/</span>cookiecutter<span class="op">-</span>ubc<span class="op">-</span>mds.git</span></code></pre></div>
@@ -304,10 +301,10 @@ Do you confirm generation? (yes/no) [yes]</code></pre>
 </blockquote>
 </div>
 <div id="version-control" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Put your project under version control</h2>
+<h2 number="2.2"><span class="header-section-number">2.2</span> Put your project under version control</h2>
 <p>It is good practice to put your data science projects under local and remote version control. The tools we recommend using for this are Git &amp; GitHub. For this book, we assume readers have <a href="https://git-scm.com/">Git</a> installed on their machine, have novice Git skills, and that have a <a href="https://github.com/">GitHub.com</a> account.</p>
 <div id="set-up-local-version-control" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Set-up local version control</h3>
+<h3 number="2.2.1"><span class="header-section-number">2.2.1</span> Set-up local version control</h3>
 <p>From the terminal and in the root <code>foocat</code> directory, we will initialize the repository to be tracked by Git using:</p>
 <pre><code>$ git init</code></pre>
 <pre><code>Initialized empty Git repository in /Users/tiffany/Documents/ubc-mds/foocat/.git/</code></pre>
@@ -340,7 +337,7 @@ $ git commit -m &quot;initial project set-up&quot;</code></pre>
  create mode 100644 tests/test_foocat.py</code></pre>
 </div>
 <div id="set-up-remote-version-control" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Set-up remote version control</h3>
+<h3 number="2.2.2"><span class="header-section-number">2.2.2</span> Set-up remote version control</h3>
 <p>Now that we have set up our local version control, let’s create a repository on <a href="https://github.com/">GitHub.com</a> and set that as the remote version control home for this project:</p>
 <p><img src="img/set-up-github1.png"></p>
 <p>The options we recommend for setting up a repository for a Python package using the workflow we present in this book include:</p>
@@ -359,7 +356,7 @@ $ git push -u origin master</code></pre>
 </div>
 </div>
 <div id="first-function" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Writing our first function</h2>
+<h2 number="2.3"><span class="header-section-number">2.3</span> Writing our first function</h2>
 <p>Pandas categoricals are a very useful data type for modeling (and were inspired by R’s factors), but certain manipulations of this data type can be tricky during data wrangling. One such challenge is concatenation (joining) of Pandas categoricals. Let’s observe the result of trying to concatenate two Pandas categoricals objects:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="whole-game.html#cb16-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb16-2"><a href="whole-game.html#cb16-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
@@ -421,7 +418,7 @@ def catbind(a, b):
 </code></pre>
 </div>
 <div id="test-drive-your-package-code" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Test drive your package code</h2>
+<h2 number="2.4"><span class="header-section-number">2.4</span> Test drive your package code</h2>
 <p>To test drive the function we just wrote we first install the package locally using Python poetry. We choose to do this with Python Poetry as opposed to using Python’s native package manager <code>pip</code> because Poetry automatically creates a virtual environment for us and will perform tricky tasks like package solving that can sometimes trip us up when we use <code>pip</code> alone.</p>
 <pre><code>$ poetry install</code></pre>
 <pre><code>Creating virtualenv foocat-z0_J6H1I-py3.7 in /Users/tiffany/Library/Caches/pypoetry/virtualenvs
@@ -447,7 +444,7 @@ $ git commit -m &quot;First working version of catbind function&quot;</code></pr
  1 file changed, 7 insertions(+)</code></pre>
 </div>
 <div id="pkg-func-deps" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Add package function dependencies</h2>
+<h2 number="2.5"><span class="header-section-number">2.5</span> Add package function dependencies</h2>
 <p>Our function depends on the Pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our pacakged code this important information (and the mechanism for making it work) will be shipped along with it. We again use <code>poetry</code> to do this, using the <code>add</code> command. This command will update the <code>[tool.poetry.dependencies]</code> section of the <code>pyproject.toml</code> file which currently looks like this and lists only Python as a project dependency:</p>
 <pre><code>[tool.poetry]
 name = &quot;foocat&quot;
@@ -509,9 +506,9 @@ $ git commit -m &quot;added pandas as a dependency&quot;</code></pre>
 </blockquote>
 </div>
 <div id="pkg-docs" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Package documentation</h2>
+<h2 number="2.6"><span class="header-section-number">2.6</span> Package documentation</h2>
 <div id="local-docs" class="section level3" number="2.6.1">
-<h3><span class="header-section-number">2.6.1</span> Reading and rendering the docs locally</h3>
+<h3 number="2.6.1"><span class="header-section-number">2.6.1</span> Reading and rendering the docs locally</h3>
 <p>For the users of your code (include your future self!) we need to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - <a href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">Sphinx</a>. In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran <code>cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git</code>. These files live in the <code>doc</code> directory and are <code>.rst</code> (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the <code>.rst</code> formatting, however if you are interested in doing so, you can see this <a href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">CheatsSheet</a> to get started.</p>
 <p>First, we need to install <code>sphinx</code> as a development dependency using <code>poetry</code>.</p>
 <pre><code>$ poetry add --dev sphinx</code></pre>
@@ -525,7 +522,7 @@ $ poetry run make html</code></pre>
 <p>Note 1: we append <code>poetry run</code> infront of most of our commands in this Python package workflow so that we ensure we are using the software tools installed in the <code>poetry</code> virtual environment.</p>
 </blockquote>
 <blockquote>
-<p>Note 2: yuo may see many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.</p>
+<p>Note 2: you may see many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.</p>
 </blockquote>
 <p>If we now look inside our <code>docs</code> directory we see that it has expanded, and the rendered <code>.html</code> files live in <code>_build/html</code>. We can open <code>_build/html/index.html</code> to view our docs locally on our laptop, they should look something like this:</p>
 <p><img src="img/sphinx-docs1.png" width=600></p>
@@ -553,10 +550,10 @@ def catbind(a, b):
 
     Examples
     --------
-    &gt;&gt;&gt; from foocat.foocat import catbind
+    &gt;&gt;&gt; from foocat import foocat
     &gt;&gt;&gt; a = pd.Categorical([&quot;character&quot;, &quot;hits&quot;, &quot;your&quot;, &quot;eyeballs&quot;])
     &gt;&gt;&gt; b = pd.Categorical([&quot;but&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;counts&quot;])
-    &gt;&gt;&gt; catbind(a, b)
+    &gt;&gt;&gt; foocat.catbind(a, b)
     [character, hits, your, eyeballs, but, integer, where it, counts]
     Categories (8, object): [but, character, counts,
     eyeballs, hits, integer, where it, your]
@@ -590,7 +587,7 @@ $ git push</code></pre>
  create mode 100644 docs/source/modules.rst</code></pre>
 </div>
 <div id="remote-docs" class="section level3" number="2.6.2">
-<h3><span class="header-section-number">2.6.2</span> Reading and rendering the docs remotely</h3>
+<h3 number="2.6.2"><span class="header-section-number">2.6.2</span> Reading and rendering the docs remotely</h3>
 <p>To share these docs online, we need to link our GitHub repository to <a href="https://readthedocs.org/">Read the Docs</a> (where we will build and host our docs remotely). To do this:</p>
 <ol style="list-style-type: decimal">
 <li>Visit <a href="https://readthedocs.org/" class="uri">https://readthedocs.org/</a> and click on “Sign up”;</li>
@@ -607,7 +604,7 @@ $ git push</code></pre>
 </div>
 </div>
 <div id="testing" class="section level2" number="2.7">
-<h2><span class="header-section-number">2.7</span> Testing</h2>
+<h2 number="2.7"><span class="header-section-number">2.7</span> Testing</h2>
 <p>We have interactively taken <code>catbind</code> for a test drive, but to prove to our future self and others that our code does in fact do what it is supposed to do, let’s write some formal unit tests. In Python packages, our tests live inside the <code>test</code> directory, typically in a file called <code>test_&lt;module_name&gt;.py</code>, thus for this package this is <code>tests/test_foocat.py</code>. Let’s add a unit test (as a function named <code>test_catbind</code>) for our <code>catbind</code> function there now:</p>
 <pre><code>from foocat import foocat
 import pandas as pd
@@ -632,9 +629,12 @@ def test_catbind():
 <pre><code>$ git add .
 $ git commit -m &quot;added unit tests for catbind&quot;
 $ git push</code></pre>
+<blockquote>
+<p>Note: It is very possible that your tests are correct and your function passes the tests yet the build button on the GitHub repository README still says “build: failing”. This is because the build continuous integration has more checks than just whether the tests pass, for example, it also checks code style using a tool called <code>flake8</code>. This and the other build checks are the subject of later chapters in this book.</p>
+</blockquote>
 </div>
 <div id="build-and-publish" class="section level2" number="2.8">
-<h2><span class="header-section-number">2.8</span> Building your package and publishing to testPyPI</h2>
+<h2 number="2.8"><span class="header-section-number">2.8</span> Building your package and publishing to testPyPI</h2>
 <p>Python packages are generally shared via the <a href="https://pypi.org/">PyPI package index</a>. However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to <a href="https://test.pypi.org/">testPyPi</a>. <code>poetry</code> has a command called <code>publish</code> which we can use to do this, however it’s default is to publish to PyPI. We can add this to the list of repositories <code>poetry</code> knows about via <code>poetry config repositories.&lt;your_project&gt; https://test.pypi.org/legacy/</code> as shown below:</p>
 <pre><code>$ poetry config repositories.foocat https://test.pypi.org/legacy/</code></pre>
 <p>Before we send our package, we first need to build it to source and wheel distributions (the format that PyPI distributes and something you’ll learn more about in the next chapter <a href="package-structure.html#package-structure">Package structure and state</a>) using <code>poetry build</code>:</p>
@@ -657,13 +657,11 @@ $ git push</code></pre>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -671,11 +669,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
+"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -687,10 +686,6 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },

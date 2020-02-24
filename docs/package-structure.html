@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Package structure and state | Python packages</title>
+  <title>3 Package structure and state | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Package structure and state | Python packages" />
+  <meta property="og:title" content="3 Package structure and state | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Package structure and state | Python packages" />
+  <meta name="twitter:title" content="3 Package structure and state | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-02-23" />
+<meta name="date" content="2020-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -41,9 +41,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -201,10 +198,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="package-structure" class="section level1" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Package structure and state</h1>
+<h1 number="3"><span class="header-section-number">3</span> Package structure and state</h1>
 <p>The previous chapter demonstrated how to develop a Python package from scratch with the help of Python Poetry. This chapter now takes a more in-depth look at packaging in Python. Often, developers don’t think about packaging until their code is actually written - but we’ll learn that thinking about packaging before even writing any code is very useful! This chapter is a somewhat Pythonified version of <a href="https://r-pkgs.org/whole-game.html">the Package structure and state chapter</a> written by Jenny Bryan that can be found in the <a href="https://r-pkgs.org/">R packages book</a> and also draws on information from the <a href="https://www.pypa.io/en/latest/">Python Packaging Authority</a>.</p>
 <div id="package-states" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Package states</h2>
+<h2 number="3.1"><span class="header-section-number">3.1</span> Package states</h2>
 <p>By “package” here we mean the code that you wish to bundle up and distribute. In Python, your package can be in several different states depending on its complexity, target audience, and stage of development. The ones we’ll talk about here are:</p>
 <ul>
 <li>modules</li>
@@ -219,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>The Python packaging workflow.</em></p>
 </div>
 <div id="python-modules" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Modules</h2>
+<h2 number="3.2"><span class="header-section-number">3.2</span> Modules</h2>
 <p>A module is simply a Python <code>.py.</code> file consisting of Python code that may include functions, classes, variables, and/or runnable code. Modules can be useful for sharing simple Python code amongst compatible Python versions. A module that relies <em>only</em> on the standard Python library can easily be redistributed and reused (on the appropriate version of Python). In this way, a single module can be thought of as a package. For example, consider a module <code>simple_math.py</code> that contains the functions <code>list_range</code> and <code>odd_even</code>:</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="package-structure.html#cb52-1"></a><span class="kw">def</span> list_range(x):</span>
 <span id="cb52-2"><a href="package-structure.html#cb52-2"></a>  <span class="cf">return</span> <span class="bu">max</span>(x) <span class="op">-</span> <span class="bu">min</span>(x)</span>
@@ -237,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Because modules are single files they can easily be shared by e.g., email, GitHub, Slack, etc. However, this method of distribution does not scale well in cases of multiple files, if your code depends on additional libraries, or needs a specific version of Python.</p>
 </div>
 <div id="python-packages" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Python packages</h2>
+<h2 number="3.3"><span class="header-section-number">3.3</span> Python packages</h2>
 <p>Projects consisting of multiple Python <code>.py</code> files (i.e., modules) are harder to distribute. If your project consists of multiple files, it is typical to organise it into a directory structure. Any directory containing Python files (or nested directories with Python files) can comprise a Python “package”.</p>
 <p>While we’ve been using the term “package” generically so far, it does have a specific meaning in Python and it’s important to make clear the distinction between “modules” and “packages”. As described in the previous section, any Python file is a module. In contrast, a package is a directory containing module(s) and/or additional package(s) (sometimes called “nested packages” or “subpackages”) along with a <code>__init__.py</code>. An <code>__init__.py</code> is required to make Python treat a directory as a package; in the simplest case <code>__init__.py</code> is an empty file, but it can also execute initialization code for the package (read more <a href="https://docs.python.org/3/tutorial/modules.html#importing-from-a-package">here</a>). Packages allow us to organise our code and access it using “dotted module names”. Consider having the following two packages in your working directory:</p>
 <p>A package containing modules:</p>
@@ -260,7 +257,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It would be possible to share a package by transferring all the files that comprise the package (keeping the directory structure intact) to another user, who could then use the package if it were placed in their working directory. However, just like single modules, this method of distribution does not scale well, makes it hard to support or update your code, and won’t work if your code depends on additional libraries, or needs a specific version of Python. We need a more efficient and reliable way to package and distribute our code which leads us to “source distribution packages” and “built distribution packages” described below.</p>
 </div>
 <div id="source-packages" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Source distribution packages</h2>
+<h2 number="3.4"><span class="header-section-number">3.4</span> Source distribution packages</h2>
 <p>A “distribution package” (often referred to simply as a “distribution”) is a single archive of the Python packages, modules and other files that make up your project. Having a single archive makes it easier to distribute your code to the wild. If your package relies <em>only</em> on the standard Python library you can use Python’s native packaging tools to create a source distribution package (<code>sdist</code>). An <code>sdist</code> is a compressed archives (e.g., <code>.tar.gz</code> or <code>.zip</code>) of your package. You can read more about source distributions <a href="https://docs.python.org/3/distutils/sourcedist.html">here</a>. The current standard tool in Python for creating <code>sdists</code> (and built distributions, which we’ll explore in the next section) is <code>setuptools</code>. As a very simple example, consider the following directory which now contains a <code>setup.py</code> file. The <code>setup.py</code> file is a standard file that helps <code>setuptools</code> build your <code>sdist</code> and it is described in detail <a href="https://docs.python.org/3/distutils/setupscript.html#">here</a>.</p>
 <pre><code>root
 ├── pkg1
@@ -275,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In fact, when you download a package from PyPi using the internet and <code>pip install XXX</code>, the above command is one of the operations that is run under-the-hood for you. It’s important to note that installing in Python using <code>pip</code> or the command above actually adds the package to your default installation directory (more on that in section <a href="package-structure.html#installed-packages">Installed packages</a>) such that it is accessible outside of your working directory - this is a key difference to simply sharing code as a module or package as we explored in the last two sections. We recommend consulting the <a href="https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/creation.html#">The Hitchhiker’s Guide to Packaging</a> and the <a href="https://docs.python.org/3/distutils/sourcedist.html">Python docs</a> for more information on building and distributing source distributions. Some notable exampls of Python <code>sdists</code> include: <a href="https://github.com/django/django">Django</a>, <a href="https://github.com/python-hyper/hyperlink">hyperlink</a>, <a href="https://github.com/psf/requests">requests</a>. Importantly, if you rely on any non-Python code/libraries/packages, a built distribution, described in the next section, is a much better way to package and distribute your code.</p>
 </div>
 <div id="built-packages" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Binary and built distributions</h2>
+<h2 number="3.5"><span class="header-section-number">3.5</span> Binary and built distributions</h2>
 <p>A built distribution is how you make life as easy as possible for installers of your code. Like a source distribution, a built distribution is a single artefact. However, as the name suggests, built distributions are “pre-built” meaning that, unlike source distributions, they do not require a build step before installation. The main built distribution used by Python is called a “wheel” (more on that later). Python’s package installer, <code>pip</code>, always prefers <code>wheels</code> (if available) because installation is always faster than building and installing from a source distribution.</p>
 <p>Binary distributions are a type of built distribution that contain compiled extensions. One of the most powerful features of Python is its ability to interoperate with libraries written in other languages, for example, C, Fortran, etc. Not all end-users will have the tools, experience, or time to build packages containing extensions written in these other languages, so <code>wheels</code> provide a method of distributing code with already compiled extensions. As an example, much of the commonly used Python library <code>NumPy</code> is implemented as C extensions. The existence of <code>wheels</code> means that a user can for example simply run <code>pip install numpy</code> to install <code>NumPy</code> from <code>PyPi</code>, as opposed to having to build it from source with the help of a C compiler, amongst other requirements. If you’re feeling particularly masochistic you can try to build <code>NumPy</code> from source following <a href="https://numpy.org/devdocs/user/building.html">these instructions from the <code>NumPy</code> docs</a>.</p>
 <p>Binary distributions are platform specific (i.e., Windows, Mac, Linux). As a result, binary distributions are usually provided with their corresponding source distributions; if you don’t upload <code>wheels</code> of your code for every operating system, end-users will still be able to build it from source. Take a look at the downloadable file list of <a href="https://pypi.org/project/numpy/#files"><code>NumPy</code> on <code>PyPi</code></a> - you’ll see <code>wheels</code> for most common platforms, as well as the source distribution at the bottom of the list. Wheels actually come in three flavours (which you can read more about <a href="https://packaging.python.org/guides/distributing-packages-using-setuptools/#wheels">here</a>:</p>
@@ -299,7 +296,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 </div>
 <div id="python-poetry" class="section level2" number="3.6">
-<h2><span class="header-section-number">3.6</span> Poetry and pyproject.toml</h2>
+<h2 number="3.6"><span class="header-section-number">3.6</span> Poetry and pyproject.toml</h2>
 <p>The previous sections gave a high level overview of Python’s native packaging options. However, in <a href="whole-game.html#whole-game">The Whole Game Chapter</a> we used Python Poetry to create a toy Python package - so where does this fit into the Python packaging landscape? Well, in the previous sections on <a href="package-structure.html#source-packages">Source distribution packages</a> and <a href="#binary-packages">Built distribution packages</a>, we really only touched the tip of the iceberg of Python packaging. When creating a package there’s a lot of customisation to think about with your <code>setup.py</code> file, other files we didn’t even talk about (e.g., <code>requirements.txt</code>, <code>setup.cfg</code>), not to mention that we didn’t even touch on dependency management! Needless to say, packaging in Python can be hard to understand, especially for beginners. These words echo the sentiments of Python Poetry’s creator Sébastien Eustace and the motivation for creating the tool:</p>
 <blockquote>
 <p><em>“Packaging systems and dependency management in Python are rather convoluted and hard to understand for newcomers. Even for seasoned developers it might be cumbersome at times to create all files needed in a Python project: setup.py, requirements.txt, setup.cfg, MANIFEST.in, and the newly added Pipfile. So I wanted a tool that would limit everything to a single configuration file to do: dependency management, packaging and publishing.”</em></p>
@@ -309,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>Python packaging gamut. Modified after <a href="https://www.youtube.com/watch?v=iLVNWfPWAC8">The Packaging Gradient by Mahmoud Hashemi</a>.</em></p>
 </div>
 <div id="installed-packages" class="section level2" number="3.7">
-<h2><span class="header-section-number">3.7</span> Installed packages</h2>
+<h2 number="3.7"><span class="header-section-number">3.7</span> Installed packages</h2>
 <p>An installed package is a distribution that’s been decompressed, built (in the case of an <code>sdist</code>) and then copied to your chosen installation directory. The default “chosen installation directory” varies by platform and by how you built/installed Python. For example, I installed Python using the <a href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a> distribution and my default directory for package installation is <code>/Users/tbeuzen/miniconda3/lib/python3.7/site-packages</code>.</p>
 <p>“Installing” a distribution (e.g., by <code>pip install XXX</code>) is really a two-step process: 1) building the package, and 2) installing the package. Using <code>wheels</code> takes out the first step, meaning we only need to install. The install step is simple, all it has to do is copy all the decompressed files to the appropriate directory. In fact, we can manually install a package if we want to by manually decompressing a <code>wheel</code> and copying the files to their appropriate locations - there’s no real reason to do this because it’s far more effort than using a single one-liner at the CL, it does not resolve dependencies so could break your installation, and probably has other unwanted side-effects. However, it’s a nice way to learn about the package installation process, so if you’d like to give it a go, you can try the following steps (which assume you’re using MacOS and the <a href="https://docs.conda.io/en/latest/"><code>conda</code> package manager</a>):</p>
 <ol style="list-style-type: decimal">
@@ -326,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb61-3"><a href="package-structure.html#cb61-3"></a>You manually installed the toy_pkg example<span class="op">!</span> Well done<span class="op">!</span></span></code></pre></div>
 </div>
 <div id="imported-packages" class="section level2" number="3.8">
-<h2><span class="header-section-number">3.8</span> Imported Packages</h2>
+<h2 number="3.8"><span class="header-section-number">3.8</span> Imported Packages</h2>
 <p>We now arrive at our last package state, the “imported package”. This state is associated with a command that is familiar to everyone that uses Python:</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="package-structure.html#cb62-1"></a><span class="im">import</span> somemodule</span></code></pre></div>
 <p>You can read about the import system in detail in the <a href="https://docs.python.org/3/reference/import.html">Python documentation</a>. Briefly, the <code>import</code> statement comprises two operations:</p>
@@ -337,7 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that for efficiency, each module is only imported once per interpreter session. If you modify your module, you can’t just re-run your import statement (as that name in the namespace is already populated and won’t be re-loaded). Instead, you have to restart your interpreter or force the import using <code>importlib.reload()</code>, but this is inefficient when working with multiple modules.</p>
 </div>
 <div id="python-applications" class="section level2" number="3.9">
-<h2><span class="header-section-number">3.9</span> Packaging Python Applications</h2>
+<h2 number="3.9"><span class="header-section-number">3.9</span> Packaging Python Applications</h2>
 <p>In this chapter we’ve only talked about packaging and distributing reusable Python code, a process which is really aimed at developers and audiences familiar with Python. While it’s outside the scope of this book, it’s also possible to package and distribute entire Python applications, that is, software that is not meant to be developed on but rather to use. Some good exmaples of Python-based applications are Sublime Text, EVE online, and Reddit. There are a lot of options available for packaging and distributing Python applications and we recommend watching the excellent talk by Mahmoud Hashemi <a href="https://www.youtube.com/watch?v=iLVNWfPWAC8">“The Packaging Gradient”</a> to learn more. To give you an idea of the available options, the figure below shows a summary of the different options discussed by Mahmoud for packaging Python applications.</p>
 <p><img src="img/py_apps.png" width=500></p>
 <p><em>Python application packaging gamut. Modified after <a href="https://www.youtube.com/watch?v=iLVNWfPWAC8">The Packaging Gradient by Mahmoud Hashemi</a>.</em></p>
@@ -355,13 +352,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -369,11 +364,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
+"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -385,10 +381,6 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },
