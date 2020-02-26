@@ -432,7 +432,7 @@ $ poetry run make html
 
 > Note 1: we append `poetry run` infront of most of our commands in this Python package workflow so that we ensure we are using the software tools installed in the `poetry` virtual environment.
 
-> Note 2: yuo may see many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.
+> Note 2: you may see many red warnings, these can be ignored and are meerely suggestions on how to improve your docs if you wish.
 
 If we now look inside our `docs` directory we see that it has expanded, and the rendered `.html` files live in `_build/html`. We can open `_build/html/index.html` to view our docs locally on our laptop, they should look something like this:
 
@@ -466,10 +466,10 @@ def catbind(a, b):
 
     Examples
     --------
-    >>> from foocat.foocat import catbind
+    >>> from foocat import foocat
     >>> a = pd.Categorical(["character", "hits", "your", "eyeballs"])
     >>> b = pd.Categorical(["but", "integer", "where it", "counts"])
-    >>> catbind(a, b)
+    >>> foocat.catbind(a, b)
     [character, hits, your, eyeballs, but, integer, where it, counts]
     Categories (8, object): [but, character, counts,
     eyeballs, hits, integer, where it, your]
@@ -577,6 +577,7 @@ $ git add .
 $ git commit -m "added unit tests for catbind"
 $ git push
 ```
+> Note: It is very possible that your tests are correct and your function passes the tests yet the build button on the GitHub repository README still says "build: failing". This is because the build continuous integration has more checks than just whether the tests pass, for example, it also checks code style using a tool called `flake8`. This and the other build checks are the subject of later chapters in this book.
 
 ## Building your package and publishing to testPyPI {#build-and-publish}
 
