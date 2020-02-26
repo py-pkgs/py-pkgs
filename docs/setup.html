@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 System setup | Python packages</title>
+  <title>1 System setup | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
-  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 System setup | Python packages" />
+  <meta property="og:title" content="1 System setup | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 System setup | Python packages" />
+  <meta name="twitter:title" content="1 System setup | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="whole-game.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -40,9 +41,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
 
 
 
@@ -53,25 +51,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +79,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -132,35 +131,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a><ul>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>1.1</b> Installing and updating Python</a></li>
 <li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>1.2</b> Register for a PyPI account</a></li>
-<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a><ul>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#pycharm"><i class="fa fa-check"></i><b>1.3.1</b> PyCharm</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a><ul>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>1.4.1</b> Find where Anaconda is installed on your machine</a></li>
 <li class="chapter" data-level="1.4.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>1.4.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
 <li class="chapter" data-level="1.4.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>1.4.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a><ul>
+<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>2.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
-<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a><ul>
+<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>2.2.1</b> Set-up local version control</a></li>
 <li class="chapter" data-level="2.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>2.2.2</b> Set-up remote version control</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Writing our first function</a></li>
 <li class="chapter" data-level="2.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>2.4</b> Test drive your package code</a></li>
 <li class="chapter" data-level="2.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>2.5</b> Add package function dependencies</a></li>
-<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a><ul>
+<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a>
+<ul>
 <li class="chapter" data-level="2.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>2.6.1</b> Reading and rendering the docs locally</a></li>
 <li class="chapter" data-level="2.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>2.6.2</b> Reading and rendering the docs remotely</a></li>
 </ul></li>
 <li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
 <li class="chapter" data-level="2.8" data-path="whole-game.html"><a href="whole-game.html#build-and-publish"><i class="fa fa-check"></i><b>2.8</b> Building your package and publishing to testPyPI</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a><ul>
+<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>3.1</b> Package states</a></li>
 <li class="chapter" data-level="3.2" data-path="package-structure.html"><a href="package-structure.html#python-modules"><i class="fa fa-check"></i><b>3.2</b> Modules</a></li>
 <li class="chapter" data-level="3.3" data-path="package-structure.html"><a href="package-structure.html#python-packages"><i class="fa fa-check"></i><b>3.3</b> Python packages</a></li>
@@ -191,10 +197,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setup" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> System setup</h1>
-<div id="python-setup" class="section level2">
-<h2><span class="header-section-number">1.1</span> Installing and updating Python</h2>
+<div id="setup" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> System setup</h1>
+<div id="python-setup" class="section level2" number="1.1">
+<h2 number="1.1"><span class="header-section-number">1.1</span> Installing and updating Python</h2>
 <p>In order to start off on a good footing, we recommend you follow these system set-up instructions so you will run into fewer technical issues (compared to not using the same system this book was designed for).</p>
 <p>We recommend installing Python <strong>3.7</strong> via the Anaconda distribution, following the instructions here: <a href="https://docs.anaconda.com/anaconda/install/" class="uri">https://docs.anaconda.com/anaconda/install/</a>. If you already have installed this distribution, ensure Python, and the <code>conda</code> package manager is up to date by running the following commands:</p>
 <pre><code>$ conda update --all</code></pre>
@@ -203,16 +209,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Finally, we install <code>cookiecutter</code> - a python package that will create Python projects from project templates</p>
 <pre><code>$ conda install -c conda-forge cookiecutter</code></pre>
 </div>
-<div id="register-for-a-pypi-account" class="section level2">
-<h2><span class="header-section-number">1.2</span> Register for a PyPI account</h2>
+<div id="register-for-a-pypi-account" class="section level2" number="1.2">
+<h2 number="1.2"><span class="header-section-number">1.2</span> Register for a PyPI account</h2>
 <p>To publish a Python package on PyPI to share with others, you will need to register for a PyPI account. You can do so freely by clicking here: <a href="https://pypi.org/account/register/" class="uri">https://pypi.org/account/register/</a></p>
 <p>Before we are ready to publish our packages on PyPI, it is advisable that we test drive them on TestPyPI first. To do so, you need to also register for a TestPyPI account. You can do so freely by clicking here: <a href="https://test.pypi.org/account/register/" class="uri">https://test.pypi.org/account/register/</a></p>
 </div>
-<div id="python-ides" class="section level2">
-<h2><span class="header-section-number">1.3</span> Python IDEs</h2>
+<div id="python-ides" class="section level2" number="1.3">
+<h2 number="1.3"><span class="header-section-number">1.3</span> Python IDEs</h2>
 <p>Commonly used free Python IDEs include <a href="https://code.visualstudio.com/">Visual Studio Code</a>, <a href="https://atom.io/">Atom</a>, and <a href="https://www.jetbrains.com/pycharm/">PyCharm Community Edition</a>. Visual Studio Code and Atom are text editors that can be customised with extensions to act as Python (or any other language) IDEs. In contrast, PyCharm is specifically a Python IDE and will work right out of the box - we describe setting up PyCharm briefly below.</p>
-<div id="pycharm" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> PyCharm</h3>
+<div id="pycharm" class="section level3" number="1.3.1">
+<h3 number="1.3.1"><span class="header-section-number">1.3.1</span> PyCharm</h3>
 <p>PyCharm offers a paid <em>Professional</em> version and free <em>Community</em> version. You can download either from <a href="https://www.jetbrains.com/pycharm/download/" class="uri">https://www.jetbrains.com/pycharm/download/</a>. Once downloaded, PyCharm will guide you through initial setup. We recommended using all default settings throughout the setup, with the exception of installing the <em>Markdown Plugin</em> when prompted to install “Featured Plugins”.</p>
 <p>Once setup is complete you should see something like the following screenshot:</p>
 <p><img src="img/set-up-pycharm1.png" width=500></p>
@@ -241,38 +247,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This was a brief, practical guide to getting started with PyCharm Community Edition. We recommend checking out the <a href="https://www.jetbrains.com/pycharm/documentation/">documentation</a> for more guidance on setting up and using PyCharm.</p>
 </div>
 </div>
-<div id="rstudio-python-setup" class="section level2">
-<h2><span class="header-section-number">1.4</span> Setting up the RStudio IDE with Python</h2>
-<p>This book will use the RStudio integrated development environment (IDE) to develop Python packages <em>- we use RStudio because in the <a href="https://ubc-mds.github.io/about/">UBC Master of Data Science program</a> we teach both the R and Python programming languages and prefer to use an IDE that works well with both.</em> However, any other Python IDE should work and we briefly describe some in [Alternative Python IDEs]. If you would like to use the RStudio IDE we recommend installing the most recent version of the IDE from the preview site: <a href="https://rstudio.com/products/rstudio/download/preview/" class="uri">https://rstudio.com/products/rstudio/download/preview/</a> and then <a href="https://cran.r-project.org/">installing R from CRAN</a>, and the <code>reticulate</code> R package via <code>install.packages(&quot;reticulate&quot;)</code> from the R console inside RStudio. When installing reticulate, you will be prompted to install miniconda, if you have already installed the Anaconda distribution of Python, answer “no” to installing miniconda at this prompt.</p>
-<div id="find-where-anaconda-is-installed-on-your-machine" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> Find where Anaconda is installed on your machine</h3>
-<div id="mac-os-linux" class="section level4">
-<h4><span class="header-section-number">1.4.1.1</span> Mac OS &amp; Linux</h4>
+<div id="rstudio-python-setup" class="section level2" number="1.4">
+<h2 number="1.4"><span class="header-section-number">1.4</span> Setting up the RStudio IDE with Python</h2>
+<p>This book will use the RStudio integrated development environment (IDE) to develop Python packages <em>- we use RStudio because in the <a href="https://ubc-mds.github.io/about/">UBC Master of Data Science program</a> we teach both the R and Python programming languages and prefer to use an IDE that works well with both.</em> However, any other Python IDE should work and we briefly describe some in [Alternative Python IDEs]. If you would like to use the RStudio IDE we recommend installing the most recent version of the IDE from the preview site: <a href="https://rstudio.com/products/rstudio/download/preview/" class="uri">https://rstudio.com/products/rstudio/download/preview/</a> and then <a href="https://cran.r-project.org/">installing R from CRAN</a>, and the <code>reticulate</code> R package via <code>install.packages("reticulate")</code> from the R console inside RStudio. When installing reticulate, you will be prompted to install miniconda, if you have already installed the Anaconda distribution of Python, answer “no” to installing miniconda at this prompt.</p>
+<div id="find-where-anaconda-is-installed-on-your-machine" class="section level3" number="1.4.1">
+<h3 number="1.4.1"><span class="header-section-number">1.4.1</span> Find where Anaconda is installed on your machine</h3>
+<div id="mac-os-linux" class="section level4" number="1.4.1.1">
+<h4 number="1.4.1.1"><span class="header-section-number">1.4.1.1</span> Mac OS &amp; Linux</h4>
 <p>In terminal, type: <code>which Python</code></p>
 </div>
-<div id="windows" class="section level4">
-<h4><span class="header-section-number">1.4.1.2</span> Windows</h4>
+<div id="windows" class="section level4" number="1.4.1.2">
+<h4 number="1.4.1.2"><span class="header-section-number">1.4.1.2</span> Windows</h4>
 <p>In the Anaconda Prompt type: <code>where python</code>.</p>
 </div>
 </div>
-<div id="configuring-reticulate-for-to-use-the-python-repl-inside-rstudio" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</h3>
+<div id="configuring-reticulate-for-to-use-the-python-repl-inside-rstudio" class="section level3" number="1.4.2">
+<h3 number="1.4.2"><span class="header-section-number">1.4.2</span> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</h3>
 <p>Create a file named <code>.Rprofile</code> in your <code>$HOME</code> directory that contains the following:</p>
 <pre><code>Sys.setenv(RETICULATE_PYTHON = &quot;path_to_the_folder_containing_anaconda&#39;s_python&quot;)</code></pre>
-<p>For me the <code>&quot;path_to_the_folder_containing_anaconda's_python&quot;</code> was <code>'Users/user1/anaconda3/bin/Python'</code> on a Mac OS.</p>
+<p>For me the <code>"path_to_the_folder_containing_anaconda's_python"</code> was <code>'Users/user1/anaconda3/bin/Python'</code> on a Mac OS.</p>
 <p>Restart RStudio for this to take effect.</p>
 </div>
-<div id="configuring-the-rstudio-terminal" class="section level3">
-<h3><span class="header-section-number">1.4.3</span> Configuring the RStudio terminal</h3>
-<div id="mac-os-linux-1" class="section level4">
-<h4><span class="header-section-number">1.4.3.1</span> Mac OS &amp; Linux</h4>
+<div id="configuring-the-rstudio-terminal" class="section level3" number="1.4.3">
+<h3 number="1.4.3"><span class="header-section-number">1.4.3</span> Configuring the RStudio terminal</h3>
+<div id="mac-os-linux-1" class="section level4" number="1.4.3.1">
+<h4 number="1.4.3.1"><span class="header-section-number">1.4.3.1</span> Mac OS &amp; Linux</h4>
 <p>Open (or create) the file called <code>.bash_profile</code> in your <code>$HOME</code> directory and add the following to the last line of that file:</p>
 <pre><code>export PATH=&quot;path_to_the_folder_containing_anaconda&#39;s_python:$PATH&quot;</code></pre>
-<p>For me that line is <code>export PATH=&quot;//anaconda3/bin:$PATH&quot;</code>.</p>
+<p>For me that line is <code>export PATH="//anaconda3/bin:$PATH"</code>.</p>
 <p>Restart RStudio for this to take effect.</p>
 </div>
-<div id="windows-1" class="section level4">
-<h4><span class="header-section-number">1.4.3.2</span> Windows</h4>
+<div id="windows-1" class="section level4" number="1.4.3.2">
+<h4 number="1.4.3.2"><span class="header-section-number">1.4.3.2</span> Windows</h4>
 <p>The default terminal in RStudio on Windows is PowerShell. This causes some unexpected problems as its not a true bash shell. You <strong>should</strong> change this using the following menu selections inside RStudio: Global Options -&gt; Terminal -&gt; Shell -&gt; Git Bash</p>
 <p><img src="img/git_bash_windows.jpeg" width=500></p>
 
@@ -291,13 +297,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -305,11 +309,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
+"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -321,10 +326,6 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },

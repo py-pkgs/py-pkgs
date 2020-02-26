@@ -581,10 +581,10 @@ $ git push
 
 ## Building your package and publishing to testPyPI {#build-and-publish}
 
-Python packages are generally shared via the [PyPI package index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/). `poetry` has a command called `publish` which we can use to do this, however it's default is to publish to PyPI. We can add this to the list of repositories `poetry` knows about via `poetry config repositories.<your_project> https://test.pypi.org/legacy/` as shown below:
+Python packages are generally shared via the [PyPI package index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/). `poetry` has a command called `publish` which we can use to do this, however it's default is to publish to PyPI. We can add this to the list of repositories `poetry` knows about via:
 
 ```
-$ poetry config repositories.foocat https://test.pypi.org/legacy/
+$ poetry config repositories.test-pypi https://test.pypi.org/legacy/
 ```
 
 Before we send our package, we first need to build it to source and wheel distributions (the format that PyPI distributes and something you'll learn more about in the next chapter [Package structure and state](#package-structure)) using `poetry build`:
