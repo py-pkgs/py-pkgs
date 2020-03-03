@@ -225,7 +225,7 @@ That seems to work 🎉, but it's quite a bit of typing every time we want to do
 ```{python cat-pandas-cat-function}
 def catbind(a, b):
   concatenated = pd.concat([pd.Series(a.astype("str")),
-                 pd.Series(b.astype("str"))])
+                            pd.Series(b.astype("str"))])
   return pd.Categorical(concatenated)
 
 catbind(a, b)
@@ -475,7 +475,7 @@ def catbind(a, b):
     eyeballs, hits, integer, where it, your]
     """
     concatenated = pd.concat([pd.Series(a.astype("str")),
-                   pd.Series(b.astype("str"))])
+                              pd.Series(b.astype("str"))])
     return pd.Categorical(concatenated)
 ```
 
@@ -536,12 +536,11 @@ After following the steps above, your docs should get successfully built on [Rea
 
 > Note: for [Read the Docs](https://readthedocs.org/) to work with the `poetry` package workflow you need to have a `.readthedocs.yml` in the root of your Python package. We have created this for you using Cookiecutter and you can view it [here](https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml).
 
-## Testing {#testing}
+## Testing {#poetry-testing}
 
 We have interactively taken `catbind` for a test drive, but to prove to our future self and others that our code does in fact do what it is supposed to do, let's write some formal unit tests. In Python packages, our tests live inside the `test` directory, typically in a file called `test_<module_name>.py`, thus for this package this is `tests/test_foocat.py`. Let's add a unit test (as a function named `test_catbind`) for our `catbind` function there now:
 
-```
-from foocat import foocat
+```{pyt{python foocat-test, eval = FALSE}m foocat import foocat
 import pandas as pd
 
 

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 The Whole Game | Python packages</title>
+  <title>Chapter 2 The Whole Game | Python packages</title>
   <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
-  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 The Whole Game | Python packages" />
+  <meta property="og:title" content="Chapter 2 The Whole Game | Python packages" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="ttimbers/py-pkgs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 The Whole Game | Python packages" />
+  <meta name="twitter:title" content="Chapter 2 The Whole Game | Python packages" />
   
   <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-02-25" />
+<meta name="date" content="2020-03-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,6 @@
   
 <link rel="prev" href="setup.html"/>
 <link rel="next" href="package-structure.html"/>
-<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -51,26 +53,25 @@
 
 
 <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -79,9 +80,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -131,42 +132,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a>
-<ul>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a><ul>
 <li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>1.1</b> Installing and updating Python</a></li>
 <li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>1.2</b> Register for a PyPI account</a></li>
-<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a>
-<ul>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a><ul>
 <li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#pycharm"><i class="fa fa-check"></i><b>1.3.1</b> PyCharm</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a>
-<ul>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a><ul>
 <li class="chapter" data-level="1.4.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>1.4.1</b> Find where Anaconda is installed on your machine</a></li>
 <li class="chapter" data-level="1.4.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>1.4.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
 <li class="chapter" data-level="1.4.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>1.4.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a>
-<ul>
+<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a><ul>
 <li class="chapter" data-level="2.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>2.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
-<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a>
-<ul>
+<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>2.2.1</b> Set-up local version control</a></li>
 <li class="chapter" data-level="2.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>2.2.2</b> Set-up remote version control</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Writing our first function</a></li>
 <li class="chapter" data-level="2.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>2.4</b> Test drive your package code</a></li>
 <li class="chapter" data-level="2.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>2.5</b> Add package function dependencies</a></li>
-<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a>
-<ul>
+<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a><ul>
 <li class="chapter" data-level="2.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>2.6.1</b> Reading and rendering the docs locally</a></li>
 <li class="chapter" data-level="2.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>2.6.2</b> Reading and rendering the docs remotely</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
-<li class="chapter" data-level="2.8" data-path="whole-game.html"><a href="whole-game.html#build-and-publish"><i class="fa fa-check"></i><b>2.8</b> Building your package and publishing to testPyPI</a></li>
+<li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#poetry-testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a>
-<ul>
+<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a><ul>
 <li class="chapter" data-level="3.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>3.1</b> Package states</a></li>
 <li class="chapter" data-level="3.2" data-path="package-structure.html"><a href="package-structure.html#python-modules"><i class="fa fa-check"></i><b>3.2</b> Modules</a></li>
 <li class="chapter" data-level="3.3" data-path="package-structure.html"><a href="package-structure.html#python-packages"><i class="fa fa-check"></i><b>3.3</b> Python packages</a></li>
@@ -176,6 +169,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="package-structure.html"><a href="package-structure.html#installed-packages"><i class="fa fa-check"></i><b>3.7</b> Installed packages</a></li>
 <li class="chapter" data-level="3.8" data-path="package-structure.html"><a href="package-structure.html#imported-packages"><i class="fa fa-check"></i><b>3.8</b> Imported Packages</a></li>
 <li class="chapter" data-level="3.9" data-path="package-structure.html"><a href="package-structure.html#python-applications"><i class="fa fa-check"></i><b>3.9</b> Packaging Python Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>4</b> Testing</a><ul>
+<li class="chapter" data-level="4.1" data-path="testing.html"><a href="testing.html#python-pytest"><i class="fa fa-check"></i><b>4.1</b> Testing in Python</a></li>
+<li class="chapter" data-level="4.2" data-path="testing.html"><a href="testing.html#testing-workflow"><i class="fa fa-check"></i><b>4.2</b> Testing workflow</a></li>
+<li class="chapter" data-level="4.3" data-path="testing.html"><a href="testing.html#test-structure"><i class="fa fa-check"></i><b>4.3</b> Test Structure</a></li>
+<li class="chapter" data-level="4.4" data-path="testing.html"><a href="testing.html#pytest-tests"><i class="fa fa-check"></i><b>4.4</b> Writing tests</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="testing.html"><a href="testing.html#the-basics"><i class="fa fa-check"></i><b>4.4.1</b> The basics</a></li>
+<li class="chapter" data-level="4.4.2" data-path="testing.html"><a href="testing.html#classes-fixtures-parameterizations"><i class="fa fa-check"></i><b>4.4.2</b> Classes, Fixtures &amp; Parameterizations</a></li>
+<li class="chapter" data-level="4.4.3" data-path="testing.html"><a href="testing.html#when-to-write-your-tests"><i class="fa fa-check"></i><b>4.4.3</b> When to write your tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="testing.html"><a href="testing.html#pytest-coverage"><i class="fa fa-check"></i><b>4.5</b> Code coverage</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -197,14 +201,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="whole-game" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> The Whole Game</h1>
+<div id="whole-game" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> The Whole Game</h1>
 <p>This chapter demonstrates how to develop an entire small toy Python package from beginning to end. It’s purpose is to give a high level overview of how a Python package can and should be developed. Later chapters will explore packaging in Python in more detail. This chapter is a Pythonified version of <a href="https://r-pkgs.org/whole-game.html">the Whole Game chapter</a> written by Jenny Bryan that can be found in the the <a href="https://r-pkgs.org/">R packages book</a>.</p>
-<div id="poetry-to-create-project" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
+<div id="poetry-to-create-project" class="section level2">
+<h2><span class="header-section-number">2.1</span> Use Cookiecutter &amp; Poetry to create a Python project</h2>
 <p>So that we do not have to create a file and directory structure for our project from scratch, we will use Cookiecutter &amp; Poetry to do this for us (which you installed back in <a href="setup.html#python-setup">1.1 Installing and updating Python</a>. First, we use Cookiecutter to create the file and directory structure for our Python project (which will be a Python package). We will use a simplified version of the template base by the <a href="https://www.pyopensci.org/">PyOpenSci</a> organization designed specifically for creating Python packages. PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages.</p>
 <p>To use Cookiecutter to set up the structure of your Python package, run the line of code below in the terminal from the directory where you would like your package to live.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="whole-game.html#cb6-1"></a>$ cookiecutter https:<span class="op">//</span>github.com<span class="op">/</span>UBC<span class="op">-</span>MDS<span class="op">/</span>cookiecutter<span class="op">-</span>ubc<span class="op">-</span>mds.git</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" data-line-number="1">$ cookiecutter https:<span class="op">//</span>github.com<span class="op">/</span>UBC<span class="op">-</span>MDS<span class="op">/</span>cookiecutter<span class="op">-</span>ubc<span class="op">-</span>mds.git</a></code></pre></div>
 <p>You will be prompted to provide information that will help customize the project.</p>
 <blockquote>
 <p>In this tutorial we will be calling our package <code>foocat</code>. However, we will eventually be publishing our package to <a href="https://test.pypi.org/">testPyPI</a> which is a testing version of Python’s main package index <a href="https://pypi.org/">PyPI</a>. Package names on testPyPI and PyPI must be unique. As a result, you will need to choose a <strong>unique name for your package</strong> while following this tutorial. Something like <code>foocat_[your intials]</code> might be appropriate, but you can always check if your chosen name is already taken by visitng testPyPI and searching that name.</p>
@@ -226,8 +230,8 @@ Select open_source_license:
 5 - GNU General Public License v3
 Choose from 1, 2, 3, 4, 5 [1]: 1</code></pre>
 <p>You will now have a new directory called <code>foocat</code>. Navigate into the <code>foocat</code> directory and initialize the project as a Poetry project so that we can take advantage of the package management and building tools of Poetry:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="whole-game.html#cb8-1"></a>$ cd foocat</span>
-<span id="cb8-2"><a href="whole-game.html#cb8-2"></a>$ poetry init</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" data-line-number="1">$ cd foocat</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">$ poetry init</a></code></pre></div>
 <p>Again we are prompted for more information. Once again, default values are shown in square brackets and have been populated where possible from our Cookiecutter template. Here is an example of how to respond the the prompts:</p>
 <pre><code>This command will guide you through creating your pyproject.toml config.
 
@@ -300,11 +304,11 @@ Do you confirm generation? (yes/no) [yes]</code></pre>
 <p>Users of the RStudio IDE may also want to make this Python project directory an RStudio project. Why might you ask? Well, once you have an <code>*.Rproj</code> file, you can use that file to quickly open the RStudio IDE (which has a terminal and an interactive Python REPL, assuming you have set this up with <code>reticulate</code>) to the project’s root directory.</p>
 </blockquote>
 </div>
-<div id="version-control" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Put your project under version control</h2>
+<div id="version-control" class="section level2">
+<h2><span class="header-section-number">2.2</span> Put your project under version control</h2>
 <p>It is good practice to put your data science projects under local and remote version control. The tools we recommend using for this are Git &amp; GitHub. For this book, we assume readers have <a href="https://git-scm.com/">Git</a> installed on their machine, have novice Git skills, and that have a <a href="https://github.com/">GitHub.com</a> account.</p>
-<div id="set-up-local-version-control" class="section level3" number="2.2.1">
-<h3 number="2.2.1"><span class="header-section-number">2.2.1</span> Set-up local version control</h3>
+<div id="set-up-local-version-control" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Set-up local version control</h3>
 <p>From the terminal and in the root <code>foocat</code> directory, we will initialize the repository to be tracked by Git using:</p>
 <pre><code>$ git init</code></pre>
 <pre><code>Initialized empty Git repository in /Users/tiffany/Documents/ubc-mds/foocat/.git/</code></pre>
@@ -336,8 +340,8 @@ $ git commit -m &quot;initial project set-up&quot;</code></pre>
  create mode 100644 tests/__init__.py
  create mode 100644 tests/test_foocat.py</code></pre>
 </div>
-<div id="set-up-remote-version-control" class="section level3" number="2.2.2">
-<h3 number="2.2.2"><span class="header-section-number">2.2.2</span> Set-up remote version control</h3>
+<div id="set-up-remote-version-control" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Set-up remote version control</h3>
 <p>Now that we have set up our local version control, let’s create a repository on <a href="https://github.com/">GitHub.com</a> and set that as the remote version control home for this project:</p>
 <p><img src="img/set-up-github1.png"></p>
 <p>The options we recommend for setting up a repository for a Python package using the workflow we present in this book include:</p>
@@ -355,26 +359,26 @@ $ git push -u origin master</code></pre>
 </blockquote>
 </div>
 </div>
-<div id="first-function" class="section level2" number="2.3">
-<h2 number="2.3"><span class="header-section-number">2.3</span> Writing our first function</h2>
+<div id="first-function" class="section level2">
+<h2><span class="header-section-number">2.3</span> Writing our first function</h2>
 <p>Pandas categoricals are a very useful data type for modeling (and were inspired by R’s factors), but certain manipulations of this data type can be tricky during data wrangling. One such challenge is concatenation (joining) of Pandas categoricals. Let’s observe the result of trying to concatenate two Pandas categoricals objects:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="whole-game.html#cb16-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb16-2"><a href="whole-game.html#cb16-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
-<span id="cb16-3"><a href="whole-game.html#cb16-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
-<span id="cb16-4"><a href="whole-game.html#cb16-4"></a><span class="op">&gt;&gt;&gt;</span> pd.concat([a, b])</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="op">&gt;&gt;&gt;</span> pd.concat([a, b])</a></code></pre></div>
 <pre><code>## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: cannot concatenate object of type &#39;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&#39;; only Series and DataFrame objs are valid</code></pre>
 <p>This occurs because the categoricals are represented as integers in memory, and in <code>a</code> the integer 0 corresponds to the word “character” while in <code>b</code>, the integer 0 corresponds to the word “but”. Thus, when we ask Python to concatenate these two Pandas categorical options it doesn’t know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a <code>str</code> type, then do the concatenation, and finally convert the concatenated Pandas obeject to a categorical again. We demonstrate that approach below:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="whole-game.html#cb18-1"></a><span class="op">&gt;&gt;&gt;</span> concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</span>
-<span id="cb18-2"><a href="whole-game.html#cb18-2"></a><span class="op">&gt;&gt;&gt;</span> pd.Categorical(concatenated)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)), pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> pd.Categorical(concatenated)</a></code></pre></div>
 <pre><code>## [character, hits, your, eyeballs, but, integer, where it, counts]
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <p>That seems to work 🎉, but it’s quite a bit of typing every time we want to do this… So let’s turn this code into a function called <code>catbind</code>!</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="whole-game.html#cb20-1"></a><span class="kw">def</span> catbind(a, b):</span>
-<span id="cb20-2"><a href="whole-game.html#cb20-2"></a>  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)),</span>
-<span id="cb20-3"><a href="whole-game.html#cb20-3"></a>                 pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</span>
-<span id="cb20-4"><a href="whole-game.html#cb20-4"></a>  <span class="cf">return</span> pd.Categorical(concatenated)</span>
-<span id="cb20-5"><a href="whole-game.html#cb20-5"></a></span>
-<span id="cb20-6"><a href="whole-game.html#cb20-6"></a>catbind(a, b)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">def</span> catbind(a, b):</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">  concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)),</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">                            pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">  <span class="cf">return</span> pd.Categorical(concatenated)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">catbind(a, b)</a></code></pre></div>
 <pre><code>## [character, hits, your, eyeballs, but, integer, where it, counts]
 ## Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <blockquote>
@@ -417,8 +421,8 @@ def catbind(a, b):
     return pd.Categorical(concatenated)
 </code></pre>
 </div>
-<div id="test-drive-your-package-code" class="section level2" number="2.4">
-<h2 number="2.4"><span class="header-section-number">2.4</span> Test drive your package code</h2>
+<div id="test-drive-your-package-code" class="section level2">
+<h2><span class="header-section-number">2.4</span> Test drive your package code</h2>
 <p>To test drive the function we just wrote we first install the package locally using Python poetry. We choose to do this with Python Poetry as opposed to using Python’s native package manager <code>pip</code> because Poetry automatically creates a virtual environment for us and will perform tricky tasks like package solving that can sometimes trip us up when we use <code>pip</code> alone.</p>
 <pre><code>$ poetry install</code></pre>
 <pre><code>Creating virtualenv foocat-z0_J6H1I-py3.7 in /Users/tiffany/Library/Caches/pypoetry/virtualenvs
@@ -429,12 +433,12 @@ No dependencies to install or update
 
   - Installing foocat (0.1.0)</code></pre>
 <p>Now, inside this project directory, we can open an interactive Python session (using <code>python</code> at the CL) and import our <code>foocat</code> module which contains our <code>catbind</code> function as shown:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="whole-game.html#cb26-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocat <span class="im">import</span> foocat</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocat <span class="im">import</span> foocat</a></code></pre></div>
 <p>The <code>foocat</code> module has now been mapped to the current session’s namespace and we can access the <code>catbind</code> function in our Python session using dot notation: <code>foocat.catbind</code> (note that if you wanted to import a specific function, rather than the whole module, you could do <code>from foocat.foocat import catbind</code>, in which case “dot notation” would not be required to use the function). Let’s try to use the function to concatenate two Pandas categoricals:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="whole-game.html#cb27-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb27-2"><a href="whole-game.html#cb27-2"></a><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</span>
-<span id="cb27-3"><a href="whole-game.html#cb27-3"></a><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</span>
-<span id="cb27-4"><a href="whole-game.html#cb27-4"></a><span class="op">&gt;&gt;&gt;</span> foocat.catbind(a, b)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="op">&gt;&gt;&gt;</span> foocat.catbind(a, b)</a></code></pre></div>
 <pre><code>[character, hits, your, eyeballs, but, integer, where it, counts]
 Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]</code></pre>
 <p>Hurray again! This seems to work as expected! Now that we have something working, let’s commit this to version control:</p>
@@ -443,8 +447,8 @@ $ git commit -m &quot;First working version of catbind function&quot;</code></pr
 <pre><code>[master b80dea8] First working version of catbind function
  1 file changed, 7 insertions(+)</code></pre>
 </div>
-<div id="pkg-func-deps" class="section level2" number="2.5">
-<h2 number="2.5"><span class="header-section-number">2.5</span> Add package function dependencies</h2>
+<div id="pkg-func-deps" class="section level2">
+<h2><span class="header-section-number">2.5</span> Add package function dependencies</h2>
 <p>Our function depends on the Pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our pacakged code this important information (and the mechanism for making it work) will be shipped along with it. We again use <code>poetry</code> to do this, using the <code>add</code> command. This command will update the <code>[tool.poetry.dependencies]</code> section of the <code>pyproject.toml</code> file which currently looks like this and lists only Python as a project dependency:</p>
 <pre><code>[tool.poetry]
 name = &quot;foocat&quot;
@@ -505,10 +509,10 @@ $ git commit -m &quot;added pandas as a dependency&quot;</code></pre>
 <p>For those of you who have used <code>requirements.txt</code> before with <code>pip</code>, you can think of <code>poetry.lock</code> as the <code>poetry</code> equivalent of that file. You can even generate a <code>requirements.txt</code> from poetry via <code>poetry export -f requirements.txt &gt; requirements.txt</code> if needed.</p>
 </blockquote>
 </div>
-<div id="pkg-docs" class="section level2" number="2.6">
-<h2 number="2.6"><span class="header-section-number">2.6</span> Package documentation</h2>
-<div id="local-docs" class="section level3" number="2.6.1">
-<h3 number="2.6.1"><span class="header-section-number">2.6.1</span> Reading and rendering the docs locally</h3>
+<div id="pkg-docs" class="section level2">
+<h2><span class="header-section-number">2.6</span> Package documentation</h2>
+<div id="local-docs" class="section level3">
+<h3><span class="header-section-number">2.6.1</span> Reading and rendering the docs locally</h3>
 <p>For the users of your code (include your future self!) we need to have readable and accessible documentation expressing how to install your package, and how to use the user-facing functions within it. The Python packaging ecosystem has a tool to help you make this process more efficient - <a href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">Sphinx</a>. In the Cookiecutter template we provided you to set-up this package, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran <code>cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git</code>. These files live in the <code>doc</code> directory and are <code>.rst</code> (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the <code>.rst</code> formatting, however if you are interested in doing so, you can see this <a href="https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html">CheatsSheet</a> to get started.</p>
 <p>First, we need to install <code>sphinx</code> as a development dependency using <code>poetry</code>.</p>
 <pre><code>$ poetry add --dev sphinx</code></pre>
@@ -559,7 +563,7 @@ def catbind(a, b):
     eyeballs, hits, integer, where it, your]
     &quot;&quot;&quot;
     concatenated = pd.concat([pd.Series(a.astype(&quot;str&quot;)),
-                   pd.Series(b.astype(&quot;str&quot;))])
+                              pd.Series(b.astype(&quot;str&quot;))])
     return pd.Categorical(concatenated)</code></pre>
 <p>Now we can use a <code>sphinx</code> extension (<code>napolean</code>) in combination with <code>autodoc</code> to render our <code>numpy</code>-styled docstring into a modules page on our docs. To do this we need to install another dev dependency:</p>
 <pre><code>$ poetry add --dev sphinxcontrib-napoleon</code></pre>
@@ -586,8 +590,8 @@ $ git push</code></pre>
  create mode 100644 docs/source/foocat.rst
  create mode 100644 docs/source/modules.rst</code></pre>
 </div>
-<div id="remote-docs" class="section level3" number="2.6.2">
-<h3 number="2.6.2"><span class="header-section-number">2.6.2</span> Reading and rendering the docs remotely</h3>
+<div id="remote-docs" class="section level3">
+<h3><span class="header-section-number">2.6.2</span> Reading and rendering the docs remotely</h3>
 <p>To share these docs online, we need to link our GitHub repository to <a href="https://readthedocs.org/">Read the Docs</a> (where we will build and host our docs remotely). To do this:</p>
 <ol style="list-style-type: decimal">
 <li>Visit <a href="https://readthedocs.org/" class="uri">https://readthedocs.org/</a> and click on “Sign up”;</li>
@@ -603,46 +607,55 @@ $ git push</code></pre>
 </blockquote>
 </div>
 </div>
-<div id="testing" class="section level2" number="2.7">
-<h2 number="2.7"><span class="header-section-number">2.7</span> Testing</h2>
+<div id="poetry-testing" class="section level2">
+<h2><span class="header-section-number">2.7</span> Testing</h2>
 <p>We have interactively taken <code>catbind</code> for a test drive, but to prove to our future self and others that our code does in fact do what it is supposed to do, let’s write some formal unit tests. In Python packages, our tests live inside the <code>test</code> directory, typically in a file called <code>test_&lt;module_name&gt;.py</code>, thus for this package this is <code>tests/test_foocat.py</code>. Let’s add a unit test (as a function named <code>test_catbind</code>) for our <code>catbind</code> function there now:</p>
-<pre><code>from foocat import foocat
-import pandas as pd
+<p>```{pyt{python foocat-test, eval = FALSE}m foocat import foocat
+import pandas as pd</p>
+<p>def test_catbind():
+a = pd.Categorical([“character”, “hits”, “your”, “eyeballs”])
+b = pd.Categorical([“but”, “integer”, “where it”, “counts”])
+assert ((foocat.catbind(a, b)).codes == [1, 4, 7, 3, 0, 5, 6, 2]).all()
+assert ((foocat.catbind(a, b)).categories == [“but”, “character”,
+“counts”, “eyeballs”, “hits”, “integer”, “where it”, “your”]).all()</p>
+<pre><code>
+&gt; Note - given that we use `pd.Categorical` to create objects to test on, we have to import the `pandas` package in our test file.
 
+We only have a single function to test for this package, and so we could run this file by opening up an interactive Python session, importing the file, and then calling the `test_catbind` function. But as our packages have more and more functions, and more and more modules (or submodules) then we want to automate this workflow. In the Python package ecosystem one way we can do this is to use `pytest`. A single call to `pytest` from the root of a project will look for all files in the `tests` directory, import all files prefixed with `test*` and then call all functions prefixed with `test*`. Pretty nice eh? 
 
-def test_catbind():
-    a = pd.Categorical([&quot;character&quot;, &quot;hits&quot;, &quot;your&quot;, &quot;eyeballs&quot;])
-    b = pd.Categorical([&quot;but&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;counts&quot;])
-    assert ((foocat.catbind(a, b)).codes == [1, 4, 7, 3, 0, 5, 6, 2]).all()
-    assert ((foocat.catbind(a, b)).categories == [&quot;but&quot;, &quot;character&quot;,
-            &quot;counts&quot;, &quot;eyeballs&quot;, &quot;hits&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;your&quot;]).all()
+To do this, we first add `pytest` as a dev dependency via `poetry`:
 </code></pre>
-<blockquote>
-<p>Note - given that we use <code>pd.Categorical</code> to create objects to test on, we have to import the <code>pandas</code> package in our test file.</p>
-</blockquote>
-<p>We only have a single function to test for this package, and so we could run this file by opening up an interactive Python session, importing the file, and then calling the <code>test_catbind</code> function. But as our packages have more and more functions, and more and more modules (or submodules) then we want to automate this workflow. In the Python package ecosystem one way we can do this is to use <code>pytest</code>. A single call to <code>pytest</code> from the root of a project will look for all files in the <code>tests</code> directory, import all files prefixed with <code>test*</code> and then call all functions prefixed with <code>test*</code>. Pretty nice eh?</p>
-<p>To do this, we first add <code>pytest</code> as a dev dependency via <code>poetry</code>:</p>
-<pre><code>$ poetry add --dev pytest</code></pre>
-<p>Then to run the tests, we use <code>poetry</code> to run <code>pytest</code> in our virtual environment:</p>
-<pre><code>$ poetry run pytest</code></pre>
-<p>We get no error returned to us, indicating that our tests passed, Hurray! This suggests that the code we wrote is correct (at least to our test specifications)! Now we can share this with the world by putting these under local and remote version control:</p>
-<pre><code>$ git add .
-$ git commit -m &quot;added unit tests for catbind&quot;
-$ git push</code></pre>
-<blockquote>
-<p>Note: It is very possible that your tests are correct and your function passes the tests yet the build button on the GitHub repository README still says “build: failing”. This is because the build continuous integration has more checks than just whether the tests pass, for example, it also checks code style using a tool called <code>flake8</code>. This and the other build checks are the subject of later chapters in this book.</p>
-</blockquote>
-</div>
-<div id="build-and-publish" class="section level2" number="2.8">
-<h2 number="2.8"><span class="header-section-number">2.8</span> Building your package and publishing to testPyPI</h2>
-<p>Python packages are generally shared via the <a href="https://pypi.org/">PyPI package index</a>. However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to <a href="https://test.pypi.org/">testPyPi</a>. <code>poetry</code> has a command called <code>publish</code> which we can use to do this, however it’s default is to publish to PyPI. We can add this to the list of repositories <code>poetry</code> knows about via:</p>
-<pre><code>$ poetry config repositories.test-pypi https://test.pypi.org/legacy/</code></pre>
-<p>Before we send our package, we first need to build it to source and wheel distributions (the format that PyPI distributes and something you’ll learn more about in the next chapter <a href="package-structure.html#package-structure">Package structure and state</a>) using <code>poetry build</code>:</p>
-<pre><code>$ poetry build</code></pre>
-<p>And, finally, now to publish to testPyPI we can use <code>poetry publish</code> (you will be prompted for your testPyPI username and password, sign up for one if you have not already done so):</p>
-<pre><code>$ poetry publish -r test-pypi</code></pre>
-<p>Now you should be able to visit your package on testPyPI (e.g., <a href="https://test.pypi.org/project/foocat/" class="uri">https://test.pypi.org/project/foocat/</a>) and download it from there using <code>pip</code> via:</p>
-<pre><code>pip install -i https://test.pypi.org/simple/ foocat</code></pre>
+<p>$ poetry add –dev pytest</p>
+<pre><code>
+Then to run the tests, we use `poetry` to run `pytest` in our virtual environment:
+</code></pre>
+<p>$ poetry run pytest</p>
+<pre><code>
+We get no error returned to us, indicating that our tests passed, Hurray! This suggests that the code we wrote is correct (at least to our test specifications)! Now we can share this with the world by putting these under local and remote version control:
+</code></pre>
+<p>$ git add .
+$ git commit -m “added unit tests for catbind”
+$ git push</p>
+<pre><code>&gt; Note: It is very possible that your tests are correct and your function passes the tests yet the build button on the GitHub repository README still says &quot;build: failing&quot;. This is because the build continuous integration has more checks than just whether the tests pass, for example, it also checks code style using a tool called `flake8`. This and the other build checks are the subject of later chapters in this book.
+
+## Building your package and publishing to testPyPI {#build-and-publish}
+
+Python packages are generally shared via the [PyPI package index](https://pypi.org/). However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to [testPyPi](https://test.pypi.org/). `poetry` has a command called `publish` which we can use to do this, however it&#39;s default is to publish to PyPI. We can add this to the list of repositories `poetry` knows about via:
+</code></pre>
+<p>$ poetry config repositories.test-pypi <a href="https://test.pypi.org/legacy/" class="uri">https://test.pypi.org/legacy/</a></p>
+<pre><code>
+Before we send our package, we first need to build it to source and wheel distributions (the format that PyPI distributes and something you&#39;ll learn more about in the next chapter [Package structure and state](#package-structure)) using `poetry build`:
+</code></pre>
+<p>$ poetry build</p>
+<pre><code>
+And, finally, now to publish to testPyPI we can use `poetry publish` (you will be prompted for your testPyPI username and password, sign up for one if you have not already done so):
+</code></pre>
+<p>$ poetry publish -r test-pypi</p>
+<pre><code>
+Now you should be able to visit your package on testPyPI (e.g., &lt;https://test.pypi.org/project/foocat/&gt;) and download it from there using `pip` via:
+</code></pre>
+<p>pip install -i <a href="https://test.pypi.org/simple/" class="uri">https://test.pypi.org/simple/</a> foocat
+```</p>
 
 </div>
 </div>
@@ -657,11 +670,13 @@ $ git push</code></pre>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -669,12 +684,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -686,6 +700,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

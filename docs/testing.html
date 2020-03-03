@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Testing | Python packages</title>
+  <meta name="description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Testing | Python packages" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
+  <meta name="github-repo" content="ttimbers/py-pkgs" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Testing | Python packages" />
+  
+  <meta name="twitter:description" content="A simple and practical introduction to creating and distributing Python code via Python packages" />
+  
+
+<meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
+
+
+<meta name="date" content="2020-03-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="package-structure.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Python packages</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a><ul>
+<li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>1.1</b> Installing and updating Python</a></li>
+<li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>1.2</b> Register for a PyPI account</a></li>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#pycharm"><i class="fa fa-check"></i><b>1.3.1</b> PyCharm</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>1.4.1</b> Find where Anaconda is installed on your machine</a></li>
+<li class="chapter" data-level="1.4.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>1.4.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
+<li class="chapter" data-level="1.4.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>1.4.3</b> Configuring the RStudio terminal</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a><ul>
+<li class="chapter" data-level="2.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>2.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
+<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>2.2.1</b> Set-up local version control</a></li>
+<li class="chapter" data-level="2.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>2.2.2</b> Set-up remote version control</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Writing our first function</a></li>
+<li class="chapter" data-level="2.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>2.4</b> Test drive your package code</a></li>
+<li class="chapter" data-level="2.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>2.5</b> Add package function dependencies</a></li>
+<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>2.6.1</b> Reading and rendering the docs locally</a></li>
+<li class="chapter" data-level="2.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>2.6.2</b> Reading and rendering the docs remotely</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#poetry-testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a><ul>
+<li class="chapter" data-level="3.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>3.1</b> Package states</a></li>
+<li class="chapter" data-level="3.2" data-path="package-structure.html"><a href="package-structure.html#python-modules"><i class="fa fa-check"></i><b>3.2</b> Modules</a></li>
+<li class="chapter" data-level="3.3" data-path="package-structure.html"><a href="package-structure.html#python-packages"><i class="fa fa-check"></i><b>3.3</b> Python packages</a></li>
+<li class="chapter" data-level="3.4" data-path="package-structure.html"><a href="package-structure.html#source-distributions"><i class="fa fa-check"></i><b>3.4</b> Source distribution packages</a></li>
+<li class="chapter" data-level="3.5" data-path="package-structure.html"><a href="package-structure.html#binary-distributions"><i class="fa fa-check"></i><b>3.5</b> Binary distribution packages</a></li>
+<li class="chapter" data-level="3.6" data-path="package-structure.html"><a href="package-structure.html#python-poetry"><i class="fa fa-check"></i><b>3.6</b> Poetry and pyproject.toml</a></li>
+<li class="chapter" data-level="3.7" data-path="package-structure.html"><a href="package-structure.html#installed-packages"><i class="fa fa-check"></i><b>3.7</b> Installed packages</a></li>
+<li class="chapter" data-level="3.8" data-path="package-structure.html"><a href="package-structure.html#imported-packages"><i class="fa fa-check"></i><b>3.8</b> Imported Packages</a></li>
+<li class="chapter" data-level="3.9" data-path="package-structure.html"><a href="package-structure.html#python-applications"><i class="fa fa-check"></i><b>3.9</b> Packaging Python Applications</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>4</b> Testing</a><ul>
+<li class="chapter" data-level="4.1" data-path="testing.html"><a href="testing.html#python-pytest"><i class="fa fa-check"></i><b>4.1</b> Testing in Python</a></li>
+<li class="chapter" data-level="4.2" data-path="testing.html"><a href="testing.html#testing-workflow"><i class="fa fa-check"></i><b>4.2</b> Testing workflow</a></li>
+<li class="chapter" data-level="4.3" data-path="testing.html"><a href="testing.html#test-structure"><i class="fa fa-check"></i><b>4.3</b> Test Structure</a></li>
+<li class="chapter" data-level="4.4" data-path="testing.html"><a href="testing.html#pytest-tests"><i class="fa fa-check"></i><b>4.4</b> Writing tests</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="testing.html"><a href="testing.html#the-basics"><i class="fa fa-check"></i><b>4.4.1</b> The basics</a></li>
+<li class="chapter" data-level="4.4.2" data-path="testing.html"><a href="testing.html#classes-fixtures-parameterizations"><i class="fa fa-check"></i><b>4.4.2</b> Classes, Fixtures &amp; Parameterizations</a></li>
+<li class="chapter" data-level="4.4.3" data-path="testing.html"><a href="testing.html#when-to-write-your-tests"><i class="fa fa-check"></i><b>4.4.3</b> When to write your tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="testing.html"><a href="testing.html#pytest-coverage"><i class="fa fa-check"></i><b>4.5</b> Code coverage</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Python packages</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="testing" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Testing</h1>
+<p>Testing is an important part of package development but one that is often neglected due to the perceived additional workload. However, the reality is quite the opposite! Introducing formal, automated testing into your workflow can have several benefits:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Fewer bugs</strong>: you’re explicitly constructing and testing your code from the viewpoint of a developer and a user;</li>
+<li><strong>Better code structure</strong>: writing tests forces you to structure and compartmentalise your code so that it’s easier to test and understand;</li>
+<li><strong>Easier development</strong>: formal tests will help others (and your future self) add features to your code without breaking the tried-and-tested base functionality.</li>
+</ol>
+<p>Section <a href="whole-game.html#poetry-testing">2.7 Testing</a> in <a href="whole-game.html#whole-game">The Whole Game chapter</a>, briefly introduced unit testing in Python package development. This chapter now describes in more detail how to implement formal and automated testing into a Python workflow. This chapter is inspired by <a href="https://r-pkgs.org/tests.html">the Testing chapter</a> of the <a href="https://r-pkgs.org/">R packages book</a> written by Jenny Bryan and the <a href="https://docs.pytest.org/en/latest/"><code>pytest</code> package documentation</a>.</p>
+<div id="python-pytest" class="section level2">
+<h2><span class="header-section-number">4.1</span> Testing in Python</h2>
+<p>A unit test is a test written to verify that a chunk of code is working as expected. You probably already conduct informal unit tests of your code in your current workflow. In a typical workflow, we write code and then run it a few times in a Python session to see if it’s working as we expect. This is informal testing, sometimes called “manual testing” or “exploratory testing”. The whole idea behind automated testing is to define a formal, efficient and reproducible unit testing procedure to test your code.</p>
+<p>There are a few testing frameworks available in Python. The two most common are:</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://docs.python.org/3/library/unittest.html"><code>unittest</code></a></li>
+<li><a href="https://docs.pytest.org/en/latest/"><code>pytest</code></a></li>
+</ol>
+<p>The <code>unittest</code> framework is part of the standard Python library and has been around for a while so is still used by many open-source Python projects. However, we will be using <code>pytest</code> as our testing framework in this chapter. <code>pytest</code> is not part of the standard Python library but is the preferred testing framework of choice at the moment. It is fully-featured, simple and intuitive to use (especially for beginners), and is supported and extendable by a large ecosystem of plugins.</p>
+</div>
+<div id="testing-workflow" class="section level2">
+<h2><span class="header-section-number">4.2</span> Testing workflow</h2>
+<p>The basic testing workflow comprises three key parts:</p>
+<ol style="list-style-type: decimal">
+<li>Create the test file and directory structure.</li>
+<li>Write and run tests.</li>
+<li>Determine test code coverage.</li>
+</ol>
+<p>We’ll describe each step in a little more detail below, but be aware that the whole testing workflow is an iterative procedure. As you develop your code, add features, and find bugs, you’ll be writing additional tests, checking the code coverage, writing more tests, etc. In the rest of this chapter we’ll be revisiting and building on the toy Python package you created in <a href="whole-game.html#whole-game">The Whole Game</a> chapter.</p>
+</div>
+<div id="test-structure" class="section level2">
+<h2><span class="header-section-number">4.3</span> Test Structure</h2>
+<p><code>pytest</code> will run all files of the form <code>test_*.py</code> or <code>*_test.py</code> in the current directory and its subdirectories. Standard practice for Python packages is to place test modules in a <code>test</code> subdirectory within the root package directory. The MDS Cookiecutter template that we downloaded and used in <a href="whole-game.html#whole-game">The Whole Game chapter</a> to build our <code>foocat</code> package automatically created this directory structure for us:</p>
+<pre><code>foocat
+├── CONDUCT.md
+├── CONTRIBUTING.md
+├── CONTRIBUTORS.md
+├── docs
+├── foocat
+├── .github
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+└── tests
+    ├── __init__.py
+    └── test_foocat.py</code></pre>
+<p>Large libraries often split tests up into multiple <code>test_*.py</code> or <code>*_test.py</code> files within the <code>tests</code> directory to better organise tests. However, for most Python packages a single file will suffice, which by default is named <code>test_yourpackagename.py</code>. Recall that in <a href="whole-game.html#whole-game">The Whole Game chapter</a> we added the following test of our <code>catbind()</code> function in the file <code>test_foocat.py</code>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb62-5" data-line-number="5"><span class="kw">def</span> test_catbind():</a>
+<a class="sourceLine" id="cb62-6" data-line-number="6">    a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb62-7" data-line-number="7">    b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</a>
+<a class="sourceLine" id="cb62-8" data-line-number="8">    <span class="cf">assert</span> ((foocat.catbind(a, b)).codes <span class="op">==</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb62-9" data-line-number="9">    <span class="cf">assert</span> ((foocat.catbind(a, b)).categories <span class="op">==</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb62-10" data-line-number="10">            <span class="st">&quot;counts&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;your&quot;</span>]).<span class="bu">all</span>()</a></code></pre></div>
+<p>We can run that test by simply typing <code>poetry run pytest</code> at the command line.</p>
+<blockquote>
+<p>We will continue to prefix our commands with <code>poetry run</code> to ensure we are using the software tools installed in our poetry virtual environment.</p>
+</blockquote>
+<pre><code>$ poetry run pytest
+
+======================== test session starts =========================
+platform darwin -- Python 3.7.4, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /Users/tbeuzen/foocat
+collected 1 item                                                      
+
+tests/test_foocat.py .                                          [100%]
+
+========================= 1 passed in 0.66s ==========================</code></pre>
+<p>The output of <code>pytest</code> provides some basic system information, along with how many tests were run and what percentage passed. If a test fails, it will output the trace-back of the error, so you can see exactly what line of your test failed. That’s really all there is to the basics of automating testing! In the next section, we’ll discuss how to write tests using <code>pytest</code> in more detail.</p>
+</div>
+<div id="pytest-tests" class="section level2">
+<h2><span class="header-section-number">4.4</span> Writing tests</h2>
+<div id="the-basics" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> The basics</h3>
+<p>We define tests for <code>pytest</code> to run in our <code>test_foocat.py</code> module as functions that are prefixed with <code>test_</code>. The <code>test_catbind()</code> function we defined above shows an example of this syntax. Within the test function, the test code will be written. There are three common types of tests you might want to use for evaluating your code, which are described below.</p>
+<p><strong>1. Asserting that a statement is <code>true</code></strong></p>
+<p>The most common test you will write will be to compare the result of your code to a known result with the help of an <code>assert</code> statement. We’ve seen an example of this previously in our <code>test_foocat.py</code> module.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">def</span> test_catbind():</a>
+<a class="sourceLine" id="cb64-2" data-line-number="2">    a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">    b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</a>
+<a class="sourceLine" id="cb64-4" data-line-number="4">    <span class="cf">assert</span> ((foocat.catbind(a, b)).codes <span class="op">==</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb64-5" data-line-number="5">    <span class="cf">assert</span> ((foocat.catbind(a, b)).categories <span class="op">==</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb64-6" data-line-number="6">                <span class="st">&quot;counts&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>,</a>
+<a class="sourceLine" id="cb64-7" data-line-number="7">                <span class="st">&quot;your&quot;</span>]).<span class="bu">all</span>()</a></code></pre></div>
+<p>In the example, we are comparing the output of <code>(foocat.catbind(a, b)).code</code> and <code>(foocat.catbind(a, b)).categories</code> to what we know should be the result/what we want the result to be. As you can see, in a <code>pytest</code> test function you may include one or more <code>assert</code> statements. If any of the included <code>assert</code> functions fail, the whole test will fail.</p>
+<p>The <code>assert</code> statement can be used with any statement that evaluates to a boolean (<code>true</code>/<code>false</code>). You may also follow the <code>assert</code> statement with a string that will provide relevant information to the user if the <code>assert</code> fails. Try the following <code>assert</code> statements in a Python session to see which pass and which fail:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> x <span class="op">=</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> <span class="cf">assert</span> (x <span class="op">&gt;</span> <span class="dv">0</span>), <span class="st">&#39;x is not positive.&#39;</span></a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> <span class="cf">assert</span> (x <span class="op">&lt;</span> <span class="dv">0</span>), <span class="st">&#39;x is not negative.&#39;</span></a>
+<a class="sourceLine" id="cb65-4" data-line-number="4"><span class="op">&gt;&gt;&gt;</span> <span class="cf">assert</span> (x <span class="op">==</span> <span class="dv">1</span>), <span class="st">&#39;x is not equal to 1.&#39;</span></a>
+<a class="sourceLine" id="cb65-5" data-line-number="5"><span class="op">&gt;&gt;&gt;</span> <span class="cf">assert</span> (x <span class="op">!=</span> <span class="dv">1</span>), <span class="st">&#39;x cannot be equal to 1.&#39;</span></a></code></pre></div>
+<blockquote>
+<p>The first and third statements will pass and no message will be printed to the console. The second and last statements will fail and will print their messages to the console.</p>
+</blockquote>
+<p><strong>2. Assert that two numbers are approximately equal</strong></p>
+<p>Due to the limitations of floating-point arithmetic, numbers that we would expect to be equal are sometimes not:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span> <span class="op">==</span> <span class="fl">0.3</span></a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="va">False</span></a></code></pre></div>
+<p>As a result, when working with floating point numbers it is common to write tests that determine if numbers are <em>approximately</em> equal. For this we use the <code>approx</code> class from <code>pytest</code>.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> pytest <span class="im">import</span> approx</a>
+<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span> <span class="op">==</span> approx(<span class="fl">0.3</span>)</a>
+<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="va">True</span></a></code></pre></div>
+<p>You can use the <code>abs</code> and <code>rel</code> arguments to specify exactly how much absolute or relative error you want to allow in your test:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="dv">11</span> <span class="op">==</span> approx(<span class="dv">10</span>, rel<span class="op">=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="va">True</span></a>
+<a class="sourceLine" id="cb68-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> <span class="dv">11</span> <span class="op">==</span> approx(<span class="dv">10</span>, <span class="bu">abs</span><span class="op">=</span><span class="fl">0.1</span>)</a>
+<a class="sourceLine" id="cb68-4" data-line-number="4"><span class="va">False</span></a></code></pre></div>
+<p><strong>3. Assert that a certain exception is raised</strong></p>
+<p>You might have noticed that our <code>catbind()</code> function is not all that robust: it does not check the type of the inputs to ensure that they are Pandas categoricals. Therefore, if we passed in an input of a different data type the code would fail, throwing a generic error message:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb69-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>]</a>
+<a class="sourceLine" id="cb69-4" data-line-number="4"><span class="op">&gt;&gt;&gt;</span> foocat.catbind(a, b)</a>
+<a class="sourceLine" id="cb69-5" data-line-number="5">Traceback (most recent call last):</a>
+<a class="sourceLine" id="cb69-6" data-line-number="6">  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb69-7" data-line-number="7">  File <span class="st">&quot;/Users/tbeuzen/foocat/foocat.py&quot;</span>, line <span class="dv">31</span>, <span class="kw">in</span> catbind</a>
+<a class="sourceLine" id="cb69-8" data-line-number="8">    pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</a>
+<a class="sourceLine" id="cb69-9" data-line-number="9"><span class="pp">AttributeError</span>: <span class="st">&#39;list&#39;</span> <span class="bu">object</span> has no attribute <span class="st">&#39;astype&#39;</span></a></code></pre></div>
+<p>Type checking is an important part of your code, it allows you to validate that your code is being used as intended, and if not, to raise a useful error message to the user telling them how they should be using it. Let’s modify our <code>catbind()</code> function to include type-checking for Pandas categoricals. Below we’ve added two new lines of code directly under the (collapsed) docstring. This code checks that both the <code>a</code> and <code>b</code> inputs are Pandas categoricas, and if not, raises a <code>TypeError</code> with a useful message:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb70-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb70-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb70-4" data-line-number="4"><span class="kw">def</span> catbind(a, b):</a>
+<a class="sourceLine" id="cb70-5" data-line-number="5">    <span class="co">&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb70-6" data-line-number="6"><span class="co">    Concatenates two pandas categoricals.</span></a>
+<a class="sourceLine" id="cb70-7" data-line-number="7"><span class="co">    </span></a>
+<a class="sourceLine" id="cb70-8" data-line-number="8"><span class="co">    ...</span></a>
+<a class="sourceLine" id="cb70-9" data-line-number="9"><span class="co">    </span></a>
+<a class="sourceLine" id="cb70-10" data-line-number="10"><span class="co">    &quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb70-11" data-line-number="11">    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">all</span>(<span class="bu">isinstance</span>(x, pd.Categorical) <span class="cf">for</span> x <span class="kw">in</span> (a, b)):</a>
+<a class="sourceLine" id="cb70-12" data-line-number="12">        <span class="cf">raise</span> <span class="pp">TypeError</span>(<span class="st">&quot;Inputs should be of type &#39;Pandas categorical&#39;.&quot;</span>)</a>
+<a class="sourceLine" id="cb70-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb70-14" data-line-number="14">    concatenated <span class="op">=</span> pd.concat([pd.Series(a.astype(<span class="st">&quot;str&quot;</span>)),</a>
+<a class="sourceLine" id="cb70-15" data-line-number="15">                              pd.Series(b.astype(<span class="st">&quot;str&quot;</span>))])</a>
+<a class="sourceLine" id="cb70-16" data-line-number="16">    <span class="cf">return</span> pd.Categorical(concatenated)</a></code></pre></div>
+<p>We’ve used <code>TypeError</code> here to indicate that the user has passed the wrong type of input into our function, but there are many other built-in exceptions for particular circumstances which you can read more about in the <a href="https://docs.python.org/3/library/exceptions.html">Python docs</a>.</p>
+<p>We can check that everything is working by re-trying our failed code from before:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="op">&gt;&gt;&gt;</span> b <span class="op">=</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>]</a>
+<a class="sourceLine" id="cb71-4" data-line-number="4"><span class="op">&gt;&gt;&gt;</span> foocat.catbind(a, b)</a>
+<a class="sourceLine" id="cb71-5" data-line-number="5">Traceback (most recent call last):</a>
+<a class="sourceLine" id="cb71-6" data-line-number="6">  File <span class="st">&quot;&lt;stdin&gt;&quot;</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb71-7" data-line-number="7">  File <span class="st">&quot;/Users/tbeuzen/foocat/foocat.py&quot;</span>, line <span class="dv">31</span>, <span class="kw">in</span> catbind</a>
+<a class="sourceLine" id="cb71-8" data-line-number="8">    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;Inputs should be of type &#39;Pandas categorical&#39;.&quot;</span>)</a>
+<a class="sourceLine" id="cb71-9" data-line-number="9"><span class="pp">ValueError</span>: Inputs should be of <span class="bu">type</span> <span class="st">&#39;Pandas categorical&#39;</span>.</a></code></pre></div>
+<p>Great! Now we should formalise this unit test! The way we can check that our code will raise a particular exception for a given situation is using the <code>raises</code> statement of <code>pytest</code>. We’ll import <code>raises</code> at the top of our file and add a new test called <code>test_input_type()</code> demonstrating this:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb72-3" data-line-number="3"><span class="im">from</span> pytest <span class="im">import</span> raises</a>
+<a class="sourceLine" id="cb72-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb72-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb72-6" data-line-number="6"><span class="kw">def</span> test_catbind():</a>
+<a class="sourceLine" id="cb72-7" data-line-number="7">    a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb72-8" data-line-number="8">    b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</a>
+<a class="sourceLine" id="cb72-9" data-line-number="9">    <span class="cf">assert</span> ((foocat.catbind(a, b)).codes <span class="op">==</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb72-10" data-line-number="10">    <span class="cf">assert</span> ((foocat.catbind(a, b)).categories <span class="op">==</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb72-11" data-line-number="11">                                                    <span class="st">&quot;counts&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;your&quot;</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb72-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb72-13" data-line-number="13"><span class="kw">def</span> test_input_type():</a>
+<a class="sourceLine" id="cb72-14" data-line-number="14">    a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb72-15" data-line-number="15">    c <span class="op">=</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>]</a>
+<a class="sourceLine" id="cb72-16" data-line-number="16">    <span class="cf">with</span> raises(<span class="pp">TypeError</span>):</a>
+<a class="sourceLine" id="cb72-17" data-line-number="17">            foocat.catbind(a, c)</a></code></pre></div>
+<p>Our <code>test_input_type()</code> test is passing a wrong input type (a list in this case) to <code>catbind()</code> which we expect to raise a <code>TypeError</code> exception. If the exception is raised, our test will pass. Let’s check that everything is working as expected and our tests are passing by running <code>pytest</code>:</p>
+<pre><code>$ poetry run pytest
+======================== test session starts =========================
+platform darwin -- Python 3.7.4, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /Users/tbeuzen/foocat
+collected 2 items                                                     
+
+tests/test_foocat.py ..                                       [100%]
+
+========================= 2 passed in 0.78s ==========================</code></pre>
+<p>You can write as many tests as you like for your code. Ideally, your tests will cover all elements of your code. In the section <a href="testing.html#pytest-coverage">Code coverage</a> we’ll show you how to determine how much of your code is being “covered” by your tests. But first, let’s look at some ways to better organise your tests.</p>
+</div>
+<div id="classes-fixtures-parameterizations" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Classes, Fixtures &amp; Parameterizations</h3>
+<p>You can populate your test module with as many individual test functions as you like, however as the number of tests grows its helpful to organise and streamline your tests. Classes, fixtures, and parameterization are a few of the key techniques that can help.</p>
+<p><strong>Classes</strong></p>
+<p>Classes are a way of grouping related tests together. Typically your code will consist of multiple functions, each of which needs to be tested with multiple tests. So its often useful to create a class that groups all the tests for each individual function together. You can define a test class in your test module by creating a <code>class</code> with a name prefixd with “Test”. You can then put all the test functions within this class as is shown below:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="im">from</span> pytest <span class="im">import</span> raises</a>
+<a class="sourceLine" id="cb74-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb74-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb74-6" data-line-number="6"><span class="kw">class</span> Testfoocat:</a>
+<a class="sourceLine" id="cb74-7" data-line-number="7">    <span class="kw">def</span> test_catbind(<span class="va">self</span>):</a>
+<a class="sourceLine" id="cb74-8" data-line-number="8">        a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb74-9" data-line-number="9">        b <span class="op">=</span> pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>])</a>
+<a class="sourceLine" id="cb74-10" data-line-number="10">        <span class="cf">assert</span> ((foocat.catbind(a, b)).codes <span class="op">==</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb74-11" data-line-number="11">        <span class="cf">assert</span> ((foocat.catbind(a, b)).categories <span class="op">==</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;counts&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>,</a>
+<a class="sourceLine" id="cb74-12" data-line-number="12">                                                        <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;your&quot;</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb74-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb74-14" data-line-number="14">    <span class="kw">def</span> test_input_type(<span class="va">self</span>):</a>
+<a class="sourceLine" id="cb74-15" data-line-number="15">        a <span class="op">=</span> pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>])</a>
+<a class="sourceLine" id="cb74-16" data-line-number="16">        c <span class="op">=</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>]</a>
+<a class="sourceLine" id="cb74-17" data-line-number="17">        <span class="cf">with</span> raises(<span class="pp">ValueError</span>):</a>
+<a class="sourceLine" id="cb74-18" data-line-number="18">            foocat.catbind(a, c)</a></code></pre></div>
+<p>While classes are a useful organisational tool, they have additional utility for handling fixtures and parameterizations which are discussed in the next section.</p>
+<p><strong>Fixtures</strong></p>
+<p>You may have noticed some repetition in our test code defining variables (<code>a</code>, <code>b</code> and <code>c</code>) to use in our tests. This violates the “DRY” principle and is where fixtures can come in handy. Fixtures are useful for sharing resources (primarily functions or data) with test functions. It is perhaps easiest to see a simple example utilising a fixture. Below we create the fixture <code>test_data()</code> which in this case creates a dictionary of data that we would like to use with our test functions. This fixture can be passed to our test functions as an argument in the function definition, meaning that we don’t have to define our data seperately in each test.</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="im">from</span> pytest <span class="im">import</span> raises, fixture</a>
+<a class="sourceLine" id="cb75-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb75-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb75-6" data-line-number="6"><span class="at">@fixture</span>()</a>
+<a class="sourceLine" id="cb75-7" data-line-number="7"><span class="kw">def</span> test_data():</a>
+<a class="sourceLine" id="cb75-8" data-line-number="8">    <span class="cf">return</span> {<span class="st">&#39;a&#39;</span>: pd.Categorical([<span class="st">&quot;character&quot;</span>, <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;your&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>]),</a>
+<a class="sourceLine" id="cb75-9" data-line-number="9">            <span class="st">&#39;b&#39;</span>: pd.Categorical([<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>]),</a>
+<a class="sourceLine" id="cb75-10" data-line-number="10">            <span class="st">&#39;c&#39;</span>: [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;counts&quot;</span>]}</a>
+<a class="sourceLine" id="cb75-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb75-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb75-13" data-line-number="13"><span class="kw">class</span> Testfoocat:</a>
+<a class="sourceLine" id="cb75-14" data-line-number="14">    <span class="kw">def</span> test_catbind(<span class="va">self</span>, test_data):</a>
+<a class="sourceLine" id="cb75-15" data-line-number="15">        <span class="cf">assert</span> ((foocat.catbind(test_data[<span class="st">&#39;a&#39;</span>], test_data[<span class="st">&#39;b&#39;</span>])).codes <span class="op">==</span></a>
+<a class="sourceLine" id="cb75-16" data-line-number="16">                [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">2</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb75-17" data-line-number="17">        <span class="cf">assert</span> ((foocat.catbind(test_data[<span class="st">&#39;a&#39;</span>], test_data[<span class="st">&#39;b&#39;</span>])).categories <span class="op">==</span> [<span class="st">&quot;but&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;counts&quot;</span>, <span class="st">&quot;eyeballs&quot;</span>,</a>
+<a class="sourceLine" id="cb75-18" data-line-number="18">                                                                                  <span class="st">&quot;hits&quot;</span>, <span class="st">&quot;integer&quot;</span>, <span class="st">&quot;where it&quot;</span>, <span class="st">&quot;your&quot;</span>]).<span class="bu">all</span>()</a>
+<a class="sourceLine" id="cb75-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb75-20" data-line-number="20">    <span class="kw">def</span> test_input_type(<span class="va">self</span>, test_data):</a>
+<a class="sourceLine" id="cb75-21" data-line-number="21">        <span class="cf">with</span> raises(<span class="pp">ValueError</span>):</a>
+<a class="sourceLine" id="cb75-22" data-line-number="22">            foocat.catbind(test_data[<span class="st">&#39;a&#39;</span>], test_data[<span class="st">&#39;c&#39;</span>])</a></code></pre></div>
+<p>You can read more about the utility of fixtures in the <a href="https://pytest.readthedocs.io/en/2.8.7/fixture.html#">pytest docs</a>.</p>
+<p><strong>Parameterizations</strong></p>
+<p>Parameteriziations can be useful for running a test multiple times using different inputs. This functionality is facilitated by the <code>mark.parametrize</code> decorator in <code>pytest</code> and is also best illustrated by example. Below we parameterize a test with two different scenarios. The first argument passed to <code>@mark.parametrize</code> defines the variables to be used in the test function (<code>a</code>, <code>b</code>, <code>expected</code>), and the second argument is a list of tuples, where each tuple contains the three elements (in order: <code>a</code>, <code>b</code>, <code>expected</code>) required to run the test.</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="im">from</span> foocat <span class="im">import</span> foocat</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="im">from</span> pytest <span class="im">import</span> raises, fixture, mark</a>
+<a class="sourceLine" id="cb76-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb76-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb76-6" data-line-number="6"><span class="at">@mark.parametrize</span>(<span class="st">&quot;a,b,expected&quot;</span>, [(pd.Categorical([<span class="st">&quot;big&quot;</span>, <span class="st">&quot;yellow&quot;</span>]),</a>
+<a class="sourceLine" id="cb76-7" data-line-number="7">                                    pd.Categorical([<span class="st">&quot;python&quot;</span>]),</a>
+<a class="sourceLine" id="cb76-8" data-line-number="8">                                    [<span class="st">&#39;big&#39;</span>, <span class="st">&#39;python&#39;</span>, <span class="st">&#39;yellow&#39;</span>]),</a>
+<a class="sourceLine" id="cb76-9" data-line-number="9">                                   (pd.Categorical([<span class="st">&quot;python&quot;</span>]),</a>
+<a class="sourceLine" id="cb76-10" data-line-number="10">                                    pd.Categorical([<span class="st">&quot;big&quot;</span>, <span class="st">&quot;yellow&quot;</span>]),</a>
+<a class="sourceLine" id="cb76-11" data-line-number="11">                                    [<span class="st">&#39;big&#39;</span>, <span class="st">&#39;python&#39;</span>, <span class="st">&#39;yellow&#39;</span>])])</a>
+<a class="sourceLine" id="cb76-12" data-line-number="12"><span class="kw">def</span> test_catbind(a, b, expected):</a>
+<a class="sourceLine" id="cb76-13" data-line-number="13">    <span class="cf">assert</span> (foocat.catbind(a, b).categories <span class="op">==</span> expected).<span class="bu">all</span>()</a></code></pre></div>
+<p>If we ran this test module with <code>poetry run pytest</code>, the output would tell us that it ran two tests (well, it really ran the same test twice).For most packages you’ll be creating the methods discussed in this chapter will more than suffice your needs, however we’ve only scratched the surface of the <code>pytest</code> iceburg and it’s possible to combine classes, fixtures, parameterizations and much more to help build efficient, streamlined tests which can be useful for larger projects.</p>
+</div>
+<div id="when-to-write-your-tests" class="section level3">
+<h3><span class="header-section-number">4.4.3</span> When to write your tests</h3>
+<p>Whether you should write your tests before you code, after you code, or somewhere in between is a topic of much debate and overall this choice may come down personal preference, experience, resource availability, and code complexity. While there’s no one “correct” testing workflow for everyone, we encourage you to have a go at Test-Driven-Development (TDD) - that is, writing your tests before you code. While this may seem a little counterintuitive at first, the kind of workflow can have many benefits:</p>
+<ul>
+<li>you will better understand exactly what code you need to write;</li>
+<li>you are forced to write tests upfront;</li>
+<li>you won’t encounter large time-consuming bugs down the line; and,</li>
+<li>it helps to keep your workflow manageable by focussing on small, incremental code improvements and additions.</li>
+</ul>
+<p>In our experience, errors found earlier are easier to fix than errors found later, i.e., the age-old proverb, <em>prevention is better than cure</em>.</p>
+</div>
+</div>
+<div id="pytest-coverage" class="section level2">
+<h2><span class="header-section-number">4.5</span> Code coverage</h2>
+<p>The tests you write should “cover” the majority of your code (100% is ideal but not always necessary). That is, your tests should run through most or all the lines of your code at least once. We refer to this as “code coverage” and there is a useful extension to <code>pytest</code> called <code>pytest-cov</code> which we can use to automatically determine how much coverage our tests have. Continuing with the <code>foocat</code> package that we have developed through the book, let’s add <code>pytest-cov</code> as a development dependency of our package:</p>
+<pre><code>$ poetry add --dev pytest-cov</code></pre>
+<p>We can then determine the coverage of our tests by running the following command which specifies the Python package directory (<code>--cove=foocat</code>) and where the tests are located (<code>tests/</code>):</p>
+<pre><code>$ poetry run pytest --cov=foocat tests/
+
+======================== test session starts =========================
+platform darwin -- Python 3.7.4, pytest-5.3.5, py-1.8.1, pluggy-0.13.1
+rootdir: /Users/tbeuzen/foocat
+plugins: cov-2.8.1
+collected 6 items                                                     
+
+tests/test_foocat.py ..                                         [100%]
+
+---------- coverage: platform darwin, python 3.7.4-final-0 -----------
+Name                   Stmts   Miss  Cover
+------------------------------------------
+foocat/__init__.py         1      0   100%
+foocat/foocat.py           6      0   100%
+------------------------------------------
+TOTAL                      7      0   100%
+
+
+========================= 2 passed in 0.72s ==========================</code></pre>
+<p>The output summarises the coverage of <code>.py</code> files in the <code>foocat</code> package directory (there are only two in this case, <code>__init__.py</code> and <code>foocat.py</code>). If you want to view your coverage in more detail to see exactly where code is/isn’t being covered you can save a full coverage report as described in the <a href="https://pytest-cov.readthedocs.io/en/latest/reporting.html">pytest docs</a>. As an example, the below command prints the report to .html format (which by default is saved in a new directory called “htmlcov”):</p>
+<pre><code>$ poetry run pytest --cov-report html --cov=foocat tests/</code></pre>
+<p><img src="img/coverage-report.png" width=400></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="package-structure.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ttimbers/py-pkgs/edit/master/05-testing.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
