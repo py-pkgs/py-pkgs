@@ -24,7 +24,7 @@
 <meta name="author" content="Tiffany Timbers &amp; Tomas Beuzen" />
 
 
-<meta name="date" content="2020-03-03" />
+<meta name="date" content="2020-03-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="whole-game.html"/>
 <link rel="next" href="testing.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -53,25 +54,26 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,9 +82,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -132,34 +134,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a><ul>
+<li class="chapter" data-level="1" data-path="setup.html"><a href="setup.html"><i class="fa fa-check"></i><b>1</b> System setup</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="setup.html"><a href="setup.html#python-setup"><i class="fa fa-check"></i><b>1.1</b> Installing and updating Python</a></li>
 <li class="chapter" data-level="1.2" data-path="setup.html"><a href="setup.html#register-for-a-pypi-account"><i class="fa fa-check"></i><b>1.2</b> Register for a PyPI account</a></li>
-<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a><ul>
+<li class="chapter" data-level="1.3" data-path="setup.html"><a href="setup.html#python-ides"><i class="fa fa-check"></i><b>1.3</b> Python IDEs</a>
+<ul>
 <li class="chapter" data-level="1.3.1" data-path="setup.html"><a href="setup.html#pycharm"><i class="fa fa-check"></i><b>1.3.1</b> PyCharm</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a><ul>
+<li class="chapter" data-level="1.4" data-path="setup.html"><a href="setup.html#rstudio-python-setup"><i class="fa fa-check"></i><b>1.4</b> Setting up the RStudio IDE with Python</a>
+<ul>
 <li class="chapter" data-level="1.4.1" data-path="setup.html"><a href="setup.html#find-where-anaconda-is-installed-on-your-machine"><i class="fa fa-check"></i><b>1.4.1</b> Find where Anaconda is installed on your machine</a></li>
 <li class="chapter" data-level="1.4.2" data-path="setup.html"><a href="setup.html#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio"><i class="fa fa-check"></i><b>1.4.2</b> Configuring <code>reticulate</code> for to use the Python REPL inside RStudio</a></li>
 <li class="chapter" data-level="1.4.3" data-path="setup.html"><a href="setup.html#configuring-the-rstudio-terminal"><i class="fa fa-check"></i><b>1.4.3</b> Configuring the RStudio terminal</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a><ul>
+<li class="chapter" data-level="2" data-path="whole-game.html"><a href="whole-game.html"><i class="fa fa-check"></i><b>2</b> The Whole Game</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="whole-game.html"><a href="whole-game.html#poetry-to-create-project"><i class="fa fa-check"></i><b>2.1</b> Use Cookiecutter &amp; Poetry to create a Python project</a></li>
-<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a><ul>
+<li class="chapter" data-level="2.2" data-path="whole-game.html"><a href="whole-game.html#version-control"><i class="fa fa-check"></i><b>2.2</b> Put your project under version control</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="whole-game.html"><a href="whole-game.html#set-up-local-version-control"><i class="fa fa-check"></i><b>2.2.1</b> Set-up local version control</a></li>
 <li class="chapter" data-level="2.2.2" data-path="whole-game.html"><a href="whole-game.html#set-up-remote-version-control"><i class="fa fa-check"></i><b>2.2.2</b> Set-up remote version control</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="whole-game.html"><a href="whole-game.html#first-function"><i class="fa fa-check"></i><b>2.3</b> Writing our first function</a></li>
 <li class="chapter" data-level="2.4" data-path="whole-game.html"><a href="whole-game.html#test-drive-your-package-code"><i class="fa fa-check"></i><b>2.4</b> Test drive your package code</a></li>
 <li class="chapter" data-level="2.5" data-path="whole-game.html"><a href="whole-game.html#pkg-func-deps"><i class="fa fa-check"></i><b>2.5</b> Add package function dependencies</a></li>
-<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a><ul>
+<li class="chapter" data-level="2.6" data-path="whole-game.html"><a href="whole-game.html#pkg-docs"><i class="fa fa-check"></i><b>2.6</b> Package documentation</a>
+<ul>
 <li class="chapter" data-level="2.6.1" data-path="whole-game.html"><a href="whole-game.html#local-docs"><i class="fa fa-check"></i><b>2.6.1</b> Reading and rendering the docs locally</a></li>
 <li class="chapter" data-level="2.6.2" data-path="whole-game.html"><a href="whole-game.html#remote-docs"><i class="fa fa-check"></i><b>2.6.2</b> Reading and rendering the docs remotely</a></li>
 </ul></li>
 <li class="chapter" data-level="2.7" data-path="whole-game.html"><a href="whole-game.html#poetry-testing"><i class="fa fa-check"></i><b>2.7</b> Testing</a></li>
+<li class="chapter" data-level="2.8" data-path="whole-game.html"><a href="whole-game.html#build-and-publish"><i class="fa fa-check"></i><b>2.8</b> Building your package and publishing to testPyPI</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a><ul>
+<li class="chapter" data-level="3" data-path="package-structure.html"><a href="package-structure.html"><i class="fa fa-check"></i><b>3</b> Package structure and state</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="package-structure.html"><a href="package-structure.html#package-states"><i class="fa fa-check"></i><b>3.1</b> Package states</a></li>
 <li class="chapter" data-level="3.2" data-path="package-structure.html"><a href="package-structure.html#python-modules"><i class="fa fa-check"></i><b>3.2</b> Modules</a></li>
 <li class="chapter" data-level="3.3" data-path="package-structure.html"><a href="package-structure.html#python-packages"><i class="fa fa-check"></i><b>3.3</b> Python packages</a></li>
@@ -170,16 +180,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.8" data-path="package-structure.html"><a href="package-structure.html#imported-packages"><i class="fa fa-check"></i><b>3.8</b> Imported Packages</a></li>
 <li class="chapter" data-level="3.9" data-path="package-structure.html"><a href="package-structure.html#python-applications"><i class="fa fa-check"></i><b>3.9</b> Packaging Python Applications</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>4</b> Testing</a><ul>
+<li class="chapter" data-level="4" data-path="testing.html"><a href="testing.html"><i class="fa fa-check"></i><b>4</b> Testing</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="testing.html"><a href="testing.html#python-pytest"><i class="fa fa-check"></i><b>4.1</b> Testing in Python</a></li>
 <li class="chapter" data-level="4.2" data-path="testing.html"><a href="testing.html#testing-workflow"><i class="fa fa-check"></i><b>4.2</b> Testing workflow</a></li>
 <li class="chapter" data-level="4.3" data-path="testing.html"><a href="testing.html#test-structure"><i class="fa fa-check"></i><b>4.3</b> Test Structure</a></li>
-<li class="chapter" data-level="4.4" data-path="testing.html"><a href="testing.html#pytest-tests"><i class="fa fa-check"></i><b>4.4</b> Writing tests</a><ul>
+<li class="chapter" data-level="4.4" data-path="testing.html"><a href="testing.html#pytest-tests"><i class="fa fa-check"></i><b>4.4</b> Writing tests</a>
+<ul>
 <li class="chapter" data-level="4.4.1" data-path="testing.html"><a href="testing.html#the-basics"><i class="fa fa-check"></i><b>4.4.1</b> The basics</a></li>
 <li class="chapter" data-level="4.4.2" data-path="testing.html"><a href="testing.html#classes-fixtures-parameterizations"><i class="fa fa-check"></i><b>4.4.2</b> Classes, Fixtures &amp; Parameterizations</a></li>
 <li class="chapter" data-level="4.4.3" data-path="testing.html"><a href="testing.html#when-to-write-your-tests"><i class="fa fa-check"></i><b>4.4.3</b> When to write your tests</a></li>
 </ul></li>
 <li class="chapter" data-level="4.5" data-path="testing.html"><a href="testing.html#pytest-coverage"><i class="fa fa-check"></i><b>4.5</b> Code coverage</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="documentation.html"><a href="documentation.html"><i class="fa fa-check"></i><b>5</b> Documentation</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="documentation.html"><a href="documentation.html#pkg-documentation"><i class="fa fa-check"></i><b>5.1</b> Package documentation</a></li>
+<li class="chapter" data-level="5.2" data-path="documentation.html"><a href="documentation.html#code-documentation"><i class="fa fa-check"></i><b>5.2</b> Code documentation</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="documentation.html"><a href="documentation.html#comments"><i class="fa fa-check"></i><b>5.2.1</b> Comments</a></li>
+<li class="chapter" data-level="5.2.2" data-path="documentation.html"><a href="documentation.html#docstrings"><i class="fa fa-check"></i><b>5.2.2</b> Docstrings</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="documentation.html"><a href="documentation.html#rendering-your-documentation"><i class="fa fa-check"></i><b>5.3</b> Rendering your documentation</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="documentation.html"><a href="documentation.html#locally"><i class="fa fa-check"></i><b>5.3.1</b> Locally</a></li>
+<li class="chapter" data-level="5.3.2" data-path="documentation.html"><a href="documentation.html#remotely"><i class="fa fa-check"></i><b>5.3.2</b> Remotely</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -201,10 +227,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="package-structure" class="section level1">
+<div id="package-structure" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Package structure and state</h1>
 <p>The previous chapter demonstrated how to develop a Python package from scratch with the help of <a href="https://python-poetry.org/">Python poetry</a>. This chapter now takes a more in-depth look at packaging in Python. Often, developers don’t think about packaging until their code is actually written - but we’ll learn that thinking about packaging before even writing any code is very useful! This chapter is a somewhat Pythonified version of the <a href="https://r-pkgs.org/whole-game.html">Package Structure and State chapter</a> of the <a href="https://r-pkgs.org/">R Packages book</a> written by Jenny Bryan and also draws on information from the <a href="https://www.pypa.io/en/latest/">Python Packaging Authority</a>.</p>
-<div id="package-states" class="section level2">
+<div id="package-states" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Package states</h2>
 <p>By “package” here we mean the code that you wish to bundle up and distribute. In Python, your package can be in several different states depending on its complexity, target audience, and stage of development. The ones we’ll talk about here are:</p>
 <ul>
@@ -219,25 +245,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="img/py_flowchart.png" width=600></p>
 <p><em>The Python packaging workflow.</em></p>
 </div>
-<div id="python-modules" class="section level2">
+<div id="python-modules" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Modules</h2>
 <p>A module is any Python <code>.py</code> file which may consist of Python functions, classes, variables, and/or runnable code. Modules can be useful for sharing simple Python code amongst compatible Python versions. A module that relies <em>only</em> on the standard Python library can easily be distributed and used by others (on the appropriate version of Python). In this way, a single module can be thought of as a package. For example, consider a module <code>simple_math.py</code> that contains the functions <code>list_range</code> and <code>odd_even</code>:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">def</span> list_range(x):</a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">  <span class="cf">return</span> <span class="bu">max</span>(x) <span class="op">-</span> <span class="bu">min</span>(x)</a>
-<a class="sourceLine" id="cb51-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="kw">def</span> odd_even(x):</a>
-<a class="sourceLine" id="cb51-5" data-line-number="5">    <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span>:</a>
-<a class="sourceLine" id="cb51-6" data-line-number="6">        <span class="bu">print</span>(<span class="st">&#39;x is odd.&#39;</span>)</a>
-<a class="sourceLine" id="cb51-7" data-line-number="7">    <span class="cf">else</span>:</a>
-<a class="sourceLine" id="cb51-8" data-line-number="8">        <span class="bu">print</span>(<span class="st">&#39;x is even.&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="package-structure.html#cb52-1"></a><span class="kw">def</span> list_range(x):</span>
+<span id="cb52-2"><a href="package-structure.html#cb52-2"></a>  <span class="cf">return</span> <span class="bu">max</span>(x) <span class="op">-</span> <span class="bu">min</span>(x)</span>
+<span id="cb52-3"><a href="package-structure.html#cb52-3"></a>  </span>
+<span id="cb52-4"><a href="package-structure.html#cb52-4"></a><span class="kw">def</span> odd_even(x):</span>
+<span id="cb52-5"><a href="package-structure.html#cb52-5"></a>    <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span>:</span>
+<span id="cb52-6"><a href="package-structure.html#cb52-6"></a>        <span class="bu">print</span>(<span class="st">&#39;x is odd.&#39;</span>)</span>
+<span id="cb52-7"><a href="package-structure.html#cb52-7"></a>    <span class="cf">else</span>:</span>
+<span id="cb52-8"><a href="package-structure.html#cb52-8"></a>        <span class="bu">print</span>(<span class="st">&#39;x is even.&#39;</span>)</span></code></pre></div>
 <p>If the module <code>simple_math.py</code> is in your working directory then you can import the module using:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="im">import</span> simple_math                 <span class="co"># imports the entire module. Functions can then be accessed via dot notation, e.g., simple_math.list_range()</span></a>
-<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="im">from</span> simple_math <span class="im">import</span> list_range <span class="co"># import only list_range function</span></a>
-<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="im">from</span> simple_math <span class="im">import</span> odd_even   <span class="co"># import only odd_even function</span></a>
-<a class="sourceLine" id="cb52-4" data-line-number="4"><span class="im">from</span> simple_math <span class="im">import</span> <span class="op">*</span>          <span class="co"># import all functions</span></a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="package-structure.html#cb53-1"></a><span class="im">import</span> simple_math                 <span class="co"># imports the entire module. Functions can then be accessed via dot notation, e.g., simple_math.list_range()</span></span>
+<span id="cb53-2"><a href="package-structure.html#cb53-2"></a><span class="im">from</span> simple_math <span class="im">import</span> list_range <span class="co"># import only list_range function</span></span>
+<span id="cb53-3"><a href="package-structure.html#cb53-3"></a><span class="im">from</span> simple_math <span class="im">import</span> odd_even   <span class="co"># import only odd_even function</span></span>
+<span id="cb53-4"><a href="package-structure.html#cb53-4"></a><span class="im">from</span> simple_math <span class="im">import</span> <span class="op">*</span>          <span class="co"># import all functions</span></span></code></pre></div>
 <p>Because modules are single files they can easily be shared to others by e.g., email, GitHub, Slack, etc. Another user would simply place the module in their working directory to use it. However, this method of distribution does not scale well in cases of multiple files, if your code depends on additional libraries, or needs a specific version of Python.</p>
 </div>
-<div id="python-packages" class="section level2">
+<div id="python-packages" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Python packages</h2>
 <p>Projects consisting of multiple Python <code>.py</code> files (i.e., modules) are, by their nature, harder to distribute. If your project consists of multiple files, it is typical to organise it into a directory structure. Any directory containing Python files can comprise a Python “package”.</p>
 <p>While we’ve been using the term “package” generically so far, it does have a specific meaning in Python and it’s important to make clear the distinction between “modules” and “packages”. As described in the previous section, any Python <code>.py</code> file is a module. In contrast, a package is a directory containing module(s) and/or additional package(s) (sometimes called “nested packages” or “subpackages”) along with an <code>__init__.py</code> file. An <code>__init__.py</code> file is required to make Python treat a directory as a package (as opposed to it simply being a plain-old directory of Python files); in the simplest case <code>__init__.py</code> is an empty file, but it can also execute initialization code for the package upon import (read more <a href="https://docs.python.org/3/tutorial/modules.html#importing-from-a-package">here</a>). Packages allow us to organise our Python code and intuitively access it using “dotted module names”. Consider having the following two packages in your working directory:</p>
@@ -256,11 +282,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     ├── __init__.py
     └── advanced_math.py</code></pre>
 <p>Modules can be accessed using dot notation. For example:</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="im">from</span> pkg1 <span class="im">import</span> simple_math        <span class="co"># import simple_math module from pkg1</span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="im">from</span> pkg2.simple <span class="im">import</span> simple_math <span class="co"># import simple_math module from pkg2</span></a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="package-structure.html#cb56-1"></a><span class="im">from</span> pkg1 <span class="im">import</span> simple_math        <span class="co"># import simple_math module from pkg1</span></span>
+<span id="cb56-2"><a href="package-structure.html#cb56-2"></a><span class="im">from</span> pkg2.simple <span class="im">import</span> simple_math <span class="co"># import simple_math module from pkg2</span></span></code></pre></div>
 <p>It would be possible to share a package by transferring all the files that comprise the package (keeping the directory structure intact) to another user, who could then use the package if it were placed in their working directory. However, just like single modules, this method of distribution does not scale well, makes it hard to support or update your code, and won’t work if your code depends on additional libraries, or needs a specific version of Python. We need a more efficient and reliable way to package and distribute our code which leads us to “source distribution packages” and “binary distribution packages” which are described below.</p>
 </div>
-<div id="source-distributions" class="section level2">
+<div id="source-distributions" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Source distribution packages</h2>
 <p>A “distribution package” (often referred to simply as a “distribution”) is a single archive of the Python packages, modules and other files that make up your project. Having a single archive makes it easier to distribute your code to the wild. The base distribution format is called a “source distribution” (<code>sdist</code>). An <code>sdist</code> is a compressed archive (e.g., <code>.tar.gz</code> or <code>.zip</code>) of your package. Essentially, an <code>sdist</code> provides all of the metadata and source files needed for building and installing your code. You can read more about source distributions <a href="https://docs.python.org/3/distutils/sourcedist.html">here</a>. The standard tool in Python for creating <code>sdists</code> (and binary distributions, which we’ll explore in the next section) is <code>setuptools</code>.</p>
 <blockquote>
@@ -280,7 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You could also share your <code>sdist</code> to PyPI from which a user could install it using <code>pip install</code>. It’s important to note that installing a package actually adds the package to your default installation directory (more on that in section <a href="package-structure.html#installed-packages">Installed packages</a>) such that it is accessible outside of your working directory - this is a key difference to simply sharing code as a module or package as we explored in the last two sections. We recommend consulting the <a href="https://the-hitchhikers-guide-to-packaging.readthedocs.io/en/latest/creation.html#">The Hitchhiker’s Guide to Packaging</a> and the <a href="https://docs.python.org/3/distutils/sourcedist.html">Python docs</a> for more information on creating and distributing source distributions. Some notable examples of Python <code>sdists</code> include: <a href="https://github.com/django/django">Django</a>, <a href="https://github.com/python-hyper/hyperlink">hyperlink</a>, <a href="https://github.com/psf/requests">requests</a>.</p>
 <p>However, if your code relies on any non-Python code/libraries/packages, a binary distribution, described in the next section, is a much better way to package and distribute your code. In fact, binary distributions are always preferred by Python’s installer <code>pip</code> and so are typically recommended even for pure-Python packages.</p>
 </div>
-<div id="binary-distributions" class="section level2">
+<div id="binary-distributions" class="section level2" number="3.5">
 <h2><span class="header-section-number">3.5</span> Binary distribution packages</h2>
 <p>Binary distributions are a type of distribution that contains compiled extensions. One of the most powerful features of Python is its ability to interoperate with libraries written in other languages, for example, C, Fortran, etc. Not all end-users will have the tools, experience, or time to build packages containing extensions written in these other languages, so binary distributions are how you make life as easy as possible for installers of your code. Like a source distribution, a binary distribution is a single artefact. However, binary distributions are “pre-built” meaning that, unlike source distributions, they do not require a build step before installation. The main binary distribution format used by Python is called a <code>wheel</code> (more on that later). Python’s package installer, <code>pip</code>, prefers <code>wheels</code> because installation is always faster than building and installing from an <code>sdist</code> (even if your <code>sdist</code> is pure Python it still involves a build step to build out the metadata from the <code>setup.py</code> file).</p>
 <p>As an example, much of the commonly used Python library <code>NumPy</code> is implemented as C extensions. The existence of <code>wheels</code> means that a user can, for example, simply run <code>pip install numpy</code> to install <code>NumPy</code> from PyPi, as opposed to having to build it from source with the help of a C compiler, amongst other requirements. If you’re feeling particularly masochistic you can try to build <code>NumPy</code> from source following <a href="https://numpy.org/devdocs/user/building.html">these instructions from the <code>NumPy</code> docs</a>.</p>
@@ -298,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Building <code>wheels</code> is similar to building source distributions with <code>setuptools</code>. Once your <code>setup.py</code> and related files are ready. We recommend taking a look at the <a href="https://packaging.python.org/tutorials/packaging-projects/">Python Packaging User Guide tutorial</a> if you’re interested in using <code>setuptools</code> to properly build the <code>sdist</code> and <code>wheel</code> of your project.</p>
 </div>
-<div id="python-poetry" class="section level2">
+<div id="python-poetry" class="section level2" number="3.6">
 <h2><span class="header-section-number">3.6</span> Poetry and pyproject.toml</h2>
 <p>The previous sections gave a high level overview of Python’s standard packaging options and tools. However, in <a href="whole-game.html#whole-game">The Whole Game Chapter</a> we used Poetry to create a toy Python package - so where does this fit into the Python packaging landscape? Well, in the previous sections on <a href="package-structure.html#source-distributions">Source distribution packages</a> and <a href="package-structure.html#binary-distributions">Binary distribution packages</a>, we really only touched the tip of the iceberg of Python packaging. When creating a package there’s a lot of customisation to think about with your <code>setup.py</code> file, and a host of other files we didn’t even talk about (e.g., <code>requirements.txt</code>, <code>setup.cfg</code>)! Needless to say, packaging in Python can be hard to understand, especially for beginners. These words echo the sentiments of Poetry’s creator Sébastien Eustace and the motivation for creating the tool:</p>
 <blockquote>
@@ -308,7 +334,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="img/py_pkgs.png" width=500></p>
 <p><em>Python packaging gamut. Modified after <a href="https://www.youtube.com/watch?v=iLVNWfPWAC8">The Packaging Gradient by Mahmoud Hashemi</a>.</em></p>
 </div>
-<div id="installed-packages" class="section level2">
+<div id="installed-packages" class="section level2" number="3.7">
 <h2><span class="header-section-number">3.7</span> Installed packages</h2>
 <p>An installed package is a distribution that’s been decompressed, built (in the case of an <code>sdist</code>) and then copied to your chosen installation directory. The default “chosen installation directory” varies by platform and by how you built/installed Python. For example, I installed Python using the <a href="https://docs.conda.io/en/latest/miniconda.html">miniconda</a> distribution and my default directory for package installation is <code>/Users/tbeuzen/miniconda3/lib/python3.7/site-packages</code>.</p>
 <p>“Installing” a distribution (e.g., by <code>pip install XXX</code>) is really a two-step process: 1) building the package, and 2) installing the package. Using <code>wheels</code> takes out the first step, meaning we only need to install. The install step is simple, all it has to do is copy all the decompressed files to the appropriate directory. In fact, we can manually install a package if we want to by manually decompressing a <code>wheel</code> and copying the files to their appropriate locations - there’s no real reason to do this because it’s far more effort than using a single one-liner at the CL, it does not resolve dependencies so could break your installation, and probably has other unwanted side-effects. However, it’s a nice way to learn about the package installation process, so if you’d like to give it a go, you can try the following steps (which assume you’re using MacOS and the <a href="https://docs.conda.io/en/latest/"><code>conda</code> package manager</a>):</p>
@@ -321,14 +347,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>You’ll now find two fresh directories: <code>toy_pkg</code> and <code>toy_pkg-0.0.1.dist-info</code>;</li>
 <li>From the CL start a Python session by typing <code>python</code> and try the following:</li>
 </ol>
-<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> toy_pkg.toy_module <span class="im">import</span> test_function</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="op">&gt;&gt;&gt;</span> test_function()</a>
-<a class="sourceLine" id="cb59-3" data-line-number="3">You manually installed the toy_pkg example<span class="op">!</span> Well done<span class="op">!</span></a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="package-structure.html#cb60-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="im">from</span> toy_pkg.toy_module <span class="im">import</span> test_function</span>
+<span id="cb60-2"><a href="package-structure.html#cb60-2"></a><span class="op">&gt;&gt;&gt;</span> test_function()</span>
+<span id="cb60-3"><a href="package-structure.html#cb60-3"></a>You manually installed the toy_pkg example<span class="op">!</span> Well done<span class="op">!</span></span></code></pre></div>
 </div>
-<div id="imported-packages" class="section level2">
+<div id="imported-packages" class="section level2" number="3.8">
 <h2><span class="header-section-number">3.8</span> Imported Packages</h2>
 <p>We now arrive at our last package state, the “imported package”. This state is associated with a command that is familiar to everyone that uses Python:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="im">import</span> somemodule</a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="package-structure.html#cb61-1"></a><span class="im">import</span> somemodule</span></code></pre></div>
 <p>You can read about the import system in detail in the <a href="https://docs.python.org/3/reference/import.html">Python documentation</a>. Briefly, the <code>import</code> statement comprises two operations:</p>
 <ol style="list-style-type: decimal">
 <li>it <a href="https://docs.python.org/3/reference/import.html#searching">searches</a> for the named module; and,</li>
@@ -336,7 +362,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>Note that for efficiency, each module is only imported once per interpreter session. If you modify your module, you can’t just re-run your <code>import</code> statement (as that name in the namespace is already populated and won’t be re-loaded). Instead, you have to restart your interpreter or force the import using <code>importlib.reload()</code>, but this is inefficient when working with multiple modules.</p>
 </div>
-<div id="python-applications" class="section level2">
+<div id="python-applications" class="section level2" number="3.9">
 <h2><span class="header-section-number">3.9</span> Packaging Python Applications</h2>
 <p>In this chapter we’ve only talked about packaging and distributing reusable Python code, a process which is really aimed at developers and audiences familiar with Python. While it’s outside the scope of this book, it’s also possible to package and distribute entire Python applications, that is, software that is not meant to be developed on but rather to use. Some good exmaples of Python-based applications are Sublime Text, EVE online, and Reddit. There are a lot of options available for packaging and distributing Python applications and we recommend watching the excellent talk by Mahmoud Hashemi <a href="https://www.youtube.com/watch?v=iLVNWfPWAC8">“The Packaging Gradient”</a> to learn more. To give you an idea of the available options, the figure below shows a summary of the different options discussed by Mahmoud for packaging Python applications.</p>
 <p><img src="img/py_apps.png" width=500></p>

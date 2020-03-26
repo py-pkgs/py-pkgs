@@ -540,7 +540,8 @@ After following the steps above, your docs should get successfully built on [Rea
 
 We have interactively taken `catbind` for a test drive, but to prove to our future self and others that our code does in fact do what it is supposed to do, let's write some formal unit tests. In Python packages, our tests live inside the `test` directory, typically in a file called `test_<module_name>.py`, thus for this package this is `tests/test_foocat.py`. Let's add a unit test (as a function named `test_catbind`) for our `catbind` function there now:
 
-```{pyt{python foocat-test, eval = FALSE}m foocat import foocat
+```{python foocat-test, eval = FALSE}
+from foocat import foocat
 import pandas as pd
 
 
@@ -601,5 +602,7 @@ $ poetry publish -r test-pypi
 Now you should be able to visit your package on testPyPI (e.g., <https://test.pypi.org/project/foocat/>) and download it from there using `pip` via:
 
 ```
-pip install -i https://test.pypi.org/simple/ foocat
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple foocat
 ```
+
+> By default `pip install` will search PyPI for the named package. However, we want to search testPyPI. The argument `--index-url` points `pip` to the testPyPI index. However, our package `foocat` depends on `pandas` which can't be found on testPyPI (it is hosted on PyPI). So, we need to use the `--extra-index-url` argument to also point `pip` to PyPI so that it can pull any necessary dependencies of `foocat` from there.
