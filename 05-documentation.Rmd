@@ -148,7 +148,7 @@ For help installing Sphinx, you can read the [Sphinx documentation](https://www.
 $ poetry add --dev sphinx
 ```
 
-> Note the use of --dev to specify a development dependency, i.e., a package that is not required by a user to use you package, but is required for development purposes.
+> Note the use of --dev to specify a development dependency, i.e., a package that is not required by a user to use your package, but is required for development purposes.
 
 Your documentation typically lives in a subdirectory called `docs` in the root package directory. At a minimum this `docs` subdirectory typically includes a `conf.py` file (which configures how Sphinx reads and builds your documentation), an `index.rst` file (a master document which will serve as the "welcome page" of your documentation and typically includes a “table of contents” linking to the various parts of your documentation), and a `Makefile` and `make.bat` file which help Sphinx to build your documentation. Other than these files, you can include as many additional files into your `docs` subdirectory as you like. The [MDS Cookiecutter template](https://github.com/TomasBeuzen/cookiecutter-ubc-mds) that we downloaded and used in [The Whole Game chapter](#whole-game) automatically created the `docs` subdirectory for you, populated with a number of files to help you quickly build your documentation. Feel free to open these files up to have a look at what's inside!
 
