@@ -50,7 +50,9 @@ Code documentation is the practice of adding human-readable descriptions to your
 
 Commenting convention in Python is described in [PEP 8 - Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/#comments). Your code comments will typically be inline or block comments. 
 
-**Inline comments** are placed on the same line as your code. They start with a `#` and should be preceded by at least two spaces. They should also start with a single space. Inline comments should not be unnecessarily verbose or just state the obvious, as this can be distracting and can actually make your code more difficult to read. We will continue to build upon the `foocat` package and `catbind()` function that has been developed throughout this book to illustrate commenting and docstrings in this chapter. An example of some inline comments are shown below.
+**Inline comments**
+
+Inline comments are placed on the same line as your code. They start with a `#` and should be preceded by at least two spaces. They should also start with a single space. Inline comments should not be unnecessarily verbose or just state the obvious, as this can be distracting and can actually make your code more difficult to read. We will continue to build upon the `foocat` package and `catbind()` function that has been developed throughout this book to illustrate commenting and docstrings in this chapter. An example of some inline comments are shown below.
 
 ```{python inline-comments, eval = FALSE}
 def catbind(a, b):
@@ -65,7 +67,9 @@ def catbind(a, b):
     return pd.Categorical(concatenated)
 ```
 
-**Block comments** are paragraph-like text used to provide a more detailed description of your code. They typically precede the code they describe and should be used sparingly to avoid making your code overly verbose. Each line of a block comment should start with a `#` and a single space and should be indented to the same level as the code it precedes. A line containing a single `#` is used as a line break to split up multi-paragraph block comments. Despite common usage, triple-quotes should not be used for block comments - they are used for docstrings as described in the next section.
+**Block comments**
+
+Block comments are paragraph-like text used to provide a more detailed description of your code. They typically precede the code they describe and should be used sparingly to avoid making your code overly verbose. Each line of a block comment should start with a `#` and a single space and should be indented to the same level as the code it precedes. A line containing a single `#` is used as a line break to split up multi-paragraph block comments. Despite common usage, triple-quotes should not be used for block comments - they are used for docstrings as described in the next section.
 
 ```{python block-comments, eval = FALSE}
 def catbind(a, b):
