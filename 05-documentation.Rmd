@@ -5,11 +5,11 @@ options(prompt = '>>> ')
 options(continue = '>>> ')
 ```
 
-Documentation is one of the most important aspects of a good package. For the users of your code (including your future self) it is necessary to have readable and accessible documentation expressing what your pakcage does, how to install your package, and how to use the user-facing functions within it. Section [2.6 Package documentation](#pkg-docs) in [The Whole Game chapter](#whole-game) briefly introduced documentation in Python package development. This chapter now describes in more detail how to document your package. This chapter is inspired by [the Object documentation](https://r-pkgs.org/man.html) chapter of the [R packages book](https://r-pkgs.org/).
+Documentation is one of the most important aspects of a good package. For the users of your code (including your future self) it is necessary to have readable and accessible documentation expressing what your pakcage does, how to install your package, and how to use the user-facing functions within it. Section [2.6 Package documentation](#pkg-docs) in [The Whole Game chapter](#whole-game) briefly introduced documentation in Python package development. This chapter now describes in more detail how to document your package. This chapter is inspired by the [Object documentation chapter](https://r-pkgs.org/man.html) of the [R packages book](https://r-pkgs.org/).
 
 ## Package documentation {#pkg-documentation}
 
-You should have a few key pieces of documentation that describe your package as a whole, for example, how it can be used, licensing, who's responsible for the package and guidance for how others can contribute to its development. Typically, these more "high-level" pieces of documentation are located in the package's root directory and include:
+You should have a few key pieces of documentation that describe your package/project as a whole, for example, how it can be used, licensing, who's responsible for the package and guidance for how others can contribute to its development. Typically, these more "high-level" pieces of documentation are located in the package's root directory and include:
 
 - README
 - License
@@ -17,7 +17,7 @@ You should have a few key pieces of documentation that describe your package as 
 - Contributors (optional)
 - Contributing (optional)
 
-Each of these files are described in more detail below. Note that the Cookiecutter template described and used in Section [2.1 Use Cookiecutter & Poetry to create a Python project](#pkg-docs) of [The Whole Game chapter](#whole-game) automatically creates and fills out these files for you.
+Each of these files are described in more detail below. Note that the Cookiecutter template described and used in [Section 2.1 Use Cookiecutter & Poetry to create a Python project](#pkg-docs) of [The Whole Game chapter](#whole-game) automatically created these files for you.
 
 ### README
 
@@ -37,11 +37,11 @@ All packages should include a license file. A license tells others what they can
 
 ### Conduct/Contributors/Contributing (optional)
 
-These files (and others) are optional inclusions to your project but help to define, protect and promote your work in the open-source world. Breifly, a *conduct file* is used to define community standards, identify a welcoming and inclusive project, and outline procedures for handling abuse. GitHub provides a [good guide](https://help.github.com/en/github/building-a-strong-community/adding-a-code-of-conduct-to-your-project) for adding a code of conduct to your project. A *contributors file* can be used to clearly idenitfy project contributors (although you may choose to include this in your README file instead). A *contributing file* simply outlines procedures for how users can efficiently and helpfully contribute to your project. GitHub provides a [good guide](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors) for adding a contributing file to your project. Note that these three files are created automatically if you use the Cookiecutter template from Section [2.1 Use Cookiecutter & Poetry to create a Python project](#pkg-docs) of [The Whole Game chapter](#whole-game).
+These files (and others) are optional inclusions to your project but help to define, protect and promote your work in the open-source world. Briefly, a *conduct file* is used to define community standards, identify a welcoming and inclusive project, and outline procedures for handling abuse. GitHub provides a [good guide](https://help.github.com/en/github/building-a-strong-community/adding-a-code-of-conduct-to-your-project) for adding a code of conduct to your project. A *contributors file* can be used to clearly identify project contributors (although you may choose to include this in your README file instead). A *contributing file* simply outlines procedures for how users can efficiently and helpfully contribute to your project. GitHub provides a [good guide](https://help.github.com/en/github/building-a-strong-community/setting-guidelines-for-repository-contributors) for adding a contributing file to your project.
 
 ## Code documentation {#code-documentation}
 
-Code documentation is the practice of adding human-readable descriptions to your code. Efficient and proper code documentation is important to help others understand how your code works, why it works, for identifying bugs, and for extending code functionality. Code documentation can be split into two main categories: 
+Code documentation is the practice of adding human-readable descriptions to your code. Efficient and proper code documentation is important for helping others understand how your code works, why it works, for identifying bugs, and for extending code functionality. Code documentation can be split into two main categories: 
 
 - **comments**: text within your code that is used to clarify what the code is doing and why.
 - **docstrings**: the first statement in a module, function, class, or method definition (preceding any code) that describes what the code does and may include defintions of arguments, example usage, and/or other important notes.
@@ -65,7 +65,7 @@ def catbind(a, b):
     return pd.Categorical(concatenated)
 ```
 
-**Block comments** are paragraph-like text used to provide a more detailed description of your code. They typically precede the code they describe and should be used sparingly to avoid making your code overly verbose. Each line of a block comment should start with a `#` and a single space and should be indented to the same level as the code it precedes. A line containing a single `#` is used as a line break to split up multi-paragraph block comments. Despite common usage, triple-quotes should not be used for block comments - they are used for docstrings as described in the next section;
+**Block comments** are paragraph-like text used to provide a more detailed description of your code. They typically precede the code they describe and should be used sparingly to avoid making your code overly verbose. Each line of a block comment should start with a `#` and a single space and should be indented to the same level as the code it precedes. A line containing a single `#` is used as a line break to split up multi-paragraph block comments. Despite common usage, triple-quotes should not be used for block comments - they are used for docstrings as described in the next section.
 
 ```{python block-comments, eval = FALSE}
 def catbind(a, b):
@@ -83,17 +83,17 @@ def catbind(a, b):
 
 ### Docstrings
 
-General docstring convention in Python is described in [PEP 257 - Docstring Conventions](https://www.python.org/dev/peps/pep-0257/). Docstrings are documentation included as the first statement in a module, function, class, or method in Python. Docstrings in Python are surrounded by triple-quotes, but other than that, there is flexibility in how you write your docstring. There are many different docstring style conventions used in Python. The exact style you use is important for helping you to render your documentation locally and remotely (more on that in the next section). The main styles currently in use are restructured text/sphinx style, google style, and NumPy style. Examples of each of these styles can be found [here](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html). Presently, we recommend the use of NumPy-style documentation strings due to their readability and prevalance in many open-source Python projects.
+General docstring convention in Python is described in [PEP 257 - Docstring Conventions](https://www.python.org/dev/peps/pep-0257/). Docstrings are documentation included as the first statement in a module, function, class, or method in Python. Docstrings in Python are surrounded by triple-quotes, but other than that, there is flexibility in how you write your docstring. There are many different docstring style conventions used in Python. The exact style you use is important for helping you to render your documentation locally and remotely (more on that in the next section). The main styles currently in use are restructured text/sphinx style, google style, and NumPy style. Examples of each of these styles can be found [here](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html). Presently, we recommend the use of NumPy style documentation strings due to their readability and prevalance in many open-source Python projects.
 
-Numpy style docstrings are described in detail in the [numpydoc docstring guide](https://NumPydoc.readthedocs.io/en/latest/format.html#docstring-standard). From that link, you will see that there is a wide range of information that you can include in your docstring, but the majority of docstrings you will write will comprise only the following sections:
+NumPy style docstrings are described in detail in the [numpydoc docstring guide](https://NumPydoc.readthedocs.io/en/latest/format.html#docstring-standard). From that link, you will see that there is a wide range of information that you can include in your docstring, but the majority of docstrings you write will comprise only the following sections:
 
 1. A one-line summary that does not use variable names or the function name;
 2. An extended description/summary;
 3. Parameter definitions and descriptions;
-4. Returned value defintions and descriptions;
+4. Returned value defintions and descriptions; and,
 5. Example usage.
 
-An example of the NumPy docstring style is shown below. Note that there is specific syntax and spacing for defining each element of your documentation - although most of the time, you will simply be copy-pasting docstring templates and won't need to worry about remembering every detail. Also each of the elements in the above numbered list is denoted by `(#)` in the docstring below for demonstration purposes, these are not part of the docstring:
+An example of the NumPy docstring style is shown below. Note that there is specific syntax and spacing for defining each element of your documentation - although most of the time, you will simply be copy-pasting docstring templates and won't need to worry about remembering every detail. Each of the elements in the above numbered list is denoted by parentheses, e.g., `(1)`, in the docstring below to help you identify the different parts of the docstring - these are not part of a standard docstring.
 
 ```{python docstring-style, eval = FALSE}
 import pandas as pd
@@ -138,9 +138,9 @@ def catbind(a, b):
 
 ## Putting it all together and rendering your documentation
 
-### Locally
+### Rendering locally
 
-Now that you've gone to the effort of documenting your package and code, the next step is to combine all of this documentation into a clean, readable "document". This is important to help users explore and understand the functionality of your package without having to search through the source code or package directory structure. [Sphinx](https://www.sphinx-doc.org/en/master/) is the main documentation generator used by the Python community (but note that it also works with, e.g., R, Java, PHP). Sphinx is based on reStructuredText, a lightweight markup language that works similar to Markdown but uses quite different syntax. Many of the files we'll use in this section to build our documentation are .rst format, however we won't focus on teaching trhe syntax here. Instead, we point you to the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) which provides a comprehensive guide to using reStructuredText.
+Now that you've gone to the effort of documenting your package and code, the next step is to combine all of this documentation into a clean, readable "document". This is important to help users explore and understand the functionality of your package without having to search through the source code or package directory structure. [Sphinx](https://www.sphinx-doc.org/en/master/) is the main documentation generator used by the Python community (but note that it also works with, e.g., R, Java, PHP). Sphinx is based on reStructuredText, a lightweight markup language that works similar to Markdown but with different syntax. Many of the files we'll use in this section to build our documentation are in .rst format. While we won't focus on teaching the reStructuredText syntax here, if you open up one of these files, you'll find that editing them is quite intuitive - if you wish to learn more about reStructuredText, we point you to the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html) which provides a comprehensive guide to reStructuredText syntax.
 
 For help installing Sphinx, you can read the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/installation.html) but for the purpose of this section we will assume you are using poetry to help build your package. To add sphinx as a development dependency of your package we can run the following:
 
@@ -164,12 +164,11 @@ Your documentation typically lives in a subdirectory called `docs` in the root p
     └── make.bat
     └── Makefile
     └── usage.rst
-    └── _static
 ```
 
 If you don't want to use the MDS Cookiecutter to build this directory structure, you can see the [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/quickstart.html#) for help getting started building documentation from scratch.
 
-Based on our cookiecutter template, we can build our documentation locally using the command:
+We can build our documentation locally using the command:
 
 ```
 $ cd docs
@@ -184,7 +183,7 @@ This builds our base documentation which will be located in a newly created subd
 
 <img src="img/documentation1.png" width=600>
 
-This cookiecutter provides you with most of the base documentatino you'll want for your package but you can modify it as much as you like. While it is possible to include link to files in your documentation that are not .rst format (such as .md files) with Sphinx - things start to get a little bit hacky and we recommend sticking with the workflow described above. If you want to link to files such as images in your documentation, a common approach is to create a subdirectory called `_static` in the `docs` directory (this was created for you by our cookiecutter) within which your files are placed and referenced to.
+This cookiecutter provides you with most of the base documentatino you'll want for your package but you can modify it as much as you like. While it is possible to include link to files in your documentation that are not .rst format (such as .md files) with Sphinx - things start to get a little bit hacky and we recommend sticking with the workflow described above. If you want to link to files such as images in your documentation, a common approach is to create a subdirectory called `_static` in the `docs` directory within which your files are placed and referenced to.
 
 However, we're not done yet. The final thing we need to do is extract all the docstrings from our code and include them in our documentation so that they are easily accessible for users. In the `index.html` page above, if you click on the `Module Index` link under the heading “Indices and tables” at the bottom of the page you will get a “Your file was not found" message. This is because we need to render our docstrings into our documentation. To do this we can use the Sphinx extension [`napolean`](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/index.html) in combination with `autodoc` to render our NumPy style docstrings into our documentation. To add `napoleon` as a dependency to our development environment we can use the following command:
 
@@ -192,7 +191,7 @@ However, we're not done yet. The final thing we need to do is extract all the do
 $ poetry add --dev sphinxcontrib-napoleon
 ```
 
-> Noe that to use the extensions, we need to add `extensions = ['sphinx.ext.napoleon', 'sphinx.ext.autodoc']` in the `conf.py` file in the `docs` directory, but we have taken care of this for you with our Cookiecutter template.
+> Note that to use the extensions, we need to add `extensions = ['sphinx.ext.napoleon', 'sphinx.ext.autodoc']` in the `conf.py` file in the `docs` directory, but we have taken care of this for you with our Cookiecutter template.
 
 Now we can change back to the root `foocat` directory and use `sphinx-apidoc` to render our docstrings into our documentation (the renders will appear in `docs/source/`), and then `make html` to re-render our docs:
 
@@ -211,11 +210,11 @@ We can click on the `foocat.foocat` module (which contains our `catbind()` funct
 
 <img src="img/documentation3.png" width=600>
 
-We've now successfully created an html render of our documentation locally. You could of course send this documentation around locally, but it would be much more efficient to upload this documentation to an easily accessible remote location linked to your package. We'll explore remotely hosting your documentation in the next section.
+We've now successfully created an html render of our documentation locally. You could of course send this documentation around locally, but it would be much more efficient to upload this documentation to an easily accessible remote location linked to your package. At this point you should push your rendered documentation to GitHub. In the next section, we'll explore how we can then take this documentation and host it remotely.
 
-### Remotely
+### Rendering remotely
 
-[Read the Docs](https://readthedocs.org/) is the most commonly used resource for hosting package documentation online. Assuming you have rendered your documentation locally and pushed it to your package's GitHub repository you can do the following to host it on Read the Docs:
+[Read the Docs](https://readthedocs.org/) is the most commonly used resource for hosting package documentation online. Assuming you have rendered your documentation locally and pushed it to your package's remote GitHub repository you can do the following to host it on Read the Docs:
 
 1. Visit <https://readthedocs.org/> and click on "Sign up";
 2. Select "Sign up with GitHub";
