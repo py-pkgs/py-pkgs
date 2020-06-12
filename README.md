@@ -18,6 +18,15 @@ If you'd like develop and build the py-pkgs book from source, you should:
 
 A fully-rendered HTML version of the book will be built in `py-pkgs/_build/html/`.
 
+## Hosting the book (for developers)
+
+The html version of the book in hosted on the `gh-pages` branch of this repo. Push updated version of the book to this branch by:
+
+- Navigating to the local build
+- `ghp-import -n -p -f py-pkgs/_build/html`
+
+More info on this process can be found [here](https://jupyterbook.org/publish/gh-pages.html#manually-host-your-book-with-github-pages). This process should be automated with GitHub Actions.
+
 ## Contributing
 
 Contributions are welcome and greatly appreciated! If you're interested in contributing to this project, take a look at the [contributor guide](CONTRIBUTING.md).
