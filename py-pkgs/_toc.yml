@@ -1,0 +1,7 @@
+- file: content/00-preface
+
+- file: content/01-setup
+- file: content/02-the-whole-game
+- file: content/03-package-structure
+- file: content/04-testing
+- file: content/05-documentation

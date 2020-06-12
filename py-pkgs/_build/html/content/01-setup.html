@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>System Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .secondtoggle, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Whole Game" href="02-the-whole-game.html" />
+    <link rel="prev" title="Welcome to Py-Pkgs!" href="00-preface.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/py-pkgs-hex.png" class="logo" alt="logo">
+  
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  
+  <ul class="nav sidenav_l1">
+  <li class="active">
+    <a href="">1. System Setup</a>
+  </li>
+  <li class="">
+    <a href="02-the-whole-game.html">2. The Whole Game</a>
+  </li>
+  <li class="">
+    <a href="03-package-structure.html">3. Package structure and state</a>
+  </li>
+  <li class="">
+    <a href="04-testing.html">4. Testing</a>
+  </li>
+  <li class="">
+    <a href="05-documentation.html">5. Documentation</a>
+  </li>
+</ul>
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse" data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu" aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation" title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+            <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i class="fas fa-download"></i></button>
+
+            
+            <div class="dropdown-buttons">
+                <!-- ipynb file if we had a myst markdown file -->
+                
+                <!-- Download raw file -->
+                <a class="dropdown-buttons" href="../_sources/content/01-setup.ipynb.txt"><button type="button" class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip" data-placement="left">.ipynb</button></a>
+                <!-- Download PDF via print -->
+                <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF" onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+            </div>
+            
+        </div>
+
+        <!-- Source interaction buttons -->
+        
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+        
+    </div>
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+<div class="tocsection onthispage pt-5 pb-3">
+    <i class="fas fa-list"></i> On this page
+</div>
+
+<nav id="bd-toc-nav">
+    <ul class="nav section-nav flex-column">
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#installing-and-updating-python" class="nav-link">Installing and Updating Python</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#register-for-a-pypi-account" class="nav-link">Register for a PyPI account</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h2">
+            <a href="#python-ides" class="nav-link">Python IDEs</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#pycharm" class="nav-link">PyCharm</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h3">
+            <a href="#rstudio" class="nav-link">RStudio</a><ul class="nav section-nav flex-column">
+                
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#find-where-anaconda-is-installed-on-your-machine" class="nav-link">Find where Anaconda is installed on your machine</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio" class="nav-link">Configuring reticulate for to use the Python REPL inside RStudio</a>
+        </li>
+    
+        <li class="nav-item toc-entry toc-h4">
+            <a href="#configuring-the-rstudio-terminal" class="nav-link">Configuring the RStudio terminal</a>
+        </li>
+    
+            </ul>
+        </li>
+    
+            </ul>
+        </li>
+    
+    </ul>
+</nav>
+
+
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="system-setup">
+<span id="id1"></span><h1>System Setup<a class="headerlink" href="#system-setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-and-updating-python">
+<span id="python-setup"></span><h2>Installing and Updating Python<a class="headerlink" href="#installing-and-updating-python" title="Permalink to this headline">¶</a></h2>
+<p>In order to start off on a good footing, we recommend you follow these system set-up instructions so you will run into fewer technical issues (compared to not using the same system this book was designed for).</p>
+<p>For this book, we recommend installing <strong>Python 3.7</strong> via the Anaconda distribution, following the instructions in the <a class="reference external" href="https://docs.anaconda.com/anaconda/install/">Anaconda documentation</a>. If you already have installed this distribution, ensure Python, and the <code class="docutils literal notranslate"><span class="pre">conda</span></code> package manager is up to date by running the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda update --all
+</pre></div>
+</div>
+<p>Next, use conda to install <a class="reference external" href="https://python-poetry.org/">Python poetry</a> - a python package that will help us more efficiently build our Python packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge poetry
+</pre></div>
+</div>
+<p>Finally, we will install <code class="docutils literal notranslate"><span class="pre">cookiecutter</span></code> - a package that will help us create Python projects from pre-made templates:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda install -c conda-forge cookiecutter
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-for-a-pypi-account">
+<span id="register-pypi"></span><h2>Register for a PyPI account<a class="headerlink" href="#register-for-a-pypi-account" title="Permalink to this headline">¶</a></h2>
+<p>PyPI is the official software repository for Python. To publish a Python package on PyPI, so that it can be shared with others, you will need to register for a PyPI account. You can do so freely on the <a class="reference external" href="https://pypi.org/account/register/">PyPI website</a>.</p>
+<p>Before we are ready to publish our packages on PyPI, it is advisable that we test drive them on TestPyPI first. To do so, you’ll also need to register for a TestPyPI account. You can do so freely on the <a class="reference external" href="https://test.pypi.org/account/register/">TestPyPI website</a>.</p>
+</div>
+<div class="section" id="python-ides">
+<span id="python-ide"></span><h2>Python IDEs<a class="headerlink" href="#python-ides" title="Permalink to this headline">¶</a></h2>
+<p>You’ll want a Python IDE (integrated development environment) to help in creating Python packages. Commonly used free Python IDEs include <a class="reference external" href="https://code.visualstudio.com/">Visual Studio Code</a>, <a class="reference external" href="https://atom.io/">Atom</a>, and <a class="reference external" href="https://www.jetbrains.com/pycharm/">PyCharm Community Edition</a>. Visual Studio Code and Atom are text editors that can be customised with extensions to act as Python (or any other language) IDEs. In contrast, PyCharm is specifically a Python IDE and will work right out of the box. Alternatively, the RStudio IDE now also supports Python and we use this IDE for the examples presented in this book.</p>
+<p>You’ll be able to follow along with the examples presented in this book regardless of what IDE you choose, but we recommend either <a class="reference internal" href="#pycharm-setup"><span class="std std-ref">PyCharm</span></a> or <a class="reference internal" href="#rstudio-setup"><span class="std std-ref">RStudio</span></a>.</p>
+<div class="section" id="pycharm">
+<span id="pycharm-setup"></span><h3>PyCharm<a class="headerlink" href="#pycharm" title="Permalink to this headline">¶</a></h3>
+<p>PyCharm offers a paid <em>Professional</em> version and free <em>Community</em> version. You can download either from the <a class="reference external" href="https://www.jetbrains.com/pycharm/download/">JetBrains website</a>. Once downloaded, PyCharm will guide you through initial setup. We recommended using all default settings throughout the setup, with the exception of installing the <em>Markdown Plugin</em> when prompted to install “Featured Plugins”.</p>
+<p>Once setup is complete you should see something like the following screenshot:</p>
+<div class="figure align-default" id="pycharm-1">
+<a class="reference internal image-reference" href="../_images/pycharm-1.png"><img alt="../_images/pycharm-1.png" src="../_images/pycharm-1.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">PyCharm setup 1.</span><a class="headerlink" href="#pycharm-1" title="Permalink to this image">¶</a></p>
+</div>
+<p>We now need to link Anaconda with PyCharm.</p>
+<ol class="simple">
+<li><p>Click <em>Configure</em> at the bottom right of the screen and then <em>Preferences</em>.</p></li>
+<li><p>Select <em>Project Interpreter</em> from the tab-menu and then click the gear icon to the right of the drop-down menu that appears and select <em>Add…</em>.</p></li>
+<li><p>In the pop-up menu that appears, click <em>System Interpreter</em> from the tab-menu and click the three dots (<em>…</em>) to the right of the drop-down menu.</p></li>
+<li><p>You now need to provide the path to Anaconda’s installation of Python, something like “/Users/user/anaconda3/bin/python”. You can determine the path using the following:</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Mac OS &amp; Linux:</strong> In terminal, type: <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">Python</span></code></p></li>
+<li><p><strong>Windows:</strong> In the Anaconda Prompt type: <code class="docutils literal notranslate"><span class="pre">where</span> <span class="pre">python</span></code>.</p></li>
+</ul>
+<ol class="simple">
+<li><p>Copy and paste the path into the PyCharm pop-up. At this point, your window will probably look something like the one below. Click <em>OK</em>.</p></li>
+</ol>
+<div class="figure align-default" id="pycharm-2">
+<a class="reference internal image-reference" href="../_images/pycharm-2.png"><img alt="../_images/pycharm-2.png" src="../_images/pycharm-2.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">PyCharm setup 2.</span><a class="headerlink" href="#pycharm-2" title="Permalink to this image">¶</a></p>
+</div>
+<ol class="simple">
+<li><p>Click <em>OK</em> again to get back to the <em>Preferences</em> menu, at which point PyCharm will show Anaconda’s installation of Python in the <em>Project Interpreter</em> drop-down menu and will populate the screen with the packages available to that interpreter (these will be all the packages installed in your base Anaconda environment)</p></li>
+<li><p>Click <em>OK</em> to return to the main menu.</p></li>
+<li><p>To start a new project you will click <em>Create New Project</em>. In the subsequent screen, an example of which is shown below, you may choose a location for your new project and you can also select an interpreter. Choose the <em>Existing Interpreter</em> radio button and then from the drop-down menu select Anaconda’s Python interpreter that we just set-up (this will likely be the only option in the drop-down menu). Click <em>Create</em> to get started.</p></li>
+</ol>
+<div class="figure align-default" id="pycharm-3">
+<a class="reference internal image-reference" href="../_images/pycharm-3.png"><img alt="../_images/pycharm-3.png" src="../_images/pycharm-3.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">PyCharm setup 3.</span><a class="headerlink" href="#pycharm-3" title="Permalink to this image">¶</a></p>
+</div>
+<p>Note that PyCharm has excellent integration with Conda environments. If you wish to use a custom Conda environment for a project, you can easily create or select an existing environment to use as a project’s interpreter. To do this, in Step 3 above, simply click <em>Conda Environment</em> rather than <em>System Interpreter</em> and create or select an existing Conda environment. This environment will then be available to select as a project interpreter for new or existing projects.</p>
+<p>This was a brief, practical guide to getting started with PyCharm Community Edition. We recommend checking out the <a class="reference external" href="https://www.jetbrains.com/pycharm/documentation/">documentation</a> for more guidance on setting up and using PyCharm.</p>
+</div>
+<div class="section" id="rstudio">
+<span id="rstudio-setup"></span><h3>RStudio<a class="headerlink" href="#rstudio" title="Permalink to this headline">¶</a></h3>
+<p>This book uses the RStudio IDE to develop Python packages because in the <a class="reference external" href="https://ubc-mds.github.io/about/">UBC Master of Data Science program</a> we teach both the R and Python programming languages and prefer to use an IDE that works well with both. If you would like to use the RStudio IDE we recommend installing the most recent version of the IDE from the <a class="reference external" href="https://rstudio.com/products/rstudio/download/preview/">preview site</a> and then <a class="reference external" href="https://cran.r-project.org/">installing R from CRAN</a>, and the <code class="docutils literal notranslate"><span class="pre">reticulate</span></code> R package via <code class="docutils literal notranslate"><span class="pre">install.packages(&quot;reticulate&quot;)</span></code> from the R console inside RStudio. When installing reticulate, you will be prompted to install miniconda, if you have already installed the Anaconda distribution of Python (which we did earlier), answer “no” to installing miniconda at this prompt.</p>
+<div class="section" id="find-where-anaconda-is-installed-on-your-machine">
+<span id="where-anaconda"></span><h4>Find where Anaconda is installed on your machine<a class="headerlink" href="#find-where-anaconda-is-installed-on-your-machine" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Mac OS &amp; Linux:</strong> In terminal, type: <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">Python</span></code></p></li>
+<li><p><strong>Windows:</strong> In the Anaconda Prompt type: <code class="docutils literal notranslate"><span class="pre">where</span> <span class="pre">python</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="configuring-reticulate-for-to-use-the-python-repl-inside-rstudio">
+<span id="reticulate"></span><h4>Configuring <code class="docutils literal notranslate"><span class="pre">reticulate</span></code> for to use the Python REPL inside RStudio<a class="headerlink" href="#configuring-reticulate-for-to-use-the-python-repl-inside-rstudio" title="Permalink to this headline">¶</a></h4>
+<p>Create a file named <code class="docutils literal notranslate"><span class="pre">.Rprofile</span></code> in your <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory that contains the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Sys.setenv<span class="o">(</span><span class="nv">RETICULATE_PYTHON</span> <span class="o">=</span> <span class="s2">&quot;path_to_the_folder_containing_anaconda&#39;s_python&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>For me the <code class="docutils literal notranslate"><span class="pre">&quot;path_to_the_folder_containing_anaconda's_python&quot;</span></code> was <code class="docutils literal notranslate"><span class="pre">'Users/user1/anaconda3/bin/Python'</span></code> on a Mac OS.</p>
+<p>Restart RStudio for this to take effect.</p>
+</div>
+<div class="section" id="configuring-the-rstudio-terminal">
+<span id="configure-rstudio"></span><h4>Configuring the RStudio terminal<a class="headerlink" href="#configuring-the-rstudio-terminal" title="Permalink to this headline">¶</a></h4>
+<p><strong>Mac OS &amp; Linux</strong></p>
+<p>Open (or create) the file called <code class="docutils literal notranslate"><span class="pre">.bash_profile</span></code> in your <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory and add the following to the last line of that file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;path_to_the_folder_containing_anaconda&#39;s_python:$PATH&quot;</span>
+</pre></div>
+</div>
+<p>For me that line is <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=&quot;//anaconda3/bin:$PATH&quot;</span></code>.</p>
+<p>Restart RStudio for this to take effect.</p>
+<p><strong>Windows</strong></p>
+<p>The default terminal in RStudio on Windows is PowerShell. This causes some unexpected problems as its not a true bash shell. You <strong>should</strong> change this using the following menu selections inside RStudio: Global Options -&gt; Terminal -&gt; Shell -&gt; Git Bash</p>
+<div class="figure align-default" id="rstudio-git-bash">
+<a class="reference internal image-reference" href="../_images/git-bash-windows.png"><img alt="../_images/git-bash-windows.png" src="../_images/git-bash-windows.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Setting up Git Bash in RStudio.</span><a class="headerlink" href="#rstudio-git-bash" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="00-preface.html" title="previous page">Welcome to Py-Pkgs!</a>
+    <a class='right-next' id="next-link" href="02-the-whole-game.html" title="next page">The Whole Game</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Tomas Beuzen & Tiffany Timbers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>
