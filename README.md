@@ -1,4 +1,7 @@
 # Python packages
+
+![build](https://github.com/UBC-MDS/py-pkgs/workflows/render-and-deploy/badge.svg)
+
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](https://www.tiffanytimbers.com/)
 
 <p align="center">
