@@ -6,3 +6,6 @@
 - file: content/04-testing
 - file: content/05-documentation
 - file: content/06-releasing-versioning
+- file: content/07-ci-cd
+- file: content/08-cli
+- file: content/09-cheatsheet
