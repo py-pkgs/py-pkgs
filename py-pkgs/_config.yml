@@ -1,7 +1,7 @@
 # Book settings
 title: 
 author: Tomas Beuzen & Tiffany Timbers
-logo: content/img/project/py-pkgs-hex.png
+logo: chapters/img/project/py-pkgs-hex.png
 
 repository:
   url: https://github.com/UBC-MDS/py-pkgs
@@ -10,15 +10,18 @@ latex:
   latex_documents:
     targetname: book.tex
 
+# Execution settings
+execute:
+  execute_notebooks         : auto  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
+
 # HTML-specific settings
 html:
-  favicon                   : "content/img/project/favicon.ico"  # A path to a favicon image
-  navbar_number_sections    : true  # Add a number to each section in your left navbar
+  favicon                   : "chapters/img/project/favicon.ico"  # A path to a favicon image
   use_edit_page_button      : false  # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
   use_repository_button     : true  # Whether to add a link to your repository button
   use_issues_button         : true  # Whether to add an "open an issue" button
   extra_navbar              : Powered by <a href="https://jupyterbook.org">Jupyter Book</a>  # Will be displayed underneath the left navbar.
   extra_footer              : ""  # Will be displayed underneath the footer.
   google_analytics_id       : ""  # A GA id that can be used to track book views.
-  home_page_in_navbar       : false  # Whether to include your home page in the left Navigation Bar
+  home_page_in_navbar       : true  # Whether to include your home page in the left Navigation Bar
   baseurl                   : ""  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/

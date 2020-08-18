@@ -1,11 +1,11 @@
-- file: content/00-preface
-
-- file: content/01-setup
-- file: content/02-the-whole-game
-- file: content/03-package-structure
-- file: content/04-testing
-- file: content/05-documentation
-- file: content/06-releasing-versioning
-- file: content/07-ci-cd
-- file: content/08-cli
-- file: content/09-cheatsheet
+- file: chapters/00-preface
+  numbered: true
+- file: chapters/01-setup
+- file: chapters/02-the-whole-game
+- file: chapters/03-package-structure
+- file: chapters/04-testing
+- file: chapters/05-documentation
+- file: chapters/06-releasing-versioning
+- file: chapters/07-ci-cd
+- file: chapters/08-cli
+- file: chapters/09-cheatsheet
