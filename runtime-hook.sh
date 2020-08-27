@@ -6,3 +6,4 @@
 # modifying the ToC reference to welcome.html
 cp py-pkgs/_build/html/welcome.html py-pkgs/_build/html/index.html
 sed -i '' 's/href="#"/href="welcome.html"/g' py-pkgs/_build/html/index.html
+echo "runtime-hook successfully ran!"
