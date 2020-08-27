@@ -38,4 +38,4 @@ jobs:
 
     # Test the runtime-hook
     - name: test runtime-hook.sh
-      run: sh runtime-hook.sh
+      run: bash runtime-hook.sh
