@@ -27,7 +27,7 @@ The html version of the book in hosted on the `gh-pages` branch of this repo. A 
 
 ## Contributing
 
-Contributions are welcome and greatly appreciated! If you're interested in contributing to this project, take a look at the [contributor guide](CONTRIBUTING.md).
+Contributions are welcome and greatly appreciated! If you're interested in contributing to this project, take a look at the [contributor guide](docs/CONTRIBUTING.md).
 
 ## Contributors
 
