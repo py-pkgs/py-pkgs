@@ -1,0 +1,994 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>2. The Whole Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Package Structure and State" href="03-package-structure.html" />
+    <link rel="prev" title="1. System Setup" href="01-setup.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/py-pkgs-hex.png" class="logo" alt="logo">
+  
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00-preface.html">
+   Welcome to Py Pkgs!
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01-setup.html">
+   1. System Setup
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. The Whole Game
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03-package-structure.html">
+   3. Package Structure and State
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04-testing.html">
+   4. Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05-documentation.html">
+   5. Documentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06-releasing-versioning.html">
+   6. Releasing and Versioning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07-ci-cd.html">
+   7. Continuous Integration and Deployment
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08-cli.html">
+   8. Packages with a Command Line Interface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09-cheatsheet.html">
+   9. Python Packaging Cheat Sheet
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/chapters/02-the-whole-game.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/UBC-MDS/py-pkgs"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/UBC-MDS/py-pkgs/issues/new?title=Issue%20on%20page%20%2Fchapters/02-the-whole-game.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-cookiecutter-poetry-to-create-a-python-package-directory-structure">
+   2.1. Using Cookiecutter &amp; Poetry to Create a Python Package Directory Structure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#putting-your-project-under-version-control">
+   2.2. Putting Your Project Under Version Control
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-local-version-control">
+     2.2.1. Set Up Local Version Control
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-remote-version-control">
+     2.2.2. Set Up Remote Version Control
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#writing-your-first-function">
+   2.3. Writing Your First Function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-drive-your-package-code">
+   2.4. Test Drive Your Package Code
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#add-package-dependencies">
+   2.5. Add Package Dependencies
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#package-documentation">
+   2.6. Package Documentation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reading-rendering-documentation-locally">
+     2.6.1. Reading &amp; Rendering Documentation Locally
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reading-rendering-documentation-remotely">
+     2.6.2. Reading &amp; Rendering Documentation Remotely
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#testing">
+   2.7. Testing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#building-publishing-your-package">
+   2.8. Building &amp; Publishing Your Package
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#testpypi">
+     2.8.1. TestPyPI
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#pypi">
+     2.8.2. PyPI
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="the-whole-game">
+<span id="whole-game"></span><h1><span class="section-number">2. </span>The Whole Game<a class="headerlink" href="#the-whole-game" title="Permalink to this headline">¶</a></h1>
+<p>To start this book, we will first develop an entire small toy Python package from beginning to end, with the aim of giving a high level overview of the key steps in developing a Python package. Later chapters will then explore each of these key steps in more detail. This chapter is a Pythonified version of <a class="reference external" href="https://r-pkgs.org/whole-game.html">The Whole Game chapter</a> written by Jenny Bryan that can be found in the <a class="reference external" href="https://r-pkgs.org/">R packages book</a>.</p>
+<div class="section" id="using-cookiecutter-poetry-to-create-a-python-package-directory-structure">
+<span id="cookiecutter-poetry"></span><h2><span class="section-number">2.1. </span>Using Cookiecutter &amp; Poetry to Create a Python Package Directory Structure<a class="headerlink" href="#using-cookiecutter-poetry-to-create-a-python-package-directory-structure" title="Permalink to this headline">¶</a></h2>
+<p>The first thing to do is create a directory structure for our Python package. So that we don’t have to create this structure from scratch, we will use Cookiecutter &amp; Poetry to do this for us (both of which you installed back in <a class="reference internal" href="01-setup.html#python-setup"><span class="std std-ref">Installing &amp; Updating Python</span></a>).</p>
+<p>Cookiecutter is a tool for populating a file and directory structure from a pre-made template. We have developed our own <a class="reference external" href="https://github.com/UBC-MDS/cookiecutter-ubc-mds">Cookiecutter template</a> which is based off the template by the <a class="reference external" href="https://www.pyopensci.org/">PyOpenSci</a> organization for creating Python packages (PyOpenSci is a not-for-profit organization that promotes open and reproducible research through peer-review of scientific Python packages). To use our Cookiecutter template to set up the structure of your Python package, open up a terminal session, change into the directory where you want your package to live and run the line of code below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git
+</pre></div>
+</div>
+<p>You will be prompted to provide information that will help customize the project.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this tutorial we will be calling our package <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code>. However, we will eventually be publishing our package to Python’s main package index <a class="reference external" href="https://pypi.org/">PyPI</a>. Package names on PyPI must be unique. As a result, you will need to choose a <strong>unique name for your package</strong> while following this tutorial. Something like <code class="docutils literal notranslate"><span class="pre">pypkgs_[your</span> <span class="pre">intials]</span></code> might be appropriate (e.g., <code class="docutils literal notranslate"><span class="pre">pypkgs_TB</span></code>). You should always check if your chosen name is already taken by visiting PyPI and searching for that name.</p>
+</div>
+<p>Below is an example of how to respond to the Cookiecutter prompts (default values for each attribute are shown in square brackets, hitting enter will accept the default attribute value):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>full_name <span class="o">[</span>Monty Python<span class="o">]</span>: Tomas Beuzen
+github_username <span class="o">[</span>mpython<span class="o">]</span>: TomasBeuzen
+project_name <span class="o">[</span>My Python package<span class="o">]</span>: pypkgs
+project_slug <span class="o">[</span>pypkgs<span class="o">]</span>: 
+project_short_description <span class="o">[</span>This cookiecutter creates a boilerplate <span class="k">for</span> a Python project.<span class="o">]</span>: Python package that eases the pain of concatenating Pandas categoricals!
+version <span class="o">[</span><span class="s1">&#39;0.1.0&#39;</span><span class="o">]</span>: 
+Select open_source_license:
+<span class="m">1</span> - MIT license
+<span class="m">2</span> - BSD license
+<span class="m">3</span> - ISC license
+<span class="m">4</span> - Apache Software License <span class="m">2</span>.0
+<span class="m">5</span> - GNU General Public License v3
+Choose from <span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span>, <span class="m">4</span>, <span class="m">5</span> <span class="o">[</span><span class="m">1</span><span class="o">]</span>: 
+Select include_github_actions:
+<span class="m">1</span> - no
+<span class="m">2</span> - build
+<span class="m">3</span> - build+deploy
+Choose from <span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span> <span class="o">[</span><span class="m">1</span><span class="o">]</span>:
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>In the example above we chose not to include any GitHub Actions workflows in our initial directory structure. GitHub Actions workflows can help automate the building, testing and deployment of your Python package, workflows typically called Continuous Integration (CI) and Continuous Deployment (CD). We’ll explore these topics in more detail in a later chapter.</p>
+</div>
+<p>We now have a new directory called <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> (of course, your package will have a different name but for the rest of the book, we’ll keep referring to it as <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code>). Next, we need to navigate into the <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> directory and initialize the project as a Poetry project so that we can take advantage of the package management and building tools of Poetry:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> pypkgs
+$ poetry init
+</pre></div>
+</div>
+<p>Again we are prompted for more information related to our package. Once again, default values are shown in square brackets and have been populated where possible from the Cookiecutter template. Here is an example of how to respond to the prompts:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>This <span class="nb">command</span> will guide you through creating your pyproject.toml config.
+
+Package name <span class="o">[</span>pypkgs<span class="o">]</span>:  
+Version <span class="o">[</span><span class="m">0</span>.1.0<span class="o">]</span>:  
+Description <span class="o">[]</span>:  Python package that eases the pain of concatenating Pandas categoricals!
+Author <span class="o">[</span>Tomas Beuzen &lt;tomas.beuzen@gmail.com&gt;, n to skip<span class="o">]</span>:  
+License <span class="o">[]</span>:  MIT
+Compatible Python versions <span class="o">[</span>^3.7<span class="o">]</span>:  
+
+Would you like to define your main dependencies interactively? <span class="o">(</span>yes/no<span class="o">)</span> <span class="o">[</span>yes<span class="o">]</span> no
+Would you like to define your development dependencies interactively? <span class="o">(</span>yes/no<span class="o">)</span> <span class="o">[</span>yes<span class="o">]</span> no
+Generated file
+
+<span class="o">[</span>tool.poetry<span class="o">]</span>
+<span class="nv">name</span> <span class="o">=</span> <span class="s2">&quot;pypkgs&quot;</span>
+<span class="nv">version</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
+<span class="nv">description</span> <span class="o">=</span> <span class="s2">&quot;Python package that eases the pain of concatenating Pandas categoricals!&quot;</span>
+<span class="nv">authors</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Tomas Beuzen &lt;tomas.beuzen@gmail.com&gt;&quot;</span><span class="o">]</span>
+<span class="nv">license</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
+
+<span class="o">[</span>tool.poetry.dependencies<span class="o">]</span>
+<span class="nv">python</span> <span class="o">=</span> <span class="s2">&quot;^3.7&quot;</span>
+
+<span class="o">[</span>tool.poetry.dev-dependencies<span class="o">]</span>
+
+<span class="o">[</span>build-system<span class="o">]</span>
+<span class="nv">requires</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;poetry&gt;=0.12&quot;</span><span class="o">]</span>
+build-backend <span class="o">=</span> <span class="s2">&quot;poetry.masonry.api&quot;</span>
+
+
+Do you confirm generation? <span class="o">(</span>yes/no<span class="o">)</span> <span class="o">[</span>yes<span class="o">]</span> 
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We said “no” to defining our dependencies interactively because it is more efficient to define them using <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">add</span></code> which we will explore a bit later on.</p>
+</div>
+<p>After using Cookiecutter and Poetry, we end up with the following directory structure:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pypkgs
+├── CONDUCT.rst
+├── CONTRIBUTING.rst
+├── CONTRIBUTORS.rst
+├── docs
+│   ├── conduct.rst
+│   ├── conf.py
+│   ├── contributing.rst
+│   ├── contributors.rst
+│   ├── index.rst
+│   ├── installation.rst
+│   ├── make.bat
+│   ├── Makefile
+│   └── usage.rst
+├── pypkgs
+│   ├── __init__.py
+│   └── pypkgs.py
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+├── .readthedocs.yml
+├── README.md
+└── tests
+    ├── __init__.py
+    └── test_pypkgs.py
+</pre></div>
+</div>
+<p>These two simple steps (Cookiecutter + Poetry) have given us a boilerplate file and directory structure suitable for building our Python package. While there are quite a few files in our boilerplate, at this point we only need to worry about a few of these to get a working package together. Specifically, we’ll be working on:</p>
+<ul class="simple">
+<li><p>the file where we will write the Python functions that our package will distribute (<code class="docutils literal notranslate"><span class="pre">pypkgs/pypkgs.py</span></code>);</p></li>
+<li><p>the file where we will write tests to ensure that our package’s functions work as we expect (<code class="docutils literal notranslate"><span class="pre">tests/test_pypkgs.py</span></code>); and,</p></li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file that defines our project’s metadata and dependencies and how it will eventually be built and distributed.</p></li>
+</ul>
+<p>Later chapters will focus on the other components of the boilerplate, which can be used to refine your package and packaging process with, for example, quality documentation, extensive testing, continuous integration, version bumping, continuous deployment, etc.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Users of the RStudio IDE may also want to make this Python project directory an RStudio project. Why? Well, once you have an <code class="docutils literal notranslate"><span class="pre">*.Rproj</span></code> file, you can use that file to quickly open the RStudio IDE (which has a terminal and an interactive Python REPL, assuming you have set this up with <code class="docutils literal notranslate"><span class="pre">reticulate</span></code>) to the project’s root directory.</p>
+</div>
+</div>
+<div class="section" id="putting-your-project-under-version-control">
+<span id="version-control"></span><h2><span class="section-number">2.2. </span>Putting Your Project Under Version Control<a class="headerlink" href="#putting-your-project-under-version-control" title="Permalink to this headline">¶</a></h2>
+<p>Before we start developing our package it is generally good practice to put your data science projects under local and remote version control. The tools we recommend using for this are Git &amp; GitHub. For this book, we assume readers have <a class="reference external" href="https://git-scm.com/">Git</a> installed on their machine, have novice Git skills, and have a <a class="reference external" href="https://github.com/">GitHub.com</a> account.</p>
+<div class="section" id="set-up-local-version-control">
+<span id="local-version-control"></span><h3><span class="section-number">2.2.1. </span>Set Up Local Version Control<a class="headerlink" href="#set-up-local-version-control" title="Permalink to this headline">¶</a></h3>
+<p>From the terminal and in the root <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> directory, we will initialize the repository to be tracked by Git using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git init
+
+Initialized empty Git repository in /Users/tbeuzen/GitHub/py-pkgs/pypkgs/.git/
+</pre></div>
+</div>
+<p>Next, we need to tell Git which files to track (which will be all of them at this point) and commit these changes locally:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;initial package setup&quot;</span>
+<span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> 8b4edcb<span class="o">]</span> initial package setup
+ <span class="m">21</span> files changed, <span class="m">704</span> insertions<span class="o">(</span>+<span class="o">)</span>
+ create mode <span class="m">100644</span> .gitignore
+ create mode <span class="m">100644</span> .readthedocs.yml
+ create mode <span class="m">100755</span> CONDUCT.rst
+ ...
+ create mode <span class="m">100644</span> pyproject.toml
+ create mode <span class="m">100644</span> tests/__init__.py
+ create mode <span class="m">100644</span> tests/test_pypkgs.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="set-up-remote-version-control">
+<span id="remote-version-control"></span><h3><span class="section-number">2.2.2. </span>Set Up Remote Version Control<a class="headerlink" href="#set-up-remote-version-control" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have set up our local version control, let’s create a repository on <a class="reference external" href="https://github.com/">GitHub.com</a> and set that as the remote version control home for this project:</p>
+<div class="figure align-default" id="github-1">
+<a class="reference internal image-reference" href="../_images/set-up-github-1.png"><img alt="../_images/set-up-github-1.png" src="../_images/set-up-github-1.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Creating a new repository in GitHub.</span><a class="headerlink" href="#github-1" title="Permalink to this image">¶</a></p>
+</div>
+<p>The options we recommend for setting up a repository for a Python package using the workflow we present in this book include:</p>
+<ul class="simple">
+<li><p>give the GitHub.com repository the same name as your Python Poetry project’s name;</p></li>
+<li><p>make the GitHub.com repository public; and,</p></li>
+<li><p><strong>do not</strong> initialize the GitHub.com repository with a README file.</p></li>
+</ul>
+<div class="figure align-default" id="github-2">
+<a class="reference internal image-reference" href="../_images/set-up-github-2.png"><img alt="../_images/set-up-github-2.png" src="../_images/set-up-github-2.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.2 </span><span class="caption-text">Setting up a new repository in GitHub.</span><a class="headerlink" href="#github-2" title="Permalink to this image">¶</a></p>
+</div>
+<p>Next, copy the remote link to your repository and use the following commands to set the remote address locally, and push your project to GitHub.com:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git remote add origin git@github.com:TomasBeuzen/pypkgs.git
+$ git push -u origin master
+Enumerating objects: <span class="m">25</span>, <span class="k">done</span>.
+Counting objects: <span class="m">100</span>% <span class="o">(</span><span class="m">25</span>/25<span class="o">)</span>, <span class="k">done</span>.
+Delta compression using up to <span class="m">8</span> threads
+Compressing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">20</span>/20<span class="o">)</span>, <span class="k">done</span>.
+Writing objects: <span class="m">100</span>% <span class="o">(</span><span class="m">25</span>/25<span class="o">)</span>, <span class="m">10</span>.17 KiB <span class="p">|</span> <span class="m">2</span>.03 MiB/s, <span class="k">done</span>.
+Total <span class="m">25</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>
+To github.com:TomasBeuzen/pypkgs.git
+ * <span class="o">[</span>new branch<span class="o">]</span>      master -&gt; master
+Branch <span class="s1">&#39;master&#39;</span> <span class="nb">set</span> up to track remote branch <span class="s1">&#39;master&#39;</span> from <span class="s1">&#39;origin&#39;</span>.
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The example above uses SSH authentication with GitHub. SSH is useful for connecting to GitHub without having to supply your username and password every time. If you’re interested in setting up SSH, take a look at the <a class="reference external" href="https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh">GitHub documentation</a>. If you don’t have SSH authentication set up, HTTPS authentication works as well and would require the use of this url in place of the one shown above to set the remote: <code class="docutils literal notranslate"><span class="pre">https://github.com/TomasBeuzen/pypkgs.git</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="writing-your-first-function">
+<span id="first-function"></span><h2><span class="section-number">2.3. </span>Writing Your First Function<a class="headerlink" href="#writing-your-first-function" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Categorical.html">Pandas categoricals</a> are a very useful data type for modeling (and were inspired by “factors” in R), but certain manipulations of this data type can be tricky during data wrangling. One such manipulation is the concatenation (joining) of two Pandas categoricals. Let’s observe the result of trying to concatenate two Pandas categorical objects:</p>
+<div class="cell tag_raises-exception docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;eyeballs&quot;</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;where it&quot;</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="n">af7dac6ee60</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;eyeballs&quot;</span><span class="p">])</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;where it&quot;</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">])</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+
+<span class="nn">/opt/miniconda3/lib/python3.7/site-packages/pandas/core/reshape/concat.py</span> in <span class="ni">concat</span><span class="nt">(objs, axis, join, join_axes, ignore_index, keys, levels, names, verify_integrity, sort, copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">226</span>                        <span class="n">keys</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">227</span>                        <span class="n">verify_integrity</span><span class="o">=</span><span class="n">verify_integrity</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">228</span>                        <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">229</span>     <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span> 
+
+<span class="nn">/opt/miniconda3/lib/python3.7/site-packages/pandas/core/reshape/concat.py</span> in <span class="ni">__init__</span><span class="nt">(self, objs, axis, join, join_axes, keys, levels, names, ignore_index, verify_integrity, copy, sort)</span>
+<span class="g g-Whitespace">    </span><span class="mi">287</span>                        <span class="s1">&#39; only pd.Series, pd.DataFrame, and pd.Panel&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">288</span>                        <span class="s1">&#39; (deprecated) objs are valid&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)))</span>
+<span class="ne">--&gt; </span><span class="mi">289</span>                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">290</span> 
+<span class="g g-Whitespace">    </span><span class="mi">291</span>             <span class="c1"># consolidate</span>
+
+<span class="ne">TypeError</span>: cannot concatenate object of type &quot;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&quot;; only pd.Series, pd.DataFrame, and pd.Panel (deprecated) objs are valid
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Pandas comes packaged with the Anaconda distribution we installed in <a class="reference internal" href="01-setup.html#python-setup"><span class="std std-ref">Installing &amp; Updating Python</span></a>. However, if for some reason you don’t currently have Pandas installed, you can install it with <code class="docutils literal notranslate"><span class="pre">pip</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span></code>, check out the official <a class="reference external" href="https://pandas.pydata.org/docs/getting_started/install.html">Pandas documentation</a>.</p>
+</div>
+<p>This error occurs because the categoricals are represented as integers in memory, and in the variable <code class="docutils literal notranslate"><span class="pre">a</span></code>, the integer 0 corresponds to the word “character” while in <code class="docutils literal notranslate"><span class="pre">b</span></code>, the integer 0 corresponds to the word “but”. Thus, when we ask Python to concatenate these two Pandas categorical options it doesn’t know what to do with these integer mappings to different categories, and so it throws an error. We can get around this several ways, one way is to convert the Pandas categoricals to a <code class="docutils literal notranslate"><span class="pre">str</span></code> type, then do the concatenation, and finally convert the concatenated Pandas obeject back to a categorical again. We demonstrate that approach below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">concatenated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)),</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">))])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">concatenated</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[character, hits, your, eyeballs, but, integer, where it, counts]
+Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]
+</pre></div>
+</div>
+</div>
+</div>
+<p>That seems to work 🎉 , but it’s quite a bit of typing every time we want to do this… So let’s turn this code into a function called <code class="docutils literal notranslate"><span class="pre">catbind</span></code>!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+  <span class="n">concatenated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)),</span>
+                            <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">))])</span>
+  <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">concatenated</span><span class="p">)</span>
+
+<span class="n">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-none notranslate"><div class="highlight"><pre><span></span>[character, hits, your, eyeballs, but, integer, where it, counts]
+Categories (8, object): [but, character, counts, eyeballs, hits, integer, where it, your]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This book assumes you know how to write, document and test functions in Python. To learn more about this see <a class="reference external" href="http://greenteapress.com/thinkpython/html/thinkpython004.html">Think Python, Chapter 3: Functions</a> by Allen Downey.</p>
+</div>
+<p>So where do we save this function if we want it to be a part of our <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> Python package? Let’s review the landscape of our Python project so far:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pypkgs
+├── CONDUCT.rst
+├── CONTRIBUTING.rst
+├── CONTRIBUTORS.rst
+├── docs
+│   └── conduct.rst
+│   └── conf.py
+│   └── contributing.rst
+│   └── contributors.rst
+│   └── index.rst
+│   └── installation.rst
+│   └── make.bat
+│   └── Makefile
+│   └── usage.rst
+├── pypkgs
+│   └── __init__.py
+│   └── pypkgs.py
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+├── .readthedocs.yml
+├── README.md
+└── tests
+    ├── __init__.py
+    └── test_pypkgs.py
+</pre></div>
+</div>
+<p>All the code that we would like the user to run as part of our package should live inside the <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> directory. Typically, for a relatively small package with just a few functions, we would house them inside a single python module (i.e., a <code class="docutils literal notranslate"><span class="pre">.py</span></code> file). Our template project directory structure already created and named such a module for us: <code class="docutils literal notranslate"><span class="pre">pypkgs/pypkgs.py</span></code>. Let’s save our function there. Additionally, given that our package depends on the Pandas Python package, we should import Pandas at the top of the <code class="docutils literal notranslate"><span class="pre">pypkgs.py</span></code> file. Here’s what <code class="docutils literal notranslate"><span class="pre">pypkgs.py</span></code> should look like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">def</span> <span class="nf">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">concatenated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)),</span>
+                              <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">))])</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">concatenated</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-drive-your-package-code">
+<span id="test-drive"></span><h2><span class="section-number">2.4. </span>Test Drive Your Package Code<a class="headerlink" href="#test-drive-your-package-code" title="Permalink to this headline">¶</a></h2>
+<p>To test drive the function we just wrote we first install our package locally using Python poetry. We choose to do this with Python Poetry as opposed to using Python’s native package manager <code class="docutils literal notranslate"><span class="pre">pip</span></code> because Poetry automatically creates and activates a virtual environment for us and will perform tricky tasks like package solving that can sometimes trip us up when we use <code class="docutils literal notranslate"><span class="pre">pip</span></code> alone. We can install our package locally by ensuring we are in our root package directory and running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry install
+Creating virtualenv pypkgs-7_Ony_oT-py3.7 in /Users/tbeuzen/Library/Caches/pypoetry/virtualenvs
+Installing dependencies from lock file
+
+No dependencies to install or update
+
+  - Installing pypkgs <span class="o">(</span><span class="m">0</span>.1.0<span class="o">)</span>
+</pre></div>
+</div>
+<p>Now, inside the root project directory we can open an interactive Python session (by typing <code class="docutils literal notranslate"><span class="pre">python</span></code> at the command line) and import our <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> module which contains our <code class="docutils literal notranslate"><span class="pre">catbind</span></code> function as shown:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypkgs</span> <span class="kn">import</span> <span class="n">pypkgs</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> module has now been mapped to the current session’s namespace and we can access the <code class="docutils literal notranslate"><span class="pre">catbind</span></code> function in our Python session using dot notation: <code class="docutils literal notranslate"><span class="pre">pypkgs.catbind</span></code> (note that if you wanted to import just the <code class="docutils literal notranslate"><span class="pre">catbind</span></code> function, rather than the whole <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> module, you could do <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pypkgs.pypkgs</span> <span class="pre">import</span> <span class="pre">catbind</span></code>, in which case “dot notation” would not be required to use the function). Let’s try to use the function to concatenate two Pandas categoricals:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;eyeballs&quot;</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;where it&quot;</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">])</span>
+<span class="n">pypkgs</span><span class="o">.</span><span class="n">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">character</span><span class="p">,</span> <span class="n">hits</span><span class="p">,</span> <span class="n">your</span><span class="p">,</span> <span class="n">eyeballs</span><span class="p">,</span> <span class="n">but</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">where</span> <span class="n">it</span><span class="p">,</span> <span class="n">counts</span><span class="p">]</span>
+<span class="n">Categories</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span> <span class="p">[</span><span class="n">but</span><span class="p">,</span> <span class="n">character</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">eyeballs</span><span class="p">,</span> <span class="n">hits</span><span class="p">,</span> <span class="n">integer</span><span class="p">,</span> <span class="n">where</span> <span class="n">it</span><span class="p">,</span> <span class="n">your</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Hurray again! This seems to work as expected! Now that we have something working, you can exit your Python session (by typing <code class="docutils literal notranslate"><span class="pre">exit()</span></code>) and commit changes to version control:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;First working version of catbind function&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="add-package-dependencies">
+<span id="package-dependencies"></span><h2><span class="section-number">2.5. </span>Add Package Dependencies<a class="headerlink" href="#add-package-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Our function depends on the Pandas package, and without it, it would fail to work. Thus we need to record this dependency in a useful place so that when we publish our packaged code this important information (and the mechanism for making it work) will be shipped along with it. We again use <code class="docutils literal notranslate"><span class="pre">poetry</span></code> to do this, using the <code class="docutils literal notranslate"><span class="pre">add</span></code> command. This command will update the <code class="docutils literal notranslate"><span class="pre">[tool.poetry.dependencies]</span></code> section of the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file which currently looks like this and lists only Python as a project dependency:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>tool.poetry<span class="o">]</span>
+<span class="nv">name</span> <span class="o">=</span> <span class="s2">&quot;pypkgs&quot;</span>
+<span class="nv">version</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
+<span class="nv">description</span> <span class="o">=</span> <span class="s2">&quot;Python package that eases the pain of concatenating Pandas categoricals!&quot;</span>
+<span class="nv">authors</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Tomas Beuzen &lt;tomas.beuzen@gmail.com&gt;&quot;</span><span class="o">]</span>
+<span class="nv">license</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
+
+<span class="o">[</span>tool.poetry.dependencies<span class="o">]</span>
+<span class="nv">python</span> <span class="o">=</span> <span class="s2">&quot;^3.7&quot;</span>
+
+<span class="o">[</span>tool.poetry.dev-dependencies<span class="o">]</span>
+
+<span class="o">[</span>build-system<span class="o">]</span>
+<span class="nv">requires</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;poetry&gt;=0.12&quot;</span><span class="o">]</span>
+build-backend <span class="o">=</span> <span class="s2">&quot;poetry.masonry.api&quot;</span>
+</pre></div>
+</div>
+<p>Let’s add our Pandas dependency now:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry add pandas
+
+Using version ^1.0.5 <span class="k">for</span> pandas
+
+Updating dependencies
+Resolving dependencies... <span class="o">(</span><span class="m">0</span>.2s<span class="o">)</span>
+
+Writing lock file
+
+
+Package operations: <span class="m">5</span> installs, <span class="m">0</span> updates, <span class="m">0</span> removals
+
+  - Installing six <span class="o">(</span><span class="m">1</span>.15.0<span class="o">)</span>
+  - Installing numpy <span class="o">(</span><span class="m">1</span>.19.0<span class="o">)</span>
+  - Installing python-dateutil <span class="o">(</span><span class="m">2</span>.8.1<span class="o">)</span>
+  - Installing pytz <span class="o">(</span><span class="m">2020</span>.1<span class="o">)</span>
+  - Installing pandas <span class="o">(</span><span class="m">1</span>.0.5<span class="o">)</span>
+</pre></div>
+</div>
+<p>Now if we view our <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file we see that <code class="docutils literal notranslate"><span class="pre">pandas</span></code> is listed as a dependency:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>tool.poetry<span class="o">]</span>
+<span class="nv">name</span> <span class="o">=</span> <span class="s2">&quot;pypkgs&quot;</span>
+<span class="nv">version</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
+<span class="nv">description</span> <span class="o">=</span> <span class="s2">&quot;Python package that eases the pain of concatenating Pandas categoricals!&quot;</span>
+<span class="nv">authors</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;Tomas Beuzen &lt;tomas.beuzen@gmail.com&gt;&quot;</span><span class="o">]</span>
+<span class="nv">license</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
+
+<span class="o">[</span>tool.poetry.dependencies<span class="o">]</span>
+<span class="nv">python</span> <span class="o">=</span> <span class="s2">&quot;^3.7&quot;</span>
+<span class="nv">pandas</span> <span class="o">=</span> <span class="s2">&quot;^1.0.5&quot;</span>
+
+<span class="o">[</span>tool.poetry.dev-dependencies<span class="o">]</span>
+
+<span class="o">[</span>build-system<span class="o">]</span>
+<span class="nv">requires</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;poetry&gt;=0.12&quot;</span><span class="o">]</span>
+build-backend <span class="o">=</span> <span class="s2">&quot;poetry.masonry.api&quot;</span>
+</pre></div>
+</div>
+<p>This changed two files, <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> (which we printed above) and <code class="docutils literal notranslate"><span class="pre">poetry.lock</span></code> (a record of all the packages and exact versions of them that poetry downloaded for this project). These changes are important for our package, so let’s commit them to version control as well:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;added pandas as a dependency&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For those of you who have used <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> before with <code class="docutils literal notranslate"><span class="pre">pip</span></code> or a <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> with <code class="docutils literal notranslate"><span class="pre">conda</span></code>, you can think of <code class="docutils literal notranslate"><span class="pre">poetry.lock</span></code> as the <code class="docutils literal notranslate"><span class="pre">poetry</span></code> equivalent of those files.</p>
+</div>
+</div>
+<div class="section" id="package-documentation">
+<span id="id1"></span><h2><span class="section-number">2.6. </span>Package Documentation<a class="headerlink" href="#package-documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="reading-rendering-documentation-locally">
+<span id="rendering-local-documentation"></span><h3><span class="section-number">2.6.1. </span>Reading &amp; Rendering Documentation Locally<a class="headerlink" href="#reading-rendering-documentation-locally" title="Permalink to this headline">¶</a></h3>
+<p>For the users of your code (including your future self) we need to have readable and accessible documentation expressing how to install your package, and how to use the functions within it. We’ll discuss documentation in detail in the chapter <a class="reference internal" href="05-documentation.html#documentation"><span class="std std-ref">Documentation</span></a>, but for now, we will demonstrate the basic steps required to get your documentation up-and-running quickly.</p>
+<p>The Python packaging ecosystem has a tool to help you easily make documentation - <a class="reference external" href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">Sphinx</a>. In the Cookiecutter template we used to define our package’s directory structure, there is a basic docs template that the Cookiecutter progam filled in with the information you entered interactively when you ran <code class="docutils literal notranslate"><span class="pre">cookiecutter</span> <span class="pre">https://github.com/UBC-MDS/cookiecutter-ubc-mds.git</span></code>. These files live in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory and are <code class="docutils literal notranslate"><span class="pre">.rst</span></code> (reStructuredText markup language) filetype. This is a lightweight markup language that works similar to Markdown but uses different syntax. The templates provided to you here are fairly well formatted already, so you do not have to change the <code class="docutils literal notranslate"><span class="pre">.rst</span></code> formatting, however if you are interested in doing so, you can see the <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">Sphinx documentation</a> to get started.</p>
+<p>First, we need to install <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> as a development dependency using <code class="docutils literal notranslate"><span class="pre">poetry</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry add --dev sphinx
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The use of <code class="docutils literal notranslate"><span class="pre">--dev</span></code> specifies a development dependency, rather than a package function dependency. A development dependency is a package that is not required by a user to use your package, but is required for development purposes. If you look in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> you will see that <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> gets added under the <code class="docutils literal notranslate"><span class="pre">[tool.poetry.dev-dependencies]</span></code> section as opposed to the <code class="docutils literal notranslate"><span class="pre">[tool.poetry.dependencies]</span></code> section.</p>
+</div>
+<p>Next, to render the help documents locally from <code class="docutils literal notranslate"><span class="pre">.rst</span></code> to <code class="docutils literal notranslate"><span class="pre">.html</span></code> we need to navigate into the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory and then run the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> there, directing it to run the <code class="docutils literal notranslate"><span class="pre">html</span></code> target:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs
+$ poetry run make html
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We append <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">run</span></code> in front of most of our commands in this Python package workflow to ensure are commands are executed within our project’s virtualenv and are using only the software tools we have specifically installed in that virtual environment.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You may see some red warnings while your docs are rendering, but these can be ignored and are typically just suggestions on how to improve your docs if you wish.</p>
+</div>
+<p>If we now look inside our <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory we see that it has expanded, and the rendered <code class="docutils literal notranslate"><span class="pre">.html</span></code> files live in <code class="docutils literal notranslate"><span class="pre">_build/html</span></code>. We can open <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code> to view our docs locally on our laptop, they should look something like this:</p>
+<div class="figure align-default" id="documentation-1">
+<a class="reference internal image-reference" href="../_images/documentation-1.png"><img alt="../_images/documentation-1.png" src="../_images/documentation-1.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.3 </span><span class="caption-text">The rendered docs homepage.</span><a class="headerlink" href="#documentation-1" title="Permalink to this image">¶</a></p>
+</div>
+<p>If we click on the “Module Index” link under the heading “Indices and tables” at the bottom of the page we get a “Your file was not found message”:</p>
+<div class="figure align-default" id="documentation-2">
+<a class="reference internal image-reference" href="../_images/documentation-2.png"><img alt="../_images/documentation-2.png" src="../_images/documentation-2.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.4 </span><span class="caption-text">File not found error!</span><a class="headerlink" href="#documentation-2" title="Permalink to this image">¶</a></p>
+</div>
+<p>This is because we haven’t written any documentation for our package function. Let’s do that now by adding a <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>-style docstring to the <code class="docutils literal notranslate"><span class="pre">catbind</span></code> function in <code class="docutils literal notranslate"><span class="pre">pypkgs/pypkgs.py</span></code> as shown below (we’ll discuss docstring style more in the chapter <a class="reference internal" href="05-documentation.html#documentation"><span class="std std-ref">Documentation</span></a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">def</span> <span class="nf">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Concatenates two pandas categoricals.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : pandas.core.arrays.categorical.Categorical</span>
+<span class="sd">      A pandas categorical.</span>
+<span class="sd">    b : pandas.core.arrays.categorical.Categorical</span>
+<span class="sd">      A pandas categorical that you wish to concatenate to a.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pandas.core.arrays.categorical.Categorical</span>
+<span class="sd">      The new concatenated pandas categorical.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from pypkgs import pypkgs</span>
+<span class="sd">    &gt;&gt;&gt; a = pd.Categorical([&quot;character&quot;, &quot;hits&quot;, &quot;your&quot;, &quot;eyeballs&quot;])</span>
+<span class="sd">    &gt;&gt;&gt; b = pd.Categorical([&quot;but&quot;, &quot;integer&quot;, &quot;where it&quot;, &quot;counts&quot;])</span>
+<span class="sd">    &gt;&gt;&gt; pypkgs.catbind(a, b)</span>
+<span class="sd">    [character, hits, your, eyeballs, but, integer, where it, counts]</span>
+<span class="sd">    Categories (8, object): [but, character, counts,</span>
+<span class="sd">    eyeballs, hits, integer, where it, your]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">concatenated</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">)),</span>
+                              <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;str&quot;</span><span class="p">))])</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">concatenated</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p>Now we can use a <code class="docutils literal notranslate"><span class="pre">sphinx</span></code> extension (<code class="docutils literal notranslate"><span class="pre">napolean</span></code>) to render our <code class="docutils literal notranslate"><span class="pre">NumPy</span></code>-styled docstring into a modules page on our docs. To do this we need to install <code class="docutils literal notranslate"><span class="pre">napoleon</span></code> as a dev dependency:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry add --dev sphinxcontrib-napoleon
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Normally to use this extension, we would also have to add <code class="docutils literal notranslate"><span class="pre">extensions</span> <span class="pre">=</span> <span class="pre">['sphinx.ext.napoleon']</span></code> in the <code class="docutils literal notranslate"><span class="pre">conf.py</span></code> file in the <code class="docutils literal notranslate"><span class="pre">docs</span></code> directory, but we have taken care of this for you already with our Cookiecutter template.</p>
+</div>
+<p>Now we can change back to our root <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> directory, and use <code class="docutils literal notranslate"><span class="pre">sphinx-apidoc</span></code> and <code class="docutils literal notranslate"><span class="pre">poetry</span></code> to re-render our docs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ..
+$ poetry run sphinx-apidoc -f -o docs/source pypkgs
+$ <span class="nb">cd</span> docs
+$ poetry run make html
+</pre></div>
+</div>
+<p>Now when we click on the “Module Index” link under the heading “Indices and tables” we see a webpage that has a link to our module, <code class="docutils literal notranslate"><span class="pre">pypkgs.pypkgs</span></code>:</p>
+<div class="figure align-default" id="documentation-3">
+<a class="reference internal image-reference" href="../_images/documentation-3.png"><img alt="../_images/documentation-3.png" src="../_images/documentation-3.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.5 </span><span class="caption-text">The rendered docs module index.</span><a class="headerlink" href="#documentation-3" title="Permalink to this image">¶</a></p>
+</div>
+<p>And we can click on that to see the docs for <code class="docutils literal notranslate"><span class="pre">pypkgs.pypkgs.catbind</span></code>. Which should look roughly like this:</p>
+<div class="figure align-default" id="documentation-4">
+<a class="reference internal image-reference" href="../_images/documentation-4.png"><img alt="../_images/documentation-4.png" src="../_images/documentation-4.png" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.6 </span><span class="caption-text">Our function documentation.</span><a class="headerlink" href="#documentation-4" title="Permalink to this image">¶</a></p>
+</div>
+<p>Another hurray! 🎉🎉🎉 Let’s commit this to version control and push to our remote:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> ..
+$ git add .
+$ git commit -m <span class="s2">&quot;generated and rendered docs for local viewing&quot;</span>
+$ git push
+</pre></div>
+</div>
+</div>
+<div class="section" id="reading-rendering-documentation-remotely">
+<span id="rendering-remote-documentation"></span><h3><span class="section-number">2.6.2. </span>Reading &amp; Rendering Documentation Remotely<a class="headerlink" href="#reading-rendering-documentation-remotely" title="Permalink to this headline">¶</a></h3>
+<p>To share these docs online, we need to link our GitHub repository to <a class="reference external" href="https://readthedocs.org/">Read the Docs</a> (where we will build and host our docs remotely). To do this:</p>
+<ol class="simple">
+<li><p>Visit <a class="reference external" href="https://readthedocs.org/">https://readthedocs.org/</a> and click on “Sign up”;</p></li>
+<li><p>Select “Sign up with GitHub”;</p></li>
+<li><p>Click “Import a Project”;</p></li>
+<li><p>Click “Import Manually”;</p></li>
+<li><p>Fill in the project details by providing a package name (this must be a unique name, we’ve already taken “pypkgs” so perhaps try “pypkgs[your initials]”), the repository URL, and leave the rest as is. Click “Next”; and,</p></li>
+<li><p>Click “Build version”.</p></li>
+</ol>
+<p>After following the steps above, your docs should get successfully built on <a class="reference external" href="https://readthedocs.org/">Read the Docs</a> and you should be able to access them via the “View Docs” button on the build page, or from the link that Cookiecutter created for you on your repositories <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For <a class="reference external" href="https://readthedocs.org/">Read the Docs</a> to work with the <code class="docutils literal notranslate"><span class="pre">poetry</span></code> package workflow you need to have a <code class="docutils literal notranslate"><span class="pre">.readthedocs.yml</span></code> in the root of your Python package. We have created this for you using Cookiecutter and you can view it <a class="reference external" href="https://github.com/UBC-MDS/cookiecutter-ubc-mds/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/.readthedocs.yml">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="testing">
+<span id="poetry-testing"></span><h2><span class="section-number">2.7. </span>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h2>
+<p>We have interactively taken <code class="docutils literal notranslate"><span class="pre">catbind</span></code> for a test drive, but to prove to our future self and others that our code does in fact do what it is supposed to do, let’s write some formal unit tests. We’ll discuss testing in detail in the <a class="reference internal" href="04-testing.html#testing"><span class="std std-ref">Testing</span></a> chapter, but will go over the key steps here. In Python packages, our tests live inside the <code class="docutils literal notranslate"><span class="pre">test</span></code> directory, typically in a file called <code class="docutils literal notranslate"><span class="pre">test_&lt;module_name&gt;.py</span></code>, thus for this package this is <code class="docutils literal notranslate"><span class="pre">tests/test_pypkgs.py</span></code>. Let’s add a unit test (as a function named <code class="docutils literal notranslate"><span class="pre">test_catbind</span></code>) for our <code class="docutils literal notranslate"><span class="pre">catbind</span></code> function there now:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pypkgs</span> <span class="kn">import</span> <span class="n">__version__</span>
+<span class="kn">from</span> <span class="nn">pypkgs</span> <span class="kn">import</span> <span class="n">pypkgs</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">def</span> <span class="nf">test_version</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">__version__</span> <span class="o">==</span> <span class="s1">&#39;0.1.0&#39;</span>
+
+<span class="k">def</span> <span class="nf">test_catbind</span><span class="p">():</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;character&quot;</span><span class="p">,</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">,</span> <span class="s2">&quot;eyeballs&quot;</span><span class="p">])</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;where it&quot;</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="p">((</span><span class="n">pypkgs</span><span class="o">.</span><span class="n">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">codes</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="p">((</span><span class="n">pypkgs</span><span class="o">.</span><span class="n">catbind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">categories</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;character&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;counts&quot;</span><span class="p">,</span> <span class="s2">&quot;eyeballs&quot;</span><span class="p">,</span> <span class="s2">&quot;hits&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;where it&quot;</span><span class="p">,</span> <span class="s2">&quot;your&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Given that we use <code class="docutils literal notranslate"><span class="pre">pd.Categorical</span></code> to create objects to test on, we have to import the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> package at the top of our test file.</p>
+</div>
+<p>While we could test our test functions by starting a Python session, importing and running them it is much more efficient to automate the testing workflow. In the Python package ecosystem one way we can do this is to use <code class="docutils literal notranslate"><span class="pre">pytest</span></code>. A single call to <code class="docutils literal notranslate"><span class="pre">pytest</span></code> from the root of a project will look for all files in the <code class="docutils literal notranslate"><span class="pre">tests</span></code> directory, import all files prefixed with <code class="docutils literal notranslate"><span class="pre">test*</span></code> and then call all functions prefixed with <code class="docutils literal notranslate"><span class="pre">test*</span></code>. Pretty great!</p>
+<p>To try this out, we first add <code class="docutils literal notranslate"><span class="pre">pytest</span></code> as a dev dependency via <code class="docutils literal notranslate"><span class="pre">poetry</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry add --dev pytest
+</pre></div>
+</div>
+<p>Then to run the tests, we use:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry run <span class="nv">pytest</span>
+<span class="o">=============================</span> <span class="nb">test</span> session <span class="nv">starts</span> <span class="o">==============================</span>
+platform darwin -- Python <span class="m">3</span>.7.6, pytest-5.4.3, py-1.9.0, pluggy-0.13.1
+rootdir: /Users/tbeuzen/GitHub/py-pkgs/pypkgs
+collected <span class="m">2</span> items                                                              
+
+tests/test_pypkgs.py ..                                                  <span class="o">[</span><span class="m">100</span>%<span class="o">]</span>
+
+<span class="o">==============================</span> <span class="m">2</span> passed in <span class="m">0</span>.56s <span class="o">===============================</span>
+</pre></div>
+</div>
+<p>We get no error returned to us, indicating that our tests passed, Hurray! This suggests that the code we wrote is correct (at least to our test specifications)! Now we can share this with the world by putting these under local and remote version control:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git add .
+$ git commit -m <span class="s2">&quot;added unit tests for catbind&quot;</span>
+$ git push
+</pre></div>
+</div>
+</div>
+<div class="section" id="building-publishing-your-package">
+<span id="build-and-publish"></span><h2><span class="section-number">2.8. </span>Building &amp; Publishing Your Package<a class="headerlink" href="#building-publishing-your-package" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="testpypi">
+<span id="publishing-testpypi"></span><h3><span class="section-number">2.8.1. </span>TestPyPI<a class="headerlink" href="#testpypi" title="Permalink to this headline">¶</a></h3>
+<p>Python packages are generally shared via the <a class="reference external" href="https://pypi.org/">PyPI package index</a>. However, when we are just starting to develop packages, and/or at the development stage of our package, we typically first check that everything works by submitting to <a class="reference external" href="https://test.pypi.org/">testPyPi</a>. <code class="docutils literal notranslate"><span class="pre">poetry</span></code> has a command called <code class="docutils literal notranslate"><span class="pre">publish</span></code> which we can use to do this, however the default behaviour is to publish to PyPI. So we need to add testPyPI to the list of repositories <code class="docutils literal notranslate"><span class="pre">poetry</span></code> knows about via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry config repositories.test-pypi https://test.pypi.org/legacy/
+</pre></div>
+</div>
+<p>Before we send our package, we first need to build it to source and wheel distributions (the format that PyPI distributes and something you’ll learn more about in the next chapter <a class="reference internal" href="03-package-structure.html#package-structure"><span class="std std-ref">Package Structure and State</span></a>) using <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">build</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry build
+Building pypkgs <span class="o">(</span><span class="m">0</span>.1.0<span class="o">)</span>
+ - Building sdist
+ - Built pypkgs-0.1.0.tar.gz
+
+ - Building wheel
+ - Built pypkgs-0.1.0-py3-none-any.whl
+</pre></div>
+</div>
+<p>Finally, to publish to testPyPI we can use <code class="docutils literal notranslate"><span class="pre">poetry</span> <span class="pre">publish</span></code> (you will be prompted for your testPyPI username and password, sign up for one if you have not already done so):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry publish -r test-pypi
+</pre></div>
+</div>
+<p>Now you should be able to visit your package on testPyPI (e.g., <a class="reference external" href="https://test.pypi.org/project/pypkgs/">https://test.pypi.org/project/pypkgs/</a>) and download it from there using <code class="docutils literal notranslate"><span class="pre">pip</span></code> via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple pypkgs
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> will search PyPI for the named package. However, we want to search testPyPI because that is where we uploaded our package. The argument <code class="docutils literal notranslate"><span class="pre">--index-url</span></code> points <code class="docutils literal notranslate"><span class="pre">pip</span></code> to the testPyPI index. However, our package <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> depends on <code class="docutils literal notranslate"><span class="pre">pandas</span></code> which can’t be found on testPyPI (it is hosted on PyPI). So, we need to use the <code class="docutils literal notranslate"><span class="pre">--extra-index-url</span></code> argument to also point <code class="docutils literal notranslate"><span class="pre">pip</span></code> to PyPI so that it can pull any necessary dependencies of <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> from there.</p>
+</div>
+</div>
+<div class="section" id="pypi">
+<span id="publishing-pypi"></span><h3><span class="section-number">2.8.2. </span>PyPI<a class="headerlink" href="#pypi" title="Permalink to this headline">¶</a></h3>
+<p>When you’re at the point where you’re happy to officially share your package with the world, you can publish to PyPI by simply typing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry publish
+</pre></div>
+</div>
+<p>Your package will then be available on PyPI (e.g., <a class="reference external" href="https://pypi.org/project/pypkgs/">https://pypi.org/project/pypkgs/</a>) and can be installed with <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install pypkgs
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are a number of optional arguments you can specify in your <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file to control the metadata of your package, check them out in the <a class="reference external" href="https://python-poetry.org/docs/pyproject/"><code class="docutils literal notranslate"><span class="pre">poetry</span></code> documentation</a>. For example, you can use your <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file as the description of your package on testPyPI or PyPI. To do this, you need to add the <code class="docutils literal notranslate"><span class="pre">readme</span></code> argument to the <code class="docutils literal notranslate"><span class="pre">[tool.poetry]</span></code> section of your <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file and point to your <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file, for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">poetry</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;pypkgs&quot;</span>
+<span class="n">version</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">description</span> <span class="o">=</span> <span class="s2">&quot;Python package that eases the pain of concatenating Pandas categoricals!&quot;</span>
+<span class="n">authors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Tomas Beuzen &lt;tomas.beuzen@gmail.com&gt;&quot;</span><span class="p">]</span>
+<span class="n">license</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
+<span class="n">readme</span> <span class="o">=</span> <span class="s2">&quot;README.md&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"06e8b80b569b4ac2bb5a989af9695ced": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"height": "350px"}}, "07d43b717dd94d33a8eeae066f36d839": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "09294cf0fd6549c78d0f15acf20400b2": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "096724e20b094296bb243e553b2820e6": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "m", "layout": "IPY_MODEL_d2ef8aa5fad04047a98f733f89624812", "max": 2, "min": -2, "step": 0.1, "style": "IPY_MODEL_d3343e0c83844ad987beb592199dd6f6", "value": -0.1}}, "0b412fd29e8a44f5bfaaa9a7122a33c3": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_1da474a760df45c3a290bbf3ba8a7f94", "IPY_MODEL_acc0b478d5b748c29c4683cbcfc8e0f3"], "layout": "IPY_MODEL_9a4a74191d4b483f8e6ca535c155a33f"}}, "107d8e3c4e4249429f4ea5f86f97caa7": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "1455d02e130148c4a24a0943765db04a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "1574978c1a56499dbe842cb3bf5b9e8f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "16770b98026442368338a8d27ffceab4": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "1989b160147948d4a6414de3b6c60694": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "1a1f847a77d44da7977d6ed1ae70ac12": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "children": ["IPY_MODEL_884172dbe7194ea7aba24ace80d35049", "IPY_MODEL_384a6bfb62454f0bb09a41d14a5eb9c9", "IPY_MODEL_8cc71f1ee02d4a10acbda0a6f9cbc4fb"], "layout": "IPY_MODEL_da554c291c9f4442991fcf6d620e017e"}}, "1cb1287d7a5940829cb770a5553a95b3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"height": "350px"}}, "1da474a760df45c3a290bbf3ba8a7f94": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_323357ab97fc4ed0af4ab5743aa038cc", "style": "IPY_MODEL_64e2b864e41244388bcb173e865939f8"}}, "1ecb0c5110084d99bd02c6845b36b5f5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "1ff35f5f7c9543158cd8fcb2fe45e951": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "200d9095bbf14c67af4083eebe042331": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_ce130e9bb1874109b6e9641a6f6b872a", "IPY_MODEL_544ffe02934f47abbe60aa68b1552268"], "layout": "IPY_MODEL_2949d658a5e24ae8af8b48f1c68ca710"}}, "204835ba5cf741febeb96117f71f03db": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_e788ecb6fbad4de6aac05557dcf109f5", "style": "IPY_MODEL_871a273a718c4b7ab105f4bf6f9500e1"}}, "20f7461031e44d41bd5b14f4cdd8542a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "24102f82e9cf49aca85e512f59a1db81": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "262d0a636bf64c67a8b3b7fdb6852569": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "2844ba0a05594aeeb871eaf4fae2c4b9": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "28a33b60ad9947cebcab993a3ecd7b01": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_1989b160147948d4a6414de3b6c60694", "style": "IPY_MODEL_f24ec537d93846e48f35cf5bca83e11d", "value": 40}}, "2949d658a5e24ae8af8b48f1c68ca710": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "2ad8e9ec7f1d4f5f89fadb89c51892cd": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "m", "layout": "IPY_MODEL_3679e8d246954e7295c526cec653232b", "max": 2, "min": -2, "step": 0.1, "style": "IPY_MODEL_455179b0a10a4d3793163b6270e8c1d4"}}, "2be4850df84041778088cca110e64d11": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_3b84503a8368455bac727f95db5d01d0", "IPY_MODEL_5ed1935a5446410aa7103f97d2500695"], "layout": "IPY_MODEL_5bc7f1fcf97f41fea3a8623cf73e21a3"}}, "2ec147d796d24e06a192384ff4f271d8": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_1ecb0c5110084d99bd02c6845b36b5f5", "style": "IPY_MODEL_750974cf708b48bcac5c4b3e178f9e34"}}, "323357ab97fc4ed0af4ab5743aa038cc": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "3679e8d246954e7295c526cec653232b": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "373d595c629d4c96ab6c69cabadfbae3": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "384a6bfb62454f0bb09a41d14a5eb9c9": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "b", "layout": "IPY_MODEL_79023cd4f95e412d86f33dacb04f9cce", "max": 3, "min": -3, "step": 0.5, "style": "IPY_MODEL_da243475d71a41f48bf4855c01052769"}}, "3966b0590b414fe1873b43e1835dbc0b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "children": ["IPY_MODEL_096724e20b094296bb243e553b2820e6", "IPY_MODEL_890cbfc7c0f343d2b7991c18b88b8177", "IPY_MODEL_fcc376497f9d4b8aa11a102ebc19b6ab"], "layout": "IPY_MODEL_ae6272a2743a4752b8798fed0b5dc332"}}, "39af2f7e78ff42679117a13c8e3e0c02": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_43d437e0efff40b0b7c59c66b9b815f5", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "3ac4ddb748c447f9903d248db1422cf1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_b8aa32ebeb924971ade818f6af335eec", "IPY_MODEL_e6a05e8e4f6a4cefb61f5f99b1eb13c2"], "layout": "IPY_MODEL_e57657510026435496e5903d5c875cbe"}}, "3b84503a8368455bac727f95db5d01d0": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_ce130e9bb1874109b6e9641a6f6b872a", "IPY_MODEL_544ffe02934f47abbe60aa68b1552268"], "layout": "IPY_MODEL_20f7461031e44d41bd5b14f4cdd8542a"}}, "3ccc38f44df249cd833536b7a8a34327": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "4007d719e1aa45349acb4e9f80f0e4ba": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_2ec147d796d24e06a192384ff4f271d8", "IPY_MODEL_f285911bbe39497a88f0994509363fbb"], "layout": "IPY_MODEL_9ecdf012164d45aaa03c28b34bebf7fa"}}, "42727846507043a098dc2e932813ee65": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_16770b98026442368338a8d27ffceab4", "style": "IPY_MODEL_b1e4ec6cae8d454999896d5ec41be03c"}}, "43d437e0efff40b0b7c59c66b9b815f5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "454c456031894c1498a69aaa4dcb0e97": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "455179b0a10a4d3793163b6270e8c1d4": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "479edca2ec334d01b8af52d21f4c1565": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "494640e15fe7442ebfa3b6786ef64d82": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "4af9e16a11ed4597bbd81a734add4f5c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_535d254dd54d41ada990b62be72d5a14", "IPY_MODEL_e6a05e8e4f6a4cefb61f5f99b1eb13c2"], "layout": "IPY_MODEL_7415264924174df19d8822f16c379f55"}}, "4c8b0dc16ddc40af8b131803f5280311": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_edcfad1763d44bbab957f8d4f981f4e4", "IPY_MODEL_d11a21b0488f4970babc1c7ad3f86aa8"], "layout": "IPY_MODEL_ef77db303b044fe783f80b51f045e866"}}, "4d8487b20ef9419aab03dcc0c813fc77": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_cf422506005a43978b50beb43766a819", "IPY_MODEL_78efe79186ed46c78e9d91400f519f1d"], "layout": "IPY_MODEL_ce3b1869747b4502b90f4448204f5d94"}}, "4f613b87c7184b80bbc2806c184eb4cb": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_9053f57dacfc4255ad1dc0b717cbd4be", "IPY_MODEL_42727846507043a098dc2e932813ee65"], "layout": "IPY_MODEL_8c5220ab1fe748d0abf46067668fd9d1"}}, "50f2a1ea21a24ed9a0db566a4678e24e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_933e89a135cd42e196abb362e0302570", "style": "IPY_MODEL_b4ed787903d4445cb7fd4c6827acf9cd"}}, "527235c0249e4be68af5cc1b5f6ecaa8": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "535d254dd54d41ada990b62be72d5a14": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_50f2a1ea21a24ed9a0db566a4678e24e", "IPY_MODEL_bfe8c68e54b24762adb625e2d926bc2e"], "layout": "IPY_MODEL_d9616e978f2840609e88757e2e7e47f3"}}, "544ffe02934f47abbe60aa68b1552268": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_7acc7084e5c34c5a9b18b84c2a78660b", "style": "IPY_MODEL_d10b5afbdea647baa88b2156fda8c6c0"}}, "54bac03c012745098c9455c5a2325e0a": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_1cb1287d7a5940829cb770a5553a95b3", "outputs": [{"data": {"image/png": "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\n", "text/plain": "<Figure size 432x288 with 1 Axes>"}, "metadata": {"needs_background": "light"}, "output_type": "display_data"}]}}, "57c1af3db3d44cc7bfcfc97614bea646": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_9053341eacf94d139041e6aa7cc93233", "style": "IPY_MODEL_527235c0249e4be68af5cc1b5f6ecaa8", "value": 40}}, "587b16eff8dc4011bcc72b4f4070b14d": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "58a162ea4105481e9d1345fdc79c9f1d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "5ab9a789ce9a4e97845523051ef0762c": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_965ef0e308be48eaa8b8ef19c63bed40", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "5bc7f1fcf97f41fea3a8623cf73e21a3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "5d02d239659c496cbb1972806465cbba": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "5d68805b72bd49498579e5c204071464": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_1da474a760df45c3a290bbf3ba8a7f94", "IPY_MODEL_acc0b478d5b748c29c4683cbcfc8e0f3"], "layout": "IPY_MODEL_72b02467571a402da6d4414c5e4489fa"}}, "5e5877766afd49fcbb63cdbbff1f5684": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "b", "layout": "IPY_MODEL_1ff35f5f7c9543158cd8fcb2fe45e951", "max": 3, "min": -3, "step": 0.5, "style": "IPY_MODEL_7bc761c122284f8b9822ff186e0f78bd", "value": -1}}, "5ed1935a5446410aa7103f97d2500695": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_262d0a636bf64c67a8b3b7fdb6852569", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "645724dd1b174799b0ff40a9e6d6ab62": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_98b7be5be6ad4194bafdff2ffd9a89f0", "IPY_MODEL_e5aa35e4f4aa46cf8044c66339de4b96"], "layout": "IPY_MODEL_454c456031894c1498a69aaa4dcb0e97"}}, "64c7a0f8b8904b1ca743bc4911a341b2": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "64e2b864e41244388bcb173e865939f8": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "6991e87f25be44a78f759d7fd412588b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "children": ["IPY_MODEL_2ad8e9ec7f1d4f5f89fadb89c51892cd", "IPY_MODEL_5e5877766afd49fcbb63cdbbff1f5684", "IPY_MODEL_81a51a474122457fa2f9da64776cf5d1"], "layout": "IPY_MODEL_8a2b88d881b247d08b03cb1b7183128d"}}, "6a03b9b6618c43bb80bcccfc6f7c19f9": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"height": "350px"}}, "6b15b70b85584ce18f7b6efe71563f96": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "6c890acf62af426cab22ed65ff429088": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "6ffdc8fcab164aedbf54cf3a45384d64": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "72b02467571a402da6d4414c5e4489fa": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "7415264924174df19d8822f16c379f55": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "750974cf708b48bcac5c4b3e178f9e34": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "78efe79186ed46c78e9d91400f519f1d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_fdfc64c80c3c407bacf0a395dede228c", "style": "IPY_MODEL_8b9cd3fe33484cb794a9c2a4d60caa9a"}}, "79023cd4f95e412d86f33dacb04f9cce": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "7a81ba3691dc47449c052dcd9070b618": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "m", "layout": "IPY_MODEL_ac55030546d54b0ca4d7e4fbf355a3c8", "max": 2, "min": -2, "step": 0.1, "style": "IPY_MODEL_6b15b70b85584ce18f7b6efe71563f96"}}, "7acc7084e5c34c5a9b18b84c2a78660b": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "7b066d9aaaa34fcda5803a72047566f0": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_d6b85a8f0ec64ee491848be1b8bf8188", "style": "IPY_MODEL_3ccc38f44df249cd833536b7a8a34327", "value": 40}}, "7bc761c122284f8b9822ff186e0f78bd": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "7c23e7df356f475e994f2f3e70730747": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "7d29dde0dd4046fb9717131bf06b637f": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "b", "layout": "IPY_MODEL_b674d805670c4a969daa587ae7d22805", "max": 3, "min": -3, "step": 0.5, "style": "IPY_MODEL_494640e15fe7442ebfa3b6786ef64d82", "value": -1}}, "81a51a474122457fa2f9da64776cf5d1": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_94487d6608754721aa3f4401e77dc292", "outputs": [{"data": {"image/png": "iVBORw0KGgoAAAANSUhEUgAAAXIAAAD4CAYAAADxeG0DAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4yLjEsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+j8jraAAANbElEQVR4nO3dfaykZ1nH8e/PLsUEKhR3oaVb3BIJsagJ9aRBQSW0KaUiFaOmJCpYkw0aEkgwTWsTRPkLiWiMaLMC8YXGVgWkkhLYShvjH1ROa1/oG11qka6lPYhSDAnYcPnHPGuGw5w9c3aembMXfj/Jyc48zz33fc09z/nNM/fM7ElVIUnq67t2uwBJ0mIMcklqziCXpOYMcklqziCXpOb27Mage/furQMHDuzG0JLU1m233falqtq3efuuBPmBAwdYX1/fjaElqa0kn5+13aUVSWrOIJek5gxySWrOIJek5gxySWrOIJek5gxySWrOIJek5gxySWrOIJek5gxySWrOIJek5gxySWrOIJek5gxySWrOIJek5gxySWputCBPckqSf0ny0bH6lCRtb8wz8jcD943YnyRpDqMEeZL9wE8B7x2jP0nS/MY6I/8D4Argm1s1SHIwyXqS9Y2NjZGGlSQtHORJXg08XlW3Ha9dVR2qqrWqWtu3b9+iw0qSBmOckb8UeE2Sh4HrgFck+cAI/UqS5rBwkFfVVVW1v6oOAJcBn6yqX1y4MknSXPwcuSQ1t2fMzqrqFuCWMfuUJB2fZ+SS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNLRzkSc5OcnOSe5Pck+TNYxQmSZrPnhH6eBJ4a1XdnuQ04LYkh6vq3hH6liRtY+Ez8qp6tKpuHy5/FbgPOGvRfiVJ8xl1jTzJAeDFwK1j9itJ2tpoQZ7k6cAHgbdU1RMz9h9Msp5kfWNjY6xhJen/vVGCPMlTmIT4tVX1oVltqupQVa1V1dq+ffvGGFaSxDifWgnwPuC+qnr34iVJknZijDPylwK/BLwiyR3DzyUj9CtJmsPCHz+sqn8CMkItkqQT4Dc7Jak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJak5g1ySmjPIJam5UYI8ycVJHkhyJMmVY/QpSZrPwkGe5BTgPcCrgHOB1yU5d9F+JUnzGeOM/HzgSFU9VFXfAK4DLh2hX0nSHMYI8rOAL0xdf2TY9i2SHEyynmR9Y2NjhGElSbDCNzur6lBVrVXV2r59+1Y1rCR9xxsjyI8CZ09d3z9skyStwBhB/mngBUnOSXIqcBlwwwj9SpLmsGfRDqrqySRvAj4OnAK8v6ruWbgySdJcFg5ygKq6EbhxjL4kSTvjNzslqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqblR/j/yVfntv7+He//9id0uQ5JO2LnP/R5+66dfNGqfnpFLUnOtzsjHfhaTpO8EnpFLUnMGuSQ1Z5BLUnMGuSQ1Z5BLUnMGuSQ1Z5BLUnMGuSQ1Z5BLUnMGuSQ1Z5BLUnMGuSQ1Z5BLUnMGuSQ1Z5BLUnMGuSQ1t1CQJ3lXkvuT3JXkw0meOVZhkqT5LHpGfhj4war6YeCzwFWLlyRJ2omFgryqPlFVTw5XPwXsX7wkSdJOjLlGfjnwsRH7kyTNYds/vpzkJuCMGbuurqqPDG2uBp4Erj1OPweBgwDPe97zTqhYSdK32zbIq+rC4+1P8gbg1cAFVVXH6ecQcAhgbW1ty3aSpJ3ZNsiPJ8nFwBXAT1bV18YpSZK0E4uukf8RcBpwOMkdSa4ZoSZJ0g4sdEZeVd8/ViGSpBPjNzslqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqTmDXJKaM8glqblRgjzJW5NUkr1j9CdJmt/CQZ7kbOAi4N8WL0eStFNjnJH/PnAFUCP0JUnaoYWCPMmlwNGqunOOtgeTrCdZ39jYWGRYSdKUPds1SHITcMaMXVcDv8lkWWVbVXUIOASwtrbm2bskjWTbIK+qC2dtT/JDwDnAnUkA9gO3Jzm/qr44apWSpC1tG+Rbqaq7gWcfu57kYWCtqr40Ql2SpDn5OXJJau6Ez8g3q6oDY/UlSZqfZ+SS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknNpWr1fwc5yQbw+RO8+V7gZPxzcta1M9a1M9a1MydrXbBYbd9XVfs2b9yVIF9EkvWqWtvtOjazrp2xrp2xrp05WeuC5dTm0ookNWeQS1JzHYP80G4XsAXr2hnr2hnr2pmTtS5YQm3t1sglSd+q4xm5JGmKQS5JzZ2UQZ7k55Pck+SbSdY27bsqyZEkDyR55Ra3PyfJrUO765OcuoQar09yx/DzcJI7tmj3cJK7h3brY9cxY7y3Jzk6VdslW7S7eJjDI0muXEFd70pyf5K7knw4yTO3aLeS+dru/id56vAYHxmOpQPLqmVqzLOT3Jzk3uH4f/OMNi9P8pWpx/dty65rGPe4j0sm/nCYr7uSnLeCml44NQ93JHkiyVs2tVnZfCV5f5LHk3xmatuzkhxO8uDw7+lb3Pb1Q5sHk7x+x4NX1Un3A/wA8ELgFmBtavu5wJ3AU4FzgM8Bp8y4/V8Dlw2XrwF+bcn1/h7wti32PQzsXeHcvR34jW3anDLM3fOBU4c5PXfJdV0E7BkuvxN4527N1zz3H/h14Jrh8mXA9St47M4EzhsunwZ8dkZdLwc+uqrjad7HBbgE+BgQ4CXArSuu7xTgi0y+MLMr8wX8BHAe8Jmpbb8LXDlcvnLWcQ88C3ho+Pf04fLpOxn7pDwjr6r7quqBGbsuBa6rqq9X1b8CR4DzpxskCfAK4G+HTX8O/Myyah3G+wXgr5Y1xhKcDxypqoeq6hvAdUzmdmmq6hNV9eRw9VPA/mWOt4157v+lTI4dmBxLFwyP9dJU1aNVdftw+avAfcBZyxxzRJcCf1ETnwKemeTMFY5/AfC5qjrRb4wvrKr+Efjyps3Tx9FWWfRK4HBVfbmq/hM4DFy8k7FPyiA/jrOAL0xdf4RvP9C/F/ivqdCY1WZMPw48VlUPbrG/gE8kuS3JwSXWMe1Nw8vb92/xUm6eeVymy5mcvc2yivma5/7/X5vhWPoKk2NrJYalnBcDt87Y/aNJ7kzysSQvWlFJ2z0uu31MXcbWJ1O7MV/HPKeqHh0ufxF4zow2C8/dnhOrbXFJbgLOmLHr6qr6yKrrmWXOGl/H8c/GX1ZVR5M8Gzic5P7hmXspdQF/AryDyS/eO5gs+1y+yHhj1HVsvpJcDTwJXLtFN6PPVzdJng58EHhLVT2xafftTJYP/nt4/+PvgBesoKyT9nEZ3gN7DXDVjN27NV/fpqoqyVI+771rQV5VF57AzY4CZ09d3z9sm/YfTF7W7RnOpGa1GaXGJHuAnwV+5Dh9HB3+fTzJh5m8rF/oF2DeuUvyp8BHZ+yaZx5HryvJG4BXAxfUsDg4o4/R52uGee7/sTaPDI/zM5gcW0uV5ClMQvzaqvrQ5v3TwV5VNyb54yR7q2qp/0HUHI/LUo6pOb0KuL2qHtu8Y7fma8pjSc6sqkeHpabHZ7Q5ymQt/5j9TN4fnFu3pZUbgMuGTxScw+SZ9Z+nGwwBcTPwc8Om1wPLOsO/ELi/qh6ZtTPJ05Kcduwykzf8PjOr7Vg2rUu+dovxPg28IJNP95zK5GXpDUuu62LgCuA1VfW1Ldqsar7muf83MDl2YHIsfXKrJ5+xDGvw7wPuq6p3b9HmjGNr9UnOZ/I7vNQnmDkflxuAXx4+vfIS4CtTSwrLtuWr4t2Yr02mj6OtsujjwEVJTh+WQi8ats1vFe/mnsC7v69lsk70deAx4ONT+65m8omDB4BXTW2/EXjucPn5TAL+CPA3wFOXVOefAW/ctO25wI1Tddw5/NzDZIlh2XP3l8DdwF3DQXTm5rqG65cw+VTE51ZU1xEm64B3DD/XbK5rlfM16/4Dv8PkiQbgu4dj58hwLD1/BXP0MiZLYndNzdMlwBuPHWfAm4a5uZPJm8Y/toK6Zj4um+oK8J5hPu9m6tNmS67taUyC+RlT23Zlvpg8mTwK/M+QX7/K5H2VfwAeBG4CnjW0XQPeO3Xby4dj7QjwKzsd26/oS1Jz3ZZWJEmbGOSS1JxBLknNGeSS1JxBLknNGeSS1JxBLknN/S/DuupVaQYqRAAAAABJRU5ErkJggg==\n", "text/plain": "<Figure size 432x288 with 1 Axes>"}, "metadata": {"needs_background": "light"}, "output_type": "display_data"}]}}, "856e6ab0a1b14ac490277652b9beabf6": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_0b412fd29e8a44f5bfaaa9a7122a33c3", "IPY_MODEL_5ab9a789ce9a4e97845523051ef0762c"], "layout": "IPY_MODEL_f55ac2b80afd433a919cc2d7ab87b098"}}, "871a273a718c4b7ab105f4bf6f9500e1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "884172dbe7194ea7aba24ace80d35049": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "m", "layout": "IPY_MODEL_d2e7ead2f8d74c5180cbabbb30b674a8", "max": 2, "min": -2, "step": 0.1, "style": "IPY_MODEL_373d595c629d4c96ab6c69cabadfbae3"}}, "890cbfc7c0f343d2b7991c18b88b8177": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatSliderModel", "state": {"description": "b", "layout": "IPY_MODEL_24102f82e9cf49aca85e512f59a1db81", "max": 3, "min": -3, "step": 0.5, "style": "IPY_MODEL_64c7a0f8b8904b1ca743bc4911a341b2", "value": -0.5}}, "8a2b88d881b247d08b03cb1b7183128d": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "8b9cd3fe33484cb794a9c2a4d60caa9a": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "8c5220ab1fe748d0abf46067668fd9d1": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "8cc71f1ee02d4a10acbda0a6f9cbc4fb": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_6a03b9b6618c43bb80bcccfc6f7c19f9", "outputs": [{"data": {"image/png": "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\n", "text/plain": "<Figure size 432x288 with 1 Axes>"}, "metadata": {"needs_background": "light"}, "output_type": "display_data"}]}}, "8dda8bf6c916451e91b96e56fc4d2a76": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "9053341eacf94d139041e6aa7cc93233": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "9053f57dacfc4255ad1dc0b717cbd4be": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_ef44415ff8dd456681965184a2a299e8", "style": "IPY_MODEL_cc29a198d1d44797a909ea9a68a5d484"}}, "907bd0f286754766afa0d6ba1612d301": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_4d8487b20ef9419aab03dcc0c813fc77", "IPY_MODEL_d11a21b0488f4970babc1c7ad3f86aa8"], "layout": "IPY_MODEL_1574978c1a56499dbe842cb3bf5b9e8f"}}, "90a70b5f560f437f9bb9422a4a6f6592": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "933e89a135cd42e196abb362e0302570": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "935fac04b32e4e0b9e1f9ea118a04ee1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_b9e169b8efac4eeb990ae37db1e8de12", "max": 200, "style": "IPY_MODEL_9927296f85f248858bdc0a0abcc67e94", "value": 100}}, "94487d6608754721aa3f4401e77dc292": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"height": "350px"}}, "965ef0e308be48eaa8b8ef19c63bed40": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "97c973da7b714095959a2a66d7d28c65": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "98b7be5be6ad4194bafdff2ffd9a89f0": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_b12e150681c94126b68be84b0d7cf158", "IPY_MODEL_204835ba5cf741febeb96117f71f03db"], "layout": "IPY_MODEL_7c23e7df356f475e994f2f3e70730747"}}, "9927296f85f248858bdc0a0abcc67e94": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "9a4a74191d4b483f8e6ca535c155a33f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "9c4a507b139f440fabaa95140d4b2193": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "9ecdf012164d45aaa03c28b34bebf7fa": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "a5e552b00bc54d1991d64d1e61258563": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "children": ["IPY_MODEL_7a81ba3691dc47449c052dcd9070b618", "IPY_MODEL_7d29dde0dd4046fb9717131bf06b637f", "IPY_MODEL_54bac03c012745098c9455c5a2325e0a"], "layout": "IPY_MODEL_2844ba0a05594aeeb871eaf4fae2c4b9"}}, "ac55030546d54b0ca4d7e4fbf355a3c8": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "acc0b478d5b748c29c4683cbcfc8e0f3": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_c69f7b00b5a54f60908cb3d92021daf6", "style": "IPY_MODEL_479edca2ec334d01b8af52d21f4c1565"}}, "ae6272a2743a4752b8798fed0b5dc332": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "b070d7bd6a794d2ba0242e4220af368f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "b12e150681c94126b68be84b0d7cf158": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_1455d02e130148c4a24a0943765db04a", "style": "IPY_MODEL_c2bcf8f8ff7b4623a8311427461ec26b"}}, "b1e4ec6cae8d454999896d5ec41be03c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "b4ed787903d4445cb7fd4c6827acf9cd": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "b65b837d3b614513bef7014f6e97b8be": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_d9226ab50b4a4df9bdd6574f239a76a5", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "b674d805670c4a969daa587ae7d22805": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "b8aa32ebeb924971ade818f6af335eec": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_50f2a1ea21a24ed9a0db566a4678e24e", "IPY_MODEL_bfe8c68e54b24762adb625e2d926bc2e"], "layout": "IPY_MODEL_587b16eff8dc4011bcc72b4f4070b14d"}}, "b9e169b8efac4eeb990ae37db1e8de12": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "bba860475dc34aa295f004356f4c7e70": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_4f613b87c7184b80bbc2806c184eb4cb", "IPY_MODEL_b65b837d3b614513bef7014f6e97b8be"], "layout": "IPY_MODEL_f128f679eeb840f88c63d5fb65e08abe"}}, "be52a81fc3e44efc8f0d70d81da55763": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_4007d719e1aa45349acb4e9f80f0e4ba", "IPY_MODEL_39af2f7e78ff42679117a13c8e3e0c02"], "layout": "IPY_MODEL_90a70b5f560f437f9bb9422a4a6f6592"}}, "bf592509273c491c9496cc5bce017755": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_200d9095bbf14c67af4083eebe042331", "IPY_MODEL_5ed1935a5446410aa7103f97d2500695"], "layout": "IPY_MODEL_b070d7bd6a794d2ba0242e4220af368f"}}, "bfe8c68e54b24762adb625e2d926bc2e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_09294cf0fd6549c78d0f15acf20400b2", "style": "IPY_MODEL_d5700c1140ff4a598008ed28c45f7d25"}}, "c2bcf8f8ff7b4623a8311427461ec26b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "c2cc4c190c324cc0a0ce9bf781a499eb": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "c69f7b00b5a54f60908cb3d92021daf6": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "cc29a198d1d44797a909ea9a68a5d484": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "cd9593419907498e8a80fa9fb7850749": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "ce130e9bb1874109b6e9641a6f6b872a": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_c2cc4c190c324cc0a0ce9bf781a499eb", "style": "IPY_MODEL_cd9593419907498e8a80fa9fb7850749"}}, "ce3b1869747b4502b90f4448204f5d94": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "cf422506005a43978b50beb43766a819": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_9c4a507b139f440fabaa95140d4b2193", "style": "IPY_MODEL_107d8e3c4e4249429f4ea5f86f97caa7"}}, "d10b5afbdea647baa88b2156fda8c6c0": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "d11a21b0488f4970babc1c7ad3f86aa8": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_97c973da7b714095959a2a66d7d28c65", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "d2a772f4a9db458db7a47d77c13dd3d5": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_6ffdc8fcab164aedbf54cf3a45384d64", "style": "IPY_MODEL_e0dea1c96cc34a53938b3f0c52e09fe1", "value": 40}}, "d2e7ead2f8d74c5180cbabbb30b674a8": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "d2ef8aa5fad04047a98f733f89624812": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "d3343e0c83844ad987beb592199dd6f6": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "d5700c1140ff4a598008ed28c45f7d25": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "d67190fd827a4b1a8ca8079df64d0a0a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "d6b85a8f0ec64ee491848be1b8bf8188": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "d9226ab50b4a4df9bdd6574f239a76a5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "d9616e978f2840609e88757e2e7e47f3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "da243475d71a41f48bf4855c01052769": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "da554c291c9f4442991fcf6d620e017e": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "e0dea1c96cc34a53938b3f0c52e09fe1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "e57657510026435496e5903d5c875cbe": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "e5aa35e4f4aa46cf8044c66339de4b96": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_fc608307f2064139ade48955ecbaf7e9", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "e6a05e8e4f6a4cefb61f5f99b1eb13c2": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_d67190fd827a4b1a8ca8079df64d0a0a", "outputs": [{"name": "stdout", "output_type": "stream", "text": "0 * 0 = 0\n"}]}}, "e788ecb6fbad4de6aac05557dcf109f5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "ea2be2adfc72403eb1236220a37dfd36": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_5d68805b72bd49498579e5c204071464", "IPY_MODEL_5ab9a789ce9a4e97845523051ef0762c"], "layout": "IPY_MODEL_6c890acf62af426cab22ed65ff429088"}}, "ec1db3073c594dac8b081d2ad5e072e1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_5d02d239659c496cbb1972806465cbba", "style": "IPY_MODEL_58a162ea4105481e9d1345fdc79c9f1d", "value": 40}}, "edcfad1763d44bbab957f8d4f981f4e4": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"children": ["IPY_MODEL_cf422506005a43978b50beb43766a819", "IPY_MODEL_78efe79186ed46c78e9d91400f519f1d"], "layout": "IPY_MODEL_fd89962cc1214dd7afd0ee8f6c352b76"}}, "ef44415ff8dd456681965184a2a299e8": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "ef77db303b044fe783f80b51f045e866": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "f128f679eeb840f88c63d5fb65e08abe": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "f24ec537d93846e48f35cf5bca83e11d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "f285911bbe39497a88f0994509363fbb": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"layout": "IPY_MODEL_07d43b717dd94d33a8eeae066f36d839", "style": "IPY_MODEL_8dda8bf6c916451e91b96e56fc4d2a76"}}, "f55ac2b80afd433a919cc2d7ab87b098": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "fc608307f2064139ade48955ecbaf7e9": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "fcc376497f9d4b8aa11a102ebc19b6ab": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_06e8b80b569b4ac2bb5a989af9695ced", "outputs": [{"data": {"image/png": "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\n", "text/plain": "<Figure size 432x288 with 1 Axes>"}, "metadata": {"needs_background": "light"}, "output_type": "display_data"}]}}, "fd89962cc1214dd7afd0ee8f6c352b76": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "fdfc64c80c3c407bacf0a395dede228c": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}}, "version_major": 2, "version_minor": 0}
+</script>
+
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="01-setup.html" title="previous page"><span class="section-number">1. </span>System Setup</a>
+    <a class='right-next' id="next-link" href="03-package-structure.html" title="next page"><span class="section-number">3. </span>Package Structure and State</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Tomas Beuzen & Tiffany Timbers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

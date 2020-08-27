@@ -1,0 +1,422 @@
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>8. Packages with a Command Line Interface</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
+    <link href="../_static/css/index.css" rel="stylesheet">
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/jupyter-sphinx.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/mystnb.js"></script>
+    <script src="../_static/sphinx-book-theme.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.18.0/dist/embed-amd.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="9. Python Packaging Cheat Sheet" href="09-cheatsheet.html" />
+    <link rel="prev" title="7. Continuous Integration and Deployment" href="07-ci-cd.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="docsearch:language" content="en">
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/py-pkgs-hex.png" class="logo" alt="logo">
+  
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00-preface.html">
+   Welcome to Py-Pkgs!
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01-setup.html">
+   1. System Setup
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02-the-whole-game.html">
+   2. The Whole Game
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03-package-structure.html">
+   3. Package Structure and State
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04-testing.html">
+   4. Testing
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05-documentation.html">
+   5. Documentation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06-releasing-versioning.html">
+   6. Releasing and Versioning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07-ci-cd.html">
+   7. Continuous Integration and Deployment
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   8. Packages with a Command Line Interface
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09-cheatsheet.html">
+   9. Python Packaging Cheat Sheet
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/chapters/08-cli.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/UBC-MDS/py-pkgs"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/UBC-MDS/py-pkgs/issues/new?title=Issue%20on%20page%20%2Fchapters/08-cli.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cli-package-structure">
+   8.1. CLI Package Structure
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cli-tools-and-code">
+   8.2. CLI Tools and Code
+  </a>
+ </li>
+</ul>
+
+        </nav>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="packages-with-a-command-line-interface">
+<span id="cli"></span><h1><span class="section-number">8. </span>Packages with a Command Line Interface<a class="headerlink" href="#packages-with-a-command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>Many Python packages include a command line interface (CLI) - that is, functionality you can access directly from the command line, without having to start up a Python session. The <code class="docutils literal notranslate"><span class="pre">cookiecutter</span></code> tool weve used throughout this book is one such example. CLIs can help users more effectivaly interact with your software, are often easier to use with virtual machines, and can make it easier to automate processes via scripting. Luckily, it’s quite easy to configure Python packages to include a CLI, especially if you’re using the <code class="docutils literal notranslate"><span class="pre">poetry</span></code> package manager tool. In this chapter, we’ll walk through setting up a very simple Python Package that includes a CLI.</p>
+<div class="section" id="cli-package-structure">
+<span id="cli-structure"></span><h2><span class="section-number">8.1. </span>CLI Package Structure<a class="headerlink" href="#cli-package-structure" title="Permalink to this headline">¶</a></h2>
+<p>As we’ve seen throughout this book, Python packages follow a standard structure and you can quickly set this structure up using the <a class="reference external" href="https://github.com/UBC-MDS/cookiecutter-ubc-mds">UBC-MDS cookiecutter template</a> and <code class="docutils literal notranslate"><span class="pre">poetry</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cookiecutter https://github.com/UBC-MDS/cookiecutter-ubc-mds.git
+$ poetry init
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you’re unfamiliar with the <code class="docutils literal notranslate"><span class="pre">cookiecutter</span></code> + <code class="docutils literal notranslate"><span class="pre">poetry</span></code> workflow, go back and check out the chapter <a class="reference internal" href="02-the-whole-game.html#whole-game"><span class="std std-ref">The Whole Game</span></a>.</p>
+</div>
+<p>With these two commands, you end up with a structure that looks something like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pypkgs
+├── CONDUCT.rst
+├── CONTRIBUTING.rst
+├── CONTRIBUTORS.rst
+├── docs
+├── pypkgs
+│   ├── __init__.py
+│   └── pypkgs.py
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+├── .readthedocs.yml
+├── README.md
+└── tests
+    ├── __init__.py
+    └── test_pypkgs.py
+</pre></div>
+</div>
+<p>We will continue to build off the <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> package we’ve developed throughout this book, but the instructions below will generalise to any package. To create a basic CLI for our package, there’s not too much more we have to do to this structure! First, we need to add a script that will contain our CLI code. Let’s go ahead and do that now by adding a new Python module called <code class="docutils literal notranslate"><span class="pre">cli.py</span></code> to the <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> subdirectory now, so that our directory structure becomes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pypkgs
+├── CONDUCT.rst
+├── CONTRIBUTING.rst
+├── CONTRIBUTORS.rst
+├── docs
+├── pypkgs
+│   ├── __init__.py
+│   ├── cli.py  <span class="c1">#  &lt;-- We added our script here!</span>
+│   └── pypkgs.py
+├── .gitignore
+├── LICENSE
+├── pyproject.toml
+├── .readthedocs.yml
+├── README.md
+└── tests
+    ├── __init__.py
+    └── test_pypkgs.py
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can call your CLI script anything you like, and put it anywhere in your package directory that you like, but the set up shown above is  common.</p>
+</div>
+<p>While our CLI module is empty for now, let’s go ahead and configure <code class="docutils literal notranslate"><span class="pre">poetry</span></code> to incorporate the CLI into our future package build. All we need to do is give our CLI an alias and point <code class="docutils literal notranslate"><span class="pre">poetry</span></code> to the location of the code we want to run when that alias is used at the CL. To do this, we need to add the following in the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">poetry</span><span class="o">.</span><span class="n">scripts</span><span class="p">]</span>
+<span class="n">pypkgs</span> <span class="o">=</span> <span class="s2">&quot;pypkgs.cli:main&quot;</span>
+</pre></div>
+</div>
+<p>This syntax points <code class="docutils literal notranslate"><span class="pre">poetry</span></code> to executable scripts that should be installed when your package is being installed. In our case, we are pointing the the <code class="docutils literal notranslate"><span class="pre">cli.py</span></code> module and the <code class="docutils literal notranslate"><span class="pre">main()</span></code> function within it (which doesn’t exist yet but we’ll create it shortly). You can read more about this configuration in the <a class="reference external" href="https://python-poetry.org/docs/pyproject/#scripts"><code class="docutils literal notranslate"><span class="pre">poetry</span></code> documentation</a>. The <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code> on the left of the equals sign is the alias you will use to access your CLI, e.g., we will be able to type at the CL <code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">pypkgs</span> <span class="pre">&lt;args&gt;</span></code>. You can call it anything you like, it doesn’t have to be the same as your package name, but it should typically be short and sweet! In the next section we’ll build up the syntax and code to actually create a working CLI.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>If you’re using <code class="docutils literal notranslate"><span class="pre">Setuptools</span></code> isntead of <code class="docutils literal notranslate"><span class="pre">poetry</span></code> to develop your package, the CLI configuration can be a little more involved, check out <a class="reference external" href="https://python-packaging.readthedocs.io/en/latest/command-line-scripts.html#command-line-scripts">this documentation</a> to learn more.</p>
+</div>
+</div>
+<div class="section" id="cli-tools-and-code">
+<span id="cli-tools"></span><h2><span class="section-number">8.2. </span>CLI Tools and Code<a class="headerlink" href="#cli-tools-and-code" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways to set up your <code class="docutils literal notranslate"><span class="pre">cli.py</span></code> script, I’m going to show, what in my opinion, is the simplest here. Go ahead and open up <code class="docutils literal notranslate"><span class="pre">cli.py</span></code> in an editor of your choice. Let’s first make sure that everything is working by creating a <code class="docutils literal notranslate"><span class="pre">main()</span></code> function (this could be called anything, but we’ll call it main here and have specified that in <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>) in <code class="docutils literal notranslate"><span class="pre">cli.py</span></code> by adding the following text into the file:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coming to you from the command line!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, we can re-install our package and test it by using our previously specified CLI alias of <code class="docutils literal notranslate"><span class="pre">pypkgs</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ poetry install
+$ pypkgs
+Coming to you from the <span class="nb">command</span> line!
+</pre></div>
+</div>
+<p>Great, looks like everything is working so far. But we are going to want to create more complicated CLIs than this, in particular, CLIs that can accept arguments! There are many tools available to help build Python CLI’s, popular ones include:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/argparse.html"><code class="docutils literal notranslate"><span class="pre">argparse</span></code></a> (part of the Python standard library)</p></li>
+<li><p><a class="reference external" href="https://click.palletsprojects.com/en/7.x/"><code class="docutils literal notranslate"><span class="pre">click</span></code></a></p></li>
+<li><p><a class="reference external" href="http://docopt.org/"><code class="docutils literal notranslate"><span class="pre">docopt</span></code></a></p></li>
+<li><p><a class="reference external" href="https://google.github.io/python-fire/guide/"><code class="docutils literal notranslate"><span class="pre">fire</span></code></a></p></li>
+</ul>
+<p>All of these different packages share the same goal - to turn Python code into a CLI. Here, we’ll be using <code class="docutils literal notranslate"><span class="pre">argparse</span></code> because it is part of the Python standard library and is easy and intuitive to use for simple CLIs.</p>
+<p>The goal of this chapter is not to teach the syntax of <code class="docutils literal notranslate"><span class="pre">argparse</span></code> (which the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse">official <code class="docutils literal notranslate"><span class="pre">argparse</span></code> documenation</a> does an excellent job of already). Rather, here we wish to show how easy it is to incorporate a CLI into your Python package. We will leverage a simple CLI example from the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse">official <code class="docutils literal notranslate"><span class="pre">argparse</span></code> documenation</a> that takes in a list of numbers and provides either the sum or the max of those numbers based on the command given.</p>
+<p>To create this functionality, simply copy-paste the following code into <code class="docutils literal notranslate"><span class="pre">cli.py</span></code> and we’ll then walk through it step-by-step:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">integers</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">&#39;Process some integers.&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;integers&#39;</span><span class="p">,</span> <span class="n">metavar</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;an integer for the accumulator&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--sum&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;accumulate&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_const&#39;</span><span class="p">,</span>
+                        <span class="n">const</span><span class="o">=</span><span class="nb">sum</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="nb">max</span><span class="p">,</span>
+                        <span class="n">help</span><span class="o">=</span><span class="s1">&#39;sum the integers (default: find the max)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+</pre></div>
+</div>
+<p>In the code above, the first thing we are doing is importing the <code class="docutils literal notranslate"><span class="pre">argparse</span></code> module which we will use to help parse CL arguments. We then have our <code class="docutils literal notranslate"><span class="pre">main()</span></code> function, which is the function that will be called when we execute our package CLI with the alias <code class="docutils literal notranslate"><span class="pre">pypks</span></code>. The way <code class="docutils literal notranslate"><span class="pre">poetry</span></code> and Python CLIs currently work, we can’t pass argument directly to this function, so instead, we define another function <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> to parse any CL arguments, and this is called within <code class="docutils literal notranslate"><span class="pre">main()</span></code>.</p>
+<p>As for the <code class="docutils literal notranslate"><span class="pre">parse_args()</span></code> function, it contains a bunch of <code class="docutils literal notranslate"><span class="pre">argparse</span></code>-specific syntax for creating an object that can parse CL arguments. Briefly, the first line (<code class="docutils literal notranslate"><span class="pre">parser</span> <span class="pre">=</span> <span class="pre">...</span></code>) sets up the parsing object which will hold all the information necessary to parse the command line into Python data types. We then add two passable arguments, the first is “integers”, which must be of type <code class="docutils literal notranslate"><span class="pre">int</span></code> and can accept any arbitrary number of integers from the CL. The second argument is “–sum”, this is an optional argument which returns the sum of the passed integers, otherwise the maximum of the passed integers is returned. In addition, all <code class="docutils literal notranslate"><span class="pre">argparse</span></code> object come with an optional help argument (specified with <code class="docutils literal notranslate"><span class="pre">-h</span></code> or <code class="docutils literal notranslate"><span class="pre">--help</span></code>), which will return a summary of all possible CL arguments and their help description (if provided). Check out the <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse">documentation</a> for a more comprehensive walkthrough of this example.</p>
+<p>We can test out our brand new CL by re-installing our package and checking the help documentation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ poetry install
+$ pypkgs --help
+usage: pypkgs [-h] [--sum] N [N ...]
+
+Process some integers.
+
+positional arguments:
+  N           an integer for the accumulator
+
+optional arguments:
+  -h, --help  show this help message and exit
+  --sum       sum the integers (default: find the max)
+</pre></div>
+</div>
+<p>It seems to be working! Let’s see if we can calculate the maximum and the sum of a set of integers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pypkgs 1 2 3 4 5
+5
+$ pypkgs --sum 1 2 3 4 5
+16
+</pre></div>
+</div>
+<p>Awesome! We’ve implemented a basic CLI here to show how this functionality can be accommodated in Python packages. You can check out a more complicated Python package CLI, called <a class="reference external" href="https://github.com/UNCG-DAISY/PyWebCAT"><code class="docutils literal notranslate"><span class="pre">PyWebCat</span></code></a>, that I wrote to interface with some open-source coastal video footage, following the above guidelines and structure. I also encourage you to take a look at the CLIs of any larger, open-source Python packages you use (like <a class="reference external" href="https://github.com/cookiecutter/cookiecutter"><code class="docutils literal notranslate"><span class="pre">cookiecutter</span></code></a> for example) to better understand how to write effective CLIs.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="07-ci-cd.html" title="previous page"><span class="section-number">7. </span>Continuous Integration and Deployment</a>
+    <a class='right-next' id="next-link" href="09-cheatsheet.html" title="next page"><span class="section-number">9. </span>Python Packaging Cheat Sheet</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Tomas Beuzen & Tiffany Timbers<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    <script src="../_static/js/index.js"></script>
+    
+  </body>
+</html>

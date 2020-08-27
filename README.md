@@ -1,6 +1,6 @@
 # Python packages
 
-![build](https://github.com/UBC-MDS/py-pkgs/workflows/render-and-deploy/badge.svg)
+![Build](https://github.com/UBC-MDS/py-pkgs/workflows/Build/badge.svg)
 
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](https://www.tiffanytimbers.com/)
 

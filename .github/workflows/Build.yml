@@ -1,0 +1,37 @@
+name: Build
+
+on:
+  # Trigger the workflow on push or pull request on master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    # run once a month
+    - cron: '0 0 1 * *'
+
+# This job installs dependencies and builds the book
+jobs:
+  build-book:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.7]
+    steps:
+    - uses: actions/checkout@v2
+
+    # Install dependencies
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    # Build the book
+    - name: Build the book
+      run: jupyter-book build py-pkgs
