@@ -1,5 +1,5 @@
 (00-welcome)=
-# Welcome to Py-Pkgs!
+# Welcome to Python Packages!
 
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](http://tiffanytimbers.com)
 

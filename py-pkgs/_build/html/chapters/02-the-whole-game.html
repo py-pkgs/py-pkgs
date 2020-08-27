@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>2. The Whole Game</title>
+    <title>2. The Whole Game &#8212; Python Packages</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
     <link href="../_static/css/index.css" rel="stylesheet">
     <link rel="stylesheet" href="../_static/sphinx-book-theme.css" type="text/css" />
@@ -62,6 +62,8 @@
   <img src="../_static/py-pkgs-hex.png" class="logo" alt="logo">
   
   
+  <h1 class="site-logo" id="site-title">Python Packages</h1>
+  
 </a>
 </div>
 
@@ -74,7 +76,7 @@
   <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="00-preface.html">
-   Welcome to Py-Pkgs!
+   Welcome to Python Packages!
   </a>
  </li>
 </ul>
@@ -502,19 +504,19 @@ Branch <span class="s1">&#39;master&#39;</span> <span class="nb">set</span> up t
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">([</span><span class="s2">&quot;but&quot;</span><span class="p">,</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span> <span class="s2">&quot;where it&quot;</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">])</span>
 <span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
 
-<span class="nn">/opt/miniconda3/envs/py-pkgs-book/lib/python3.8/site-packages/pandas/core/reshape/concat.py</span> in <span class="ni">concat</span><span class="nt">(objs, axis, join, ignore_index, keys, levels, names, verify_integrity, sort, copy)</span>
-<span class="g g-Whitespace">    </span><span class="mi">272</span>     <span class="ne">ValueError</span><span class="p">:</span> <span class="n">Indexes</span> <span class="n">have</span> <span class="n">overlapping</span> <span class="n">values</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">273</span>     <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">274</span><span class="s2">     op = _Concatenator(</span>
-<span class="g g-Whitespace">    </span><span class="mi">275</span><span class="s2">         objs,</span>
-<span class="g g-Whitespace">    </span><span class="mi">276</span><span class="s2">         axis=axis,</span>
+<span class="nn">/opt/miniconda3/envs/test/lib/python3.7/site-packages/pandas/core/reshape/concat.py</span> in <span class="ni">concat</span><span class="nt">(objs, axis, join, ignore_index, keys, levels, names, verify_integrity, sort, copy)</span>
+<span class="g g-Whitespace">    </span><span class="mi">282</span>         <span class="n">verify_integrity</span><span class="o">=</span><span class="n">verify_integrity</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">283</span>         <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span>
+<span class="ne">--&gt; </span><span class="mi">284</span>         <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">285</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">286</span> 
 
-<span class="nn">/opt/miniconda3/envs/py-pkgs-book/lib/python3.8/site-packages/pandas/core/reshape/concat.py</span> in <span class="ni">__init__</span><span class="nt">(self, objs, axis, join, keys, levels, names, ignore_index, verify_integrity, copy, sort)</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span><span class="s2">                     &quot;only Series and DataFrame objs are valid&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">358</span><span class="s2">                 )</span>
-<span class="ne">--&gt; </span><span class="mi">359</span><span class="s2">                 raise TypeError(msg)</span>
-<span class="g g-Whitespace">    </span><span class="mi">360</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">361</span><span class="s2">             # consolidate</span>
+<span class="nn">/opt/miniconda3/envs/test/lib/python3.7/site-packages/pandas/core/reshape/concat.py</span> in <span class="ni">__init__</span><span class="nt">(self, objs, axis, join, keys, levels, names, ignore_index, verify_integrity, copy, sort)</span>
+<span class="g g-Whitespace">    </span><span class="mi">357</span>                     <span class="s2">&quot;only Series and DataFrame objs are valid&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">358</span>                 <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">359</span>                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span> 
+<span class="g g-Whitespace">    </span><span class="mi">361</span>             <span class="c1"># consolidate</span>
 
 <span class="ne">TypeError</span>: cannot concatenate object of type &#39;&lt;class &#39;pandas.core.arrays.categorical.Categorical&#39;&gt;&#39;; only Series and DataFrame objs are valid
 </pre></div>
