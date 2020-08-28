@@ -2,6 +2,7 @@
 
 ![Build](https://github.com/UBC-MDS/py-pkgs/workflows/Build/badge.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/aedd3981-db10-4730-b21f-a762194129f9/deploy-status)](https://app.netlify.com/sites/zen-ptolemy-4bba7d/deploys)
+[![Website](https://img.shields.io/badge/Website-pypkgs.org-blue)](https://py-pkgs.org/)
 
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](https://www.tiffanytimbers.com/)
 
@@ -9,7 +10,7 @@
   <img src="py-pkgs/chapters/img/project/py-pkgs-hex.png" width="220">
 </p>
 
-A practical book on how to distribute Python code via Python packages. This book is aimed at Python intermediate users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It's scope and intent is inspired by the [R packages](https://r-pkgs.org/) book written by Hadley Wickham and Jenny Bryan.
+A practical book on how to distribute Python code via Python packages - available online at <https://py-pkgs.org/>. This book is aimed at Python intermediate users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It's scope and intent is inspired by the [R packages](https://r-pkgs.org/) book written by Hadley Wickham and Jenny Bryan.
 
 ## Building the book
 
