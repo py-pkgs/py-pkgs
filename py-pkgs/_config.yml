@@ -15,7 +15,7 @@ latex:
 #######################################################################################
 # Execution settings
 execute:
-  execute_notebooks         : force  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
+  execute_notebooks         : "force"  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
 
 #######################################################################################
 # HTML-specific settings
