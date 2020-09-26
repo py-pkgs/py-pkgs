@@ -8,7 +8,7 @@ helps, and credit will always be given.
 
 ### Report Bugs
 
-Report bugs by creatin an [issue](https://github.com/TomasBeuzen/animated-data/issues).
+Report bugs by creating an [issue](https://github.com/UBC-MDS/py-pkgs/issues).
 
 If you are reporting a bug, please include:
 
@@ -28,7 +28,7 @@ and "help wanted" is open to whoever wants to implement it. Features might inclu
 
 ### Submit Feedback
 
-The best way to send feedback is to file an [issue](https://github.com/TomasBeuzen/animated-data/issues).
+The best way to send feedback is to file an [issue](https://github.com/UBC-MDS/py-pkgs/issues).
 
 If you are proposing a feature:
 
@@ -39,14 +39,14 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `animated-data` for local development.
+Ready to contribute? Here's how to set up `py-pkgs` for local development.
 
-1. Fork the `animated-data` repo on GitHub.
+1. Fork the `py-pkgs` repo on GitHub.
 
 2. Clone your fork locally:
 
 	```
- 	git clone git@github.com:your_name_here/animated-data.git
+	git clone git@github.com:your_name_here/py-pkgs.git
 	```
 
 3. Create a branch for local development:
@@ -68,4 +68,4 @@ Ready to contribute? Here's how to set up `animated-data` for local development.
 
 ## Code of Conduct
 
-Please note that the animated-data project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+Please note that the py-pkgs project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
