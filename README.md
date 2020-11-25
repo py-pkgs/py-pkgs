@@ -17,7 +17,7 @@ A practical book on how to distribute Python code via Python packages - availabl
 If you'd like develop and build the py-pkgs book from source, you should:
 
 - Clone this repository and run
-- Run `pip install requirements.txt` (it is recommended you do this within a virtual environment)
+- Run `pip install -r requirements.txt` (it is recommended you do this within a virtual environment)
 - (Recommended) Clean the existing `jupyter-book clean py-pkgs/` directory
 - Run `jupyter-book build py-pkgs/`
 
