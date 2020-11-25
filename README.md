@@ -12,14 +12,17 @@
 
 A practical book on how to distribute Python code via Python packages - available online at <https://py-pkgs.org/>. This book is aimed at Python intermediate users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It's scope and intent is inspired by the [R packages](https://r-pkgs.org/) book written by Hadley Wickham and Jenny Bryan.
 
+This book is currently under development. Please feel free to provide comments or suggestions in a [GitHub issue](https://github.com/UBC-MDS/py-pkgs/issues).
+
 ## Building the book
 
 If you'd like develop and build the py-pkgs book from source, you should:
 
-- Clone this repository and run
-- Run `pip install -r requirements.txt` (it is recommended you do this within a virtual environment)
-- (Recommended) Clean the existing `jupyter-book clean py-pkgs/` directory
-- Run `jupyter-book build py-pkgs/`
+1. Clone this repository;
+2. Run `pip install -r requirements.txt` (it is recommended you do this within a virtual environment);
+3. Make any desired changes;
+4. Clean the existing build directory: `jupyter-book clean py-pkgs/`;
+5. Build the book: `jupyter-book build py-pkgs/`
 
 A fully-rendered HTML version of the book will be built in `py-pkgs/_build/html/`.
 
