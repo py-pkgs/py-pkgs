@@ -2,7 +2,8 @@
 # Book settings
 title: Python Packages
 author: Tomas Beuzen & Tiffany Timbers
-logo: chapters/img/project/py-pkgs-hex.png
+copyright: "2021"
+logo: images/py-pkgs-hex.png
 repository:
   url: https://github.com/UBC-MDS/py-pkgs
   path_to_book: "py-pkgs/"  # A path to your book's folder, relative to the repository root.
@@ -20,7 +21,7 @@ execute:
 #######################################################################################
 # HTML-specific settings
 html:
-  favicon                   : "chapters/img/project/favicon.ico"  # A path to a favicon image
+  favicon                   : "images/favicon.ico"  # A path to a favicon image
   use_edit_page_button      : false  # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
   use_repository_button     : true  # Whether to add a link to your repository button
   use_issues_button         : true  # Whether to add an "open an issue" button
@@ -28,4 +29,4 @@ html:
   extra_footer              : ""  # Will be displayed underneath the footer.
   google_analytics_id       : "UA-157992550-3"  # A GA id that can be used to track book views.
   home_page_in_navbar       : true  # Whether to include your home page in the left Navigation Bar
-  baseurl                   : "https://py-pkgs.org/"  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/
+  baseurl                   : "https://py-pkgs.org/"  # The base URL where your book will be hosted.

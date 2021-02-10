@@ -1,7 +1,9 @@
 - file: welcome
   numbered: true
-- file: chapters/01-setup
-- file: chapters/02-the-whole-game
+- file: chapters/00-preface
+- file: chapters/01-introduction
+- file: chapters/02-setup
+- file: chapters/03-how-to-package-a-python
 - file: chapters/03-package-structure
 - file: chapters/04-testing
 - file: chapters/05-documentation
