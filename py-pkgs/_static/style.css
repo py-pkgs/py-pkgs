@@ -5,3 +5,7 @@ p {
 .caption {
   text-align: center;
 }
+
+.caption.collapsible-parent {
+  text-align: left;
+}

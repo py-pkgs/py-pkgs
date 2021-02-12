@@ -1,0 +1,21 @@
+\mainmatter
+
+# Introduction
+
+Now unplug your Internet cable, and start doing some serious work.
+
+We have a nice figure in Figure \@ref(fig:hello), and also a table in Table \@ref(tab:iris).
+
+```{r hello, fig.cap='Hello World!', out.width='90%'}
+par(mar = c(4, 4, 1, .1))
+plot(cars, pch = 19)
+```
+
+```{r iris}
+knitr::kable(
+  head(iris), caption = 'The boring iris data.',
+  booktabs = TRUE
+)
+```
+
+More chapters to come in `02-foo.Rmd`, `03-bar`.Rmd, ...

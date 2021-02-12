@@ -1,13 +1,20 @@
 - file: welcome
+  
+- part: Chapters
   numbered: true
-- file: chapters/00-preface
-- file: chapters/01-introduction
-- file: chapters/02-setup
-- file: chapters/03-how-to-package-a-python
-- file: chapters/03-package-structure
-- file: chapters/04-testing
-- file: chapters/05-documentation
-- file: chapters/06-releasing-versioning
-- file: chapters/07-ci-cd
-- file: chapters/08-cli
-- file: chapters/09-cheatsheet
+  chapters:
+  - file: 00-preface
+  - file: 01-introduction
+  - file: 02-setup
+  - file: 03-how-to-package-a-python
+  - file: 04-package-structure
+  - file: 05-testing
+  - file: 06-documentation
+  - file: 07-releasing-versioning
+  - file: 08-ci-cd
+  
+- part: Appendices
+  numbered: true
+  chapters:
+  - file: A1-cli
+  - file: A2-cheatsheet

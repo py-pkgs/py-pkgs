@@ -1,0 +1,4 @@
+# The FOO Method
+
+We talk about the _FOO_ method\index{FOO} in this chapter.
+

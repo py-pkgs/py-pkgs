@@ -1,0 +1,7 @@
+# About the Author {-}
+
+Frida Gomam is a famous lady. Police will always let her go.
+
+```{r 02_vscode-1, fig.cap = "Installing the "Python" extension in Visual Studio Code.", fig.retina = 2, out.width="750px", echo = FALSE, message = FALSE, warning = FALSE}
+knitr::include_graphics("images/02_vscode-1.png")
+```
