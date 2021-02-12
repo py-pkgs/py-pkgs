@@ -1,9 +1,13 @@
 - file: welcome
-  
+
+- part: Preface
+  numbered: false
+  chapters:
+  - file: 00-preface
+
 - part: Chapters
   numbered: true
   chapters:
-  - file: 00-preface
   - file: 01-introduction
   - file: 02-setup
   - file: 03-how-to-package-a-python
@@ -14,7 +18,7 @@
   - file: 08-ci-cd
   
 - part: Appendices
-  numbered: true
+  numbered: false
   chapters:
   - file: A1-cli
   - file: A2-cheatsheet
