@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/UBC-MDS/py-pkgs/workflows/Build/badge.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/aedd3981-db10-4730-b21f-a762194129f9/deploy-status)](https://app.netlify.com/sites/zen-ptolemy-4bba7d/deploys)
-[![Website](https://img.shields.io/badge/Website-pypkgs.org-blue)](https://py-pkgs.org/)
+[![Website](https://img.shields.io/badge/Website-https://py--pkgs.org-blue)](https://py-pkgs.org/)
 
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](https://www.tiffanytimbers.com/)
 

@@ -1,3 +1,11 @@
 p {
-    text-align: justify;
-  }
+  text-align: justify;
+}
+
+.caption {
+  text-align: center;
+}
+
+.caption.collapsible-parent {
+  text-align: left;
+}
