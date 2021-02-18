@@ -4,6 +4,7 @@
   numbered: false
   chapters:
   - file: 00-preface
+  - file: 00-authors
 
 - part: Chapters
   numbered: true
