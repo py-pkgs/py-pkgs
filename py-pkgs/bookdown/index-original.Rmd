@@ -11,9 +11,8 @@ lot: yes
 lof: yes
 site: bookdown::bookdown_site
 description: "Open source book on building Python packages."
-github-repo: yihui/bookdown-crc
+github-repo: UBC-MDS/py-pkgs
 graphics: yes
-#cover-image: images/cover.jpg
 ---
 
 ```{r setup, include=FALSE}
@@ -29,7 +28,7 @@ lapply(c('xfun'), function(pkg) {
 
 # Preface {-}
 
-Hi there, this is my great book.
+Hi there, this is my great book. Here's a reference [Structure of the book] or this one [Structure of the book ]
 
 ## Why read this book {-}
 

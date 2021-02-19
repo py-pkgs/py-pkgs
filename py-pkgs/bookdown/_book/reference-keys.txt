@@ -1,6 +1,5 @@
 fig:hello
 tab:iris
-why-read-this-book
 introduction
 the-foo-method
 more-to-say

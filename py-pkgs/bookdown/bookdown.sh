@@ -5,7 +5,9 @@
 # Unsync the files (before we make changes to the .Rmd)
 (cd .. ; jupytext --update-metadata '{"jupytext": null}' *.ipynb)
 jupytext --update-metadata '{"jupytext": null}' *.Rmd
+# Rename some files
+mv 00-preface.Rmd index.Rmd
 # Parse the .Rmd to change Jupyter Book format to RStudio format
 python bookdown.py
-# Build the bookdown
-r bookdown
+# # Build the bookdown
+# r bookdown
