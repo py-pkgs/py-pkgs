@@ -7,7 +7,7 @@
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](https://www.tiffanytimbers.com/)
 
 <p align="center">
-  <img src="py-pkgs/chapters/img/project/py-pkgs-hex.png" width="220">
+  <img src="py-pkgs/images/py-pkgs-hex.png" width="220">
 </p>
 
 A practical book on how to distribute Python code via Python packages - available online at <https://py-pkgs.org/>. This book is aimed at Python intermediate users who want to package up their code to share it with their collaborators (including their future selves) and the wider Python community. It's scope and intent is inspired by the [R packages](https://r-pkgs.org/) book written by Hadley Wickham and Jenny Bryan.
