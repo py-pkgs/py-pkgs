@@ -1,5 +1,0 @@
-fig:hello
-tab:iris
-introduction
-the-foo-method
-more-to-say
