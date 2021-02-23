@@ -1,0 +1,99 @@
+---
+title: "Python Packages"
+author: "Tomas Beuzen and Tiffany Timbers"
+date: "`r Sys.Date()`"
+documentclass: krantz
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+lot: yes
+lof: yes
+site: bookdown::bookdown_site
+description: "Open source book on building Python packages."
+github-repo: UBC-MDS/py-pkgs
+graphics: yes
+---
+
+# Preface {-}
+
+Python packages are the fundamental unit of shareable code in Python. Packages make it easy to reuse and maintain your code, and are how you share your code with your colleagues and the wider Python community. *Python Packages* is an open source textbook that describes modern and efficient workflows for creating Python packages. The focus of this text is overwhelmingly practical; we will demonstrate methods and tools you can use to develop and maintain packages quickly, reproducibly, and with as much automation as possible - so you can focus on writing and sharing code!
+
+## Why read this book? {-}
+
+Python packages are a core element of the Python programming language and are how you write reuseable and shareable code in Python. Despite their importance, packages can be difficult to understand and cumbersome to create for beginners and seasoned developers alike. This book aims to describe the packaging process at an accessible level for data scientists, developers and hobbyist programmers. Along the way, we'll walk through the development of a real Python package and we will explore all the key elements of Python packaging, including; package structure, when and why to write tests and documentation, and how to maintain and update your package with the help of automated CI/CD pipelines.
+
+By reading this book, you will:
+- Understand what Python packages are, and when and why you should use them.
+- Be able to build your own Python package from scratch.
+- Learn how to document your Python code and packages, and how to render this documentation into a coherent, shareable document.
+- Write automated and formal tests for your code.
+- Learn how to release your package on the Python Package Index (PyPI) and discover best practices for updating and versioning your code.
+- Implement automation and CI/CD pipelines to build, test, and deploy your package and update its dependencies.
+- Get tips on Python coding style, best-practice packaging workflows, and other useful development tools.
+
+## Structure of the book {-}
+
+**Chapter 1: [Introduction]** first gives a brief introduction to packages in Python and why you should know how to make them. **Chapter 2: [System setup]** describes how to set up your development environment to develop packages and follow along with the remainder of the book. In **Chapter 3: [How to package a Python]**, we will develop a small toy package from end-to-end to get a feel for the steps involved in the packaging process and to understand the final product we are aiming for. The remaining chapters then unpack this workflow and go into more details about each step in the packaging process, organised roughly in their order in the workflow:
+
+- **Chapter 4: [Package structure and state]** 
+- **Chapter 5: [Testing]**
+- **Chapter 6: [Documentation]**
+- **Chapter 7: [Releasing and versioning]**
+- **Chapter 8: [Continuous integration and deployment]**
+- **Appendix 1: [Packages with a command line interface]**
+- **Appendix 2: [Python packaging cheat sheet]**
+
+## Conventions {-}
+
+Throughout this book we use `foo()` to refer to functions, and `bar` to refer to variables and function parameters.
+
+Larger code snippets in the text appear as below and we will use type hints and the so-called "Numpy-style" for docstrings:
+
+```python
+def palindrome(word: str) -> str:
+    """Turns a string into a palindrome by concatenating it with a reversed version of itself.
+    
+    Parameters
+    ----------
+    word : str
+        Word to turn into a palindrome.
+    
+    Returns
+    -------
+    str
+        Palindrome of word.
+    
+    Examples
+    --------
+    >>> palindrome("Tomas")
+    'TomassamoT'
+    >>> palindrome("Python")
+    'PythonnohtyP'
+    """
+    return word + word[::-1]
+```
+
+Code executed in the interactive Python interpreter to produce an output will appear as below:
+
+```{python}
+a = 1
+b = 2
+a + b
+```
+
+If you have an electronic version of the book, e.g., <https://py-pkgs.org>, all code is rendered in such a way that you can easily copy and paste directly from your browser to your Python interpreter or editor.
+
+## Persistence {-}
+
+The Python software ecosystem is constantly evolving. While the packaging workflows and concepts discussed in this book are effectively tool-agnostic, the tools we do use in the book may have been updated by the time you read it. If the maintainers of these tools are doing the right thing by documenting, versioning, and properly deprecating their code (we'll explore these concepts ourselves in **Chapter 7: [Releasing and versioning]**), then it should be straightforward to adapt any outdated code in the book.
+
+## Colophon {-}
+
+This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/index.html), compiled using [Jupyter Book](https://jupyterbook.org/intro.html), is hosted on [GitHub](https://github.com/), and the [online version](https://py-pkgs.org/) is deployed with [Netlify](https://www.netlify.com/). The complete source is available from [GitHub](https://github.com/), and is automatically updated after edits by [GitHub Actions](https://github.com/features/actions). 
+
+## Acknowledgements {-}
+
+We'd like to thank everyone that has contributed to the development of [*Python Packages*](https://py-pkgs.org/). This is an open source textbook that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practioners and hobbyists. Without you all, this book wouldn’t be nearly as good as it is, and we are deeply grateful. A special thanks to those who directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
+
+We would also like to acknowledge the software used to develop this book. This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/index.html), compiled using [Jupyter Book](https://jupyterbook.org/intro.html), is hosted on [GitHub](https://github.com/), and the [online version](https://py-pkgs.org/) is deployed with [Netlify](https://www.netlify.com/).
