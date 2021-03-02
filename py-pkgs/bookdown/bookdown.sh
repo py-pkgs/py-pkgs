@@ -17,11 +17,13 @@
 (cd .. ; jupytext --set-formats ipynb,bookdown//Rmd --sync 00-authors.ipynb)
 (cd .. ; jupytext --set-formats ipynb,bookdown//Rmd --sync 01-introduction.ipynb)
 (cd .. ; jupytext --set-formats ipynb,bookdown//Rmd --sync 02-setup.ipynb)
+(cd .. ; jupytext --set-formats ipynb,bookdown//Rmd --sync 03-how-to-package-a-python.ipynb)
 # Unsync the files (before we make changes to the .Rmd)
 (cd .. ; jupytext --update-metadata '{"jupytext": null}' 00-preface.ipynb)
 (cd .. ; jupytext --update-metadata '{"jupytext": null}' 00-authors.ipynb)
 (cd .. ; jupytext --update-metadata '{"jupytext": null}' 01-introduction.ipynb)
 (cd .. ; jupytext --update-metadata '{"jupytext": null}' 02-setup.ipynb)
+(cd .. ; jupytext --update-metadata '{"jupytext": null}' 03-how-to-package-a-python.ipynb)
 jupytext --update-metadata '{"jupytext": null}' *.Rmd
 # Rename some files
 mv 00-preface.Rmd index.Rmd
