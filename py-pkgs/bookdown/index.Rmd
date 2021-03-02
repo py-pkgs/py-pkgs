@@ -24,6 +24,7 @@ Python packages are the fundamental unit of shareable code in Python. Packages m
 Python packages are a core element of the Python programming language and are how you write reuseable and shareable code in Python. Despite their importance, packages can be difficult to understand and cumbersome to create for beginners and seasoned developers alike. This book aims to describe the packaging process at an accessible level for data scientists, developers and hobbyist programmers. Along the way, we'll walk through the development of a real Python package and we will explore all the key elements of Python packaging, including; package structure, when and why to write tests and documentation, and how to maintain and update your package with the help of automated CI/CD pipelines.
 
 By reading this book, you will:
+
 - Understand what Python packages are, and when and why you should use them.
 - Be able to build your own Python package from scratch.
 - Learn how to document your Python code and packages, and how to render this documentation into a coherent, shareable document.

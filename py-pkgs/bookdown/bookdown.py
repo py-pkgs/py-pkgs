@@ -9,6 +9,16 @@ class RmdCleaner:
         with open(filename) as f:
             self.text = f.read()
 
+    def admonitions(self):
+        def repl(match):
+            admonition = match.group(1)
+            return admonition.replace("}\n", ">").replace("\n\n", "\n>\n>")
+
+        self.text = re.sub("```{(?:note|attention|tip)(}\n(?:.+\n|\n)+?)```", repl, self.text)
+
+    def allow_python_errors(self):
+        self.text = re.sub(r'tags=c\("raises-exception"\)', r"error=TRUE", self.text)
+
     def figures(self):
         def repl(match):
             figure = match.group(0)
@@ -62,6 +72,9 @@ class RmdCleaner:
 
         self.text = re.sub(r"{ref}`(?:\d+|A\d):(.*?)`", repl, self.text)
 
+    def remove_author_images(self):
+        self.text = re.sub(r"```{figure} images\/(?:tomas-beuzen|tiffany-timbers)(?:.+\n)+```", "", self.text)
+
     def titles(self):
         """Remove MyST referencing syntax like (00:preface)="""
         titles = re.compile(r"\(\d*:.*\n")
@@ -78,7 +91,10 @@ class RmdCleaner:
         self.header()
         self.titles()
         self.references()
+        self.remove_author_images()
         self.figures()
+        self.admonitions()
+        self.allow_python_errors()
         self.line_spacing()
         self.save()
 
