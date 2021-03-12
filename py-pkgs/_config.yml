@@ -14,10 +14,18 @@ latex:
   latex_documents:
     targetname: book.tex
 
+sphinx:
+  extra_extensions: [sphinx-prompt]
+
 #######################################################################################
 # Execution settings
 execute:
   execute_notebooks         : "force"  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
+
+#######################################################################################
+# Launch button settings
+launch_buttons:
+  binderhub_url             : ""  # The URL of the BinderHub (e.g., https://mybinder.org)
 
 #######################################################################################
 # HTML-specific settings
