@@ -14,6 +14,9 @@ latex:
   latex_documents:
     targetname: book.tex
 
+sphinx:
+  extra_extensions: [sphinx-prompt]
+
 #######################################################################################
 # Execution settings
 execute:
