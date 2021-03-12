@@ -2,6 +2,7 @@
 
 # How to package a Python
 
+
 To start this book, we will first develop an entire Python package from beginning to end. The aim of this chapter is to give the reader a simple and high level overview of the key steps involved in developing a Python package and what the final product we're building actually looks like. Later chapters will then explore each of these key steps in more detail. This chapter was inspired by [The Whole Game chapter](https://r-pkgs.org/whole-game.html) of the [R packages book](https://r-pkgs.org/) written by Hadley Wickham and Jenny Bryan.
 
 ## Package structure
@@ -458,6 +459,7 @@ def catbind(a, b):
     Examples
     --------
     >>> from pypkgs import pypkgs
+    >>> import pandas as pd
     >>> a = pd.Categorical(["character", "hits", "your", "eyeballs"])
     >>> b = pd.Categorical(["but", "integer", "where it", "counts"])
     >>> pypkgs.catbind(a, b)

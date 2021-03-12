@@ -60,6 +60,10 @@ class RmdCleaner:
         else:
             self.text = re.sub("(.+\n)+(?:---)", "", self.text, count=1)
 
+    def horizontal_line(self):
+        """Remove <hr> tags"""
+        self.text = re.sub(r"<hr.*\/>", r"", self.text)
+
     def line_spacing(self):
         """Remove double line breaks"""
         self.text = re.sub(r"\n\n\n", r"\n\n", self.text)
@@ -88,6 +92,7 @@ class RmdCleaner:
             f.write(self.text)
 
     def clean(self):
+        self.horizontal_line()
         self.header()
         self.titles()
         self.references()
