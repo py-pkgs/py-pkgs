@@ -2,6 +2,7 @@
 
 # Introduction
 
+
 Python packages are a core element of the Python programming language and are how you write reuseable and shareable code in Python. If you’re reading this book, chances are you already know how to use packages with the help of the `import` statement in Python. For example, importing and using the `numpy` package to round pi to 3 decimal places is as simple as:
 
 ```{python}
