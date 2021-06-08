@@ -11,6 +11,7 @@ on:
   schedule:
     # run once a month
     - cron: '0 0 1 * *'
+  workflow_dispatch:
 
 # This job installs dependencies and builds the book
 jobs:

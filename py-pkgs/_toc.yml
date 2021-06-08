@@ -1,12 +1,11 @@
-- file: welcome
-
-- part: Preface
-  numbered: false
+format: jb-book
+root: welcome
+parts:
+- caption: Preface
   chapters:
   - file: 00-preface
   - file: 00-authors
-
-- part: Chapters
+- caption: Chapters
   numbered: true
   chapters:
   - file: 01-introduction
@@ -17,9 +16,7 @@
   - file: 06-documentation
   - file: 07-releasing-versioning
   - file: 08-ci-cd
-  
-- part: Appendices
-  numbered: false
+- caption: Appendices
   chapters:
   - file: A1-cli
   - file: A2-cheatsheet
