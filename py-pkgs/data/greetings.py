@@ -1,5 +1,10 @@
-name = "Tom"
-
-
 def hello_world():
-    print(f"Hello world, my name is {name}!")
+    print("Hello World!")
+
+
+def hallo_welt():
+    print("Hallo Welt!")
+
+
+def hola_mundo():
+    print("Hola Mundo!")
