@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 870 550"
+   xml:space="preserve"
+   inkscape:version="1.0.2 (e86c8708, 2021-01-15)"
+   sodipodi:docname="pkg-branching.svg"
+   inkscape:export-filename="/Users/tomasbeuzen/GitHub/py-pkgs/py-pkgs/py-pkgs/images/pkg-branching.png"
+   inkscape:export-xdpi="200"
+   inkscape:export-ydpi="200"
+   width="870"
+   height="550"><g
+   id="g2336"
+   transform="translate(-5.0000133,1.0373987)"><path
+     style="mix-blend-mode:normal;fill:#334864;fill-opacity:1;stroke:#262626;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 138.82475,336.55089 h 568.5527"
+     id="path1434"
+     sodipodi:nodetypes="cc" /><text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:53.3333px;line-height:0;font-family:sans-serif;fill:#333333;fill-opacity:1;stroke:none"
+     x="797.63153"
+     y="355.41858"
+     id="text1438"><tspan
+       sodipodi:role="line"
+       x="797.63153"
+       y="355.41858"
+       id="tspan1436"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48px;line-height:1;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:center;text-anchor:middle;fill:#333333">main</tspan></text><text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:53.3333px;line-height:0;font-family:sans-serif;fill:#333333;fill-opacity:1;stroke:none"
+     x="782.02899"
+     y="244.11508"
+     id="text1442"><tspan
+       sodipodi:role="line"
+       x="782.02899"
+       y="244.11508"
+       id="tspan1440"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:48px;line-height:1;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:center;text-anchor:middle;fill:#333333">dev</tspan></text><path
+     style="fill:none;stroke:#262626;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:18, 6;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 236.15014,336.55089 26.58237,-111.22087 h 365.12314 l 27.08288,111.22087"
+     id="path1446"
+     sodipodi:nodetypes="cccc" /><circle
+     style="fill:#ffcc00;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="circle1452"
+     cx="385.49408"
+     cy="225.33002"
+     r="14.630565" /><circle
+     style="fill:#ffcc00;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path1450"
+     cx="266.6254"
+     cy="225.33002"
+     r="14.630565" /><circle
+     style="fill:#ffcc00;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="circle1454"
+     cx="504.36276"
+     cy="225.33002"
+     r="14.630565" /><circle
+     style="fill:#567aa9;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="circle1456"
+     cx="237.85414"
+     cy="336.55084"
+     r="14.630565" /><circle
+     style="fill:#567aa9;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="circle1458"
+     cx="124.1942"
+     cy="336.55084"
+     r="14.630565" /><circle
+     style="fill:#567aa9;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="circle1460"
+     cx="654.68964"
+     cy="336.55084"
+     r="14.630565" /><text
+     xml:space="preserve"
+     id="text1488"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1490);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,336.52193,-572.76151)"><tspan
+       x="-251.22656"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">add datasets </tspan></tspan><tspan
+       x="-251.22656"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">modules</tspan></tspan></text><text
+     xml:space="preserve"
+     id="text1498"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1500);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,455.06053,-858.64186)"><tspan
+       x="-251.22656"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">update
+</tspan></tspan><tspan
+       x="-251.22656"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">documentation</tspan></tspan></text><text
+     xml:space="preserve"
+     id="text1506"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1508);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,395.918,-715.0338)"><tspan
+       x="-251.22656"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">update
+</tspan></tspan><tspan
+       x="-251.22656"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">tests</tspan></tspan></text><path
+     id="rect1554"
+     style="fill:none;fill-opacity:1;stroke:#262626;stroke-width:6;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 236.30048,280.83184 15.37657,-8.87767 8.87767,15.37658"
+     sodipodi:nodetypes="ccc" /><path
+     id="path1557"
+     style="fill:none;fill-opacity:1;stroke:#262626;stroke-width:6;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 652.22555,273.69671 -8.84325,15.39639 -15.39639,-8.84326"
+     sodipodi:nodetypes="ccc" /><text
+     xml:space="preserve"
+     id="text2202"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2204);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,924.1293,-575.9167)"
+     x="208.96414"
+     y="0"><tspan
+       x="-89.117374"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:end;text-anchor:end">merge dev
+</tspan></tspan><tspan
+       x="-89.117374"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:end;text-anchor:end">with main</tspan></tspan></text><text
+     xml:space="preserve"
+     id="text2208"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2210);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,658.58667,65.159961)"
+     x="208.96414"
+     y="0"><tspan
+       x="-56.304833"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:end;text-anchor:end">initial
+</tspan></tspan><tspan
+       x="-39.898562"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:end;text-anchor:end">commit</tspan></tspan></text><text
+     xml:space="preserve"
+     id="text2214"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2216);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,715.41665,-72.039742)"
+     x="208.96414"
+     y="0"><tspan
+       x="-154.74246"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:end;text-anchor:end">first version
+</tspan></tspan><tspan
+       x="-105.52364"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font';text-align:end;text-anchor:end">of partypy</tspan></tspan></text><path
+     id="path2218"
+     style="fill:none;fill-opacity:1;stroke:#262626;stroke-width:6;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 696.57989,323.99597 12.55492,12.55492 -12.55493,12.55492"
+     sodipodi:nodetypes="ccc" /><circle
+     style="fill:#ffcc00;fill-opacity:1;stroke:#262626;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="circle2278"
+     cx="623.22516"
+     cy="225.33002"
+     r="14.630565" /><text
+     xml:space="preserve"
+     id="text2302"
+     style="font-style:normal;font-weight:normal;font-size:26.66669999999999874px;line-height:1;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2304);fill:#000000;fill-opacity:1;stroke:none;"
+     transform="rotate(-45,514.49173,-1002.1215)"><tspan
+       x="-251.22656"
+       y="-93.641217"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">preparing for
+</tspan></tspan><tspan
+       x="-251.22656"
+       y="-65.979039"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'FiraCode Nerd Font';-inkscape-font-specification:'FiraCode Nerd Font'">release 0.2.0</tspan></tspan></text></g><metadata
+   id="metadata5188"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title>modelr</dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs5186"><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect1490" /><rect
+     x="-189.02939"
+     y="-51.220867"
+     width="167.07759"
+     height="59.757679"
+     id="rect1482" /><inkscape:path-effect
+     effect="powerclip"
+     id="path-effect1024"
+     is_visible="true"
+     lpeversion="1"
+     inverse="true"
+     flatten="false"
+     hide_clip="false"
+     message="Use fill-rule evenodd on &lt;b&gt;fill and stroke&lt;/b&gt; dialog if no flatten result after convert clip to paths." /><clipPath
+     clipPathUnits="userSpaceOnUse"
+     id="clipPath1020"><path
+       style="display:none;fill:#ff0000;stroke:#000000;stroke-width:0.469754px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 338.25313,213.86388 15.09547,12.51899 7.54191,16.40919 -23.24505,-2.22504 -19.80175,3.6429 5.31396,-17.82698 z"
+       id="path1022"
+       sodipodi:nodetypes="ccccccc" /><path
+       id="lpe_path-effect1024"
+       style="fill:#ff0000;stroke:#000000;stroke-width:0.469754px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       class="powerclip"
+       d="M 287.9113,125.71255 H 388.59506 V 240.34828 H 287.9113 Z m 50.34183,88.15133 -15.09546,12.51906 -5.31396,17.82698 19.80175,-3.6429 23.24505,2.22504 -7.54191,-16.40919 z" /></clipPath><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect1500" /><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect1508" /><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect2204" /><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect2210" /><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect2216" /><rect
+     x="-251.22617"
+     y="-114.63718"
+     width="309.76428"
+     height="235.37209"
+     id="rect2304" /></defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1477"
+   inkscape:window-height="942"
+   id="namedview5184"
+   showgrid="false"
+   inkscape:snap-global="true"
+   inkscape:snap-bbox="true"
+   inkscape:object-paths="true"
+   inkscape:snap-intersection-paths="true"
+   inkscape:snap-smooth-nodes="true"
+   inkscape:zoom="0.57981222"
+   inkscape:cx="539.97928"
+   inkscape:cy="232.9548"
+   inkscape:window-x="485"
+   inkscape:window-y="25"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="Layer_1"
+   inkscape:document-rotation="0"
+   units="px"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0" /><style
+   type="text/css"
+   id="style4714">
+	.st0{fill:#141227;}
+	.st1{fill:#404040;}
+	.st2{opacity:0.94;}
+	.st3{fill:#FFFFFF;}
+	.st4{opacity:0.8;fill:#F2F2F2;enable-background:new    ;}
+	.st5{fill:#F7A238;}
+	.st6{fill:#00A5DC;}
+	.st7{fill:#164F86;}
+	.st8{fill:#36A85D;}
+	.st9{fill:#DB1F26;}
+	.st10{fill:#FFF34D;}
+	.st11{fill:#F26524;}
+	.st12{fill:#B57AB4;}
+	.st13{fill:#EF4782;}
+	.st14{fill:#0088C5;}
+	.st15{fill:#BCBCBC;}
+	.st16{fill:none;stroke:#FFF34D;stroke-width:7;stroke-miterlimit:10;}
+	.st17{fill:#F2F2F2;}
+</style><title
+   id="title4716">modelr</title>
+</svg>
