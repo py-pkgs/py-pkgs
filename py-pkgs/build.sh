@@ -1,0 +1,1 @@
+docker run --rm -m 8g -v $PWD:/pypkgs tbeuzen/pypkgs:0.1 /bin/bash -c "cd /pypkgs/bookdown; sh _build.sh"
