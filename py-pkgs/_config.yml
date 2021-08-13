@@ -16,6 +16,11 @@ latex:
 
 sphinx:
   extra_extensions: [sphinx-prompt]
+  config:
+    bibtex_reference_style: super
+    
+bibtex_bibfiles:
+    - references.bib
 
 #######################################################################################
 # Execution settings
