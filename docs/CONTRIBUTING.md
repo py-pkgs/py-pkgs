@@ -65,7 +65,8 @@ Ready to contribute? Here's how to set up `py-pkgs` for local development.
 	```
 
 5. Submit a pull request by e.g., using the GitHub website.
+6. Check the Netlify Deploy Preview, which is generated automatically for pull requests to `main`.
 
 ## Code of Conduct
 
-Please note that the py-pkgs project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+Please note that the `py-pkgs` project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
