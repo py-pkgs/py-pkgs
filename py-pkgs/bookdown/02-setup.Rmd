@@ -45,7 +45,7 @@ $ conda install -c conda-forge poetry cookiecutter
 
 \index{PyPI} is the official online software repository for Python. A \index{software repository} is a storage location for downloadable software, like Python packages. In this book we'll be publishing a package on PyPI. Before publishing packages on PyPI, it is typical to "test drive" their publication on \index{TestPyPI} which is a test version of PyPI. To follow along with this book, you should register for a TestPyPI account on the [TestPyPI website](https://test.pypi.org/account/register/) and a PyPI account on the [PyPI website](https://pypi.org/account/register/).
 
-## Install Git and register for a GitHub account
+## Set up Git and GitHub
 
 <!-- #region -->
 If you're not using a \index{version control system}, we highly recommend you get into the habit! A version control system tracks changes to the file(s) of your project in a clear and organized way (no more "document_1.doc", "document_1_new.doc", "document_final.doc", etc.). As a result, a version control system contains a full history of all the revisions made to your project which you can view and retrieve at any time. You don't *need* to use or be familiar with version control to read this book, but if you're serious about creating Python packages, version control will become an invaluable part of your workflow, so now is a good time to learn!
