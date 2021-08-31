@@ -71,7 +71,8 @@ class RmdCleaner:
     def code_blocks(self):
         """Format Python and bash code blocks"""
         self.text = re.sub(r"```{prompt} python >>> auto", r"```python", self.text)
-        self.text = re.sub(r"```{prompt} bash \$ auto", r"```python", self.text)
+        self.text = re.sub(r"```{code-block} python\n(.+\n)+---", r"```python", self.text)
+        self.text = re.sub(r"```{prompt} bash \\$ auto", r"```python", self.text)
 
     def references(self):
         """Convert in-text references like {ref}`How-to-package-a-Python` to [How to package a Python]"""

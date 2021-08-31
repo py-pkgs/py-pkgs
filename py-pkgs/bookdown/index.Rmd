@@ -17,39 +17,52 @@ graphics: yes
 
 # Preface {-}
 
-Python packages are the fundamental units of shareable code in Python. Packages make it easy to reuse, maintain, and share your code between projects, with your colleagues, and with the wider Python community. [**Python Packages**](https://py-pkgs.org/) is an open source textbook that describes modern and efficient workflows for creating Python packages. The focus of this book is overwhelmingly practical; we will demonstrate methods and tools you can use to develop and maintain packages quickly, reproducibly, and with as much automation as possible - so you can focus on writing and sharing code!
+Python packages are the fundamental units of shareable code in Python. Packages make it easy to organize, reuse, and maintain your code, as well as share it between projects, with your colleagues, and with the wider Python community. [*Python Packages*](https://py-pkgs.org/) is an open source textbook that describes modern and efficient workflows for creating Python packages. The focus of this book is overwhelmingly practical; we will demonstrate methods and tools you can use to develop and maintain packages quickly, reproducibly, and with as much automation as possible - so you can focus on writing and sharing code!
 
 ## Why read this book? {-}
 
-Python packages are a core element of the Python programming language and are how you write reuseable and shareable code in Python. Despite their importance, packages can be difficult to understand and cumbersome to create for beginners and seasoned developers alike. This book aims to describe the packaging process at an accessible level for data scientists, developers, and hobbyist programmers. Along the way, we'll walk through the development of a real Python package and will explore all the key elements of Python packaging, including; creating a package file and directory structure, when and why to write tests and documentation, and how to maintain and update your package with the help of automated CI/CD pipelines.
+Despite their importance, packages can be difficult to understand and cumbersome to create for beginners and seasoned developers alike. This book aims to describe the packaging process at an accessible and practical level for data scientists, developers, and programmers. Along the way, we'll develop a real Python package and will explore all the key elements of Python packaging, including; creating a package file and directory structure, when and why to write tests and documentation, and how to maintain and update your package with the help of automated continuous integration and continuous deployment (CI/CD) pipelines.
 
 By reading this book, you will:
 
 - Understand what Python packages are, and when and why you should use them.
 - Be able to build your own Python package from scratch.
 - Learn how to document your Python code and packages, and how to render this documentation into a coherent, shareable document.
-- Write automated and formal tests for your code.
+- Write software tests for your code, and automate them.
 - Learn how to release your package on the Python Package Index (PyPI) and discover best practices for updating and versioning your code.
 - Implement automation and CI/CD pipelines to build, test, and deploy your package and update its dependencies.
 - Get tips on Python coding style, best-practice packaging workflows, and other useful development tools.
 
 ## Structure of the book {-}
 
-**Chapter 1: [Introduction]** first gives a brief introduction to packages in Python and why you should know how to make them. **Chapter 2: [System setup]** describes how to set up your development environment to develop packages and follow along with the examples in this book. In **Chapter 3: [How to package a Python]**, we will develop an example package from beginning-to-end to understand the key steps involved in the packaging process and the final product we are aiming for. The remaining chapters then unpack this workflow and go into more detail about each step in the packaging process, organized roughly in their order in the workflow:
+**Chapter 1: [Introduction]** first gives a brief introduction to packages in Python and why you should know how to make them.
+
+**Chapter 2: [System setup]** describes how to set up your development environment to develop packages and follow along with the examples in this book.
+
+In **Chapter 3: [How to package a Python]**, we develop an example package from beginning-to-end as a practical demonstration of the key steps involved in the packaging process. This chapter forms the foundation of the book and will act as a reference sheet for readers creating packages in the future.
+
+The remaining chapters then go into more detail about each step in this process, organized roughly in their order in the workflow:
 
 - **Chapter 4: [Package structure and distribution]** 
 - **Chapter 5: [Testing]**
 - **Chapter 6: [Documentation]**
 - **Chapter 7: [Releasing and versioning]**
 - **Chapter 8: [Continuous integration and deployment]**
-- **Appendix 1: [Packages with a command line interface]**
-- **Appendix 2: [Python packaging cheat sheet]**
+
+## Assumptions {-}
+
+While this book aims to introduce Python packaging at a beginner level, we assume readers have basic familiarity with the following key skills/tools:
+
+| Item    | Learning resources |
+| :--- | ---: |
+| How to import Python packages with the `import` statement | Python [documentation](https://docs.python.org/3/reference/simple_stmts.html#the-import-statement) | {-}| How to use and write simple Python functions| [Plotting and Programming in Python: Writing Functions](https://swcarpentry.github.io/python-novice-gapminder/16-writing-functions/index.html) {cite:p}`carpentries2021` |
+| (Optional) Basic familiarity with version control and Git and GitHub (or similar tools) | [Happy Git and GitHub for the useR](https://happygitwithr.com) {cite:p}`bryan2021` or [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) {cite:p}`rsep2021b`| 
 
 ## Conventions {-}
 
-Throughout this book we use `foo()` to refer to functions, `bar` for inline commmands, variables, function parameters, and package/software names, and *`__init__.py`* to refer to files and directories.
+Throughout this book we use `foo()` to refer to functions, `bar` for inline commands/variables/function parameters/package names, and *`__init__.py`*  and *`src/`* to refer to files and directories respectively.
 
-Commands entered in a terminal appear as below:
+Commands entered at the command line appear as below, with \$ indicating the command prompt:
 
 ```{prompt} bash \$ auto
 $ mkdir my-first-package
@@ -57,7 +70,7 @@ $ cd my-first-package
 $ python
 ```
 
-While code entered in an interactive Python interpreter looks like this:
+Code entered in a Python interpreter looks like this:
 
 ```python
 >>> import math
@@ -68,33 +81,28 @@ While code entered in an interactive Python interpreter looks like this:
 3.142
 ```
 
-Larger code snippets in the text appear as below and we use ["NumPy-style"](https://numpydoc.readthedocs.io/en/latest/format.html) docstrings:
+Code blocks appear as below:
 
 ```python
-def palindrome(word):
-    """Turns a word into a palindrome.
-    
-    Parameters
-    ----------
-    word : str
-        Word to turn into a palindrome.
-    
-    Returns
-    -------
-    str
-        Palindrome of word.
-    
-    Examples
-    --------
-    >>> palindrome("Tomas")
-    'TomassamoT'
-    >>> palindrome("Python")
-    'PythonnohtyP'
-    """
-    return word + word[::-1]
+def is_even(n):
+    if n % 2 == 0:
+        return True
+    else:
+        return False
 ```
 
-If you are reading an electronic version of the book, e.g., <https://py-pkgs.org>, all code is rendered in such a way that you can easily copy and paste directly from your browser to your Python interpreter or editor.
+As we discuss concepts and walk through code examples in the text, we emphasize lines we want to draw attention to by highlighting them. For example, let's add a short documentation string (docstring) to the `is_even()` function:
+
+```python
+def is_even(n):
+    """Check if n is even."""
+    if n % 2 == 0:
+        return True
+    else:
+        return False
+```
+
+If you are reading an electronic version of the book, e.g., <https://py-pkgs.org>, all code is rendered so that you can easily copy and paste directly from your browser to your Python interpreter or editor.
 
 ## Persistence {-}
 
@@ -102,8 +110,10 @@ The Python software ecosystem is constantly evolving. While we aim to make the p
 
 ## Colophon {-}
 
-This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/index.html), compiled using [Jupyter Book](https://jupyterbook.org/intro.html), is hosted on [GitHub](https://github.com/), and the [online version](https://py-pkgs.org/) is deployed with [Netlify](https://www.netlify.com/). The complete source is available from [GitHub](https://github.com/), and is automatically updated when edits are made to the source by [GitHub Actions](https://github.com/features/actions). 
+This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/index.html) and compiled using [Jupyter Book](https://jupyterbook.org/intro.html). The source is hosted on [GitHub](https://github.com/UBC-MDS/py-pkgs) and is deployed online at <https://py-pkgs.org> with [Netlify](https://www.netlify.com/).
 
 ## Acknowledgements {-}
 
-We'd like to thank everyone that has contributed to the development of [**Python Packages**](https://py-pkgs.org/). This is an open source textbook that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practioners and hobbyists. Without you all, this book wouldn’t be nearly as good as it is, and we are deeply grateful. A special thanks to those who directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
+We'd like to thank everyone that has contributed to the development of [*Python Packages*](https://py-pkgs.org/). This is an open source textbook that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practitioners and hobbyists. Without you all, this book wouldn’t be nearly as good as it is, and we are deeply grateful. A special thanks to those who directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
+
+The scope and intent of this book was inspired by the fantastic [R Packages](https://r-pkgs.org) {cite:p}`wickham2015` book written by Hadley Wickham and Jenny Bryan, a book that has been a significant resource for the R community over the years. We hope that [*Python Packages*](https://py-pkgs.org/) will eventually play a similar role in the Python community.
