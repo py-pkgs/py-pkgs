@@ -20,4 +20,3 @@ parts:
 - caption: Appendices
   chapters:
   - file: A1-cli
-  - file: A2-cheatsheet
