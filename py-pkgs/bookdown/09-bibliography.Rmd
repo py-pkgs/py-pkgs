@@ -1,9 +1,0 @@
-
-
-# Bibliography
-
-<!-- #region -->
-```{bibliography}
-:style: unsrt
-```
-<!-- #endregion -->

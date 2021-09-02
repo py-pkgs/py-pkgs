@@ -58,9 +58,9 @@ While this book aims to introduce Python packaging at a beginner level, we assum
 
 | Item    | Learning resources |
 | :--- | ---: |
-| How to import Python packages with the `import` statement | Python [documentation](https://docs.python.org/3/reference/simple_stmts.html#the-import-statement) | {-}| How to write conditionals (`if`/`elif`/`else`) and loops (`for`) in Python| Python [documentation](https://docs.python.org/3/tutorial/controlflow.html)|
+| How to import Python packages with the `\index{import}` statement | Python [documentation](https://docs.python.org/3/reference/simple_stmts.html#the-import-statement) | {-}| How to write conditionals (`if`/`elif`/`else`) and loops (`for`) in Python| Python [documentation](https://docs.python.org/3/tutorial/controlflow.html)|
 | How to use and write simple Python functions| [Plotting and Programming in Python: Writing Functions](https://swcarpentry.github.io/python-novice-gapminder/16-writing-functions/index.html) {cite:p}`carpentries2021` |
-| (Optional) Basic familiarity with version control and Git and GitHub (or similar tools) | [Happy Git and GitHub for the useR](https://happygitwithr.com) {cite:p}`bryan2021` or [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) {cite:p}`rsep2021b`| 
+| (Optional) Basic familiarity with version control and \index{Git} and \index{GitHub} (or similar tools) | [Happy Git and GitHub for the useR](https://happygitwithr.com) {cite:p}`bryan2021` or [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) {cite:p}`rsep2021b`| 
 ```
 
 ## Conventions {-}

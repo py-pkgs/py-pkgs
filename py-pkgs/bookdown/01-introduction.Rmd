@@ -3,7 +3,7 @@
 # Introduction
 
 
-Python packages are a core element of the Python programming language and are how you write reuseable and shareable code in Python. This book assumes that readers are already familiar with how to import and use packages with the help of the `import` statement in Python. For example, the code below imports and uses `numpy` {cite:p}`harris2020array`, the core scientific computing package for Python, to round pi to three decimal places:
+Python packages are a core element of the Python programming language and are how you write reuseable and shareable code in Python. This book assumes that readers are already familiar with how to \index{import} and use packages with the help of the `import` statement in Python. For example, the code below imports and uses `numpy` {cite:p}`harris2020array`, the core scientific computing package for Python, to round pi to three decimal places:
 
 ```python
 >>> import math
@@ -16,7 +16,7 @@ Python packages are a core element of the Python programming language and are ho
 
 At a minimum, a package bundles together code (such as functions, classes, variables, or scripts) so that it can be easily reused across different projects. However, packages are typically also supported by extra content such as documentation and tests, which become exponentially more important if you wish to share your package with others.
 
-As of July 2021, there are over 300,000 packages available on the [Python Package Index (PyPI)](https://pypi.org), the official online software repository for Python. Packages are a key reason why Python is such a powerful and widely used programming language. The chances are that someone has already solved a problem that you're working on, and you can benefit from their work by downloading and installing their package. Put simply, packages are how you make it as easy as possible to use, maintain, share and collaborate on Python code with others; whether they be your friends, work colleagues, the world, or your future self!
+As of July 2021, there are over 300,000 packages available on the [Python Package Index (\index{PyPI})](https://pypi.org), the official online software repository for Python. Packages are a key reason why Python is such a powerful and widely used programming language. The chances are that someone has already solved a problem that you're working on, and you can benefit from their work by downloading and installing their package. Put simply, packages are how you make it as easy as possible to use, maintain, share and collaborate on Python code with others; whether they be your friends, work colleagues, the world, or your future self!
 
 Even if you never intend to share your code with others, making packages will ultimately save you time. Packages make it significantly easier for you to reuse and maintain your code within a project and across different projects. After programming for some time, most people will eventually reach a point where they want to reuse code from one project in another. For beginners in particular, this is something often accomplished by copy-and-pasting existing code into the new project. Despite being inefficient, this practice also makes it difficult to improve and maintain your code across projects. Creating a simple Python package will solve these problems.
 
