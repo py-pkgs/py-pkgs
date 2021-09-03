@@ -33,6 +33,19 @@ class RmdCleaner:
             print("Bad figure formatting!")
             print(e)
 
+    def tables(self):
+        def repl(match):
+            table = match.group(0)
+            label = re.findall("name: (\d+-.+)\n", table)[0]
+            caption = re.findall("```{table} (.+\n)", table)[0]
+            content = re.findall("\|(?:.+\n)+", table)[0]
+            return f'Table: (\#tab:{label}) {caption}\n\n{content}\n'
+        try:
+            self.text = re.sub("```{table}(?:.+\n)+```", repl, self.text)
+        except Exception as e:
+            print("Bad table formatting!")
+            print(e)
+
     def header(self):
         if self.filename == "index.Rmd":
             new_header = dedent("""\
@@ -41,7 +54,7 @@ class RmdCleaner:
             author: "Tomas Beuzen and Tiffany Timbers"
             date: "`r Sys.Date()`"
             documentclass: krantz
-            bibliography: [book.bib, packages.bib]
+            bibliography: references.bib
             biblio-style: apalike
             link-citations: yes
             colorlinks: yes
@@ -68,11 +81,49 @@ class RmdCleaner:
         """Remove double line breaks"""
         self.text = re.sub(r"\n\n\n", r"\n\n", self.text)
 
+    def citations(self):
+        """Change {cite:p}`carpentries2021` to [@carpentries2021]"""
+        def repl(match):
+            return "[@" + match.group(1) + "]"
+
+        self.text = re.sub(r"{cite:p}`(.*?)`", repl, self.text)
+
+    def indexes(self):
+        """Change \index{PyPI} to PyPI"""
+        def repl(match):
+            return match.group(1)
+
+        self.text = re.sub(r"\\index{(.*?)}", repl, self.text)
+
     def code_blocks(self):
         """Format Python and bash code blocks"""
         self.text = re.sub(r"```{prompt} python >>> auto", r"```python", self.text)
         self.text = re.sub(r"```{code-block} python\n(.+\n)+---", r"```python", self.text)
         self.text = re.sub(r"```{prompt} bash \\$ auto", r"```python", self.text)
+
+    def figreferences(self):
+        """Convert in-text numbered references like {numref}`00-assumptions-fig` to \@ref(fig:00-assumptions-fig)"""
+
+        def repl(match):
+            return "Fig. \\@ref(fig:" + match.group(1) + ")"
+
+        self.text = re.sub(r"{numref}`(.*?-fig)`", repl, self.text)
+
+    def tabreferences(self):
+        """Convert in-text numbered references like {numref}`00-assumptions-table` to \@ref(tab:00-assumptions-table)"""
+
+        def repl(match):
+            return "Table \\@ref(tab:" + match.group(1) + ")"
+
+        self.text = re.sub(r"{numref}`(.*?-table)`", repl, self.text)
+
+    def numreferences(self):
+        """Convert in-text references like {ref}`How-to-package-a-Python` to [How to package a Python]"""
+
+        def repl(match):
+            return "[" + match.group(1).replace("-", " ") + "]"
+
+        self.text = re.sub(r"{numref}`(?:\d+|A\d):(.*?)`", repl, self.text)
 
     def references(self):
         """Convert in-text references like {ref}`How-to-package-a-Python` to [How to package a Python]"""
@@ -101,10 +152,16 @@ class RmdCleaner:
         self.horizontal_line()
         self.header()
         self.titles()
+        self.indexes()
+        self.citations()
+        self.tabreferences()
+        self.figreferences()
         self.references()
+        self.numreferences()
         self.remove_author_images()
         self.code_blocks()
         self.figures()
+        self.tables()
         self.admonitions()
         self.allow_python_errors()
         self.line_spacing()

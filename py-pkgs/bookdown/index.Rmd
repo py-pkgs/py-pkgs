@@ -3,7 +3,7 @@ title: "Python Packages"
 author: "Tomas Beuzen and Tiffany Timbers"
 date: "`r Sys.Date()`"
 documentclass: krantz
-bibliography: [book.bib, packages.bib]
+bibliography: references.bib
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes
@@ -51,17 +51,17 @@ The remaining chapters then go into more detail about each step in this process,
 
 ## Assumptions {-}
 
-While this book aims to introduce Python packaging at a beginner level, we assume readers have basic familiarity with the concepts listed in {numref}`assumptions-table`:
+While this book aims to introduce Python packaging at a beginner level, we assume readers have basic familiarity with the concepts listed in Table \@ref(tab:00-assumptions-table):
 
-```{table} Concepts this book assumes readers have basic familiarity with.
-:name: assumptions-table
+Table: (\#tab:00-assumptions-table) Concepts this book assumes readers have basic familiarity with.
 
 | Item    | Learning resources |
 | :--- | ---: |
-| How to import Python packages with the `\index{import}` statement | Python [documentation](https://docs.python.org/3/reference/simple_stmts.html#the-import-statement) | {-}| How to write conditionals (`if`/`elif`/`else`) and loops (`for`) in Python| Python [documentation](https://docs.python.org/3/tutorial/controlflow.html)|
-| How to use and write simple Python functions| [Plotting and Programming in Python: Writing Functions](https://swcarpentry.github.io/python-novice-gapminder/16-writing-functions/index.html) {cite:p}`carpentries2021` |
-| (Optional) Basic familiarity with version control and \index{Git} and \index{GitHub} (or similar tools) | [Happy Git and GitHub for the useR](https://happygitwithr.com) {cite:p}`bryan2021` or [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) {cite:p}`rsep2021b`| 
-```
+| How to import Python packages with the `import` statement | Python [documentation](https://docs.python.org/3/reference/simple_stmts.html#the-import-statement) | {-}| How to write conditionals (`if`/`elif`/`else`) and loops (`for`) in Python| Python [documentation](https://docs.python.org/3/tutorial/controlflow.html)|
+| How to use and write simple Python functions| [Plotting and Programming in Python: Writing Functions](https://swcarpentry.github.io/python-novice-gapminder/16-writing-functions/index.html) [@carpentries2021] |
+| (Optional) Basic familiarity with version control and Git and GitHub (or similar tools) | [Happy Git and GitHub for the useR](https://happygitwithr.com) [@bryan2021] or [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) [@rsep2021b]| 
+
+
 
 ## Conventions {-}
 
@@ -121,4 +121,4 @@ This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stabl
 
 We'd like to thank everyone that has contributed to the development of [*Python Packages*](https://py-pkgs.org/). This is an open source textbook that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practitioners and hobbyists. Without you all, this book wouldn’t be nearly as good as it is, and we are deeply grateful. A special thanks to those who directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
 
-The scope and intent of this book was inspired by the fantastic [R Packages](https://r-pkgs.org) {cite:p}`wickham2015` book written by Hadley Wickham and Jenny Bryan, a book that has been a significant resource for the R community over the years. We hope that [*Python Packages*](https://py-pkgs.org/) will eventually play a similar role in the Python community.
+The scope and intent of this book was inspired by the fantastic [R Packages](https://r-pkgs.org) [@wickham2015] book written by Hadley Wickham and Jenny Bryan, a book that has been a significant resource for the R community over the years. We hope that [*Python Packages*](https://py-pkgs.org/) will eventually play a similar role in the Python community.
