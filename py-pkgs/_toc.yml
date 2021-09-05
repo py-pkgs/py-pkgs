@@ -17,6 +17,3 @@ parts:
   - file: 07-releasing-versioning
   - file: 08-ci-cd
   - file: 09-bibliography
-- caption: Appendices
-  chapters:
-  - file: A1-cli

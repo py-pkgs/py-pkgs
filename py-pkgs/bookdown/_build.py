@@ -14,7 +14,7 @@ class RmdCleaner:
             admonition = match.group(1)
             return admonition.replace("}\n", ">").replace("\n\n", "\n>\n>")
 
-        self.text = re.sub("```{(?:note|attention|tip)(}\n(?:.+\n|\n)+?)```", repl, self.text)
+        self.text = re.sub("```{(?:note|attention|tip).*?(}\n(?:.+\n|\n)+?)```", repl, self.text)
 
     def allow_python_errors(self):
         self.text = re.sub(r'tags=c\("raises-exception"\)', r"error=TRUE", self.text)
@@ -23,7 +23,7 @@ class RmdCleaner:
         def repl(match):
             figure = match.group(0)
             reference = re.findall("name: \d+-(.+)\n", figure)[0]
-            caption = re.findall("alt: (.+)\\n---", figure)[0]
+            caption = re.findall("alt: (.+)\\n---", figure)[0].replace("_", "\\_")
             size = re.findall("width: (.+)(?=%)", figure)[0]
             file_location = re.findall("images\/.+.(?:png|svg)", figure)[0]
             return f'```{{r {self.filename[:2] + "-" + reference}, fig.cap = "{caption}", out.width = "{size}%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}}\nknitr::include_graphics("{"../" + file_location}")\n```'
@@ -95,11 +95,22 @@ class RmdCleaner:
 
         self.text = re.sub(r"\\index{(.*?)}", repl, self.text)
 
+    def nested_code_blocks(self):
+        """Format Python and bash code blocks"""
+        self.text = re.sub(r"````.*", r"````md", self.text)
+
     def code_blocks(self):
         """Format Python and bash code blocks"""
         self.text = re.sub(r"```{prompt} python >>> auto", r"```python", self.text)
         self.text = re.sub(r"```{code-block} python\n(.+\n)+---", r"```python", self.text)
-        self.text = re.sub(r"```{prompt} bash \\$ auto", r"```python", self.text)
+        self.text = re.sub(r"```{code-block} toml\n(.+\n)+---", r"```toml", self.text)
+        self.text = re.sub(r"```{code-block} md\n(.+\n)+---", r"```md", self.text)
+        self.text = re.sub(r"```{prompt} bash \\\$ auto", r"```bash", self.text)
+
+    # def md_blocks(self):
+    #     """Format Python and bash code blocks"""
+    #     self.text = re.sub(r"```md", r"::: {.kframe data-latex=""}", self.text)
+    #     self.text = re.sub(r"```", r":::", self.text)
 
     def figreferences(self):
         """Convert in-text numbered references like {numref}`00-assumptions-fig` to \@ref(fig:00-assumptions-fig)"""
@@ -118,10 +129,10 @@ class RmdCleaner:
         self.text = re.sub(r"{numref}`(.*?-table)`", repl, self.text)
 
     def numreferences(self):
-        """Convert in-text references like {ref}`How-to-package-a-Python` to [How to package a Python]"""
+        """Convert in-text references like {ref}`How-to-package-a-Python` to \@ref(how-to-package-a-python)"""
 
         def repl(match):
-            return "[" + match.group(1).replace("-", " ") + "]"
+            return "Section \\@ref(" + match.group(1).lower() + ")"
 
         self.text = re.sub(r"{numref}`(?:\d+|A\d):(.*?)`", repl, self.text)
 
@@ -152,17 +163,19 @@ class RmdCleaner:
         self.horizontal_line()
         self.header()
         self.titles()
-        self.indexes()
+        # self.indexes()
         self.citations()
         self.tabreferences()
         self.figreferences()
         self.references()
         self.numreferences()
         self.remove_author_images()
+        # self.nested_code_blocks()
         self.code_blocks()
         self.figures()
         self.tables()
         self.admonitions()
+        # self.md_blocks()
         self.allow_python_errors()
         self.line_spacing()
         self.save()
