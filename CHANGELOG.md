@@ -2,7 +2,7 @@
 
 <!--next-version-placeholder-->
 
-## v0.3 (28/08/2021)
+## v0.3 (06/09/2021)
 
 Complete overhaul of existing chapters and content. Key notes:
 
