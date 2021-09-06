@@ -13,7 +13,7 @@ if [ "$(uname)" == "Darwin" ]; then
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     sed -i 's/href="#"/href="welcome.html"/g' py-pkgs/_build/html/index.html
     sed -i 's/py-pkgs.org\/welcome.html/py-pkgs.org/g' py-pkgs/_build/html/index.html
-    find py-pkgs/_build/html/*.html -type f -exec sed -i -e 's/\\index\{.*?\}//g' {} \;  # remove \index{*} made for PDF-render
+    perl -i -pe 's/\\index\{.*?\}//g' py-pkgs/_build/html/*.html  # remove \index{*} made for PDF-render
     echo runtime-hook successfully ran in OS $(uname)!
 else
     echo runtime-hook not run.
