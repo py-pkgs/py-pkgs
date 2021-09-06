@@ -84,7 +84,7 @@ class RmdCleaner:
     def citations(self):
         """Change {cite:p}`carpentries2021` to [@carpentries2021]"""
         def repl(match):
-            return "[@" + match.group(1) + "]"
+            return " [@" + match.group(1) + "]"
 
         self.text = re.sub(r"{cite:p}`(.*?)`", repl, self.text)
 
