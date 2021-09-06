@@ -1,9 +1,0 @@
-
-
-# About the authors {-}
-
-Tomas Beuzen is a Postdoctoral Teaching & Learning Fellow in the Department of Statistics at the University of British Columbia and a data science consultant. In these roles he teaches courses and provides expert advice about Python and R programming, data wrangling, and machine learning. Tomas has a background in coastal engineering and enjoys the practical application of data science to solving problems in the natural and engineered world. He is currently interested in developing open-source, educational data science material.
-
-
-Tiffany Timbers is an Assistant Professor of Teaching in the Department of Statistics and an Co-Director for the Master of Data Science program (Vancouver Option) at the University of British Columbia. In these roles she teaches and develops curriculum around the responsible application of Data Science to solve real-world problems. One of her favourite courses she teaches is a graduate course on collaborative software development, which focuses on teaching how to create R and Python packages using modern tools and workflows.
-

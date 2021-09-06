@@ -1,4 +1,3 @@
-
 # Contributing
 
 Contributions are welcome and are greatly appreciated! Every little bit
@@ -8,7 +7,7 @@ helps, and credit will always be given.
 
 ### Report Bugs
 
-Report bugs by creating an [issue](https://github.com/UBC-MDS/py-pkgs/issues).
+Report bugs by creating an [issue](https://github.com/py-pkgs/py-pkgs/issues).
 
 If you are reporting a bug, please include:
 
@@ -28,7 +27,7 @@ and "help wanted" is open to whoever wants to implement it. Features might inclu
 
 ### Submit Feedback
 
-The best way to send feedback is to file an [issue](https://github.com/UBC-MDS/py-pkgs/issues).
+The best way to send feedback is to file an [issue](https://github.com/py-pkgs/py-pkgs/issues).
 
 If you are proposing a feature:
 
@@ -65,8 +64,7 @@ Ready to contribute? Here's how to set up `py-pkgs` for local development.
 	```
 
 5. Submit a pull request by e.g., using the GitHub website.
-6. Check the Netlify Deploy Preview, which is generated automatically for pull requests to `main`.
 
 ## Code of Conduct
 
-Please note that the `py-pkgs` project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+Please note that the py-pkgs project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.

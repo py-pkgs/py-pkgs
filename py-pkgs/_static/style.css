@@ -10,6 +10,10 @@ hr {
   margin-bottom: 1.6em;
 }
 
+td p {
+  text-align: left;
+}
+
 .caption {
   text-align: center;
 }

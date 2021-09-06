@@ -1,4 +1,3 @@
-
 # Code of Conduct
 
 ## Pledge
