@@ -5,7 +5,7 @@ author: Tomas Beuzen & Tiffany Timbers
 copyright: "2021"
 logo: images/py-pkgs-hex.png
 repository:
-  url: https://github.com/UBC-MDS/py-pkgs
+  url: https://github.com/py-pkgs/py-pkgs
   path_to_book: "py-pkgs/"  # A path to your book's folder, relative to the repository root.
   branch: master  # Which branch of the repository should be used when creating links
 exclude_patterns: [bookdown, _build]
