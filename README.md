@@ -37,7 +37,7 @@ A fully-rendered HTML version of the book will be built in `py-pkgs/_build/html/
 If you'd like develop and build the `py-pkgs` book to PDF:
 
 1. Install [Docker](https://docs.docker.com/get-docker/);
-2. Pull the `py-pkgs` images: `docker pull ubcdsci/intro-to-ds`;
+2. Pull the `py-pkgs` images: `docker pull tbeuzen/pypkgs:latest`;
 3. Make any desired changes to source files;
 4. Build the book using the `build_jupybook.sh` script:
 
