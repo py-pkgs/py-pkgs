@@ -4,6 +4,7 @@
 # looks like py-pkgs.org/welcome, but I want it to just be
 # py-pkgs.org. So I'm copying the content of welcome.html and then
 # modifying the ToC reference to welcome.html
+cp robots.txt py-pkgs/_build/html/
 cp py-pkgs/_build/html/welcome.html py-pkgs/_build/html/index.html
 if [ "$(uname)" == "Darwin" ]; then
     sed -i '' 's/href="#"/href="welcome.html"/g' py-pkgs/_build/html/index.html
