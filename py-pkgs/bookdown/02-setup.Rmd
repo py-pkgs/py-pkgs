@@ -7,7 +7,7 @@ If you intend to follow along with the code presented in this book, we recommend
 
 ## The command-line interface
 
-A command-line interface\index{command-line interface} (CLI) is a text-based interface used to interact with your computer. We'll be using a CLI for various tasks throughout this book. We'll assume Mac and Linux users are using the Terminal"\index{Terminal}" and Windows users are using the Anaconda Prompt"\index{Anaconda Prompt}" (which we'll install in the next section) as a CLI.
+A command-line interface\index{command-line interface} (CLI) is a text-based interface used to interact with your computer. We'll be using a CLI for various tasks throughout this book. We'll assume Mac and Linux users are using the "Terminal"\index{Terminal} and Windows users are using the "Anaconda Prompt"\index{Anaconda Prompt} (which we'll install in the next section) as a CLI.
 
 ## Installing software
 
@@ -15,50 +15,47 @@ A command-line interface\index{command-line interface} (CLI) is a text-based int
 
 We recommend installing the latest version of Python via the Miniconda\index{Miniconda} distribution by following the instructions in the Miniconda [documentation](https://docs.conda.io/en/latest/miniconda.html). Miniconda is a lightweight version of the popular Anaconda\index{Anaconda} distribution. If you have previously installed the Anaconda or Miniconda distribution feel free to skip to **Section \@ref(install-packaging-software)**.
 
-If you are unfamiliar with Miniconda and Anaconda, they are distributions of Python that also include the `conda`\index{conda} package and environment manager, and a number of other useful packages. The difference between Anaconda and Miniconda is that Anaconda automatically installs over 250 additional packages (many of which you might never use), while Miniconda is a much smaller distribution that comes bundled with just a few key packages; you can then install additional packages as you need them using the command `conda install`.
+If you are unfamiliar with Miniconda and Anaconda, they are distributions of Python that also include the `conda`\index{conda} package and environment manager, and a number of other useful packages. The difference between Anaconda and Miniconda is that Anaconda installs over 250 additional packages (many of which you might never use), while Miniconda is a much smaller distribution that comes bundled with just a few key packages; you can then install additional packages as you need them using the command `conda install`.
 
-`conda` is a piece of software that supports the process of installing and updating software (like Python packages). It is also an environment manager which is the key function we'll be using it for in this book. An environment manager helps you create "virtual environments\index{virtual environment}" on your machine where you can safely install different packages and their dependencies in an isolated location. Installing all the packages you need in the same place (i.e., the system default location) can be problematic because different packages often depend on different versions of the same dependencies; as you install more packages, you'll inevitably get conflicts between dependencies and your code will start to break. Virtual environments help you compartmentalize and isolate the packages you are using for different projects to avoid this issue. You can read more about virtual environments in the `conda` [documentation](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html). While alternative package and environment managers exist, we choose to use `conda` in this book because of its popularity, ease-of-use, and ability to handle any software stack (not just Python).
+`conda` is a piece of software that supports the process of installing and updating software (like Python packages). It is also an environment manager, which is the key function we'll be using it for in this book. An environment manager helps you create "virtual environments\index{virtual environment}" on your machine, where you can safely install different packages and their dependencies in an isolated location. Installing all the packages you need in the same place (i.e., the system default location) can be problematic because different packages often depend on different versions of the same dependencies; as you install more packages, you'll inevitably get conflicts between dependencies, and your code will start to break. Virtual environments help you compartmentalize and isolate the packages you are using for different projects to avoid this issue. You can read more about virtual environments in the `conda` [documentation](https://conda.io/projects/conda/en/latest/user-guide/concepts/environments.html). While alternative package and environment managers exist, we choose to use `conda` in this book because of its popularity, ease-of-use, and ability to handle any software stack (not just Python).
 
 ### Install packaging software
 
-<!-- #region -->
-Once you've installed the Miniconda\index{Miniconda} distribution, ensure that Python and `conda`\index{conda} are up to date by running the following command at the command-line:
+Once you've installed the Miniconda\index{Miniconda} distribution, ensure that Python and `conda`\index{conda} are up to date by running the following command at the command line:
 
 ```bash
 $ conda update --all
 ```
 
-Then, use `conda` to install the two main pieces of software we'll be using to help us create Python packages in this book:
+Now we'll install the two main pieces of software we'll be using to help us create Python packages in this book:
 
-1. [`poetry`\index{poetry}](https://python-poetry.org/): software that will help us build our own Python packages; and,
-2. [`cookiecutter`\index{cookiecutter}](https://github.com/cookiecutter/cookiecutter): software that will help us create packages from pre-made templates:
+1. [`poetry`\index{poetry}](https://python-poetry.org/): software that will help us build our own Python packages. You can install `poetry` for your specific operating system using the instructions in the official [documentation](https://python-poetry.org/docs/#installation). For example, on Mac OS or Linux the installation command is:
 
-```bash
-$ conda install -c conda-forge poetry cookiecutter
-```
+    ```bash
+    $ curl -sSL https://install.python-poetry.org | python3 -
+    ```
 
->You may also choose to install `poetry` and/or `cookiecutter` using alternative tools that you're familiar with, such as `pip`, but be sure to properly manage your virtual environments.
+2. [`cookiecutter`\index{cookiecutter}](https://github.com/cookiecutter/cookiecutter): software that will help us create packages from pre-made templates. It can be installed with `conda` as follows:
 
-<!-- #endregion -->
+    ```bash
+    $ conda install -c conda-forge cookiecutter
+    ```
 
 ## Register for a PyPI account
 
-PyPI\index{PyPI} is the official online software repository for Python. A software repository\index{software repository} is a storage location for downloadable software, like Python packages. In this book we'll be publishing a package to PyPI. Before publishing packages to PyPI, it is typical to "test drive" their publication on TestPyPI\index{TestPyPI} which is a test version of PyPI. To follow along with this book, you should register for a TestPyPI account on the [TestPyPI website](https://test.pypi.org/account/register/) and a PyPI account on the [PyPI website](https://pypi.org/account/register/).
+The Python Package Index (PyPI)\index{PyPI} is the official online software repository for Python. A software repository\index{software repository} is a storage location for downloadable software, like Python packages. In this book we'll be publishing a package to PyPI. Before publishing packages to PyPI, it is typical to "test drive" their publication on TestPyPI\index{TestPyPI}, which is a test version of PyPI. To follow along with this book, you should register for a TestPyPI account on the [TestPyPI website](https://test.pypi.org/account/register/) and a PyPI account on the [PyPI website](https://pypi.org/account/register/).
 
 ## Set up Git and GitHub
 
-<!-- #region -->
-If you're not using a version control\index{version control} system, we highly recommend you get into the habit! A version control system tracks changes to the file(s) of your project in a clear and organized way (no more "document_1.doc", "document_1_new.doc", "document_final.doc", etc.). As a result, a version control system contains a full history of all the revisions made to your project which you can view and retrieve at any time. You don't *need* to use or be familiar with version control to read this book, but if you're serious about creating Python packages, version control will become an invaluable part of your workflow, so now is a good time to learn!
+If you're not using a version control\index{version control} system, we highly recommend you get into the habit! A version control system tracks changes to the file(s) of your project in a clear and organized way (no more "document_1.doc", "document_1_new.doc", "document_final.doc", etc.). As a result, a version control system contains a full history of all the revisions made to your project, which you can view and retrieve at any time. You don't *need* to use or be familiar with version control to read this book, but if you're serious about creating Python packages, version control will become an invaluable part of your workflow, so now is a good time to learn!
 
-There are many version control systems available, but the most common is Git\index{Git} and we'll be using it throughout this book. You can download Git by following the instructions in the [Git documentation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). Git helps track changes to a project on a local computer, but what if we want to collaborate with others? Or, what happens if your computer crashes and you lose all your work? That's where GitHub\index{GitHub} comes in. GitHub is one of many online services for hosting Git-managed projects. GitHub helps you create an online copy of your local Git repository which acts as a back-up of your local work and allows others to easily and transparently collaborate on your project. You can sign up for a free GitHub account on the [GitHub website](https://www.github.com).
+There are many version control systems available, but the most common is Git\index{Git} and we'll be using it throughout this book. You can download Git by following the instructions in the [Git documentation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). Git helps track changes to a project on a local computer, but what if we want to collaborate with others? Or, what happens if your computer crashes and you lose all your work? That's where GitHub\index{GitHub} comes in. GitHub is one of many online services for hosting Git-managed projects. GitHub helps you create an online copy of your local Git repository, which acts as a backup of your local work and allows others to easily and transparently collaborate on your project. You can sign up for a free GitHub account on the [GitHub website](https://www.github.com).
 
->This book assume that those who choose to follow the optional version control sections of this book have basic familiarity with Git and GitHub (or equivalent). Two excellent learning resources are [Happy Git and GitHub for the useR](https://happygitwithr.com) [@bryan2021] and [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) [@rsep2021].
-
-<!-- #endregion -->
+We assume that those who choose to follow the optional version control sections of this book have basic familiarity with Git and GitHub (or equivalent). Two excellent learning resources are [*Happy Git and GitHub for the useR*](https://happygitwithr.com) [@bryan2021] and [*Research Software Engineering with Python*](https://merely-useful.tech/py-rse/git-cmdline.html) [@rsep2021].
 
 ## Python integrated development environments
 
-A Python integrated development environment\index{integrated development environment} (IDE) will make the process of creating Python packages significantly easier. An IDE is a piece of software that provides advanced functionality for code development such as directory and file creation and navigation, autocomplete, debugging, and syntax highlighting, to name a few. An IDE will save you time and help you write better code. Commonly used free Python IDEs include [Visual Studio Code\index{Visual Studio Code}](https://code.visualstudio.com/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [Spyder](https://www.spyder-ide.org/), and [PyCharm Community Edition](https://www.jetbrains.com/pycharm/). For those more familiar with the Jupyter\index{Jupyter} ecosystem, [JupyterLab](https://jupyter.org/) is a suitable browser-based IDE. Finally, for the R\index{R} community, the [RStudio\index{RStudio} IDE](https://rstudio.com/products/rstudio/download/) also supports Python.
+A Python integrated development environment\index{integrated development environment} (IDE) will make the process of creating Python packages significantly easier. An IDE is a piece of software that provides advanced functionality for code development, such as directory and file creation and navigation, autocomplete, debugging, and syntax highlighting, to name a few. An IDE will save you time and help you write better code. Commonly used free Python IDEs include [Visual Studio Code\index{Visual Studio Code}](https://code.visualstudio.com/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [Spyder](https://www.spyder-ide.org/), and [PyCharm Community Edition](https://www.jetbrains.com/pycharm/). For those more familiar with the Jupyter\index{Jupyter} ecosystem, [JupyterLab](https://jupyter.org/) is a suitable browser-based IDE. Finally, for the R\index{R} community, the [RStudio\index{RStudio} IDE](https://rstudio.com/products/rstudio/download/) also supports Python.
 
 You'll be able to follow along with the examples presented in this book regardless of what IDE you choose to develop your Python code in. If you don't know which IDE to use, we recommend starting with Visual Studio Code. Below we briefly describe how to set up Visual Studio Code, JupyterLab, and RStudio as Python IDEs (these are the IDEs we personally use in our day-to-day work). 
 
@@ -66,15 +63,15 @@ You'll be able to follow along with the examples presented in this book regardle
 
 You can download Visual Studio Code\index{Visual Studio Code} (VS Code) from the Visual Studio Code [website](https://code.visualstudio.com/). Once you've installed VS Code, you should install the "Python" extension from the VS Code Marketplace. To do this, follow the steps listed below and illustrated in Fig. \@ref(fig:02-vscode-1-fig):
 
-1. Open the Marketplace by clicking the *Extensions* tab on the VS Code activity bar;
-2. Search for "Python" in the search bar;
+1. Open the Marketplace by clicking the *Extensions* tab on the VS Code activity bar.
+2. Search for "Python" in the search bar.
 3. Select the extension named "Python" and then click *Install*.
 
 ```{r 02-vscode-1-fig, fig.cap = "Installing the Python extension in Visual Studio Code.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/02-vscode-1.png")
 ```
 
-Once this is done, you have everything you need to start creating packages! For example, you can create files and directories from the *File Explorer* tab on the VS Code activity bar and you can open up an integrated CLI by selecting *Terminal* from the *View* menu. Fig. \@ref(fig:02-vscode-2-fig) shows an example of executing a Python *.py* file from the command line in VS Code.
+Once this is done, you have everything you need to start creating packages! For example, you can create files and directories from the *File Explorer* tab on the VS Code activity bar, and you can open up an integrated CLI by selecting *Terminal* from the *View* menu. Fig. \@ref(fig:02-vscode-2-fig) shows an example of executing a Python *.py* file from the command line in VS Code.
 
 ```{r 02-vscode-2-fig, fig.cap = "Executing a simple Python file called hello-world.py from the integrated terminal in Visual Studio Code.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/02-vscode-2.png")
@@ -84,7 +81,6 @@ We recommend you take a look at the VS Code [Getting Started Guide](https://code
 
 - [Python Docstring Generator](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring): an extension to quickly generate documentation strings (docstrings\index{docstring}) for Python functions.
 - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one): an extension that provides keyboard shortcuts, automatic table of contents, and preview functionality for Markdown\index{Markdown} files. [Markdown](https://www.markdownguide.org) is a plain-text markup language that we'll use and learn about in this book.
-- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint): an extension that enables automatic style checking of Markdown files.
 
 ### JupyterLab
 
@@ -116,12 +112,12 @@ Users with an R\index{R} background may prefer to stay in the RStudio\index{RStu
 install.packages("reticulate")
 ```
 
-When installing reticulate, you may be prompted to install the Anaconda distribution. We already installed the Miniconda distribution of Python in **Section \@ref(installing-python)**, so answer "no" to this prompt. Before being able to use Python in RStudio, you will need to configure `reticulate`. We will briefly describe how to do this for different operating systems below, but encourage you to look at the `reticulate` [documentation](https://rstudio.github.io/reticulate/) for more help.
+When installing reticulate, you may be prompted to install the Anaconda distribution. We already installed the Miniconda distribution of Python in **Section \@ref(installing-python)**, so answer "no" to this prompt. Before being able to use Python in RStudio, you will need to configure `reticulate`. We will briefly describe how to do this for different operating systems below, but we encourage you to look at the `reticulate` [documentation](https://rstudio.github.io/reticulate/) for more help.
 
 **Mac and Linux**
 
-1. Find the path to the Python interpreter installed with Miniconda by typing `which python` at the command line;
-2. Open (or create) an `.Rprofile` file in your HOME directory and add the line `Sys.setenv(RETICULATE_PYTHON = "path_to_python")`, where `"path_to_python"` is the path identified in step 1;
+1. Find the path to the Python interpreter installed with Miniconda by typing `which python` at the command line.
+2. Open (or create) an `.Rprofile` file in your HOME directory and add the line `Sys.setenv(RETICULATE_PYTHON = "path_to_python")`, where `"path_to_python"` is the path identified in step 1.
 3. Open (or create) a `.bash_profile` file in your HOME directory and add the line `export PATH="/opt/miniconda3/bin:$PATH"`, replacing `/opt/miniconda3/bin` with the path you identified in step 1 but without the `python` at the end.
 4. Restart R.
 5. Try using Python in RStudio by running the following in the R console:
@@ -133,8 +129,8 @@ repl_python()
 
 **Windows**
 
-1. Find the path to the Python interpreter installed with Miniconda by opening an Anaconda Prompt from the Start Menu and typing `where python` in a terminal;
-2. Open (or create) an `.Rprofile` file in your HOME directory and add the line `Sys.setenv(RETICULATE_PYTHON = "path_to_python")`, where `"path_to_python"` is the path identified in step 1. Note that in Windows, you need `\\` instead of `\` to separate the directories; for example your path might look like: `C:\\Users\\miniconda3\\python.exe`;
+1. Find the path to the Python interpreter installed with Miniconda by opening an Anaconda Prompt from the Start Menu and typing `where python` in a terminal.
+2. Open (or create) an `.Rprofile` file in your HOME directory and add the line `Sys.setenv(RETICULATE_PYTHON = "path_to_python")`, where `"path_to_python"` is the path identified in step 1. Note that in Windows, you need `\\` instead of `\` to separate the directories; for example your path might look like: `C:\\Users\\miniconda3\\python.exe`.
 3. Open (or create) a `.bash_profile` file in your HOME directory and add the line `export PATH="/opt/miniconda3/bin:$PATH"`, replacing `/opt/miniconda3/bin` with the path you identified in step 1 but without the `python` at the end.
 4. Restart R.
 5. Try using Python in RStudio by running the following in the R console:
@@ -144,7 +140,7 @@ library(reticulate)
 repl_python()
 ```
 
-Fig. \@ref(fig:02-rstudio-fig) shows an example of executing Python code interactively in RStudio.
+Fig. \@ref(fig:02-rstudio-fig) shows an example of executing Python code interactively within the RStudio console.
 
 ```{r 02-rstudio-fig, fig.cap = "Executing Python code in the RStudio.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/02-rstudio.png")
