@@ -3,15 +3,15 @@
 # Package structure and distribution
 
 
-**Chapter 3: [How to package a Python]** provided a practical overview of how to create, install, and distribute a Python package. This chapter now goes into more detail about what a Python package actually is; digging deeper into how packages are structured, installed, and distributed.
+**Chapter 3: [How to package a Python]** provided a practical overview of how to create, install, and distribute a Python package. This chapter now goes into more detail about what a Python package actually is, digging deeper into how packages are structured, installed, and distributed.
 
-We begin with a discussion of how modules and packages are represented in Python and why they are used\index{package structure}. We then discuss some more advanced package structure topics such as controlling the import behavior of a package and including non-code files, like data. The chapter finishes with a discussion of what package distributions\index{distribution} are, how to build them, and how they are installed. Along the way, we'll demonstrate key concepts by continuing to develop our `pycounts` package from the previous chapter.
+We begin with a discussion of how modules and packages are represented in Python and why they are used\index{package structure}. We then discuss some more advanced package structure topics, such as controlling the import behavior of a package and including non-code files, like data. The chapter finishes with a discussion of what package distributions\index{distribution} are, how to build them, and how they are installed. Along the way, we'll demonstrate key concepts by continuing to develop our `pycounts` package from the previous chapter.
 
 ## Packaging fundamentals
 
 We'll begin this chapter by exploring some of the lower-level implementation details related to what packages are, how they're structured, and how they're used in Python. 
 
-All data in a Python program is represented by objects or by relations between objects. For example, integers and functions are kinds of Python objects. We can find the type of a Python object using the `type()` function. For example, the code below, run in a Python interpreter, creates an integer object and a function object mapped to the names `a` and `hello_world` respectively:
+All data in a Python program are represented by objects or by relations between objects. For example, integers and functions are kinds of Python objects. We can find the type of a Python object using the `type()` function. For example, the code below, run in a Python interpreter, creates an integer object and a function object mapped to the names `a` and `hello_world`, respectively:
 
 ```python
 >>> a = 1
@@ -44,7 +44,7 @@ def hello_world_squamish():
     print("I chen tl'iḵ!")
 ```
 
-We can import that module using the `import` statement and can use the `type()` function to verify that we created a module object which has been mapped to the name "greetings" (the name of the file):
+We can import that module using the `import` statement and can use the `type()` function to verify that we created a module object, which has been mapped to the name "greetings" (the name of the file):
 
 ```python
 >>> import greetings
@@ -56,6 +56,8 @@ module
 ```
 
 We call the module object an "organizational unit of code" because the content of the module (in this case, the two "hello world" functions) can be accessed via the module name and "dot notation". For example:
+
+\newpage
 
 ```python
 >>> greetings.hello_world()
@@ -85,11 +87,11 @@ At this point in our discussion, it's useful to mention Python's namespaces\inde
  'greetings']
 ```
 
-In the output above, we can see the names of the three objects we have defined in this section: `a`, `hello_world`, and `greetings`. The other names bounded by double underscores are objects that were initialized automatically when we started the Python interpreter and are implementation details that aren't important to our discussion here, but can be read about in the Python [documentation](https://docs.python.org/3/reference/executionmodel.html?highlight=__builtins__#execution-model).
+In the output above, we can see the names of the three objects we have defined in this section: `a`, `hello_world`, and `greetings`. The other names bounded by double underscores are objects that were initialized automatically when we started the Python interpreter and are implementation details that aren't important to our discussion here but can be read about in the Python [documentation](https://docs.python.org/3/reference/executionmodel.html?highlight=__builtins__#execution-model).
 
-Namespaces are created at different moments, have different lifetimes, and can be accessed from different parts of a Python program — but these details digress from our discussion and we point interested readers to the Python [documentation](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) to learn more. The important point to make here is that, when a module is imported using the `import` statement, a module object is created and it has its own namespace containing the names of the Python objects defined in the modules. For example, when we imported the *`greetings.py`* file earlier, we created a `greetings` module object and namespace containing the names of the objects defined in the file — `hello_world` and `hello_world_squamish` — which we can access using dot notation, e.g., `greetings.hello_world()` and `greetings.hello_world_squamish()`.
+Namespaces are created at different moments, have different lifetimes, and can be accessed from different parts of a Python program — but these details digress from our discussion, and we point interested readers to the Python [documentation](https://docs.python.org/3/tutorial/classes.html#python-scopes-and-namespaces) to learn more. The important point to make here is that when a module is imported using the `import` statement, a module object is created and it has its own namespace containing the names of the Python objects defined in the modules. For example, when we imported the *`greetings.py`* file earlier, we created a `greetings` module object and namespace containing the names of the objects defined in the file — `hello_world` and `hello_world_squamish` — which we can access using dot notation, e.g., `greetings.hello_world()` and `greetings.hello_world_squamish()`.
 
-In this way, the module object isolates a collection of code and provides us with a clean, logical, and organized way to access it. We can inspect the namespace of a module by passing the module object as an input to the `dir()` function :
+In this way, the module object isolates a collection of code and provides us with a clean, logical, and organized way to access it. We can inspect the namespace of a module by passing the module object as an input to the `dir()` function:
 
 ```python
 >>> dir(greetings)
@@ -101,7 +103,7 @@ In this way, the module object isolates a collection of code and provides us wit
  'hello_world_squamish']
 ```
 
-An important point to stress here is that there is no relation between names in different namespaces. That means that we can have objects of the exact same name in a Python session if they exist in different namespaces. For example, in the Python session we've been running in this section we have access to two `hello_world` functions; one that was defined earlier in our interactive interpreter, and one defined in the `greetings` module. While these functions have the exact same name, there is no relation between them because they exist in different namespaces; `greetings.hello_world()` exists in the `greetings` module namespace and `hello_world()` exists in the "global" namespace of our interpreter. So, we can access both with the appropriate syntax:
+An important point to stress here is that there is no relation between names in different namespaces. That means that we can have objects of the exact same name in a Python session if they exist in different namespaces. For example, in the Python session we've been running in this section we have access to two `hello_world` functions; one that was defined earlier in our interactive interpreter, and one defined in the `greetings` module. While these functions have the exact same name, there is no relation between them because they exist in different namespaces; `greetings.hello_world()` exists in the `greetings` module namespace, and `hello_world()` exists in the "global" namespace of our interpreter. So, we can access both with the appropriate syntax:
 
 ```python
 >>> hello_world("Tom")
@@ -131,7 +133,7 @@ pkg
     └── module2.py
 ```
 
-Put simply, packages provide another level of abstraction for our code and allow us to group and organize related modules under a single package namespace. It's helpful to think of a package as a module containing other modules. In fact, this is pretty much how Python treats packages. Regardless of whether you `import` a single, standalone module (i.e., a *.py* file) or a package (i.e., a directory), Python will create a module object in the current namespace. For example, let's import the `pycounts` package we created in **Chapter 3: [How to package a Python]** and check its type (recall that this package contains two modules; *`pycounts.py`* and *`plotting.py`*): 
+Put simply, packages provide another level of abstraction for our code and allow us to organize related modules under a single package namespace. It's helpful to think of a package as a module containing other modules. In fact, this is pretty much how Python treats packages. Regardless of whether you `import` a single, standalone module (i.e., a *.py* file) or a package (i.e., a directory), Python will create a module object in the current namespace. For example, let's import the `pycounts` package we created in **Chapter 3: [How to package a Python]** and check its type (recall that this package contains two modules; *`pycounts.py`* and *`plotting.py`*): 
 
 >If you're following on from **Chapter 3: [How to package a Python]** and created a virtual environment for your `pycounts` package using `conda`, as we did in **Section \@ref(create-a-virtual-environment)**, be sure to activate that environment before continuing with this chapter by running `conda activate pycounts` at the command line.
 
@@ -147,6 +149,8 @@ module
 ```
 
 Note that despite importing our `pycounts` package (which contains two modules), Python still created a single module object. Just as before, we can access the contents of our package via dot notation. For example, we can import the `plot_words()` function from the `plotting` module of the `pycounts` package using the following syntax:
+
+\newpage
 
 ```python
 >>> from pycounts.plotting import plot_words
@@ -189,7 +193,7 @@ But when importing something from a package, Python uses the `__path__` attribut
 ```
 
 <!-- #region -->
->In **Section \@ref(installing-your-package)** we discussed how `poetry`, the tool we're using to develop our `pycounts` package, installs packages in "editable" mode\index{editable install} meaning that it installs a link to your package's code on your computer, and that's what we see in the output above. If you install `pycounts` (or any other package) using `pip install` or `conda install` and check it `__path__` attribute you would see path including a *`site-packages/`* directory, which is where Python puts installed packages by default, e.g.: `['/opt/miniconda/base/envs/pycounts/lib/python3.9/site-packages/pycounts']`.
+>In **Section \@ref(installing-your-package)** we discussed how `poetry`, the tool we're using to develop our `pycounts` package, installs packages in "editable" mode\index{editable install} meaning that it installs a link to your package's code on your computer, and that's what we see in the output above. If you install `pycounts` (or any other package) using `pip install` or `conda install` and check its `__path__` attribute you would see a path including a *`site-packages/`* directory, which is where Python puts installed packages by default, e.g.: `['/opt/miniconda/base/envs/pycounts/lib/python3.9/site-packages/pycounts']`.
 >
 >We'll talk more about package installation in **Section \@ref(package-distribution-and-installation)**.
 
@@ -207,7 +211,7 @@ With the theory out of the way, we'll now get back to more practical topics in t
 <!-- #region -->
 As we discussed in **Section \@ref(packaging-fundamentals)**, packages are a way of organizing and accessing a collection of modules. Fundamentally, a package is identified as a directory containing an *`__init__.py`*\index{init.py} file, and a module is a file with a *.py* extension that contains Python code. Below is an example directory structure of a simple Python package with two modules and a subpackage:
 
-```
+```md
 pkg
 ├── __init__.py
 ├── module1.py
@@ -220,7 +224,7 @@ The *`__init__.py`* tells Python to treat a directory as a package (or subpackag
 
 The above structure satisfies the criteria for a Python package, and you would be able to `import`\index{import} content from this package on your local computer if it was in the current working directory (or if its path had been manually added to `sys.path`). But this package lacks the content required to make it installable\index{installable Python package}. 
 
-To create an installable package, we need a tool capable of installing and building packages. Currently the most common tools used for package development are `poetry`\index{poetry}, `flit`\index{flit}, and `setuptools`\index{setuptools}. In this book, we use `poetry` but we'll compare these tools later in **Section \@ref(packaging-tools)**. Regardless of the tool you use, it will rely on a configuration file(s) that defines the metadata and installation instructions for your package. In a `poetry`-managed project that file is the *`pyproject.toml`*\index{pyproject.toml}. It's also good practice to include a README in your package's root directory to provide high-level information about the package, and to put the Python code of your package in a *`src/`* directory (we'll discuss why this is in **Section \@ref(the-source-layout)**). Thus, the structure for an installable package looks more like this:
+To create an installable package, we need a tool capable of installing and building packages. Currently the most common tools used for package development are `poetry`\index{poetry}, `flit`\index{flit}, and `setuptools`\index{setuptools}. In this book, we use `poetry`, but we'll compare these tools later in **Section \@ref(packaging-tools)**. Regardless of the tool you use, it will rely on a configuration file(s) that defines the metadata and installation instructions for your package. In a `poetry`-managed project, that file is the *`pyproject.toml`*\index{pyproject.toml}. It's also good practice to include a README in your package's root directory to provide high-level information about the package, and to put the Python code of your package in a *`src/`* directory (we'll discuss why this is in **Section \@ref(the-source-layout)**). Thus, the structure for an installable package looks more like this:
 
 ```md
 pkg
@@ -257,19 +261,21 @@ pycounts
     └── ...
 ```
 
-Not all of this content will be included in the version of your package that you install or distribute to others. Typically, it's just the Python code (in the *`src/`* directory) that forms the installable version of your package (but we'll show how you can specify additional content to include in **Section \@ref(including-non-code-files-in-a-package)**). The rest of the content, like documentation and tests, exists to support development and this content is not needed by the users of your package, so it's usually shared (if desired) via a collaborative medium like GitHub\index{GitHub}, where other developers can access and contribute to it.
+Not all of this content will be included in the version of your package that you install or distribute to others. Typically, it's just the Python code (in the *`src/`* directory) that forms the installable version of your package (but we'll show how you can specify additional content to include in **Section \@ref(including-non-code-files-in-a-package)**). The rest of the content, like documentation and tests, exists to support development, and this content is not needed by the users of your package, so it's usually shared (if desired) via a collaborative medium like GitHub\index{GitHub}, where other developers can access and contribute to it.
 
->The package structure described in this section is technically called a "regular package" in Python and it is what the vast majority of Python packages and developers use. However, Python also supports a second type of package known as a "namespace package\index{namespace package}". Namespace packages are a way of splitting a single Python package across multiple directories. Unlike regular packages, where all contents live in the same directory hierarchy, namespace packages can be formed from directories in different locations on a file system and do not contain an *`__init__.py`* file.
+>The package structure described in this section is technically called a "regular package" in Python, and it is what the vast majority of Python packages and developers use. However, Python also supports a second type of package known as a "namespace package\index{namespace package}". Namespace packages are a way of splitting a single Python package across multiple directories. Unlike regular packages, where all contents live in the same directory hierarchy, namespace packages can be formed from directories in different locations on a file system and do not contain an *`__init__.py`* file.
 >
->The main reason a developer might want to use a namespace package is if they wish to develop, install, and distribute portions of a package separately, or if they want to combine packages that reside on different locations on their file system. Namespace packages can be a confusing topic for beginners and the majority of developers will never create a namespace package so we won't discuss them further in this book. Instead we refer readers interested in learning more about them to [PEP 420](https://www.python.org/dev/peps/pep-0420/) and the Python [documentation](https://docs.python.org/3/reference/import.html#namespace-packages). As a result, when we use the term "package" in this book, we specifically mean "regular package".
+>\newpage
+>
+>The main reason a developer might want to use a namespace package is if they wish to develop, install, and distribute portions of a package separately, or if they want to combine packages that reside on different locations on their file system. However, namespace packages can be a confusing topic for beginners and the majority of developers will never create a namespace package so we won't discuss them further in this book. Instead we refer readers interested in learning more about them to [PEP 420](https://www.python.org/dev/peps/pep-0420/) and the Python [documentation](https://docs.python.org/3/reference/import.html#namespace-packages). As a result, when we use the term "package" in this book, we specifically mean "regular package".
 
 <!-- #endregion -->
 
-### Package and modules names
+### Package and module names
 
-When building a package, it's important to select appropriate names for your package and its modules. Python package naming\index{package name} guidelines and conventions are described in [Python Enhancement Proposal (PEP) 8](https://www.python.org/dev/peps/pep-0008/) and [PEP 423](https://www.python.org/dev/peps/pep-0423/). The fundamental guidelines are that:
+When building a package, it's important to select appropriate names for your package and its modules. Python package naming\index{package name} guidelines and conventions are described in [Python Enhancement Proposal (PEP) 8](https://www.python.org/dev/peps/pep-0008/) and [PEP 423](https://www.python.org/dev/peps/pep-0423/). The fundamental guidelines are:
 
-- Packages and modules should have a single, short, all-lowercase name; and,
+- Packages and modules should have a single, short, all-lowercase name.
 - Underscores can be used to separate words in a name if it improves readability, but their use is typically discouraged.
 
 In terms of the actual name chosen for a module or package, it may be helpful to consider the following "three M's":
@@ -322,6 +328,8 @@ Earlier we discussed how an *`__init__.py`*\index{init.py} file is used to tell 
 
 We'll demonstrate this functionality using the `pycounts` packages we developed in **Chapter 3: [How to package a Python]**. Consider the *`__init__.py`* of our package:
 
+\newpage
+
 ```md
 pycounts
 ├── .readthedocs.yml
@@ -344,7 +352,7 @@ pycounts
 
 When a package is imported, the *`__init__.py`* file is executed, and any objects it defines are bound to the package's namespace. As an example, in Python packaging, it's convention to define a package's version in two places:
 
-1. In the package's configuration file, *`pyproject.toml`*, as we saw in **Section \@ref(installing-your-package)**; and,
+1. In the package's configuration file, *`pyproject.toml`*, as we saw in **Section \@ref(installing-your-package)**.
 2. In the package's *`__init__.py`* file using the `__version__` attribute, so users can quickly check the version of your package they are using, with code like:
 
 ```python
@@ -356,7 +364,7 @@ When a package is imported, the *`__init__.py`* file is executed, and any object
 0.1.0
 ```
 
-Sometimes you'll see the version number hard-coded in the *`__init__.py`* file, like `__version__ = "0.1.0"`\index{init.py!version}. But this means you have to remember to update the version in two places anytime you want to make a new version of your package — *`__init__.py`* and *`pyproject.toml`* (we'll discuss versioning in **Chapter 7: [Releasing and versioning]**). Instead, it's better to have your package version defined only in *`pyproject.toml`*\index{pyproject.toml}, and then read programmatically in the *`__init__.py`* file using the `importlib.metadata.version()` function which reads a package's version from its installed metadata (i.e., the *`pyproject.toml`* file).
+Sometimes you'll see the version number hard-coded in the *`__init__.py`* file, like `__version__ = "0.1.0"`\index{init.py!version}. But this means you have to remember to update the version in two places anytime you want to make a new version of your package — *`__init__.py`* and *`pyproject.toml`* (we'll discuss versioning in **Chapter 7: [Releasing and versioning]**). Instead, it's better to have your package version defined only in *`pyproject.toml`*\index{pyproject.toml}, and then read programmatically in the *`__init__.py`* file using the `importlib.metadata.version()` function, which reads a package's version from its installed metadata (i.e., the *`pyproject.toml`* file).
 
 The `py-pkgs-cookiecutter` we used to create our `pycounts` package (**Section \@ref(creating-a-package-structure)**) already populated our *`__init__.py`* file with this code for us:
 
@@ -375,7 +383,7 @@ from pycounts.pycounts import count_words
 from pycounts.plotting import plot_words
 ```
 
-We could make life easier for our users by importing these core functions in `pycounts`'s *`__init__.py`* file which would bind them to the package namespace. For example, the code below, added to the *`__init__.py`* file, imports our core functions `pycounts.count_words()` and `plotting.plot_words()`: 
+We could make life easier for our users by importing these core functions in `pycounts`'s *`__init__.py`* file, which would bind them to the package namespace. For example, the code below, added to the *`__init__.py`* file, imports our core functions `pycounts.count_words()` and `plotting.plot_words()`: 
 
 ```python
 # read version from installed package
@@ -399,15 +407,19 @@ The functions are now bound to the `pycounts` namespace, so users can access the
 <function count_words>
 ```
 
+\newpage
+
 >If you're following along and developing the `pycounts` package in this book, and tried installing it from TestPyPI or PyPI in **Section \@ref(building-and-distributing-your-package)**, it will no longer be installed in "editable mode"\index{editable install} and so won't reflect any changes you make to the source code. You'll have to run `poetry install` to see your changes and put your package back in editable mode (which is the mode you want for development).
 
 <!-- #endregion -->
 
-Ultimately, the *`__init__.py`* file can be used to customize how your package and its contents are imported. It's an interesting exercise to visit large Python packages such as [NumPy](https://github.com/numpy/numpy/blob/main/numpy/__init__.py), [pandas](https://github.com/pandas-dev/pandas/blob/master/pandas/__init__.py), or [scikitlearn](https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/__init__.py) to see the kinds of initialization code they run in their *`__init__.py`* files.
+Ultimately, the *`__init__.py`* file can be used to customize how your package and its contents are imported. It's an interesting exercise to visit large Python packages, such as [NumPy](https://github.com/numpy/numpy/blob/main/numpy/__init__.py), [pandas](https://github.com/pandas-dev/pandas/blob/master/pandas/__init__.py), or [scikitlearn](https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/__init__.py), to see the kinds of initialization code they run in their *`__init__.py`* files.
 
 ### Including non-code files in a package
 
 Consider again the full structure of our `pycounts` package:
+
+\newpage
 
 ```md
 pycounts
@@ -460,11 +472,11 @@ Most developers won't ship additional content with their package like this, pref
 ### Including data in a package
 
 <!-- #region -->
-One type of non-code that developers do commonly want to include in a packages is data\index{data}. There are several reasons why a developer might want to include data in their package:
+One type of non-code that developers do commonly want to include in a package is data\index{data}. There are several reasons why a developer might want to include data in their package:
 
-1. It's required to use some of the package's functionality;
-2. To provide example data to help demonstrate the functionality of the package;
-3. As a method of distributing and versioning a data file(s); 
+1. It's required to use some of the package's functionality.
+2. To provide example data to help demonstrate the functionality of the package.
+3. As a method of distributing and versioning a data file(s).
 4. If the package is being used to bundle up a reproducible data analysis and it's important to keep the code and data together.
 
 Regardless of the use case, there are two typical ways to include data in a Python package:
@@ -472,14 +484,14 @@ Regardless of the use case, there are two typical ways to include data in a Pyth
 1. Include the raw data as part of the installable package, and provide code to help users load it (if required). This option is well-suited to smaller data files, or for data that the package absolutely depends on.
 2. Include scripts as part of the package that download the data from an external source. This option is suited to large data files, or ones that a user may only need optionally.
 
-We'll demonstrate option 1 above with an example. Our `pycounts` package helps users calculate words counts in text files. To demonstrate our package's functionality to new users, it might be helpful to add an example text file to our package for them to practice with. For our package, we'll add a text file of the novel "Flatland", by Edwin Abbott [@abbott1884] ([available online](https://www.gutenberg.org/ebooks/97)).
+We'll demonstrate option 1 above with an example. Our `pycounts` package helps users calculate words counts in text files. To demonstrate our package's functionality to new users, it might be helpful to add an example text file to our package for them to practice with. For our package, we'll add a text file of the novel *Flatland*, by Edwin Abbott [@abbott1884] ([available online](https://www.gutenberg.org/ebooks/97)).
 
-To include this data in our package we need to do two things:
+To include this data in our package, we need to do two things:
 
-1. Include the raw *.txt* file in our package; and,
+1. Include the raw *.txt* file in our package.
 2. Include code to help a user access the data.
 
-We'll start by creating a new *`data`* subpackage in our *`src/pycounts/`* directory where you should download and place the linked Flatland novel as *`flatland.txt`*. We'll also create a new module *`datasets.py`* in our package that we'll shortly populate with code to help users load data. Our `pycounts` directory structure now looks like this:
+We'll start by creating a new *`data`* subpackage in our *`src/pycounts/`* directory, where you should download and place the linked *Flatland* novel as *`flatland.txt`*. We'll also create a new module *`datasets.py`* in our package that we'll shortly populate with code to help users load data. Our `pycounts` directory structure now looks like this:
 
 ```md
 pycounts
@@ -566,7 +578,7 @@ pkg
 └── ...
 ```
 
-However, nesting a package's code in a *`src/`* directory is not required to build a package, and it's also common to see packages without it. We'll call this the "non-src" layout, and show an example below.
+However, nesting a package's code in a *`src/`* directory is not required to build a package, and it's also common to see packages without it. We'll call this the "non-src" layout and show an example below.
 
 ```md
 pkg
@@ -580,7 +592,7 @@ pkg
 └── ...
 ```
 
-In general, we recommend using the "src" layout over the "non-src" layout (and so does the [Python Packaging Authority](https://packaging.python.org/tutorials/packaging-projects/)), because it has several advantages when it comes to developing and distributing installable Python packages. We list a few of these below:
+In general, we recommend using the "src" layout over the "non-src" layout (and so does the [Python Packaging Authority](https://packaging.python.org/tutorials/packaging-projects/)) because it has several advantages when it comes to developing and distributing installable Python packages. We list a few of these below:
 
 1. For developers using a testing framework like `pytest`, a "src" layout forces you to install your package before it can be tested. Most developers would agree that you would want to test your package as it will be installed by users, rather than as it currently exists on your own machine. The problem with a "non-src" layout is that Python can `import` your package even if it is not installed. This is because in most cases the first place Python searches when running `import` is the current directory (check this by importing `sys` and running `sys.path[0]`). Without a "src" folder, Python will find your package as it exists in the current directory and import it, rather than using it as it would be installed on a user's machine. There are plenty of horror stories of developers uploading broken distributions to PyPI because they were testing their code as it existed on their machine rather than as it would be installed by users. This issue is described in detail in Ionel Cristian Mărieș' [Packaging a Python Library](https://blog.ionelmc.ro/2014/05/25/python-packaging/) and Hynek Schlawack's [Testing and Packaging](https://hynek.me/articles/testing-packaging/) excellent blog posts for those interested.
     
@@ -598,7 +610,7 @@ In general, we recommend using the "src" layout over the "non-src" layout (and s
     
     There's usually a lot more than just Python code at that path. There could be test modules, scratch code, data files, documentation, example scripts, etc., all of which are now potentially importable in your development workflow!
 
-3. Finally, "src" is general a universally recognized location for source code, making it easier for others to quickly navigate the contents of your package.
+3. Finally, "src" is generally a universally recognized location for source code, making it easier for others to quickly navigate the contents of your package.
 
 Ultimately, while you can certainly use a "non-src layout" to develop a package, using a "src" layout will typically reduce the chance of things breaking during development and distribution.
 
@@ -608,9 +620,9 @@ In this section, we won't be writing any code, but rather we will discuss theory
 
 As we saw in **Chapter 3: [How to package a Python]**, the typical workflow for developing and distributing a Python packages is as follows:
 
-1. A *developer* creates a Python package on their machine;
-2. The *developer* uses a tool like `poetry` to build a distribution from that package;
-3. The *developer* shares the distribution, usually by uploading to a online repository like [PyPI](https://pypi.org); and,
+1. A *developer* creates a Python package on their machine.
+2. The *developer* uses a tool like `poetry` to build a distribution from that package.
+3. The *developer* shares the distribution, usually by uploading to a online repository like [PyPI](https://pypi.org).
 4. A *user* uses an installation tool like `pip` to download the distribution and install it on their machine.
 5. (Optional) *Users* provide feedback to the developer about the package (identify bugs, request features, etc.) and the cycle repeats.
 
@@ -620,13 +632,13 @@ This workflow is illustrated in Fig. \@ref(fig:04-pkg-cycle-fig).
 knitr::include_graphics("../images/04-pkg-cycle.png")
 ```
 
-To build up an intuition of the steps in this process, we'll begin at the user-end, and discuss how packages are installed. We'll then work our way backwards to better understand what distributions are and how their made.
+To build up an intuition of the steps in this process, we'll begin at the user-end, and discuss how packages are installed. We'll then work our way backwards to better understand what distributions are and how they're made.
 
 ### Package installation
 
 To be installed, a package needs to generate two directories:
 
-1. *`{package}`*: a directory of the package's source files (i.e., modules and subpackages); and,
+1. *`{package}`*: a directory of the package's source files (i.e., modules and subpackages).
 2. *`{package}-{version}.dist-info`*: a directory of files containing information about the package, such as a  metadata file with information such as the package's author and what versions of Python it supports (METADATA), a license file (LICENSE), a file specifying what tool was used to install the package (INSTALLER), and more. These files are described in detail in [PEP 427](https://www.python.org/dev/peps/pep-0427/#the-dist-info-directory).
 
 We'll talk about how these directories are actually built shortly, but for now, we'll talk about installation\index{installable Python package}. When you install a package with an installer like `pip` the above directories are copied into the *`site-packages/`* directory of your Python installation, which is one of the default places Python looks when importing a package. The exact path to the *`site-packages/`* directory varies depending on your operating system, how you installed Python, and whether you're using a virtual environment. You can check the path using the `sys.path` variable. The below paths are for a MacOS, with Python installed via [Miniconda](https://docs.conda.io/en/latest/miniconda.html), and with a virtual environments called `pycounts` activated:
@@ -664,18 +676,20 @@ If you navigate to the *`site-packages/`* directory you will see examples of the
 └── WHEEL
 ```
 
+\newpage
+
 So the question is, how do we provide the *`{package}`* and *`{package}-{version}.dist-info`* directories necessary to install our package? There are two options:
 
 1. Create a single archive of all our package source code, metadata, and instructions on how to create the *`{package}`* and *`{package}-{version}.dist-info`* directories, and then share that archive with users. This is called a source distribution or sdist\index{distribution!sdists}. To install your package from an sdist, a user needs to download the archive, unpack it, and use the included build instructions to build it into the *`{package}`* and *`{package}-{version}.dist-info`* directories on their own computer (we'll talk about how these directories are "built" in **Section \@ref(building-sdists-and-wheels)**). Finally, the package is installed by copying these directories to the *`site-packages/`* directory.
-2. Build the *`{package}`* and *`{package}-{version}.dist-info`* directories on our own machine, compress them into a single file, and share them with users. This single file is called a wheel\index{distribution!wheel}. A user just needs to download the wheel and extract the contents to the *`site-packages/`* folder, no build step is necessary.
+2. Build the *`{package}`* and *`{package}-{version}.dist-info`* directories on our own machine, compress them into a single file, and share them with users. This single file is called a wheel\index{distribution!wheel}. A user just needs to download the wheel and extract the contents to the *`site-packages/`* folder; no build step is necessary.
 
 `pip install`\index{pip} can handle installation from an sdist or a wheel, but distributing your package to users as a wheel (option 2) certainly seems preferable; everything has already been done on the developer's side and installation just involves downloading the distribution and copying it to the appropriate location on a user's computer. This is why wheels are the preferred distribution format for Python packages. In fact, when you run `pip install <some-package>`, it will always prioritize installing the specified package from a wheel (if it exists).
 
 At this point you might be wondering why we bother with sdists at all. The reason is that wheels aren't always available to users. Some Python packages contain "extensions" written in other languages, such as C/C++, because they offer functionality and performance enhancements. While Python is typically referred to as an interpreted language (i.e., your Python code is translated to machine code as it is executed), languages such as C/C++ require compilation by a compiler program before they can be used (i.e., your code must be translated into "machine code" *before* it can be executed). Compilation is platform-specific. Thus, if a developer wanted to provide wheels of a package that included extensions in another language, they would have to generate one wheel for each platform they wanted to support (e.g., MacOS-arm64, MacOS-x86, Win-32, Win-amd64, etc.). For this reason, sdists are usually provided with wheels; if a wheel isn't available for a user's particular platform, they will still be able to build the package from the sdist (which would require that they have the appropriate compiling program(s)).
 
-As an example, the popular `numpy` package contains extensions written in C, so its wheels are platform-specific. Wheels have a specific naming convention (described in [PEP 427](https://www.python.org/dev/peps/pep-0427/)) which includes the name of the platform they support; if you look at `numpy`'s [distributions on PyPi](https://pypi.org/project/numpy/#files), you'll see wheels for common platforms, as well as an sdist at the bottom of the list.
+As an example, the popular `numpy` package contains extensions written in C, so its wheels are platform-specific. Wheels have a specific naming convention (described in [PEP 427](https://www.python.org/dev/peps/pep-0427/)), which includes the name of the platform they support; if you look at `numpy`'s [distributions on PyPi](https://pypi.org/project/numpy/#files), you'll see wheels for common platforms, as well as an sdist at the bottom of the list.
 
-Wheels specific to a platform are known as "platform wheels". However, the vast majority of Python packages use pure Python code (i.e., they don't include extensions written in other languages), and so don't need to worry about generating platform wheels. Most developers and readers of this book will only ever generate one wheel for their package; a "universal wheel" (compatible with Python 2 and 3) or a "pure Python wheel" (compatible with either Python 2 or 3). The build tool you use to make your distributions will handle wheel creation for you (as we'll talk about in the next section), so it's not something you need to worry about, but it's interesting to know these things!
+Wheels specific to a platform are known as "platform wheels". However, the vast majority of Python packages use pure Python code (i.e., they don't include extensions written in other languages), and so don't need to worry about generating platform wheels. Most developers and readers of this book will only ever generate one wheel for their package: a "universal wheel" (compatible with Python 2 and 3) or a "pure Python wheel" (compatible with either Python 2 or 3). The build tool you use to make your distributions will handle wheel creation for you (as we'll talk about in the next section), so it's not something you need to worry about, but it's interesting to know these things!
 
 ### Building sdists and wheels
 
@@ -686,7 +700,7 @@ In a nutshell the build process involves:
 2. Developer or user builds a wheel from the sdist;
 3. Users installs the wheel{distribution!wheel}.
 
-The build steps here are where packaging tools like `poetry`\index{poetry}, `flit`\index{flit} or `setuptools`\index{setuptools} come in. These tools provide the code required to build sdists and wheels. Recall the *`pyproject.toml`* file `poetry` uses to manage package development. One table in that file we did not talk about when we introduced the file in **Section \@ref(installing-your-package)** is `[build-system]`:
+The build steps here are where packaging tools like `poetry`\index{poetry}, `flit`\index{flit}, or `setuptools`\index{setuptools} come in. These tools provide the code required to build sdists and wheels. Recall the *`pyproject.toml`* file `poetry` uses to manage package development. One table in that file we did not talk about when we introduced the file in **Section \@ref(installing-your-package)** is `[build-system]`:
 
 ```toml
 ...other file content hidden...
@@ -696,15 +710,15 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 ```
 
-This table specifies the tools required to build the sdist and wheel for a package (`requires`) and where the functions that actually do the build are located in a build-tool's library (`build-backend`). For example, the table above shows that the `poetry-core` library is require to build our package, and that the building functions are located in `poetry.core.masonry.api`. If you take a look at the source code of `poetry-core`'s `poetry.core.masonry.api` [module](https://github.com/python-poetry/poetry-core/blob/master/poetry/core/masonry/api.py), you'll see functions like `build_wheel()` and `build_sdist()`. The exact building mechanics are beyond the scope of this book so we wont go into detail about how they work. However, as a packaging book, it would be remiss not to mention that the ability to specify the build tools required to make sdists and wheels of a package is a relatively new development in the packaging ecosystem. This functionality was introduced in [PEP 517](https://www.python.org/dev/peps/pep-0517/) and [PEP 518](https://www.python.org/dev/peps/pep-0518/), to remove the dependency of the packaging system on legacy tools. These PEPs are an interesting read for those keen on digging into more of the low-level details of building and installing package distributions.
+This table specifies the tools required to build the sdist and wheel for a package (`requires`) and where the functions that actually do the build are located in a build-tool's library (`build-backend`). For example, the table above shows that the `poetry-core` library is require to build our package, and that the building functions are located in `poetry.core.masonry.api`. If you take a look at the source code of `poetry-core`'s `poetry.core.masonry.api` [module](https://github.com/python-poetry/poetry-core/blob/master/poetry/core/masonry/api.py), you'll see functions like `build_wheel()` and `build_sdist()`. The exact building mechanics are beyond the scope of this book, so we wont go into detail about how they work. However, as a packaging book, it would be remiss not to mention that the ability to specify the build tools required to make sdists and wheels of a package is a relatively new development in the packaging ecosystem. This functionality was introduced in [PEP 517](https://www.python.org/dev/peps/pep-0517/) and [PEP 518](https://www.python.org/dev/peps/pep-0518/), to remove the dependency of the packaging system on legacy tools. These PEPs are an interesting read for those keen on digging into more of the low-level details of building and installing package distributions.
 
 ### Packaging tools
 
 The focus of this book is on workflows and tools that make packaging accessible and efficient. `poetry`\index{poetry} is one of those tools; it abstracts the lower-level details of package development away from the developer so they can focus on writing code. `poetry` is completely configured by a single *`pyproject.toml`*\index{pyproject.toml} file and has intuitive commands to install a package (`poetry install`), manage dependencies (`poetry add`), build distributions (`poetry build`), and publish those distributions to a repository like PyPI (`poetry publish`).
 
-An alternative modern packaging tool is `flit`\index{flit}. `flit` is essentially a stripped down version of `poetry`. It is also managed by a *`pyproject.toml`* file and provides commands similar to `poetry` to help install a package (`flit install`), build distributions (`flit build`), and publish those distributions to a repository like PyPI (`flit publish`). The main difference between `flit` and `poetry` is that `flit` doesn't automatically manage the dependencies of your project like `poetry` does; you have to manually add dependencies and their version specifications to *`pyproject.toml`*. As a result, we prefer `poetry` because it means there's one less thing to worry about!
+An alternative modern packaging tool is `flit`\index{flit}. `flit` is essentially a stripped-down version of `poetry`. It is also managed by a *`pyproject.toml`* file and provides commands similar to `poetry` to help install a package (`flit install`), build distributions (`flit build`), and publish those distributions to a repository like PyPI (`flit publish`). The main difference between `flit` and `poetry` is that `flit` doesn't automatically manage the dependencies of your project like `poetry` does; you have to manually add dependencies and their version specifications to *`pyproject.toml`*. As a result, we prefer `poetry` because it means there's one less thing to worry about!
 
-The downside of `poetry` and `flit` is that, at the time of writing, they only support pure Python packages and not packages that contain extensions written in other languages, which we discussed in **Section \@ref(package-installation)**. This is completely fine for the vast majority of developers. However, for those looking to build more advanced packages that include non-Python code, `setuptools`\index{setuptools} is the preferred option. For a long time `setuptools` was the default build tool for Python packages so it is still used by many projects that have been around for a while. `setuptools` require a little more expertise to configure than `poetry` or `flit`, as you can read more about in the [documentation](https://setuptools.readthedocs.io/en/latest/userguide/index.html), so we prefer `poetry` or `flit` for packaging projects where possible.
+The downside of `poetry` and `flit` is that, at the time of writing, they only support pure Python packages and not packages that contain extensions written in other languages, which we discussed in **Section \@ref(package-installation)**. This is completely fine for the vast majority of developers. However, for those looking to build more advanced packages that include non-Python code, `setuptools`\index{setuptools} is the preferred option. For a long time, `setuptools` was the default build tool for Python packages so it is still used by many projects that have been around for a while. `setuptools` require a little more expertise to configure than `poetry` or `flit`, as you can read more about in the [documentation](https://setuptools.readthedocs.io/en/latest/userguide/index.html), so we prefer `poetry` or `flit` for packaging projects where possible.
 
 ### Package repositories
 
@@ -712,7 +726,7 @@ In **Chapter 3: [How to package a Python]**, we released our `pycounts` package 
 
 The [Anaconda](https://anaconda.org/anaconda/repo)\index{Anaconda} and [conda-forge](https://conda-forge.org)\index{conda-forge} repositories are the next most popular software repositories for Python packages. Packages on these repositories can be installed from the command line using `conda install`\index{conda} (we installed the `conda` tool in **Section \@ref(installing-python)**). The main differences between PyPI and these repositories is that they can host non-Python software (as opposed to PyPI which only hosts Python software), and `conda` packages are binaries (there is never a need to have to build a package or its dependencies from an sdist). As a result, packages that depend on non-Python code are usually released to Anaconda or conda-forge. Even for packages that are pure Python, developers sometimes still also create a `conda` package and upload to Anaconda or conda-forge to cater to users who are using `conda` as a package manager rather than `pip`. For those interested, Anaconda provides a helpful [tutorial](https://docs.conda.io/projects/conda-build/en/latest/user-guide/tutorials/build-pkgs-skeleton.html) to help convert packages on PyPI to `conda` packages, but for most readers of this book, building sdist and wheel distributions and sharing them on PyPI will be enough.
 
-In some cases, you may want to release your package to a private repository (for example, for internal use by your company only). There are many private repository options for Python packages. Companies like [Anaconda](https://docs.anaconda.com/), [PyDist](https://pydist.com/) and [GemFury](https://gemfury.com/) are all examples that offer (typically paid) private Python package repository hosting. You can also set up your own server on a dedicated machine or cloud service — as discussed in this [article](https://medium.com/swlh/how-to-install-a-private-pypi-server-on-aws-76993e45c610). You can also choose to host your package on GitHub (or equivalent), and forego releasing to a dedicated software repository. `pip install` supports installing a package directly from a GitHub repository you have access to, as discussed in the [documentation](https://pip.pypa.io/en/stable/topics/vcs-support/). You can `pip install` from a repository branch, a specific commit, or a tag. For example, we tagged a release of v0.1.0 of our `pycounts` package on GitHub in **Section \@ref(tagging-a-package-release-with-version-control)**. Others could now install our package directly from GitHub\index{GitHub} using the following command:
+In some cases, you may want to release your package to a private repository (for example, for internal use by your company only). There are many private repository options for Python packages. Companies like [Anaconda](https://docs.anaconda.com/), [PyDist](https://pydist.com/), and [GemFury](https://gemfury.com/) are all examples that offer (typically paid) private Python package repository hosting. You can also set up your own server on a dedicated machine or cloud service — as discussed in this [article](https://medium.com/swlh/how-to-install-a-private-pypi-server-on-aws-76993e45c610). You can also choose to host your package on GitHub (or equivalent), and forego releasing to a dedicated software repository. `pip install` supports installing a package directly from a GitHub repository you have access to, as discussed in the [documentation](https://pip.pypa.io/en/stable/topics/vcs-support/). You can `pip install` from a repository branch, a specific commit, or a tag. For example, we tagged a release of v0.1.0 of our `pycounts` package on GitHub in **Section \@ref(tagging-a-package-release-with-version-control)**. Others could now install our package directly from GitHub\index{GitHub} using the following command:
 
 ```bash
 $ pip install git+https://github.com/TomasBeuzen/pycounts.git@v0.1.0
