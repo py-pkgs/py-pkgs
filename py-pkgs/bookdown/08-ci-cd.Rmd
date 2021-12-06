@@ -5,9 +5,9 @@
 <!-- #region -->
 If you've gotten this far, you now have a working knowledge of how to create a fully-featured Python package! We went through quite a lot to get here: we learned about package structure, developed source code, created tests, wrote documentation, and learned how to release new versions of a package.
 
-As you continue to develop your package into the future it would be helpful to automate many of these workflows so you and your collaborators can focus more on writing code and less on the nuances of packaging and testing. This is where continuous integration\index{continuous integration} (CI) and continuous deployment\index{continuous deployment} (CD) come in! CI/CD\index{CI/CD} generally refers to the automated testing, building, and deployment of software. In this chapter we'll first introduce CI/CD and walk through how to set it up with the GitHub Actions service. After that, we'll show how to set up CI/CD for a Python package, demonstrating concepts using the `pycounts` package we've been developing throughout this book.
+As you continue to develop your package into the future it would be helpful to automate many of these workflows so you and your collaborators can focus more on writing code and less on the nuances of packaging and testing. This is where continuous integration\index{continuous integration} (CI) and continuous deployment\index{continuous deployment} (CD) come in! CI/CD\index{CI/CD} generally refers to the automated testing, building, and deployment of software. In this chapter, we'll first introduce CI/CD and walk through how to set it up with the GitHub Actions service. After that, we'll show how to set up CI/CD for a Python package, demonstrating concepts using the `pycounts` package we've been developing throughout this book.
 
->This chapter requires basic familiarity with Git and GitHub or similar version control\index{version control} tools. To learn more about Git and GitHub, we recommend the following resources: [Happy Git and GitHub for the useR](https://happygitwithr.com) [@bryan2021] and [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html) [@rsep2021].
+>This chapter requires basic familiarity with Git and GitHub or similar version control\index{version control} tools. To learn more about Git and GitHub, we recommend the following resources: [*Happy Git and GitHub for the useR*](https://happygitwithr.com) [@bryan2021] and [*Research Software Engineering with Python*](https://merely-useful.tech/py-rse/git-cmdline.html) [@rsep2021].
 
 <!-- #endregion -->
 
@@ -24,9 +24,11 @@ CI/CD\index{CI/CD} can automate the packaging workflows that we've done manually
 <!-- #region -->
 You could manually write and execute a CI/CD workflow by, for example, writing scripts that execute all of the steps we've walked through in previous chapters (i.e., running tests, building documented, build and release distributions, etc.). However, this process is not efficient or scalable, and it does not work well if more than one person (i.e., you) is contributing to your code.
 
-It is therefore more common to use a CI/CD service to implement CI/CD. These services essentially do what we described above but in an automated manner; we define a workflow which these services will automatically run at certain "trigger events" which we can also define (for example, merging new code into the "main" branch of a GitHub repository might trigger the automatic deployment of a new version of the software).
+It is therefore more common to use a CI/CD service to implement CI/CD. These services essentially do what we described above but in an automated manner; we define a workflow, which these services will automatically run at certain "trigger events", which we can also define (for example, merging new code into the "main" branch of a GitHub repository might trigger the automatic deployment of a new version of the software).
 
-There are many CI/CD services out there — such as [GitHub Actions](https://docs.github.com/en/actions)\index{GitHub Actions}, [Travis CI](https://www.travis-ci.com), and [CircleCi](https://circleci.com). We'll be using GitHub Actions in this chapter which is a service for executing CI/CD workflows for software stored in a GitHub repository. We'll introduce how to use GitHub Actions in the next section.
+There are many CI/CD services out there — such as [GitHub Actions](https://docs.github.com/en/actions)\index{GitHub Actions}, [Travis CI](https://www.travis-ci.com), and [CircleCi](https://circleci.com). We'll be using GitHub Actions in this chapter, which is a service for executing CI/CD workflows for software stored in a GitHub repository. We'll introduce how to use GitHub Actions in the next section.
+
+\newpage
 
 >GitHub Actions is free for public repositories and includes a generous amount of free minutes for private repositories. Read more in the GitHub Actions [documentation](https://docs.github.com/en/billing/managing-billing-for-github-actions/about-billing-for-github-actions).
 
@@ -38,7 +40,7 @@ There are many CI/CD services out there — such as [GitHub Actions](https://doc
 
 GitHub Actions\index{GitHub Actions} is a service for executing CI/CD workflows. The general idea is to create a set of commands that GitHub Actions will run on our behalf. We call this set of commands a "workflow". A GitHub Actions workflow is defined in a *.yml* file and contains the set of "actions" we want GitHub Actions to run for us (such as running our tests with `pytest` or building our documentation with `sphinx`). Actions are organized as "steps" in a workflow (e.g., step 1: run tests, step 2: build documentation), which in turn are organized into "jobs" (e.g., job 1: continuous integration). A workflow is executed on a machine provided by GitHub Actions called a "runner", when triggered by a particular "event" (like merging code into the `main` branch of a repository).
 
-That's a lot to take in, but don't worry! All this terminology is summarized in Table \@ref(tab:08-actions-table) and we'll walk through an example of using GitHub Actions which refers to this terminology in the next section.
+That's a lot to take in, but don't worry! All this terminology is summarized in Table \@ref(tab:08-actions-table), and we'll walk through an example of using GitHub Actions, which refers to this terminology in the next section.
 
 Table: (\#tab:08-actions-table) Terminology used in GitHub Actions.
 
@@ -55,7 +57,7 @@ Table: (\#tab:08-actions-table) Terminology used in GitHub Actions.
 
 ### A toy example
 
-In this section we'll walk through a simple example of running a workflow with GitHub Actions. The workflow will contains actions that simply print some things to the GitHub Actions runner's terminal using the `echo` command, when a change is made to a repository's content.
+In this section, we'll walk through a simple example of running a workflow with GitHub Actions. The workflow will contains actions that simply print some things to the GitHub Actions runner's terminal using the `echo` command, when a change is made to a repository's content.
 
 - **Step 1**
 
@@ -67,7 +69,7 @@ knitr::include_graphics("../images/08-example-1.png")
 
 - **Step 2**
 
-    Commit the *.yml* file that has been created for you to your repository by clicking "Start commit" and then "Commit new file". Then, open the file on GitHub. You should see the contents below. All the terminology we defined in **Section \@ref(key-concepts)** exists in this workflow file and each line is commented to describe exactly what it does. For example, we can see that:
+    Commit the *.yml* file that has been created for you to your repository by clicking "Start commit" and then "Commit new file". Then, open the file on GitHub. You should see the contents below. All the terminology we defined in **Section \@ref(key-concepts)** exists in this workflow file, and each line is commented to describe exactly what it does. For example, we can see that:
     - This workflow is triggered `on` any push or pull request made to the main branch.
     - It consists of one job called `build`.
     - The job will run on `ubuntu-latest` (the latest version of the Ubuntu runner GitHub Actions provides).
@@ -180,11 +182,11 @@ Some actions can also be configured with inputs using the `with` key, as in the 
 
 ## Setting up continuous integration
 
-Now that we have a basic familiarity with GitHub Actions, in this section we'll build up a continuous integration\index{continuous integration} workflow for a Python package. We'll create this workflow for the `pycounts` package we've been developing throughout this book. However, it will be applicable to any Python package and it should be straightforward to see how you can modify it to your needs.
+Now that we have a basic familiarity with GitHub Actions, in this section we'll build up a continuous integration\index{continuous integration} workflow for a Python package. We'll create this workflow for the `pycounts` package we've been developing throughout this book. However, it will be applicable to any Python package, and it should be straightforward to see how you can modify it to your needs.
 
 Our goal here is to create a CI workflow that will install our package with `poetry`, run our package's tests with `pytest`, and build its documentation with `sphinx`, every time someone makes a push or pull request of changes to the `main` branch of the `pycounts` GitHub repository. These are steps we, or a collaborator, would usually perform locally every time our package is changed, so it makes sense to automate them.
 
-### Set up
+### Setup
 
 <!-- #region -->
 To set up a workflow with GitHub Actions, we need to create a workflow file. Workflow files are *.yml* files located in a *`.github/workflows/`* directory in the root package directory. We'll call our file *`ci-cd.yml`*. You can create that file in an editor of your choice, or by running the following commands at the command line, from your root package directory:
@@ -194,7 +196,9 @@ $ mkdir -p .github/workflows
 $ touch .github/workflows/ci-cd.yml
 ```
 
-Your package directory structure should now look something like this:
+Your package directory structure should now look something like the following:
+
+\newpage
 
 ```md
 pycounts
@@ -217,7 +221,7 @@ pycounts
     └── ...
 ```
 
-Open this new *`ci-cd.yml`* file in an editor. We are going to set up a CI workflow that triggers when someone makes a push or pull-request to the `main` branch of our repository. To set this up, copy and paste the following text into *`ci-cd.yml`*:
+Open this new *`ci-cd.yml`* file in an editor. We are going to set up a CI workflow that triggers when someone pushes new content or makes a pull-request to the `main` branch of our repository. To set this up, copy and paste the following text into *`ci-cd.yml`*:
 
 >When building our CI workflow, we'll be using the same syntax and terminology we described previously in **Section \@ref(introduction-to-github-actions)**. Don't be afraid to revise that section as needed.
 
@@ -233,12 +237,14 @@ on:
       - main
 ```
 
-Now we need to set up the steps that will be executed if one of the above trigger events occurs. GitHub Actions essentially provides you with a blank operating system of your choice (a "runner") which we need to set up based on what steps we are going to want it to execute. In our case, we need to install Python and install `poetry` on the runner, so that we can then install our packages and run its tests and build its documentation. Thus, our setup will involve the steps below, for which we've indicated whether step will use an action or command(s) (**Section \@ref(actions-and-commands)**):
+\newpage
 
-1. Specify an operating system. We'll be using Ubuntu with the syntax `runs-on: ubuntu-latest`. MacOS and Windows are also available if you wish to test your package on those systems, but Ubuntu is a good default to use — see the GitHub Actions [documentation](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources));
-2. Install Python (action: [actions/setup-python@v2](https://github.com/actions/setup-python));
-3. Checkout our repository so we can access its contents (action: [actions/checkout@v2](https://github.com/actions/checkout));
-4. Install `poetry` (action: [snok/install-poetry@v1](https://github.com/snok/install-poetry)); and, 
+Now we need to set up the steps that will be executed if one of the above trigger events occurs. GitHub Actions essentially provides you with a blank operating system of your choice (a "runner"), which we need to set up based on what steps we are going to want it to execute. In our case, we need to install Python and install `poetry` on the runner, so that we can then install our packages and run its tests and build its documentation. Thus, our setup will involve the steps below, for which we've indicated whether step will use an action or command(s) (**Section \@ref(actions-and-commands)**):
+
+1. Specify an operating system. We'll be using Ubuntu with the syntax `runs-on: ubuntu-latest`. MacOS and Windows are also available if you wish to test your package on those systems, but Ubuntu is a good default to use — see the GitHub Actions [documentation](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources)).
+2. Install Python (action: [actions/setup-python@v2](https://github.com/actions/setup-python)).
+3. Checkout our repository so we can access its contents (action: [actions/checkout@v2](https://github.com/actions/checkout)).
+4. Install `poetry` (action: [snok/install-poetry@v1](https://github.com/snok/install-poetry)).
 5. Use `poetry` to install `pycounts` (command: `poetry install`).
 
 We'll add all these steps to our workflow in a job called "ci":
@@ -274,8 +280,8 @@ jobs:
 
 The above steps will set up our system in preparation for:
 
-1. Running `pycounts`'s unit tests with `pytest`;
-2. Checking the code coverage of our tests; and,
+1. Running `pycounts`'s unit tests with `pytest`.
+2. Checking the code coverage of our tests.
 3. Checking that `pycounts`'s documentation builds correctly.
 
 We'll create each of these steps in the following sections.
@@ -294,6 +300,8 @@ Recall that we used `pytest` as the testing framework for our `pycounts` package
       run: poetry run pytest tests/ --cov=pycounts --cov-report=xml
 ```
 
+\newpage
+
 >We could install `conda` on our runner and set up a virtual environment if we wanted to. But this is a lot of overhead for a workflow that is just going to run tests and build documentation, so we've decided not to do that here.
 
 Note that in the command above we are also obtaining our test coverage through the `--cov` argument and outputting a report to *.xml* format with the `--cov-report` argument (these require the `pytest-cov` package which we used and added as a dependency of our package in **Section \@ref(calculating-coverage)**). In the next section, we will integrate another service called [Codecov](https://codecov.io/) into our workflow that will automatically record test coverage for us using the *.xml* report.
@@ -302,7 +310,7 @@ Note that in the command above we are also obtaining our test coverage through t
 ### Recording code coverage
 
 <!-- #region -->
-In the previous step we ran the tests for our `pycounts` package. However, if someone adds new code to your package but forgets to write tests for that new code, your existing tests will still pass, but the coverage will be reduced. So, we probably want to track code coverage in our CI workflow.
+In the previous step, we ran the tests for our `pycounts` package. However, if someone adds new code to your package but forgets to write tests for that new code, your existing tests will still pass, but the coverage will be reduced. So, we probably want to track code coverage in our CI workflow.
 
 To do this, we could print the coverage to our runner's build log, but having the coverage buried in those logs is not overly helpful. Instead, it's common to use a service like [Codecov](https://codecov.io/) to track our code coverage for us. To set up Codecov, first create a Codecov account by linking it with your GitHub account, as described in the Codecov [documentation](https://docs.codecov.com/docs) (Codecov also supports GitLab and Bitbucket). Once you've done this, Codecov automatically syncs with all the repositories that you have access to. Now, to use Codecov to automatically track code coverage as part of our CI workflow we can use the action they've created called [codecov/codecov-action@v2](https://github.com/marketplace/actions/codecov), as below:
 
@@ -312,13 +320,13 @@ To do this, we could print the coverage to our runner's build log, but having th
     # Step 7. Use Codecov to track coverage
     - uses: codecov/codecov-action@v2
       with:
-        file: ./coverage.xml    # coverage report
+        files: ./coverage.xml   # coverage report
         fail_ci_if_error: true  # terminate workflow if an error occurs
 ```
 
 With this step in our workflow, coverage will automatically be recorded for each new proposed change to our code. Codecov can show you whether coverage has increased or decreased, by how much, and will link to relevant areas of your package's source code. This information will automatically appear on any pull request someone makes to the `main` branch on GitHub, or it can be viewed anytime on the Codecov website; for example, Fig. \@ref(fig:08-cov-fig) shows the coverage dashboard for a package called `pypkgs`, where coverage decreased significantly after the most recent commit.
 
-```{r 08-cov-fig, fig.cap = "Example of the Codecov dashboard linked to a repository called `pypkgs`. Coverage decreased significantly after the most recent commit.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
+```{r 08-cov-fig, fig.cap = "Example of the Codecov dashboard linked to a repository called pypkgs. Coverage decreased significantly after the most recent commit.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-cov.png")
 ```
 <!-- #endregion -->
@@ -370,7 +378,7 @@ jobs:
     # Step 7. Use Codecov to track coverage
     - uses: codecov/codecov-action@v2
       with:
-        file: ./coverage.xml    # coverage report
+        files: ./coverage.xml   # coverage report
         fail_ci_if_error: true  # terminate workflow if an error occurs
     # Step 8. Build documentation
     - name: Build documentation
@@ -403,20 +411,20 @@ This workflow will trigger anytime someone makes a push or pull request with the
 
 In the previous step, we set up CI for our package to check that tests run, code coverage is stable, and documentation still builds, whenever we make a push or pull request with new changes to the `main` branch of our repository.
 
-In this section we'll set up continuous deployment\index{continuous deployment} (CD). If the changes we push to our repository pass our CI, then we want a CD workflow that will automatically:
+In this section, we'll set up continuous deployment\index{continuous deployment} (CD). If the changes we push to our repository pass our CI, then we want a CD workflow that will automatically:
 
-1. Create a new version of our `pycounts` package;
-2. Build new distributions (i.e., sdist and wheel);
-3. Upload the distributions to TestPyPI and test that the package can be installed successfully; and,
+1. Create a new version of our `pycounts` package.
+2. Build new distributions (i.e., sdist and wheel).
+3. Upload the distributions to TestPyPI and test that the package can be installed successfully.
 4. Upload the distributions to PyPI.
 
 We'll build up that CD workflow in this section.
 
-### Set up
+### Setup
 
 To set up CD, we'll add to the *`.github/workflows/ci-cd.yml`* workflow file we created in **Section \@ref(setting-up-continuous-integration)**. Our aim here is to add a new job called "cd" to this workflow that will trigger a deployment of our package each time updated code is pushed to the `main` branch of our repository. We only want this job to execute if:
 
-1. The "ci" job passes — we don't want to deploy a new version of our package if it isn't passing CI. We can specify this constraint using the `needs` keyword in GitHub Actions ([documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds)); and,
+1. The "ci" job passes — we don't want to deploy a new version of our package if it isn't passing CI. We can specify this constraint using the `needs` keyword in GitHub Actions ([documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idneeds)).
 2. Code is pushed to the `main` branch — we don't want to deploy a new version of our package when a pull request is opened, we only want to deploy a new version when a pull request is merged into the `main` branch or changes are pushed to the `main` branch directly. We can specify this constraint using the `if` syntax in GitHub Actions ([documentation](https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idif)).
 
 We can set up a new job and add the two constraints above with the following syntax:
@@ -444,17 +452,17 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 ```
 
-Now we can set up our CD workflow. In GitHub Actions, each job runs on a fresh runner which we need to set up from scratch. Once we've done that, our CD workflow will effectively comprise all the steps we walked through manually in **Chapter 7: [Releasing and versioning]**. Below we list all the steps required to set up the CD workflow:
+Now we can set up our CD workflow. In GitHub Actions, each job runs on a fresh runner, which we need to set up from scratch. Once we've done that, our CD workflow will effectively comprise all the steps we walked through manually in **Chapter 7: [Releasing and versioning]**. Below we list all the steps required to set up the CD workflow:
 
-1. Specify an operating system. We'll be using Ubuntu again with the syntax `runs-on: ubuntu-latest`;
-2. Install Python (action: [actions/setup-python@v2](https://github.com/actions/setup-python));
-3. Check out our repository so we can access its contents (action: [actions/checkout@v2](https://github.com/actions/checkout));
-4. Make a new release of `pycounts` (command: `semantic-release publish`, this uses the [Python Semantic Release (PSR)](https://python-semantic-release.readthedocs.io/en/latest/) tool which we described in **Section \@ref(automatic-version-bumping)** and will describe again below);
-5. Upload new release to TestPyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish));
-6. Test that the new package version installs successfully from TestPyPI (command: `pip install`; and,
+1. Specify an operating system. We'll be using Ubuntu again with the syntax `runs-on: ubuntu-latest`.
+2. Install Python (action: [actions/setup-python@v2](https://github.com/actions/setup-python)).
+3. Check out our repository so we can access its contents (action: [actions/checkout@v2](https://github.com/actions/checkout)).
+4. Make a new release of `pycounts` (command: `semantic-release publish`, this uses the [Python Semantic Release (PSR)](https://python-semantic-release.readthedocs.io/en/latest/) tool which we described in **Section \@ref(automatic-version-bumping)** and will describe again below).
+5. Upload new release to TestPyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish)).
+6. Test that the new package version installs successfully from TestPyPI (command: `pip install`).
 7. Upload new release to PyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish)).
 
-Steps 1-3 are the same as we set up previously for our CI workflow, so we can just copy and paste them into our "cd" job as below. The only new code here is that we specify the input parameter `fetch-depth: 0` for the [actions/checkout@v2](https://github.com/actions/checkout) action. This input parameter will allow the PSR tool to access the full history of commits in our repository, so that it can determine how to bump the package's version. Without this parameter, PSR can only access the single most recent commit message.
+Steps 1 to 3 are the same as we set up previously for our CI workflow, so we can just copy and paste them into our "cd" job as below. The only new code here is that we specify the input parameter `fetch-depth: 0` for the [actions/checkout@v2](https://github.com/actions/checkout) action. This input parameter will allow the PSR tool to access the full history of commits in our repository, so that it can determine how to bump the package's version. Without this parameter, PSR can only access the single most recent commit message.
 
 ```yaml
 name: ci-cd
@@ -490,20 +498,20 @@ jobs:
         fetch-depth: 0
 ```
 
-We'll discuss steps 4-7 in the sections below.
+We'll discuss steps 4 to 7 in the sections below.
 
 ### Automatically creating a new package version
 
-As we saw in **Chapter 7: [Releasing and versioning]**, there's a few key steps to go through when creating a new version of your package:
+As we saw in **Chapter 7: [Releasing and versioning]**, there are a few key steps to go through when creating a new version of your package:
 
-1. Document what's changed in the *`CHANGELOG.md`*\index{documentation!changelog};
-2. Bump the package version\index{versioning} number;
-3. Tag\index{version control!tag} a new release\index{version control!release} on GitHub; and,
+1. Document what's changed in the *`CHANGELOG.md`*\index{documentation!changelog}.
+2. Bump the package version\index{versioning} number.
+3. Tag\index{version control!tag} a new release\index{version control!release} on GitHub.
 4. Build a new sdist and wheel\index{distribution}.
 
-In **Section \@ref(automatic-version-bumping)** we introduced the [Python Semantic Release (PSR)](https://python-semantic-release.readthedocs.io/en/latest/) tool, which can automatically bump your package's version number based on keywords it finds in commit messages.
+In **Section \@ref(automatic-version-bumping)**, we introduced the [Python Semantic Release (PSR)](https://python-semantic-release.readthedocs.io/en/latest/) tool, which can automatically bump your package's version number based on keywords it finds in commit messages.
 
-However, PSR\index{versioning!Python Semantic Release}\index{Python Semantic Release} can do more than this! In fact, it can do all the steps we list above. In **Section \@ref(automatic-version-bumping)** we saw how PSR is configured using a table called `[tool.semantic_release]` in the *`pyproject.toml`*\index{pyproject.toml}. To configure it to perform all the steps above, we need to add a few keys to that table as follows:
+However, PSR\index{versioning!Python Semantic Release}\index{Python Semantic Release} can do more than this! In fact, it can do all the steps we list above. In **Section \@ref(automatic-version-bumping)**, we saw how PSR is configured using a table called `[tool.semantic_release]` in the *`pyproject.toml`*\index{pyproject.toml}. To configure it to perform all the steps above, we need to add a few keys to that table as follows:
 
 ```toml
 [tool.semantic_release]
@@ -516,7 +524,9 @@ upload_to_pypi = false                      # don't auto-upload to PyPI
 remove_dist = false                         # don't remove dists
 ```
 
-We've added comments above to clarify what each key is doing in the table and we describe them in Table \@ref(tab:08-psr-table). You can also read more about these configuration options in the PSR [documentation](https://python-semantic-release.readthedocs.io/en/latest/configuration.html).
+We've added comments above to clarify what each key is doing in the table, and we describe them in Table \@ref(tab:08-psr-table). You can also read more about these configuration options in the PSR [documentation](https://python-semantic-release.readthedocs.io/en/latest/configuration.html).
+
+\newpage
 
 Table: (\#tab:08-psr-table) Description of Python Semantic Release configuration options.
 
@@ -531,7 +541,9 @@ Table: (\#tab:08-psr-table) Description of Python Semantic Release configuration
 |`remove_dist`|Whether to remove distributions at `dist_path` after upload. We turned this off because we want to upload these distributions to TestPyPI and PyPI ourselves.|
 
 
-With PSR configured in our *`pyproject.toml`*, we can now add it as a step to our CD workflow. In **Section \@ref(automatic-version-bumping)** we used the command `semantic-release version` to get PSR to automatically update our version based on keywords it finds in all the commit messages that have been made since the last tag of your package. In our CD workflow, we'll be using the slightly different command `semantic-release publish` which will bump our version, update our changelog, tag a new release on GitHub, and build a new sdist and wheel. Because PSR will directly modifying our *`CHANGELOG.md`* file and tagging a new release for us in our GitHub repository, we need to configure the Git credentials of the runner machine. This involves setting the username as `github-actions` and email address as `github-actions@github.com`. If you don't configure these credentials, the workflow won't be able to make changes to our repository, as you can read more about in the GitHub [documentation](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git).
+With PSR configured in our *`pyproject.toml`*, we can now add it as a step to our CD workflow. In **Section \@ref(automatic-version-bumping)**, we used the command `semantic-release version` to get PSR to automatically update our version based on keywords it finds in all the commit messages that have been made since the last tag of your package. In our CD workflow, we'll be using the slightly different command `semantic-release publish`, which will bump our version, update our changelog, tag a new release on GitHub, and build a new sdist and wheel. Because PSR will directly modify our *`CHANGELOG.md`* file and tagging a new release for us in our GitHub repository, we need to configure the Git credentials of the runner machine. This involves setting the username as `github-actions` and email address as `github-actions@github.com`. If you don't configure these credentials, the workflow won't be able to make changes to our repository, as you can read more about in the GitHub [documentation](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git).
+
+\newpage
 
 ```yaml
     # Step 4. Use PSR to make release
@@ -547,15 +559,15 @@ We'll see PSR in action shortly, but let's first configure the rest of our CD wo
 
 ### Uploading to TestPyPI and PyPI
 
-The PSR step will create an sdist and wheel for our new package version. What we need to do next in our CD workflow is try uploading those distributions to TestPyPI\index{TestPyPI}. This step is not strictly necessary but it's a good idea because it can help catch any unexpected errors before we upload our package to PyPI\index{PyPI}.
+The PSR step will create an sdist and wheel for our new package version. What we need to do next in our CD workflow is try uploading those distributions to TestPyPI\index{TestPyPI}. This step is not strictly necessary, but it's a good idea because it can help catch any unexpected errors before we upload our package to PyPI\index{PyPI}.
 
 Rather than write the code needed to do all this from scratch, we'll use the [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action. This action relies on token authentication with TestPyPI (rather than the classic username and password authentication). To use the action, you'll need to log-in to [TestPyPI](https://test.pypi.org), [create an API token](https://pypi.org/help/#apitoken), and [add the token as a secret](https://docs.github.com/en/actions/reference/encrypted-secrets) called `TEST_PYPI_API_TOKEN` to your GitHub repository, as shown in Fig. \@ref(fig:08-token-1-fig).
 
-```{r 08-token-1-fig, fig.cap = "Adding the TestPyPI API token secret to our GitHub repository.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
+```{r 08-token-1-fig, fig.cap = "Adding the TestPyPI API token to our GitHub repository.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-token-1.png")
 ```
 
-To use the [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action, we can add the following step to our CD workflow. Note how we configure the action to use the token `user` method, specify `password` as the `TEST_PYPI_API_TOKEN` we just added to our repository, and we point the action to the TestPyPI repository (`repository_url: https://test.pypi.org/legacy/`).
+To use the [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action, we can add the following step to our CD workflow. Note how we configure the action to use the token `user` method, specifying `password` as the `TEST_PYPI_API_TOKEN` we just added to our repository, and we point the action to the TestPyPI repository (`repository_url: https://test.pypi.org/legacy/`).
 
 ```yaml
     # Step 5. Publish to TestPyPI
@@ -578,11 +590,13 @@ The above action will publish the new version of your package to TestPyPI. We no
           pycounts
 ```
 
-Finally, the last step in our CD workflow will be publishing our package to PyPI. This uses the same [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action as earlier, and will require you to obtain a token from [PyPI](https://pypi.org) and add the token as `PYPI_API_TOKEN` to your GitHub repository, as shown in Fig. \@ref(fig:08-token-2-fig).
+Finally, the last step in our CD workflow will be publishing our package to PyPI. This uses the same [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action as earlier and will require you to obtain a token from [PyPI](https://pypi.org) and add the token as `PYPI_API_TOKEN` to your GitHub repository, as shown in Fig. \@ref(fig:08-token-2-fig).
 
-```{r 08-token-2-fig, fig.cap = "Adding the PyPI API token secret to our GitHub repository.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
+```{r 08-token-2-fig, fig.cap = "Adding the PyPI API token to our GitHub repository.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-token-2.png")
 ```
+
+\newpage
 
 ```yaml
     # Step 7. Publish to PyPI
@@ -665,23 +679,31 @@ $ git push
 
 Now if we go to our `pycounts` GitHub repository and click on the "Actions" tab, we should see a new run of our workflow as shown in Fig. \@ref(fig:08-cd-1-fig):
 
+\newpage
+
 ```{r 08-cd-1-fig, fig.cap = "Continuous deployment workflow on GitHub.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-cd-1.png")
 ```
 
 If we click on the workflow we will see it was composed of two jobs, "ci" and "cd", each of which ran successfully, as shown in Fig. \@ref(fig:08-cd-2-fig):
 
+\newpage
+
 ```{r 08-cd-2-fig, fig.cap = "Successfully run continuous deployment workflow on GitHub.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-cd-2.png")
 ```
 
-If we click on the "cd" job to view the build log, we can see that PSR parsed our commit message — "feat: add CI/CD workflow" — to determine that our package should be bumped with a minor release from 0.2.0 to 0.3.0 as shown in Fig. \@ref(fig:08-cd-3-fig):
+If we click on the "cd" job to view the build log, we can see that PSR parsed our commit message — "feat: add CI/CD workflow" — to determine that our package should be bumped with a minor release from 0.2.0 to 0.3.0 as shown in Fig. \@ref(fig:08-cd-3-fig).
+
+\newpage
 
 ```{r 08-cd-3-fig, fig.cap = "The Python semantic release tool automatically bumped the package version from 0.2.0 to 0.3.0.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-cd-3.png")
 ```
 
-PSR also automatically updated our changelog and tagged a new release of our package, as shown in Fig. \@ref(fig:08-cd-4-fig) and Fig. \@ref(fig:08-cd-5-fig) respectively.
+PSR also automatically updated our changelog and tagged a new release of our package, as shown in Fig. \@ref(fig:08-cd-4-fig) and Fig. \@ref(fig:08-cd-5-fig), respectively.
+
+\newpage
 
 ```{r 08-cd-4-fig, fig.cap = "The Python semantic release tool automatically updated the changelog and added an entry for v0.3.0 based on commit messages.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-cd-4.png")
@@ -691,7 +713,11 @@ knitr::include_graphics("../images/08-cd-4.png")
 knitr::include_graphics("../images/08-cd-5.png")
 ```
 
+\newpage
+
 Finally, we can see from the build logs that the new version of our package was released to TestPyPI and PyPI, as shown in Fig. \@ref(fig:08-cd-6-fig):
+
+\newpage
 
 ```{r 08-cd-6-fig, fig.cap = "Deployment of new package version 0.3.0 to PyPI.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-cd-6.png")
@@ -701,9 +727,9 @@ It didn't take too long for us to implement a CD workflow that completely automa
 
 ## Summary
 
-In this chapter we created CI/CD workflows for our `pycounts` package. What we've shown here is just one example and one set of tools for implementing CI/CD — but after reading this chapter, the hope is that you can appreciate the utility of CI/CD and the kinds of workflows that you can set up for your packages in the future.
+In this chapter, we created CI/CD workflows for our `pycounts` package. What we've shown here is just one example and one set of tools for implementing CI/CD — but after reading this chapter, the hope is that you can appreciate the utility of CI/CD and the kinds of workflows that you can set up for your packages in the future.
 
-It's important to note that when using version control in this book, we've been directly modifying the `main` branch of our repository. However, changes to your package are more typically made on branches. Branches isolate your changes so you can develop your package without affecting the existing, stable version. Only when you're happy with your changes and they've passed CI, do you merge them into the existing source, and trigger a CD workflow (if it exists). In collaborative environments, this is typically done via a "pull request", which you can read more about in the GitHub [documentation](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests). Open-source projects are built off pull requests; go visit your favorite Python package repository on GitHub and click the "Pull requests" tab to see what and how collaborators are merging changes into the package, and the kind of CI/CD workflows that are set up to handle them.
+It's important to note that when using version control in this book, we've been directly modifying the `main` branch of our repository. However, changes to your package are more typically made on branches. Branches isolate your changes so you can develop your package without affecting the existing, stable version. Only when you're happy with your changes and they've passed CI, do you merge them into the existing source and trigger a CD workflow (if it exists). In collaborative environments, this is typically done via a "pull request", which you can read more about in the GitHub [documentation](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests). Open-source projects are built off pull requests; go visit your favorite Python package repository on GitHub and click the "Pull requests" tab to see what and how collaborators are merging changes into the package, and the kind of CI/CD workflows that are set up to handle them.
 
 Finally, while we developed our workflow file from scratch here, the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter) we used to set up our package in **Section \@ref(creating-a-package-structure)** can make the workflow *.yml* file for you. Recall from **Section \@ref(creating-a-package-structure)** that one of the `py-pkgs-cookiecutter` prompts was as follows:
 

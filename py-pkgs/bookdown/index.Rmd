@@ -17,18 +17,18 @@ graphics: yes
 
 # Preface {-}
 
-Python packages are the fundamental units of shareable code in Python. Packages make it easy to organize, reuse, and maintain your code, as well as share it between projects, with your colleagues, and with the wider Python community. *Python Packages* is an open source book that describes modern and efficient workflows for creating Python packages. The focus of this book is overwhelmingly practical; we will demonstrate methods and tools you can use to develop and maintain packages quickly, reproducibly, and with as much automation as possible - so you can focus on writing and sharing code!
+Python packages are the fundamental units of shareable code in Python. Packages make it easy to organize, reuse, and maintain your code, as well as share it between projects, with your colleagues, and with the wider Python community. *Python Packages* is an open-source book that describes modern and efficient workflows for creating Python packages. The focus of this book is overwhelmingly practical; we will demonstrate methods and tools you can use to develop and maintain packages quickly, reproducibly, and with as much automation as possible — so you can focus on writing and sharing code!
 
 ## Why read this book? {-}
 
-Despite their importance, packages can be difficult to understand and cumbersome to create for beginners and seasoned developers alike. This book aims to describe the packaging process at an accessible and practical level for data scientists, developers, and programmers. Along the way, we'll develop a real Python package and will explore all the key elements of Python packaging, including; creating a package file and directory structure, when and why to write tests and documentation, and how to maintain and update your package with the help of automated continuous integration and continuous deployment (CI/CD) pipelines.
+Despite their importance, packages can be difficult to understand and cumbersome to create for beginners and seasoned developers alike. This book aims to describe the packaging process at an accessible and practical level for data scientists, developers, and programmers. Along the way, we'll develop a real Python package and will explore all the key elements of Python packaging, including: creating a package file and directory structure, when and why to write tests and documentation, and how to maintain and update your package with the help of automated continuous integration and continuous deployment (CI/CD) pipelines.
 
 By reading this book, you will:
 
 - Understand what Python packages are, and when and why you should use them.
 - Be able to build your own Python package from scratch.
 - Learn how to document your Python code and packages.
-- Write software tests for your code, and automate them.
+- Write software tests for your code and automate them.
 - Learn how to release your package on the Python Package Index (PyPI) and discover best practices for updating and versioning your code.
 - Implement CI/CD workflows to build, test, and deploy your package automatically.
 - Get tips on Python coding style, best-practice packaging workflows, and other useful development tools.
@@ -59,7 +59,7 @@ Table: (\#tab:00-assumptions-table) Concepts this book assumes readers have basi
 | :--- | ---: |
 | How to import Python packages with the `import`\index{import} statement | Python [documentation](https://docs.python.org/3/reference/simple_stmts.html#the-import-statement) | {-}| How to write conditionals (`if`/`elif`/`else`) and loops (`for`) in Python| Python [documentation](https://docs.python.org/3/tutorial/controlflow.html)|
 | How to use and write simple Python functions| [Plotting and Programming in Python: Writing Functions](https://swcarpentry.github.io/python-novice-gapminder/16-writing-functions/index.html)  [@carpentries2021] |
-| (Optional) Basic familiarity with version control\index{version control} and Git\index{Git} and GitHub\index{GitHub} (or similar tools) | [Happy Git and GitHub for the useR](https://happygitwithr.com)  [@bryan2021] or [Research Software Engineering with Python: Using Git at the Command Line](https://merely-useful.tech/py-rse/git-cmdline.html)  [@rsep2021]| 
+| (Optional) Basic familiarity with version control\index{version control} and Git\index{Git} and GitHub\index{GitHub} (or similar tools) | [*Happy Git and GitHub for the useR*](https://happygitwithr.com)  [@bryan2021] or [*Research Software Engineering with Python*](https://merely-useful.tech/py-rse/git-cmdline.html)  [@rsep2021]| 
 
 
 
@@ -107,8 +107,8 @@ The Python software ecosystem is constantly evolving. While we aim to make the p
 
 This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/index.html) and compiled using [Jupyter Book](https://jupyterbook.org/intro.html). The source is hosted on [GitHub](https://github.com/UBC-MDS/py-pkgs) and is deployed online at <https://py-pkgs.org> with [Netlify](https://www.netlify.com/).
 
-## Acknowledgements {-}
+## Acknowledgments {-}
 
-We'd like to thank everyone that has contributed to the development of [*Python Packages*](https://py-pkgs.org/). This is an open source book that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practitioners and hobbyists. Without you all, this book wouldn't be nearly as good as it is, and we are deeply grateful. A special thanks to those who have directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
+We'd like to thank everyone that has contributed to the development of *Python Packages*. This is an open-source book that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub, where it has been read, revised, and supported by many students, educators, practitioners, and hobbyists. Without you all, this book wouldn't be nearly as good as it is, and we are deeply grateful. A special thanks to those who have directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
 
-The scope and intent of this book was inspired by the fantastic [R Packages](https://r-pkgs.org)  [@wickham2015] book written by Hadley Wickham and Jenny Bryan, a book that has been a significant resource for the R community over the years. We hope that *Python Packages* will eventually play a similar role in the Python community.
+The scope and intent of this book was inspired by the fantastic [*R Packages*](https://r-pkgs.org)  [@wickham2015] book written by Hadley Wickham and Jenny Bryan, a book that has been a significant resource for the R community over the years. We hope that *Python Packages* will eventually play a similar role in the Python community.

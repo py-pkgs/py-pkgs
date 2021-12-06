@@ -39,7 +39,7 @@ If you'd like develop and build the `py-pkgs` book to PDF:
 1. Install [Docker](https://docs.docker.com/get-docker/);
 2. Pull the `py-pkgs` images: `docker pull tbeuzen/pypkgs:latest`;
 3. Make any desired changes to source files;
-4. Build the book using the `build_jupybook.sh` script:
+4. Build the book using the `build_bookdown.sh` script:
 
   ```bash
   $ cd py-pkgs
