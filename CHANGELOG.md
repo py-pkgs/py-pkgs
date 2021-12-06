@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.4 (06/12/2021)
+
+General updates after professional proofs:
+
+- Python Packages will soon be available to buy with the help of our publisher CRC Press (Taylor & Francis Group).
+- This version contains revisions to the book following review by CRC Press editors and an external proofreader.
+- Note that the book will remain open-course and available to read online.
+
 ## v0.3 (06/09/2021)
 
 Complete overhaul of existing chapters and content. Key notes:
