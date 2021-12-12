@@ -10,11 +10,13 @@ if [ "$(uname)" == "Darwin" ]; then
     sed -i '' 's/href="#"/href="welcome.html"/g' py-pkgs/_build/html/index.html
     sed -i '' 's/py-pkgs.org\/welcome.html/py-pkgs.org/g' py-pkgs/_build/html/index.html
     perl -i -pe 's/\\index\{.*?\}//g' py-pkgs/_build/html/*.html  # remove \index{*} made for PDF-render
+    perl -i -pe 's/\\newpage//g' py-pkgs/_build/html/*.html  # remove \newpage command
     echo runtime-hook successfully ran in OS $(uname)!
 elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
     sed -i 's/href="#"/href="welcome.html"/g' py-pkgs/_build/html/index.html
     sed -i 's/py-pkgs.org\/welcome.html/py-pkgs.org/g' py-pkgs/_build/html/index.html
     perl -i -pe 's/\\index\{.*?\}//g' py-pkgs/_build/html/*.html  # remove \index{*} made for PDF-render
+    perl -i -pe 's/\\newpage//g' py-pkgs/_build/html/*.html  # remove \newpage command
     echo runtime-hook successfully ran in OS $(uname)!
 else
     echo runtime-hook not run.
