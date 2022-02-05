@@ -2,6 +2,19 @@
 
 <!--next-version-placeholder-->
 
+## v0.5 (09/02/202)
+
+✨NEW
+- **Section 2.6: Developing with Docker**. Instructions on how to set up a package development environment in VS Code or Jupyter with the help of Docker. Closes #101 
+- **Section 3.6.1: Dependency version constraints**. Discusses what version constraints are, the problems that can occur with upper caps, and why we dissuade from using them (going against the `poetry` default). Closes #95 
+- **Section 7.6: Updating dependency versions**. Details about how to update dependency versions for your package.
+
+
+♻️UPDATE
+- Various updates to **Chapter 8**, fail-proofing PSR, ensuring it makes GitHub releases (currently just doing tags), cleaning up workflows files. Closes #103
+- More reminders/warnings throughout the book to activate your virtual environment before running using or developing package.
+- In **Section 3.3.2 Set up remote version control**, entering suername and password is no longer allowed to connect to GitHub so recommend setting up SSH auth.
+
 ## v0.4 (06/12/2021)
 
 General updates after professional proofs:
