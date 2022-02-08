@@ -23,12 +23,12 @@ class RmdCleaner:
         def repl(match):
             figure = match.group(0)
             reference = re.findall("name: \d+-(.+)\n", figure)[0]
-            caption = re.findall("alt: (.+)\\n---", figure)[0].replace("_", "\\_")
+            caption = re.findall("alt: (.+)\\n.*?---", figure)[0].replace("_", "\\_")
             size = re.findall("width: (.+)(?=%)", figure)[0]
             file_location = re.findall("images\/.+.(?:png|svg)", figure)[0]
             return f'```{{r {self.filename[:2] + "-" + reference}, fig.cap = "{caption}", out.width = "{size}%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}}\nknitr::include_graphics("{"../" + file_location}")\n```'
         try:
-            self.text = re.sub("```{figure}(?:.+\n)+```", repl, self.text)
+            self.text = re.sub("```{figure}(?:.+\n)+.*```", repl, self.text)
         except Exception as e:
             print("Bad figure formatting!")
             print(e)

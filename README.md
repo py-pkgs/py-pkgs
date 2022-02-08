@@ -37,7 +37,7 @@ A fully-rendered HTML version of the book will be built in `py-pkgs/_build/html/
 If you'd like develop and build the `py-pkgs` book to PDF:
 
 1. Install [Docker](https://docs.docker.com/get-docker/);
-2. Pull the `py-pkgs` images: `docker pull tbeuzen/pypkgs:latest`;
+2. Pull the `py-pkgs-bookdown` images: `docker pull tbeuzen/py-pkgs-bookdown`;
 3. Make any desired changes to source files;
 4. Build the book using the `build_bookdown.sh` script:
 
@@ -58,6 +58,6 @@ This book was written in [JupyterLab](https://jupyterlab.readthedocs.io/en/stabl
 
 ## Acknowledgements
 
-We'd like to thank everyone that has contributed to the development of [*Python Packages*](https://py-pkgs.org/). This is an open source book that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practitioners and hobbyists. Without you all, this book wouldn't be nearly as good as it is, and we are deeply grateful. A special thanks to those who have directly contributed to the text via GitHub (in alphabetical order): `@Carreau`, `@dcslagel`.
+We'd like to thank everyone that has contributed to the development of [*Python Packages*](https://py-pkgs.org/). This is an open source book that began as supplementary material for the University of British Columbia's Master of Data Science program and was subsequently developed openly on GitHub where it has been read, revised, and supported by many students, educators, practitioners and hobbyists. Without you all, this book wouldn't be nearly as good as it is, and we are deeply grateful. A special thanks to those who have contributed to or provided feedback on the text via GitHub (in alphabetical order): `benjy765`, `Carreau`, `chendaniely`, `dcslagel`, `eliasdabbas`, `fegue`, `firasm`, `Midnighter`, `mtkerbeR`, `NickleDave`, `SamEdwardes`, `tarensanders`.
 
 The scope and intent of this book was inspired by the fantastic [R Packages](https://r-pkgs.org) book written by Hadley Wickham and Jenny Bryan, a book that has been a significant resource for the R community over the years. We hope that *Python Packages* will eventually play a similar role in the Python community.

@@ -11,6 +11,8 @@ A command-line interface\index{command-line interface} (CLI) is a text-based int
 
 ## Installing software
 
+**Section \@ref(installing-python)** and **Section \@ref(install-packaging-software)** describe how to install the software you'll need to develop a Python package and follow along with the text and examples in this book. However, we also support an alternative setup with Docker\index{Docker} that has everything you need already installed to get started. The Docker approach is recommended for anyone that runs into issues installing or using any of the software below on their specific operating system, or anyone who would simply prefer to use Docker — if that's you, skip to **Section \@ref(register-for-a-pypi-account)** for now, and we'll describe the Docker setup later in **Section \@ref(developing-with-docker)**.
+
 ### Installing Python
 
 We recommend installing the latest version of Python via the Miniconda\index{Miniconda} distribution by following the instructions in the Miniconda [documentation](https://docs.conda.io/en/latest/miniconda.html). Miniconda is a lightweight version of the popular Anaconda\index{Anaconda} distribution. If you have previously installed the Anaconda or Miniconda distribution feel free to skip to **Section \@ref(install-packaging-software)**.
@@ -29,11 +31,7 @@ $ conda update --all
 
 Now we'll install the two main pieces of software we'll be using to help us create Python packages in this book:
 
-1. [`poetry`\index{poetry}](https://python-poetry.org/): software that will help us build our own Python packages. You can install `poetry` for your specific operating system using the instructions in the official [documentation](https://python-poetry.org/docs/#installation). For example, on Mac OS or Linux the installation command is:
-
-    ```bash
-    $ curl -sSL https://install.python-poetry.org | python3 -
-    ```
+1. [`poetry`\index{poetry}](https://python-poetry.org/): software that will help us build our own Python packages. `poetry` is under active development, thus we recommend referring to the official [`poetry` documentation](https://python-poetry.org/docs/) for detailed installation instructions and support.
 
 2. [`cookiecutter`\index{cookiecutter}](https://github.com/cookiecutter/cookiecutter): software that will help us create packages from pre-made templates. It can be installed with `conda` as follows:
 
@@ -57,7 +55,7 @@ We assume that those who choose to follow the optional version control sections 
 
 A Python integrated development environment\index{integrated development environment} (IDE) will make the process of creating Python packages significantly easier. An IDE is a piece of software that provides advanced functionality for code development, such as directory and file creation and navigation, autocomplete, debugging, and syntax highlighting, to name a few. An IDE will save you time and help you write better code. Commonly used free Python IDEs include [Visual Studio Code\index{Visual Studio Code}](https://code.visualstudio.com/), [Atom](https://atom.io/), [Sublime Text](https://www.sublimetext.com/), [Spyder](https://www.spyder-ide.org/), and [PyCharm Community Edition](https://www.jetbrains.com/pycharm/). For those more familiar with the Jupyter\index{Jupyter} ecosystem, [JupyterLab](https://jupyter.org/) is a suitable browser-based IDE. Finally, for the R\index{R} community, the [RStudio\index{RStudio} IDE](https://rstudio.com/products/rstudio/download/) also supports Python.
 
-You'll be able to follow along with the examples presented in this book regardless of what IDE you choose to develop your Python code in. If you don't know which IDE to use, we recommend starting with Visual Studio Code. Below we briefly describe how to set up Visual Studio Code, JupyterLab, and RStudio as Python IDEs (these are the IDEs we personally use in our day-to-day work). 
+You'll be able to follow along with the examples presented in this book regardless of what IDE you choose to develop your Python code in. If you don't know which IDE to use, we recommend starting with Visual Studio Code. Below we briefly describe how to set up Visual Studio Code, JupyterLab, and RStudio as Python IDEs (these are the IDEs we personally use in our day-to-day work). If you'd like to use Docker to help develop Python packages and follow along with this book, we'll describe how to do so with Visual Studio Code or JupyterLab in **Section \@ref(developing-with-docker)**.
 
 ### Visual Studio Code
 
@@ -145,3 +143,102 @@ Fig. \@ref(fig:02-rstudio-fig) shows an example of executing Python code interac
 ```{r 02-rstudio-fig, fig.cap = "Executing Python code in the RStudio.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/02-rstudio.png")
 ```
+
+## Developing with Docker
+
+If you have issues installing or using any of the software in this book on your specific operating system, or would prefer to use Docker\index{Docker} to help develop your Python packages, we have provided an alternative software setup with Docker\index{Docker} that has everything you need already installed to get started. [Docker](https://docs.docker.com/get-started/overview/) is a platform that allows you to run and develop software in an isolated environment called a *container*. *Images* contain the instructions required to create a container.
+
+We have developed images to support Python package development in Visual Studio Code\index{Visual Studio Code} or JupyterLab\index{Jupyter}, and we describe the workflows for using these images in the sections below. We will continue to maintain these images via their GitHub repositories ([py-pkgs/docker-vscode](https://github.com/py-pkgs/docker-vscode) and [py-pkgs/docker-jupyter](https://github.com/py-pkgs/docker-jupyter)) to support readers of this book into the future.
+
+### Docker with Visual Studio Code
+
+To develop with Docker inside Visual Studio Code, you can consult the Visual Studio Code [official container tutorial](https://code.visualstudio.com/docs/remote/containers-tutorial), or try following the steps below:
+
+1. Install Visual Studio Code from the [official website](https://code.visualstudio.com/).
+2. Install and configure Docker Desktop for your operating system following the instructions on the [official website](https://www.docker.com/get-started).
+3. Once docker is installed, open a command-line interface and pull the `py-pkgs-vscode` docker image by running the following command:
+
+    ```bash
+    $ docker pull tbeuzen/py-pkgs-vscode
+    ```
+
+4. From Visual Studio Code, open/create the working directory you want to develop in (this can be called anything and located wherever you like on your file system).
+5. In Visual Studio Code, open the *Extensions* tab on the VS Code activity bar and search for the "Remote - Containers" extension in the search bar. Install this extension if it is not already installed.
+6. Create a file called *`.devcontainer.json`* in your current working directory (be sure to include the period at the beginning of the file name). This file will tell Visual Studio Code how to run in a Docker container. You can read more about this configuration in the [official documentation](https://code.visualstudio.com/docs/remote/create-dev-container), but for now, a minimal set up requires adding the following content to that file:
+
+    ```json
+    {
+        "name": "poetry",
+        "image": "tbeuzen/py-pkgs-vscode",
+        "extensions": ["ms-python.python"],
+    }
+    ```
+
+7. Now, open the Visual Studio Code [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) and search for and select the command "Remote-Containers: Reopen in Container". This command will open Visual Studio Code inside a container made using the `py-pkgs-vscode` docker image. After Visual Studio Code finishes opening in the container, test that you have access to the three pre-installed pieces of packaging software we need by opening the [integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) and trying the following commands:
+
+    ```bash
+    $ poetry --version
+    $ conda --version
+    $ cookiecutter --version
+    ```
+
+8. Your development environment is now set up, and you can work with Visual Studio Code as if everything were running locally on your machine (except now your development environment exists inside a container). If you exit Visual Studio Code, your container will persist, and you can re-open it in the future using the “Remote-Containers: Reopen in Container” command we used in step 7.
+
+### Docker with JupyterLab
+
+<!-- #region -->
+To develop with Docker in JupyterLab follow the instructions below. Helpful information and tutorials can also be found in the Jupyter Docker Stacks [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html).
+
+1. Install and configure Docker Desktop for your operating system following the instructions on the [official website](https://www.docker.com/get-started).
+2. Once docker is installed, open a command-line interface and pull the `py-pkgs-jupyter` docker image by running the following command:
+
+    ```bash
+    $ docker pull tbeuzen/py-pkgs-jupyter
+    ```
+
+3. From the command line, navigate to the directory you want to develop in (this can be called anything and located wherever you like on your file system).
+4. Start a new container by running the following command from the command line:
+
+    ```bash
+    $ docker run -it \
+      -p 8888:8888 \
+      -v "${PWD}":/home/jovyan/work \
+      tbeuzen/py-pkgs-jupyter
+    ```
+    
+>In the command above, `-it` creates an interactive bash shell in the container, `-p` binds port 8888 in the container to port 8888 on the host machine and `-v` mounts the current directory into the container at the location `/home/jovyan/work`. You can read more about the `docker run` command and its arguments in the Docker command-line interface [documentation](https://docs.docker.com/engine/reference/commandline/run/).
+
+    
+5. Copy the unique URL printed to screen (that looks something like this: `http://127.0.0.1:8888/lab?token=45d53a348580b3acfafa`) to your browser. This will open an instance of JupyterLab running inside a Docker container.
+6. Navigate to the `work` directory in JupyterLab. This is where you can develop and create new files and directories that will persist in the directory from where you launched your container.
+7. Test that you have access to the three pre-installed pieces of packaging software we need by opening a terminal in JupyterLab and trying the following commands:
+
+    ```bash
+    $ poetry --version
+    $ conda --version
+    $ cookiecutter --version
+    ```
+
+8. When you've finished a working session, you can exit JupyterLab, and kill your terminal, and your container will persist for you to use later. To re-enter the container at a later time, first find its ID:
+
+    ```bash
+    $ docker ps -a
+    ```
+    
+    ```md
+    CONTAINER ID   IMAGE
+    653daa2cd48e   tbeuzen/py-pkgs-jupyter
+    ```
+    
+9. Re-enter the container using the unique ID above:
+
+    ```bash
+    $ docker start -a 653daa2cd48e
+    ```
+    
+10. If you want to completely remove the container, use the following command:
+
+    ```bash
+    $ docker rm 653daa2cd48e
+    ```
+<!-- #endregion -->

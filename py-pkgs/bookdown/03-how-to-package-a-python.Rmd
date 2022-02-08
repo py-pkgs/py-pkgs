@@ -266,7 +266,7 @@ Table: (\#tab:03-prompt-table) A description of the py-pkgs-cookiecutter templat
 |:---  | :---  |
 |`author_name`, `package_name`, `package_short_description`| These are self-explanatory. Note that we will be publishing our `pycounts` package to Python's main package index [PyPI](https://pypi.org/)\index{PyPI}, where names must be unique. **If you plan to follow along with this tutorial you should choose a unique name for your package**. Something like `pycounts_[your intials]` might be appropriate, but you can check if a name is already taken by searching for it on [PyPI](https://pypi.org/). We provide guidance on choosing a good package name in **Section \@ref(package-and-module-names)**. |
 |`package_version`|The version of your package. Most packages use [semantic versioning](https://semver.org)\index{semantic versioning}, where a version number consists of three integers `A.B.C`. `A` is the "major" version, `B` is the "minor" version, and `C` is the "patch" version. The first version of a package usually starts at 0.1.0 and increments from there. We'll discuss versioning in **Chapter 7: [Releasing and versioning]**.|
-|`python_version`|The minimum version of Python your package will support.|
+|`python_version`|The minimum version of Python your package will support. We'll talk more about versions and constraints in **Section \@ref(dependency-version-constraints)**|
 |`open_source_license`|The license\index{license} that dictates how your package can be used by others. We discuss licenses in **Section \@ref(license)**. The [MIT license](https://choosealicense.com/licenses/mit/) we chose in our example is a permissive license commonly used for open-source work. If your project will not be open source you can choose not to include a license.|
 |`include_github_actions`|An option to include continuous integration and continuous deployment files for use with [GitHub Actions](https://github.com/features/actions). We'll explore these topics in **Chapter 8: [Continuous integration and deployment]**, so for now, we recommend responding `no`.|
 
@@ -347,7 +347,6 @@ $ git commit -m "initial package setup"
 
 ### Set up remote version control
 
-<!-- #region -->
 Now that we have set up local version control\index{version control}, we will create a repository on [GitHub](https://github.com/)\index{GitHub} and set that as the remote version control home for this project. First, we need to create a new repository on [GitHub](https://www.github.com) as demonstrated in Fig. \@ref(fig:03-set-up-github-1-fig):
 
 ```{r 03-set-up-github-1-fig, fig.cap = "Creating a new repository in GitHub.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
@@ -370,6 +369,9 @@ Now, use the commands shown on GitHub, and outlined in Fig. \@ref(fig:03-set-up-
 knitr::include_graphics("../images/03-set-up-github-3.png")
 ```
 
+\newpage
+>The commands below should be specific to your GitHub username and the name of your Python package. They use SSH authentication to connect to GitHub which you will need to set up by following the steps in the official GitHub [documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
+
 ```bash
 $ git remote add origin git@github.com:TomasBeuzen/pycounts.git
 $ git branch -M main
@@ -387,10 +389,6 @@ To github.com:TomasBeuzen/pycounts.git
  * [new branch]      main -> main
 Branch 'main' set up to track remote branch 'main' from 'origin'.
 ```
-
->The commands above should be specific to your GitHub username and the name of your Python package. The example above uses SSH authentication with GitHub, which we recommend setting up. SSH is useful for connecting to GitHub without having to supply your username and password every time. If you're interested in setting up SSH, take a look at the GitHub [documentation](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh). If you don't have SSH authentication set up, HTTPS authentication works as well and would require the use of the following url in place of the one shown above to set the remote: `https://github.com/TomasBeuzen/pycounts.git`. 
-
-<!-- #endregion -->
 
 ## Packaging your code
 
@@ -468,9 +466,9 @@ To use this new environment for developing and installing software we need to "a
 $ conda activate pycounts
 ```
 
-In most command lines, `conda` will add a prefix like `(pycounts)` to your command-line prompt to indicate which environment you are working in. Anytime you wish to work on your package, you should activate its virtual environment.
+In most command lines, `conda` will add a prefix like `(pycounts)` to your command-line prompt to indicate which environment you are working in. Anytime you wish to work on your package, you should activate its virtual environment. You can view the packages currently installed in a `conda` environment using the command `conda list`, and you can exit a `conda` virtual environment using `conda deactivate`.
 
->You can view the packages currently installed in a `conda` environment using the command `conda list`, and you can exit a `conda` virtual environment using `conda deactivate`.
+>`poetry`, the packaging tool we'll use to develop our package later in this chapter, also supports [virtual environment management](https://python-poetry.org/docs/managing-environments/) without the need for `conda`. However, we find `conda` to be a more intuitive and explicit environment manager, which is why we advocate for it in this book. 
 
 
 ### Installing your package
@@ -499,8 +497,6 @@ build-backend = "poetry.core.masonry.api"
 ```
 
 Table \@ref(tab:03-toml-table) provides a brief description of each of the headings in that file (called "tables" in TOML file jargon).
-
-\newpage
 
 Table: (\#tab:03-toml-table) A description of the tables in the pyproject.toml.
 
@@ -560,6 +556,8 @@ $ git commit -m "feat: add word counting functions"
 $ git push
 ```
 
+\newpage
+
 >In this book, we use the [Angular style](https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines) for Git commit messages. We'll talk about this style more in **Section \@ref(automatic-version-bumping)**, but our commit messages have the form "type: subject", where "type" indicates the kind of change being made and "subject" contains a description of the change. We'll be using the following "types" for our commits:
 >
 >- "build": indicates a change to the build system or external dependencies.
@@ -575,9 +573,9 @@ $ git push
 <!-- #region -->
 Let's now add a new function to our package that can plot a bar chart of the top `n` words in a `Counter` object of word counts. Imagine we've come up with the following `plot_words()` function that does this. The function uses the convenient `.most_common()` method of the `Counter` object to return a list of tuples of the top `n` words counts in the format `(word, count)`. It then uses the Python function `zip(*...)` to unpack that list of tuples into two individual lists, `word` and `count`. Finally, the `matplotlib`  [@hunter2007] package is used to plot the result (`plt.bar(...)`), which looks like Fig. \@ref(fig:03-matplotlib-figure-fig).
 
-\newpage
-
 >If this code is not familiar to you, don't worry! The code itself is not overly important to our discussion of packaging. You just need to know that we are adding some new code to our package that depends on the `matplotlib` package.
+
+\newpage
 
 ```python
 import matplotlib.pyplot as plt
@@ -625,6 +623,8 @@ pycounts
 Open *`src/pycounts/plotting.py`* and add the `plot_words()` code from above (don't forget to add the `import matplotlib.pyplot as plt` at the top of the module).
 
 After doing this, if we tried to `import` our new function in a Python interpreter we'd get an error:
+
+>If using a `conda` virtual environment, make sure that environment is active by running `conda activate pycounts`, before using or working on your package.
 
 ```python
 >>> from pycounts.plotting import plot_words
@@ -695,6 +695,66 @@ $ git push
 ```
 <!-- #endregion -->
 
+### Dependency version constraints
+
+Versioning is the practice of assigning a unique identifier to unique releases of a package. For example, [semantic versioning](https://semver.org)\index{semantic versioning} is a common versioning system that consists of three integers `A.B.C`. `A` is the "major" version, `B` is the "minor" version, and `C` is the "patch" version identifier. Package versions usually starts at 0.1.0 and positively increment the major, minor, and patch numbers from there, depending on the kind of changes made to the package over time.
+
+We'll talk more about versioning in **Chapter 7: [Releasing and versioning]**, but what's important to know now is that we typically constrain the required version number(s) of our package's dependencies, to ensure we're using versions that are up-to-date and contain the functionality we need. You may have noticed `poetry` prepended a caret (^) operator to the dependency versions in our *`pyproject.toml`* file, under the `[tool.poetry.dependencies]` section:
+
+```toml
+[tool.poetry.dependencies]
+python = "^3.9"
+matplotlib = "^3.4.3"
+```
+
+The caret operator is short-hand for "requires this or any higher version that does not modify the left-most non-zero version digit". For example, our package depends on any `python` version >=3.9.0 and <4.0.0. Thus, examples of valid versions include 3.9.1 and 3.12.0, but 4.0.1 would be invalid. There are many other syntaxes that can be used to specify version constraints in different ways, as you can read more about in the `poetry` [documentation](https://python-poetry.org/docs/dependency-specification). So why do we care about this? The caret operator enforces an upper cap on the dependency versions our package requires. A problem with this approach is that it forces anyone depending on your package to specify the same constraints and can thus make it difficult to add and resolve dependencies.
+
+This problem is best shown by example. Version 1.21.5 of the popular `numpy` package had bound version constraints on Python, requiring version >=3.7 and <3.11 (see the [source code](https://github.com/numpy/numpy/blob/c3d0a09342c08c466984654bc4738af595fba896/setup.py#L409)). Watch what happens if we try to add this version of `numpy` to our `pycounts` package (we use the argument `--dry-run` to show what would happen here without actually execute anything):
+
+```bash
+$ poetry add numpy=1.21.5 --dry-run
+``` 
+
+```md
+Updating dependencies
+Resolving dependencies... (0.1s)
+
+SolverProblemError
+
+The current project's Python requirement (>=3.9,<4.0) is not compatible 
+with some of the required packages Python requirement:
+    - numpy requires Python >=3.7,<3.11, so it will not be satisfied for
+      Python >=3.11,<4.0
+```
+
+The problem here is that our package currently supports Python version ^3.9 (i.e., >=3.9.0 and <4.0.0), so if we released it, a user with Python 3.12.0 would technically be able to install it. However, `numpy=1.21.5` only supports >=3.7 and <3.11 which would not be compatible with Python 3.12.0 (or any version >=3.11). As a result of this inconsistency, `poetry` refuses to add `numpy=1.21.5` as a dependency of our package. To add it, we have three main choices:
+
+1. Change the Python version constraints of our package to >=3.7 and <3.11.
+2. Wait for a version of `numpy` that is compatible with our package's Python constraints.
+3. Manually specify the versions of Python for which the dependency can be installed, e.g.: `poetry add numpy=1.21.5 --python ">=3.7, <3.11"`.  
+
+None of these options is really ideal, especially if your package has a large number of dependencies with different bound version constraints. However, a simple way this issue could be resolved is if `numpy=1.21.5` did not having an upper cap on the Python version required. In fact, in the subsequent minor version release of `numpy`, 1.22.0, the upper version cap on Python was removed, requiring only version >=3.8 (see the [source code](https://github.com/numpy/numpy/blob/4adc87dff15a247e417d50f10cc4def8e1c17a03/setup.py#L410)), which we would be able to successfully add to our package:
+
+```bash
+$ poetry add numpy=1.22.0 --dry-run
+``` 
+
+Ultimately, version constraints are an important issue that can affect the usability of your package. If you intend to share your package, having an upper cap on dependency versions can make it very difficult for other developers to use your package as a dependency in their own projects. At the time of writing, much of the packaging community, including the [Python Packaging Authority](https://github.com/pypa/packaging.python.org/pull/850), recommend not using an upper cap on version constraints unless absolutely necessary. As a result, we recommend specifying version constraints without an upper cap by manually changing `poetry`'s default caret operator (^) to a greater-than-or-equal-to sign (>=). For example, we will change the `[tool.poetry.dependencies]` section of our *`pyproject.toml`* file as follows:
+
+```toml
+[tool.poetry.dependencies]
+python = ">=3.9"
+matplotlib = ">=3.4.3"
+```
+
+You can read more about the issues around version constraints, as well as examples where they might actually be valid, in Henry Schreiner's excellent [blog post](https://iscinumpy.dev/post/bound-version-constraints/). Those using version control should commit this import change we've made to our package:
+
+```bash
+$ git add pyproject.toml
+$ git commit -m "build: remove upper bound on dependency versions"
+$ git push
+```
+
 ## Testing your package
 
 ### Writing tests
@@ -708,10 +768,10 @@ Many of us already conduct informal tests of our code by running it a few times 
 Tests in Python are often written with the `assert`\index{tests!assert} statement. `assert` checks the truth of an expression; if the expression is true, Python does nothing and continues running, but if it's false, the code terminates and shows a user-defined error message. For example, consider running the follow code in a Python interpreter:
 
 ```python
-ages = [32, 19, 9, 75]
-for age in ages:
-    assert age >= 18, "Person is younger than 18!"
-    print("Age verified!")
+>>> ages = [32, 19, 9, 75]
+>>> for age in ages:
+>>>     assert age >= 18, "Person is younger than 18!"
+>>>     print("Age verified!")
 ```
 
 ```md
@@ -733,8 +793,6 @@ Using the `assert` statement, let's write a test for the `count_words()` functio
 The unit test we are going to write will `assert` that the `count_words()` function produces an expected result given a certain fixture. We'll use the following quote from Albert Einstein as our fixture:
 
 >*"Insanity is doing the same thing over and over and expecting different results."*
-
-\newpage
 
 The *actual* result is the result `count_words()` outputs when we input this fixture. We can get the *expected* result by manually counting the words in the quote (ignoring capitalization and punctuation):
 
@@ -780,6 +838,8 @@ It would be tedious and inefficient to manually write and execute unit tests\ind
 
 The `py-pkgs-cookiecutter`\index{py-pkgs-cookiecutter} created a *`tests/`* directory and a module called *`test_pycounts.py`* for us to put our tests in:
 
+\newpage
+
 ```md
 pycounts
 ├── CHANGELOG.md
@@ -802,8 +862,6 @@ pycounts
 
 As mentioned above, `pytest` tests are written as functions prefixed with `test_` and which contain one or more `assert` statements that check some code functionality. Based on this format, let's add the unit test we created in **Section \@ref(writing-tests)** as a test function to *`tests/test_pycounts.py`* using the below Python code:
 
-\newpage
-
 ```python
 from pycounts.pycounts import count_words
 from collections import Counter
@@ -818,7 +876,11 @@ def test_count_words():
     assert actual == expected, "Einstein quote counted incorrectly!"
 ```
 
+\newpage
+
 Before we can use `pytest` to run our test for us we need to add it as a development dependency\index{dependency!development dependency} of our package using the command `poetry add --dev`. A development dependency is a package that is not required by a user to use your package but is required for development purposes (like testing):
+
+>If using a `conda` virtual environment, make sure that environment is active by running `conda activate pycounts`, before using or working on your package.
 
 ```bash
 $ poetry add --dev pytest
@@ -962,7 +1024,7 @@ A *`README.md`* was also created, but it contains a "Usage" section, which is cu
 >In the Markdown text below, the following syntax is used:
 >
 >- Headers are denoted with number signs (\#). The number of number signs corresponds to the heading level.
-- Code blocks are bounded by three back-ticks (```). A programming language can succeed the opening bounds to specify how the code syntax should be highlighted.
+- Code blocks are bounded by three back-ticks. A programming language can succeed the opening bounds to specify how the code syntax should be highlighted.
 - Links are defined using brackets \[\] to enclose the link text, followed by the URL in parentheses ().
 
 ````xml
@@ -1010,8 +1072,6 @@ of the MIT license.
 the `py-pkgs-cookiecutter` 
 [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
 ````
-
-\newpage
 
 When we render this Markdown text later on with `sphinx`, it will look like Fig. \@ref(fig:03-documentation-1a-fig). We'll talk about `sphinx` in **Section \@ref(building-documentation)**, but many other tools are also able to natively render Markdown documents (e.g., Jupyter, VS Code, GitHub, etc.), which is why it's so widely used.
 
@@ -1198,6 +1258,8 @@ You could write examples from scratch using a plain-text format like Markdown\in
 
 Jupyter\index{Jupyter} Notebooks\index{Jupyter!notebooks} are interactive documents with an *.ipynb* extension that can contain code, equations, text, and visualizations. They are effective for demonstrating examples because they directly import and use code from your package; this ensures you don't make mistakes when writing out your examples, and it allows users to download, execute, and interact with the notebooks themselves (as opposed to just reading text). To create a usage example for our `pycounts` package using a Jupyter Notebook, we first need to add `jupyter` as a development dependency\index{dependency!development dependency}:
 
+>If using a `conda` virtual environment, make sure that environment is active by running `conda activate pycounts`, before using or working on your package.
+
 ```bash
 $ poetry add --dev jupyter
 ```
@@ -1218,17 +1280,15 @@ knitr::include_graphics("../images/03-jupyter-example-1.png")
 
 As an example, we'll update our notebook with the collection of Markdown and code cells shown in Fig. \@ref(fig:03-jupyter-example-2-fig) and Fig. \@ref(fig:03-jupyter-example-3-fig).
 
-\newpage
-
 ```{r 03-jupyter-example-2-fig, fig.cap = "First half of Jupyter Notebook demonstrating an example workflow using the pycounts package.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/03-jupyter-example-2.png")
 ```
 
+\newpage
+
 ```{r 03-jupyter-example-3-fig, fig.cap = "Second half of Jupyter Notebook demonstrating an example workflow using the pycounts package.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/03-jupyter-example-3.png")
 ```
-
-\newpage
 
 Our Jupyter Notebook now contains an interactive tutorial demonstrating the basic usage of our package. What's important to note is that the code and outputs are generated using our package itself, they have not been written manually. Our users could now also download our example notebook and interact and execute it themselves. But in the next section, we'll show how to use `sphinx` to automatically execute notebooks and include their content (including the outputs of code cells) into a compiled collection of all our package's documentation that users can easily read and navigate through without even having to start the Jupyter application!
 <!-- #endregion -->
@@ -1325,9 +1385,14 @@ Before we can go ahead and build our documentation with `sphinx`, it relies on a
 
 These extensions are not necessary to create documentation with `sphinx`, but they are all commonly used in Python packaging documentation and significantly improve the look and user-experience of the generated documentation. Extensions without the `sphinx.ext` prefix need to be installed. We can install them as development dependencies in a `poetry`-managed project with the following command:
 
+>If using a `conda` virtual environment, make sure that environment is active by running `conda activate pycounts`, before using or working on your package.
+
 ```bash
-$ poetry add --dev myst-nb sphinx-autoapi sphinx-rtd-theme
+$ poetry add --dev myst-nb --python "^3.9"
+$ poetry add --dev sphinx-autoapi sphinx-rtd-theme
 ```
+
+>Adding `myst-nb` is a great example of why upper caps on dependency versions can be a pain, as we discussed in **Section \@ref(dependency-version-constraints)**. At the time of writing, one of the dependencies of `myst-nb`, `mdit-py-plugins`, has an upper cap of <4.0 on the Python version it requires, so it's not compatible with our package and its other dependencies which all support Python >=3.9. Thus, unless `mdit-py-plugins` removes this upper cap, the easiest way for us to add `myst-nb` is to tell `poetry` to only install it for Python versions ^3.9 (i.e., >=3.9 and <4.0), by using the argument `--python "^3.9"`.
 
 Once installed, any extensions you want to use need to be added to a list called `extensions` in the *`conf.py`* configuration file and configured. Configuration options for each extension (if they exist) can be viewed in their respective documentation, but the `py-pkgs-cookeicutter` has already taken care of everything for us, by defining the following variables within *`conf.py`*:
 
@@ -1342,10 +1407,11 @@ autoapi_dirs = ["../src"]  # location to parse for API reference
 html_theme = "sphinx_rtd_theme"
 ```
 
-With our documentation structure set up, and our extensions configured, we can now build our documentation with `sphinx` using the following command from our root package directory:
+With our documentation structure set up, and our extensions configured, we can now navigate to the *`docs/`* directory and build our documentation with `sphinx` using the following commands:
 
 ```bash
-$ make html --directory=docs/
+$ cd docs
+$ make html
 ```
 
 ```md
@@ -1355,27 +1421,29 @@ build succeeded.
 The HTML pages are in _build/html.
 ```
 
-If we now look inside our *`docs/`* directory we see a new directory *`_build/html`*, which contains our built documentation as HTML files. If you open *`_build/html/index.html`*, you should see the page shown earlier in Fig. \@ref(fig:03-documentation-1b-fig).
+If we look inside our *`docs/`* directory we see a new directory *`_build/html`*, which contains our built documentation as HTML files. If you open *`_build/html/index.html`*, you should see the page shown earlier in Fig. \@ref(fig:03-documentation-1b-fig).
 
->If you make significant changes to your documentation, it can be a good idea to delete the *`_build/`* folder before building it again. You can do this easily by adding the `clean` option into the `make html` command: `make clean html --directory=docs/`
-
-\newpage
+>If you make significant changes to your documentation, it can be a good idea to delete the *`_build/`* folder before building it again. You can do this easily by adding the `clean` option into the `make html` command: `make clean html`.
 
 The `sphinx-autoapi` extension extracted the docstrings we wrote for our package's functions in **[Writing docstrings]** and rendered them into our documentation. You can find the generated API reference sheet by clicking "API Reference" in the table of contents. For example, Fig. \@ref(fig:03-documentation-2-fig) shows the functions and docstrings in the `pycounts.plotting` module. The `sphinx.ext.viewcode` extension added the "source" button next to each function in our API reference sheet, which links readers directly to the source code of the function (if they want to view it).
+
+\newpage
 
 ```{r 03-documentation-2-fig, fig.cap = "Documentation for the pycounts plotting module.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/03-documentation-2.png")
 ```
 
-\newpage
-
 Finally, if we navigate to the "Example usage" page, Fig. \@ref(fig:03-documentation-3-fig) shows the Jupyter Notebook\index{Jupyter!notebook} we wrote in **Section \@ref(creating-usage-examples)** rendered into our documentation, including the Markdown text, code input, and executed output. This was made possible using the `myst-nb` extension.
+
+\newpage
 
 ```{r 03-documentation-3-fig, fig.cap = "Jupyter Notebook example rendered into pycounts's documentation.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/03-documentation-3.png")
 ```
 
-Ultimately, you can efficiently make beautiful and many-featured documentation with `sphinx` and its ecosystem of extensions. You can now use this documentation yourself or potentially share it with others, but it really shines when you host it on the web using a free service like [Read the Docs](https://readthedocs.org/), as we'll do in the next section. For those using version control\index{version control}, now is a good time to commit our work on our package's documentation:
+Ultimately, you can efficiently make beautiful and many-featured documentation with `sphinx` and its ecosystem of extensions. You can now use this documentation yourself or potentially share it with others, but it really shines when you host it on the web using a free service like [Read the Docs](https://readthedocs.org/), as we'll do in the next section. For those using version control\index{version control}, now is a good time to commit our work on our package's documentation. Be sure to run the following commands from the root package directory:
+
+\newpage
 
 ```bash
 $ git add README.md docs/example.ipynb
@@ -1393,7 +1461,7 @@ $ git push
 <!-- #region -->
 If you intend to share your package with others, it will be useful to make your documentation accessible online\index{documentation!host documentation}. It's common to host Python package documentation on the free online hosting service [Read the Docs](https://readthedocs.org/)\index{Read the Docs}. Read the Docs works by connecting to an online repository hosting your package documentation, such as a GitHub repository. When you push changes to your repository, Read the Docs automatically builds a fresh copy of your documentation (i.e., runs `make html`) and hosts it at the URL `https://<pkgname>.readthedocs.io/` (you can also configure Read the Docs to use a custom domain name). This means that any changes you make to your documentation source files (and push to your linked remote repository) are immediately deployed to your users. If you need your documentation to be private (e.g., only available to employees of a company), Read the Docs offers a paid "Business plan" with this functionality.
 
->[GitHub Pages](https://pages.github.com)\index{GitHub Pages} is another popular service used for hosting documentation from a repository. However, it doesn't natively support automatic building of your documentation when you push changes to the source files. This functionality can be configured through the use of [GitHub Actions](https://github.com/features/actions), but we prefer to use Read the Docs here because of its simpler set up.
+>[GitHub Pages](https://pages.github.com)\index{GitHub Pages} is another popular service used for hosting documentation from a repository. However, it doesn't natively support automatic building of your documentation when you push changes to the source files, which is why we prefer to use Read the Docs here. If you did want to host your docs on GitHub Pages, we recommend using the [ghp-import](https://github.com/c-w/ghp-import) package, or setting up an automated GitHub Actions workflow using the [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) action (we'll learn more about GitHub Actions in **Chapter 8: [Continuous integration and deployment]**).
 
 \newpage
 
@@ -1405,7 +1473,7 @@ The [Read the Docs](https://readthedocs.org) documentation will provide the most
 4. Click "Import Manually".
 5. Fill in the project details by:
     1. Providing your package name (e.g., `pycounts`).
-    2. The GitHub repository URL (e.g., `https://github.com/TomasBeuzen/pycounts`).
+    2. The URL to your package's GitHub repository (e.g., `https://github.com/TomasBeuzen/pycounts`).
     3. Specify the default branch as `main`.
 6. Click "Next" and then "Build version".
 
@@ -1655,7 +1723,9 @@ Before moving onto the next chapter, let's summarize a reference list of all the
     
     ```bash
     $ poetry add --dev myst-nb sphinx-autoapi sphinx-rtd-theme
-    $ make html --directory docs/
+    $ cd docs
+    $ make html
+    $ cd ..
     ```
     
 8. (Optional) Host documentation online with [Read the Docs](https://readthedocs.org/) (**Section \@ref(hosting-documentation-online)**).

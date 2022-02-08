@@ -67,6 +67,7 @@ Ultimately, the testing workflow is all about working incrementally and iterativ
 
 ## Test structure
 
+<!-- #region -->
 To use `pytest`\index{tests!pytest} as a testing framework, it expects tests to be structured as follows:
 
 1. Tests are defined as functions prefixed with `test_` and contain one or more statements that `assert`\index{tests!assert} code produces an expected result or raises a particular error.
@@ -117,11 +118,11 @@ def test_count_words():
 
 To use `pytest` to run this test it should first be installed as a development dependency\index{dependency!development dependency} of your package. If using `poetry` as a packaging tool, as we do in this book, that can be done with the following command:
 
+>If you're following on from **Chapter 3: [How to package a Python]** and created a virtual environment for your `pycounts` package using `conda`, as we did in **Section \@ref(create-a-virtual-environment)**, be sure to activate that environment before continuing with this chapter by running `conda activate pycounts` at the command line.
+
 ```bash
 $ poetry add --dev pytest
 ```
-
->If you're following on from **Chapter 3: [How to package a Python]**, specifically, **Section \@ref(running-tests)**, we already installed `pytest` as a development dependency of our `pycounts` package so running the above command won't do anything.
 
 With `pytest` installed, we use the following command from our root package directory to run our test:
 
@@ -140,6 +141,7 @@ tests/test_pycounts.py .                                         [100%]
 ```
 
 The output of `pytest` provides some basic system information, along with how many tests were run and what percentage passed. If a test fails, it will output the traceback of the error, so you can see exactly which test failed and why. In the next section, we'll go into more detail about how to write different kinds of tests in `pytest`.
+<!-- #endregion -->
 
 ## Writing tests
 
@@ -478,7 +480,7 @@ For example, the most-common words in *Flatland* can be determined as follows:
 ```
 
 ```md
-[('the', 2245)]
+[('the', 2244)]
 ```
 
 Unsurprisingly, the most common word is "the" which occurs 2245 times. An example regression test for our package would, therefore, look as follows:
@@ -509,7 +511,7 @@ def test_regression():  <--------
     """Regression test for Flatland"""
     top_word = count_words(get_flatland()).most_common(1)
     assert top_word[0][0] == "the", "Most common word is not 'the'"
-    assert top_word[0][1] == 2245, "'the' count has changed"
+    assert top_word[0][1] == 2244, "'the' count has changed"
 ```
 
 `pytest` should now find and execute five tests:
@@ -739,7 +741,7 @@ def test_is_even(n, result):
 
 The above test would run successfully for the first two parameterized input/output pairs but would fail for the last one with the following helpful error message that points out exactly which parameterization failed:
 
-```{code-block} xml
+```xml
 ---
 emphasize-lines: 4, 19
 ---

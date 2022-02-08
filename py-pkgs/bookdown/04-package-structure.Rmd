@@ -395,9 +395,12 @@ from pycounts.pycounts import count_words
 from pycounts.plotting import plot_words
 ```
 
-The functions are now bound to the `pycounts` namespace, so users can access them like this:
-
 <!-- #region -->
+>If you're following along and developing the `pycounts` package in this book, and tried installing it from TestPyPI or PyPI in **Section \@ref(building-and-distributing-your-package)**, it will no longer be installed in "editable mode"\index{editable install} and so won't reflect any changes you make to the source code. You'll have to run `poetry install` to see your changes and put your package back in editable mode (which is the mode you want for development).
+
+The functions are now bound to the `pycounts` namespace, so users can access them like this:
+<!-- #endregion -->
+
 ```python
 >>> import pycounts
 >>> pycounts.count_words
@@ -406,12 +409,6 @@ The functions are now bound to the `pycounts` namespace, so users can access the
 ```md
 <function count_words>
 ```
-
-\newpage
-
->If you're following along and developing the `pycounts` package in this book, and tried installing it from TestPyPI or PyPI in **Section \@ref(building-and-distributing-your-package)**, it will no longer be installed in "editable mode"\index{editable install} and so won't reflect any changes you make to the source code. You'll have to run `poetry install` to see your changes and put your package back in editable mode (which is the mode you want for development).
-
-<!-- #endregion -->
 
 Ultimately, the *`__init__.py`* file can be used to customize how your package and its contents are imported. It's an interesting exercise to visit large Python packages, such as [NumPy](https://github.com/numpy/numpy/blob/main/numpy/__init__.py), [pandas](https://github.com/pandas-dev/pandas/blob/master/pandas/__init__.py), or [scikitlearn](https://github.com/scikit-learn/scikit-learn/blob/main/sklearn/__init__.py), to see the kinds of initialization code they run in their *`__init__.py`* files.
 
@@ -554,7 +551,7 @@ A user can directly use this path in the `pycounts` function `count_words()` as 
 ```
 
 ```md
-Counter({'the': 2245, 'of': 1597, 'to': 1078, 'and': 1074, 
+Counter({'the': 2244, 'of': 1597, 'to': 1078, 'and': 1074, 
 'a': 902, 'i': 706, 'in': 698, 'that': 486, ... })
 ```
 
@@ -710,7 +707,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 ```
 
-This table specifies the tools required to build the sdist and wheel for a package (`requires`) and where the functions that actually do the build are located in a build-tool's library (`build-backend`). For example, the table above shows that the `poetry-core` library is require to build our package, and that the building functions are located in `poetry.core.masonry.api`. If you take a look at the source code of `poetry-core`'s `poetry.core.masonry.api` [module](https://github.com/python-poetry/poetry-core/blob/master/poetry/core/masonry/api.py), you'll see functions like `build_wheel()` and `build_sdist()`. The exact building mechanics are beyond the scope of this book, so we wont go into detail about how they work. However, as a packaging book, it would be remiss not to mention that the ability to specify the build tools required to make sdists and wheels of a package is a relatively new development in the packaging ecosystem. This functionality was introduced in [PEP 517](https://www.python.org/dev/peps/pep-0517/) and [PEP 518](https://www.python.org/dev/peps/pep-0518/), to remove the dependency of the packaging system on legacy tools. These PEPs are an interesting read for those keen on digging into more of the low-level details of building and installing package distributions.
+This table specifies the tools required to build the sdist and wheel for a package (`requires`) and where the functions that actually do the build are located in a build-tool's library (`build-backend`). For example, the table above shows that the `poetry-core` library is required to build our package, and that the building functions are located in `poetry.core.masonry.api`. If you take a look at the source code of `poetry-core`'s `poetry.core.masonry.api` [module](https://github.com/python-poetry/poetry-core/blob/master/src/poetry/core/masonry/api.py), you'll see functions like `build_wheel()` and `build_sdist()`. The exact building mechanics are beyond the scope of this book, so we wont go into detail about how they work. However, as a packaging book, it would be remiss not to mention that the ability to specify the build tools required to make sdists and wheels of a package is a relatively new development in the packaging ecosystem. This functionality was introduced in [PEP 517](https://www.python.org/dev/peps/pep-0517/) and [PEP 518](https://www.python.org/dev/peps/pep-0518/), to remove the dependency of the packaging system on legacy tools. These PEPs are an interesting read for those keen on digging into more of the low-level details of building and installing package distributions.
 
 ### Packaging tools
 
