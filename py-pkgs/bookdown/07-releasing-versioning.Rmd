@@ -230,10 +230,7 @@ Before we make our new release, we should document everything we've changed in o
 
 \newpage
 
-```{code-block} xml
----
-emphasize-lines: 5
----
+```xml
 # Changelog
 
 <!--next-version-placeholder-->
@@ -268,6 +265,7 @@ $ git push
 
 ### Step 3: bump version number
 
+<!-- #region -->
 Once your changes for the new release are ready, you need to bump the package version manually (**Section \@ref(manual-version-bumping)**) or automatically with the PSR tool (**Section \@ref(automatic-version-bumping)**).
 
 We'll take the automatic route using PSR\index{versioning!Python Semantic Release}\index{Python Semantic Release} here, but if you're not using Git as a version control system, you'll need to do this step manually. The changes we made to `pycounts`, described in the section above, constitute a minor release (we added a new feature to load example data and made some significant changes to our package's test framework). When we committed these changes in **Section \@ref(version-control)** and **Section \@ref(version-control)**, we did so with the following collection of commit messages:
@@ -279,6 +277,8 @@ $ git commit -m "fix: check input type to plot_words function"
 ```
 
 As we discussed in **Section \@ref(automatic-version-bumping)**, PSR can automatically parse these commit messages to increment our package version for us. If you haven't already, install PSR as a development dependency using `poetry`:
+
+>If you're following on from **Chapter 3: [How to package a Python]** and created a virtual environment for your `pycounts` package using `conda`, as we did in **Section \@ref(create-a-virtual-environment)**, be sure to activate that environment before continuing by running `conda activate pycounts` at the command line.
 
 ```bash
 $ poetry add --dev python-semantic-release
@@ -316,6 +316,7 @@ $ git tag --list
 v0.1.0
 v0.2.0
 ```
+<!-- #endregion -->
 
 ### Step 4: run tests and build documentation
 
@@ -335,6 +336,8 @@ Now we'll check that our tests are still passing and what their coverage is usin
 $ pytest tests/ --cov=pycounts
 ```
 
+\newpage
+
 ```xml
 ========================= test session starts =========================
 
@@ -352,10 +355,11 @@ TOTAL                              35      0   100%
 ========================== 7 passed in 0.41s ==========================
 ```
 
-Finally, to check that documentation still builds correctly you typically want to create the documentation from scratch, i.e., remove any existing built documentation in your package and then building it again. To do this, we first need to run `make clean --directory docs/` before running `make html --directory docs/` (we discussed building documentation with these commands in **Chapter 6: [Documentation]**). In the spirit of efficiency we can combine these two commands together like we do below:
+Finally, to check that documentation still builds correctly you typically want to create the documentation from scratch, i.e., remove any existing built documentation in your package and then building it again. To do this, we first need to run `make clean` before running `make html` from the *`docs/`* directory (we discussed building documentation with these commands in **Chapter 6: [Documentation]**). In the spirit of efficiency we can combine these two commands together like we do below:
 
 ```bash
-$ make clean html --directory docs/
+$ cd docs
+$ make clean html
 ```
 
 ```md
@@ -397,21 +401,17 @@ knitr::include_graphics("../images/07-tag.png")
 
 To create a release from this tag, click "Draft a new release". You can then identify the tag from which to create the release and optionally add a description of the release; often, this description links to the changelog, where changes have already been documented. Fig. \@ref(fig:07-release-1-fig) shows the release of v0.2.0 of `pycounts` on GitHub.
 
-\newpage
-
 ```{r 07-release-1-fig, fig.cap = "Release v0.2.0 of pycounts on GitHub.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/07-release-1.png")
 ```
 
 ### Step 6: build and release package to PyPI
 
-It's now time to build the new distributions\index{distribution} for our package (i.e., the sdist and wheel — we talked about these in **Section \@ref(package-distribution-and-installation)**). We can do that with `poetry` using the following command:
+It's now time to build the new distributions\index{distribution} for our package (i.e., the sdist and wheel — we talked about these in **Section \@ref(package-distribution-and-installation)**). We can do that with `poetry` using the following command run from the root package directory:
 
 ```bash
 $ poetry build
 ```
-
-\newpage
 
 ```md
 Building pycounts (0.2.0)
@@ -437,7 +437,7 @@ Now you should be able to try and download your package from TestPyPI\index{Test
 $ pip install --index-url https://test.pypi.org/simple/ pycounts
 ```
 
->By default `pip install` will search PyPI for the named package. The argument `--index-url` points `pip` to the TestPyPI index instead. If your package has dependencies that a developer did not upload to TestPyPI, you'll also need to tell `pip` that it can search for them on PyPI with the following argument: `--extra-index-url https://pypi.org/simple`.
+>By default `pip` will search PyPI for the named package. The argument `--index-url` points `pip` to the TestPyPI index instead. If your package has dependencies that are not on TestPyPI, you may need to tell `pip` to also search PyPI with the following argument: `--extra-index-url https://pypi.org/simple`.
 
 If you're happy with how your newly versioned package is working, you can go ahead and publish to PyPI:
 
@@ -497,3 +497,43 @@ A few other things to think about when making breaking changes:
 - If your breaking change is a result of one of your package's dependencies changing, it is often better to warn your users that they require a newer version of a dependency rather than immediately making it a required dependency of your package.
 - Documentation is key! Don't be afraid to be verbose about documenting breaking changes in your package's documentation and changelog.
 <!-- #endregion -->
+
+## Updating dependency versions
+
+If your package depends on other packages, like our `pycounts` package does, you'll need to think about updating your dependency version constraints as new versions of dependencies are released over time. This is true even for the version(s) of Python that your package supports.
+
+Luckily, `poetry` makes this a relatively simple process. The command `poetry update` can be used to update the version of installed dependencies in your virtual environment, within the constraints of the *`pyproject.toml`* file. This is useful for testing that your package works as expected with newer versions of its dependencies. For example, if we wanted to install the latest version of `matplotlib` compatible with our `pycounts` package, we could use the following code:
+
+```bash
+$ poetry update matplotlib
+```
+
+However, `poetry update` won't update the constraints specified in your `pyproject.toml` file, or the metadata built into your package releases. To update that you have two options:
+
+1. Manually modify version constraints in *`pyproject.toml`*.
+2. Use `poetry add` to update a dependency to a specific version(s).
+
+For example, our current version constraint for `matplotlib` is shown in *`pyproject.toml`*:
+
+```toml
+[tool.poetry.dependencies]
+python = ">=3.9"
+matplotlib = ">=3.4.3"
+```
+
+If we wanted the minimum version of `matplotlib` to now be 3.5.0, we could manually adjust our *`pyproject.toml`* file as shown below:
+
+```toml
+[tool.poetry.dependencies]
+python = ">=3.9"
+matplotlib = ">=3.5.0"
+```
+
+Or we could run the following code:
+
+```bash
+$ poetry add "matplotlib>=3.5.0"
+```
+
+>We use double quotes in the command above because in many shells, like bash, `>` is a redirection operator. The double quotes are used to preserve the literal value of the contained characters (read more in the [documentation](http://www.gnu.org/software/bash/manual/html_node/Double-Quotes.html)).
+

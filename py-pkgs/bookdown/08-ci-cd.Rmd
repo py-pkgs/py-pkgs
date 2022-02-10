@@ -105,7 +105,8 @@ knitr::include_graphics("../images/08-example-1.png")
         # part of the job
         steps:
           # Checks-out your repository so your job can access it
-          - uses: actions/checkout@v2
+          - name: Check-out repository
+            uses: actions/checkout@v2
 
           # Runs a single command using the runners shell
           - name: Run a one-line script
@@ -168,14 +169,16 @@ In contrast to commands, actions are reusable units of code that perform a parti
 
 ```yaml
 # Checks-out your repository so your job can access it
-- uses: actions/checkout@v2
+- name: Check-out repository
+  uses: actions/checkout@v2
 ```
 
 Some actions can also be configured with inputs using the `with` key, as in the example below:
 
 ```yaml
 # Set up a Python environment for use in actions
-- uses: actions/setup-python@v2
+- name: Set up Python
+  uses: actions/setup-python@v2
   with:
     python-version: 3.9
 ```
@@ -221,20 +224,14 @@ pycounts
     └── ...
 ```
 
-Open this new *`ci-cd.yml`* file in an editor. We are going to set up a CI workflow that triggers when someone pushes new content or makes a pull-request to the `main` branch of our repository. To set this up, copy and paste the following text into *`ci-cd.yml`*:
+Open this new *`ci-cd.yml`* file in an editor. We are going to set up a CI workflow that triggers when someone pushes new content or makes a pull-request to any branch of our repository (note that this differs slightly to **Section \@ref(a-toy-example)**, where our workflow ran on push or pull request to the "main" branch only). To set this up, copy and paste the following text into *`ci-cd.yml`*:
 
 >When building our CI workflow, we'll be using the same syntax and terminology we described previously in **Section \@ref(introduction-to-github-actions)**. Don't be afraid to revise that section as needed.
 
 ```yaml
 name: ci-cd
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 ```
 
 \newpage
@@ -252,28 +249,26 @@ We'll add all these steps to our workflow in a job called "ci":
 ```yaml
 name: ci-cd
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   ci:
-    # Step 1. Set up operating system
+    # Set up operating system
     runs-on: ubuntu-latest
+
+    # Define job steps
     steps:
-    # Step 2. Set up Python 3.9
-    - uses: actions/setup-python@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    # Step 3. Check-out repository so we can access its contents
-    - uses: actions/checkout@v2
-    # Step 4. Install poetry
-    - uses: snok/install-poetry@v1
-    # Step 5. Install our pycounts package
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
+
+    - name: Install poetry
+      uses: snok/install-poetry@v1
+
     - name: Install package
       run: poetry install
 ```
@@ -295,7 +290,6 @@ Remember all the hard work we put into writing tests for our package back in the
 Recall that we used `pytest` as the testing framework for our `pycounts` package. This is listed as a development dependency of our package, so it will already be installed on our runner from "Step 5" when we execute `poetry install`. Therefore, we just need to add a new step to our workflow with a command to run `pytest`. Because our runner is not using a `conda` virtual environment, `poetry` sets one up automatically when `poetry install` is executed. We need to explicitly tell `poetry` to use this virtual environment it set up for us by prefixing commands with `poetry run`, as we do below:
 
 ```yaml
-    # Step 6. Run tests for pycounts
     - name: Test with pytest
       run: poetry run pytest tests/ --cov=pycounts --cov-report=xml
 ```
@@ -317,11 +311,10 @@ To do this, we could print the coverage to our runner's build log, but having th
 >If your GitHub repository is private, you'll need to provide an "upload token" to allow Codecov to access it as described in the Codecov [documentation](https://github.com/marketplace/actions/codecov). 
 
 ```yaml
-    # Step 7. Use Codecov to track coverage
-    - uses: codecov/codecov-action@v2
+    - name: Use Codecov to track coverage
+      uses: codecov/codecov-action@v2
       with:
         files: ./coverage.xml   # coverage report
-        fail_ci_if_error: true  # terminate workflow if an error occurs
 ```
 
 With this step in our workflow, coverage will automatically be recorded for each new proposed change to our code. Codecov can show you whether coverage has increased or decreased, by how much, and will link to relevant areas of your package's source code. This information will automatically appear on any pull request someone makes to the `main` branch on GitHub, or it can be viewed anytime on the Codecov website; for example, Fig. \@ref(fig:08-cov-fig) shows the coverage dashboard for a package called `pypkgs`, where coverage decreased significantly after the most recent commit.
@@ -336,7 +329,6 @@ knitr::include_graphics("../images/08-cov.png")
 The final step we'll add to our CI workflow will be to check that our documentation builds without issue. We'll use the same `make html` command we've used throughout this book to build documentation with `sphinx` to do this:
 
 ```yaml
-    # Step 8. Build documentation
     - name: Build documentation
       run: poetry run make html --directory docs/
 ```
@@ -348,44 +340,42 @@ We've now set up our CI pipeline! Our final *`.github/workflows/ci-cd.yml`* file
 ```yaml
 name: ci-cd
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   ci:
-    # Step 1. Set up operating system
+    # Set up operating system
     runs-on: ubuntu-latest
+
+    # Define job steps
     steps:
-    # Step 2. Set up Python 3.9
-    - uses: actions/setup-python@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    # Step 3. Check-out repository so we can access its contents
-    - uses: actions/checkout@v2
-    # Step 4. Install poetry
-    - uses: snok/install-poetry@v1
-    # Step 5. Install our pycounts package
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
+
+    - name: Install poetry
+      uses: snok/install-poetry@v1
+
     - name: Install package
       run: poetry install
-    # Step 6. Run tests for pycounts
+
     - name: Test with pytest
       run: poetry run pytest tests/ --cov=pycounts --cov-report=xml
-    # Step 7. Use Codecov to track coverage
-    - uses: codecov/codecov-action@v2
+
+    - name: Use Codecov to track coverage
+      uses: codecov/codecov-action@v2
       with:
         files: ./coverage.xml   # coverage report
-        fail_ci_if_error: true  # terminate workflow if an error occurs
-    # Step 8. Build documentation
+
     - name: Build documentation
       run: poetry run make html --directory docs/
 ```
 
-We're now ready to test out our workflow! Let's go ahead and commit our workflow file to version control and push it to GitHub. This will trigger our workflow because we configured it to run when someone pushes to the "main" branch of our repository.
+We're now ready to test out our workflow! Let's go ahead and commit our workflow file to version control and push it to GitHub. This will trigger our workflow because we configured it to run when someone pushes new work to any branch of our repository.
 
 ```bash
 $ git add .github/workflows/ci-cd.yml
@@ -400,6 +390,8 @@ knitr::include_graphics("../images/08-ci-1.png")
 ```
 
 We can investigate the build logs by clicking the "ci" job as in Fig. \@ref(fig:08-ci-2-fig):
+
+\newpage
 
 ```{r 08-ci-2-fig, fig.cap = "Continuous integration workflow logs.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
 knitr::include_graphics("../images/08-ci-2.png")
@@ -432,23 +424,19 @@ We can set up a new job and add the two constraints above with the following syn
 ```yaml
 name: ci-cd
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   ci:
     # ...
     # CI steps hidden
     # ...
+
   cd:
     # Only run this job if the "ci" job passes
     needs: ci
-    # Only run this job if new work is pushed to "main"
+
+    # Only run this job if new work is pushed to the "main" branch
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 ```
 
@@ -457,48 +445,56 @@ Now we can set up our CD workflow. In GitHub Actions, each job runs on a fresh r
 1. Specify an operating system. We'll be using Ubuntu again with the syntax `runs-on: ubuntu-latest`.
 2. Install Python (action: [actions/setup-python@v2](https://github.com/actions/setup-python)).
 3. Check out our repository so we can access its contents (action: [actions/checkout@v2](https://github.com/actions/checkout)).
-4. Make a new release of `pycounts` (command: `semantic-release publish`, this uses the [Python Semantic Release (PSR)](https://python-semantic-release.readthedocs.io/en/latest/) tool which we described in **Section \@ref(automatic-version-bumping)** and will describe again below).
-5. Upload new release to TestPyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish)).
-6. Test that the new package version installs successfully from TestPyPI (command: `pip install`).
-7. Upload new release to PyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish)).
+4. Install `poetry` (action: [snok/install-poetry@v1](https://github.com/snok/install-poetry)).
+5. Use `poetry` to install `pycounts` (command: `poetry install`).
+6. Make a new release of `pycounts` (command: `semantic-release publish`, this uses the [Python Semantic Release (PSR)](https://python-semantic-release.readthedocs.io/en/latest/) tool which we described in **Section \@ref(automatic-version-bumping)** and will describe again below).
+7. Upload new release to TestPyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish)).
+8. Test that the new package version installs successfully from TestPyPI (command: `pip install`).
+9. Upload new release to PyPI (action: [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish)).
 
-Steps 1 to 3 are the same as we set up previously for our CI workflow, so we can just copy and paste them into our "cd" job as below. The only new code here is that we specify the input parameter `fetch-depth: 0` for the [actions/checkout@v2](https://github.com/actions/checkout) action. This input parameter will allow the PSR tool to access the full history of commits in our repository, so that it can determine how to bump the package's version. Without this parameter, PSR can only access the single most recent commit message.
+Steps 1 to 5 are the same as we set up previously for our CI workflow, so we can just copy and paste them into our "cd" job as below. The only new code here is that we specify the input parameter `fetch-depth: 0` for the [actions/checkout@v2](https://github.com/actions/checkout) action. This input parameter will allow the PSR tool to access the full history of commits in our repository, so that it can determine how to bump the package's version. Without this parameter, PSR can only access the single most recent commit message.
 
 ```yaml
 name: ci-cd
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   ci:
     # ...
     # CI steps hidden
     # ...
+
   cd:
     # Only run this job if the "ci" job passes
     needs: ci
-    # Only run this job if the "main" branch changes
+
+    # Only run this job if new work is pushed to "main"
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # Step 1. Set up operating system
+
+    # Set up operating system
     runs-on: ubuntu-latest
+
+    # Define job steps
     steps:
-    # Step 2. Set up Python 3.9
-    - uses: actions/setup-python@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    # Step 3. Check-out repository so we can access its contents
-    - uses: actions/checkout@v2
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
+        
+    - name: Install poetry
+      uses: snok/install-poetry@v1
+
+    - name: Install package
+      run: poetry install
 ```
 
-We'll discuss steps 4 to 7 in the sections below.
+We'll discuss steps 6 to 9 in the sections below.
 
 ### Automatically creating a new package version
 
@@ -518,10 +514,12 @@ However, PSR\index{versioning!Python Semantic Release}\index{Python Semantic Rel
 version_variable = "pyproject.toml:version" # version location
 branch = "main"                             # branch to make releases of
 changelog_file = "CHANGELOG.md"             # changelog file
-build_command = "pip install poetry && poetry build"  # build dists
+build_command = "poetry build"              # build dists
 dist_path = "dist/"                         # where to put dists
+upload_to_release = true                    # auto-create GitHub release
 upload_to_pypi = false                      # don't auto-upload to PyPI
 remove_dist = false                         # don't remove dists
+patch_without_tag = true                    # patch release by default
 ```
 
 We've added comments above to clarify what each key is doing in the table, and we describe them in Table \@ref(tab:08-psr-table). You can also read more about these configuration options in the PSR [documentation](https://python-semantic-release.readthedocs.io/en/latest/configuration.html).
@@ -537,28 +535,36 @@ Table: (\#tab:08-psr-table) Description of Python Semantic Release configuration
 |`changelog_file`|Location of changelog file for PSR to update using commit messages.|
 |`build_command`|How to build new distributions for the release.|
 |`dist_path`|Location of distributions after running `build_command`.|
-|`upload_to_pypi`|Whether to upload to PyPI. Default is `true`, but we want to upload to TestPyPI first to test things out, so we've turned this off. |
+|`upload_to_release`|Whether to automatically create a release of the new package version on GitHub.|
+|`upload_to_pypi`|Whether to upload to PyPI. Default is `true`, but we want to upload to TestPyPI first to test things out, so we've turned this off.|
 |`remove_dist`|Whether to remove distributions at `dist_path` after upload. We turned this off because we want to upload these distributions to TestPyPI and PyPI ourselves.|
+|`patch_without_tag`|Always create a new patch release even if there is no trigger tag, such as "fix" or "feat", in any commits since the last release.|
 
 
-With PSR configured in our *`pyproject.toml`*, we can now add it as a step to our CD workflow. In **Section \@ref(automatic-version-bumping)**, we used the command `semantic-release version` to get PSR to automatically update our version based on keywords it finds in all the commit messages that have been made since the last tag of your package. In our CD workflow, we'll be using the slightly different command `semantic-release publish`, which will bump our version, update our changelog, tag a new release on GitHub, and build a new sdist and wheel. Because PSR will directly modify our *`CHANGELOG.md`* file and tagging a new release for us in our GitHub repository, we need to configure the Git credentials of the runner machine. This involves setting the username as `github-actions` and email address as `github-actions@github.com`. If you don't configure these credentials, the workflow won't be able to make changes to our repository, as you can read more about in the GitHub [documentation](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git).
+With PSR configured in our *`pyproject.toml`*, we can now add it as a step to our CD workflow.
 
-\newpage
+In **Section \@ref(automatic-version-bumping)**, we used the command `semantic-release version` to get PSR to automatically update our version based on keywords it finds in all the commit messages that have been made since the last tag of your package. In our CD workflow, we'll be using the slightly different command `semantic-release publish`, which will bump our version, update our changelog, tag a new release on GitHub, and build a new sdist and wheel. 
+
+PSR will need to interact with our GitHub repository to modify our *`CHANGELOG.md`* file and tag a new release of our package. To give PSR permission to do this there's a few things we need to do:
+
+1. Provide PSR with a GitHub [access token](https://python-semantic-release.readthedocs.io/en/latest/envvars.html#env-gh-token) called `GH_TOKEN` to allow it to read/write files in our repository. At the start of each workflow run, [GitHub automatically creates](https://docs.github.com/en/actions/security-guides/automatic-token-authentication) such a token for us, called `GITHUB_TOKEN`. We can pass this token to PSR using the `env` key and the syntax `${{ secrets.GITHUB_TOKEN }}`. You can read more about this syntax in the [GitHub documentation](https://docs.github.com/en/actions/security-guides/encrypted-secrets#using-encrypted-secrets-in-a-workflow), but we've done it for you in the code shown below.
+2. Configure the Git credentials of the runner machine by setting the username as `github-actions` and email address as `github-actions@github.com`. If you don't configure these credentials, the workflow won't be able to make changes to our repository, as you can read more about in the GitHub [documentation](https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git). We've also done this for you in the code shown below, so all you need to do is add this code as the next step in your CD workflow file.
 
 ```yaml
-    # Step 4. Use PSR to make release
-    - name: Python Semantic Release
+    - name: Use Python Semantic Release to prepare release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          pip install python-semantic-release
           git config user.name github-actions
           git config user.email github-actions@github.com
-          semantic-release publish
+          poetry run semantic-release publish
 ```
 
 We'll see PSR in action shortly, but let's first configure the rest of our CD workflow file.
 
 ### Uploading to TestPyPI and PyPI
 
+<!-- #region -->
 The PSR step will create an sdist and wheel for our new package version. What we need to do next in our CD workflow is try uploading those distributions to TestPyPI\index{TestPyPI}. This step is not strictly necessary, but it's a good idea because it can help catch any unexpected errors before we upload our package to PyPI\index{PyPI}.
 
 Rather than write the code needed to do all this from scratch, we'll use the [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action. This action relies on token authentication with TestPyPI (rather than the classic username and password authentication). To use the action, you'll need to log-in to [TestPyPI](https://test.pypi.org), [create an API token](https://pypi.org/help/#apitoken), and [add the token as a secret](https://docs.github.com/en/actions/reference/encrypted-secrets) called `TEST_PYPI_API_TOKEN` to your GitHub repository, as shown in Fig. \@ref(fig:08-token-1-fig).
@@ -570,8 +576,8 @@ knitr::include_graphics("../images/08-token-1.png")
 To use the [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action, we can add the following step to our CD workflow. Note how we configure the action to use the token `user` method, specifying `password` as the `TEST_PYPI_API_TOKEN` we just added to our repository, and we point the action to the TestPyPI repository (`repository_url: https://test.pypi.org/legacy/`).
 
 ```yaml
-    # Step 5. Publish to TestPyPI
-    - uses: pypa/gh-action-pypi-publish@release/v1
+    - name: Publish to TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.TEST_PYPI_API_TOKEN }}
@@ -581,7 +587,6 @@ To use the [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-a
 The above action will publish the new version of your package to TestPyPI. We now want to test that we can install the package correctly from TestPyPI using the following command:
 
 ```yaml
-    # Step 6. Test install from TestPyPI
     - name: Test install from TestPyPI
       run: |
           pip install \
@@ -592,84 +597,97 @@ The above action will publish the new version of your package to TestPyPI. We no
 
 Finally, the last step in our CD workflow will be publishing our package to PyPI. This uses the same [pypa/gh-action-pypi-publish@release/v1](https://github.com/pypa/gh-action-pypi-publish) action as earlier and will require you to obtain a token from [PyPI](https://pypi.org) and add the token as `PYPI_API_TOKEN` to your GitHub repository, as shown in Fig. \@ref(fig:08-token-2-fig).
 
-```{r 08-token-2-fig, fig.cap = "Adding the PyPI API token to our GitHub repository.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
-knitr::include_graphics("../images/08-token-2.png")
-```
-
-\newpage
-
 ```yaml
-    # Step 7. Publish to PyPI
-    - uses: pypa/gh-action-pypi-publish@release/v1
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
 ```
 
+\newpage
+
+```{r 08-token-2-fig, fig.cap = "Adding the PyPI API token to our GitHub repository.", out.width = "100%", fig.retina = 2, fig.align = "center", echo = FALSE, message = FALSE, warning = FALSE}
+knitr::include_graphics("../images/08-token-2.png")
+```
+<!-- #endregion -->
+
 ### Testing continuous deployment
 
+<!-- #region -->
 We've now set up our CD workflow! Our final *`.github/workflows/ci-cd.yml`* file looks like this:
 
 ```yaml
 name: ci-cd
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+on: [push, pull_request]
 
 jobs:
   ci:
     # ...
     # CI steps same as before
     # ...
+
   cd:
     # Only run this job if the "ci" job passes
     needs: ci
+    
     # Only run this job if new work is pushed to "main"
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    # Step 1. Set up operating system
+
+    # Set up operating system
     runs-on: ubuntu-latest
+
+    # Define job steps
     steps:
-    # Step 2. Set up Python 3.9
-    - uses: actions/setup-python@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
       with:
         python-version: 3.9
-    # Step 3. Check-out repository so we can access its contents
-    - uses: actions/checkout@v2
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    # Step 4. Use PSR to make release
-    - name: Python Semantic Release
+
+    - name: Install poetry
+      uses: snok/install-poetry@v1
+
+    - name: Install package
+      run: poetry install
+
+    - name: Use Python Semantic Release to prepare release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-          pip install python-semantic-release
           git config user.name github-actions
           git config user.email github-actions@github.com
-          semantic-release publish
-    # Step 5. Publish to TestPyPI
-    - uses: pypa/gh-action-pypi-publish@release/v1
+          poetry run semantic-release publish
+
+    - name: Publish to TestPyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.TEST_PYPI_API_TOKEN }}
         repository_url: https://test.pypi.org/legacy/
-    # Step 6. Test install from TestPyPI
+
     - name: Test install from TestPyPI
       run: |
           pip install \
           --index-url https://test.pypi.org/simple/ \
           --extra-index-url https://pypi.org/simple \
           pycounts
-    # Step 7. Publish to PyPI
-    - uses: pypa/gh-action-pypi-publish@release/v1
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
 ```
 
-We're now ready to test out our full CI/CD workflow! Let's go ahead and commit our new workflow file and our *`pyproject.toml`* file (which we changed when we added the configuration options for PSR) to version control and push it to GitHub. This will trigger our CI/CD workflow because we configured it to run when someone pushes to the "main" branch of our repository. For the sake of example, we'll include the "feat" keyword in our commit message to trigger PSR to make a minor release of our package from these changes (we described what keywords trigger particular version bumps in **Section \@ref(automatic-version-bumping)**).
+We're now ready to test out our full CI/CD workflow! Let's go ahead and commit our new workflow file and our *`pyproject.toml`* file (which we changed when we added the configuration options for PSR) to version control and push it to GitHub. This will trigger our CI/CD workflow because we configured it to run when someone pushes to the "main" branch of our repository. For the sake of example, we'll include the "feat" keyword in our commit message to trigger PSR to make a minor release of our package from these changes.
+
+>We described what keywords trigger particular version bumps in **Section \@ref(automatic-version-bumping)**, but note that even if no keywords were present in any commits, we configured PSR in **Section \@ref(automatically-creating-a-new-package-version)** to make a patch release by default.
 
 ```bash
 $ git add .github/workflows/ci-cd.yml pyproject.toml
@@ -724,6 +742,7 @@ knitr::include_graphics("../images/08-cd-6.png")
 ```
 
 It didn't take too long for us to implement a CD workflow that completely automates all the steps we would usually have to perform manually when publishing a new release of our package. You may choose, or need, to use different tools and commands to what we've used here to implement CD for your packages in the future. But hopefully you can see the kinds of things that are possible with CD and how it can be useful to quickly deploy new releases of your package, how it saves you from having to remember all the commands you'd need to run to do this yourself, and how it lowers the barrier for potential collaborators to contribute to your package.
+<!-- #endregion -->
 
 ## Summary
 
