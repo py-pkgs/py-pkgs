@@ -5,9 +5,10 @@
 ## v0.5 (09/02/202)
 
 ✨NEW
-- **Section 2.6: Developing with Docker**. Instructions on how to set up a package development environment in VS Code or Jupyter with the help of Docker. Closes #101 
-- **Section 3.6.1: Dependency version constraints**. Discusses what version constraints are, the problems that can occur with upper caps, and why we dissuade from using them (going against the `poetry` default). Closes #95 
+- **Section 2.6: Developing with Docker**. Instructions on how to set up a package development environment in VS Code or Jupyter with the help of Docker. Closes #101
+- **Section 3.6.1: Dependency version constraints**. Discusses what version constraints are, the problems that can occur with upper caps, and why we dissuade from using them (going against the `poetry` default). Closes #95
 - **Section 7.6: Updating dependency versions**. Details about how to update dependency versions for your package.
+- **Chapter 8**: revised and updated workflow for CI/CD. Closes #103
 
 
 ♻️UPDATE
