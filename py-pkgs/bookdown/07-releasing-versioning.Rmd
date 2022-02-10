@@ -521,7 +521,7 @@ python = ">=3.9"
 matplotlib = ">=3.4.3"
 ```
 
-If we wanted the minimum version of `matplotlib` to now be 3.5.0, we could manually adjust our *`pyproject.toml`* file to:
+If we wanted the minimum version of `matplotlib` to now be 3.5.0, we could manually adjust our *`pyproject.toml`* file as shown below:
 
 ```toml
 [tool.poetry.dependencies]

@@ -707,9 +707,9 @@ python = "^3.9"
 matplotlib = "^3.4.3"
 ```
 
-The caret operator is short-hand for "requires this or any higher version that does not modify the left-most non-zero version digit". For example, our package depends on any `python` version >=3.9.0 and <4.0.0. Thus, examples of valid versions include 3.9.1 and 3.12.0, but 4.0.1 would be invalid. There are many other syntaxes that can be used to specify version constraints in different ways, as you can read more about in the `poetry` [documentation](https://python-poetry.org/docs/dependency-specification). So why do we care about this? The caret operator enforces an upper cap on the dependency versions our package requires. A problem with this approach is that it forces anyone depending on your package to specify the same constraints and can thus make it difficult to add and resolve dependencies.
+The caret operator is short-hand for "requires this or any higher version that does not modify the left-most non-zero version digit". For example, our package depends on any Python version >=3.9.0 and <4.0.0. Thus, examples of valid versions include 3.9.1 and 3.12.0, but 4.0.1 would be invalid. There are many other syntaxes that can be used to specify version constraints in different ways, as you can read more about in the `poetry` [documentation](https://python-poetry.org/docs/dependency-specification). So why do we care about this? The caret operator enforces an upper cap on the dependency versions our package requires. A problem with this approach is that it forces anyone depending on your package to specify the same constraints and can thus make it difficult to add and resolve dependencies.
 
-This problem is best shown by example. Version 1.21.5 of the popular `numpy` package had bound version constraints on Python, requiring version >=3.7 and <3.11 (see the [source code](https://github.com/numpy/numpy/blob/c3d0a09342c08c466984654bc4738af595fba896/setup.py#L409)). Watch what happens if we try to add this version of `numpy` to our `pycounts` package (we use the argument `--dry-run` to show what would happen here without actually execute anything):
+This problem is best shown by example. Version 1.21.5 of the popular `numpy` package had bound version constraints on Python, requiring version >=3.7 and <3.11 (see the [source code](https://github.com/numpy/numpy/blob/c3d0a09342c08c466984654bc4738af595fba896/setup.py#L409)). Watch what happens if we try to add this version of `numpy` to our `pycounts` package (we use the argument `--dry-run` to show what would happen here without actually executing anything):
 
 ```bash
 $ poetry add numpy=1.21.5 --dry-run
@@ -723,23 +723,23 @@ SolverProblemError
 
 The current project's Python requirement (>=3.9,<4.0) is not compatible 
 with some of the required packages Python requirement:
-    - numpy requires Python >=3.7,<3.11, so it will not be satisfied for
-      Python >=3.11,<4.0
+    - numpy requires Python >=3.7,<3.11, so it will not be satisfied 
+      for Python >=3.11,<4.0
 ```
 
-The problem here is that our package currently supports Python version ^3.9 (i.e., >=3.9.0 and <4.0.0), so if we released it, a user with Python 3.12.0 would technically be able to install it. However, `numpy=1.21.5` only supports >=3.7 and <3.11 which would not be compatible with Python 3.12.0 (or any version >=3.11). As a result of this inconsistency, `poetry` refuses to add `numpy=1.21.5` as a dependency of our package. To add it, we have three main choices:
+The problem here is that our package currently supports Python versions ^3.9 (i.e., >=3.9.0 and <4.0.0), so if we released it, a user with Python 3.12.0 would technically be able to install it. However, `numpy` 1.21.5 only supports >=3.7 and <3.11 which would not be compatible with Python 3.12.0 (or any version >=3.11). As a result of this inconsistency, `poetry` refuses to add `numpy` 1.21.5 as a dependency of our package. To add it, we have three main choices:
 
 1. Change the Python version constraints of our package to >=3.7 and <3.11.
 2. Wait for a version of `numpy` that is compatible with our package's Python constraints.
 3. Manually specify the versions of Python for which the dependency can be installed, e.g.: `poetry add numpy=1.21.5 --python ">=3.7, <3.11"`.  
 
-None of these options is really ideal, especially if your package has a large number of dependencies with different bound version constraints. However, a simple way this issue could be resolved is if `numpy=1.21.5` did not having an upper cap on the Python version required. In fact, in the subsequent minor version release of `numpy`, 1.22.0, the upper version cap on Python was removed, requiring only version >=3.8 (see the [source code](https://github.com/numpy/numpy/blob/4adc87dff15a247e417d50f10cc4def8e1c17a03/setup.py#L410)), which we would be able to successfully add to our package:
+None of these options is really ideal, especially if your package has a large number of dependencies with different bound version constraints. However, a simple way this issue could be resolved is if `numpy` 1.21.5 did not having an upper cap on the Python version required. In fact, in the subsequent minor version release of `numpy`, 1.22.0, the upper version cap on Python was removed, requiring only version >=3.8 (see the [source code](https://github.com/numpy/numpy/blob/4adc87dff15a247e417d50f10cc4def8e1c17a03/setup.py#L410)), which we would be able to successfully add to our package:
 
 ```bash
 $ poetry add numpy=1.22.0 --dry-run
 ``` 
 
-Ultimately, version constraints are an important issue that can affect the usability of your package. If you intend to share your package, having an upper cap on dependency versions can make it very difficult for other developers to use your package as a dependency in their own projects. At the time of writing, much of the packaging community, including the [Python Packaging Authority](https://github.com/pypa/packaging.python.org/pull/850), recommend not using an upper cap on version constraints unless absolutely necessary. As a result, we recommend specifying version constraints without an upper cap by manually changing `poetry`'s default caret operator (^) to a greater-than-or-equal-to sign (>=). For example, we will change the `[tool.poetry.dependencies]` section of our *`pyproject.toml`* file as follows:
+Ultimately, version constraints are an important issue that can affect the usability of your package. If you intend to share your package, having an upper cap on dependency versions can make it very difficult for other developers to use your package as a dependency in their own projects. At the time of writing, much of the packaging community, including the [Python Packaging Authority](https://github.com/pypa/packaging.python.org/pull/850), generally recommend not using an upper cap on version constraints unless absolutely necessary. As a result, we recommend specifying version constraints without an upper cap by manually changing `poetry`'s default caret operator (^) to a greater-than-or-equal-to sign (>=). For example, we will change the `[tool.poetry.dependencies]` section of our *`pyproject.toml`* file as follows:
 
 ```toml
 [tool.poetry.dependencies]

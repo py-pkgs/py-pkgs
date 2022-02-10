@@ -14,7 +14,7 @@ class RmdCleaner:
             admonition = match.group(1)
             return admonition.replace("}\n", ">").replace("\n\n", "\n>\n>")
 
-        self.text = re.sub("```{(?:note|attention|tip).*?(}\n(?:.+\n|\n)+?)```", repl, self.text)
+        self.text = re.sub("```{(?:note|attention|tip).*?(}\n(?:.+\n|\n)+?).*```", repl, self.text)
 
     def allow_python_errors(self):
         self.text = re.sub(r'tags=c\("raises-exception"\)', r"error=TRUE", self.text)
