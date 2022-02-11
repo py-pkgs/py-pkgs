@@ -12,7 +12,7 @@
 
 Python packages are a core element of the Python programming language and are how you create organized, reusable, and shareable code in Python. *Python Packages* is an open source book that describes modern and efficient workflows for creating Python packages.
 
-This book is currently under development. Please feel free to provide comments or suggestions in a [GitHub issue](https://github.com/py-pkgs/py-pkgs/issues).
+You can purchase the book at [CRC Press](https://www.routledge.com/Python-Packages/Beuzen-Timbers/p/book/9781032029443) or on [Amazon](https://www.amazon.com/Python-Packages-Chapman-Hall-Crc/dp/1032029447).
 
 ## Building the book
 
