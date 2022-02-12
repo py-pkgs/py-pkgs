@@ -2,7 +2,7 @@
 # Book settings
 title: Python Packages
 author: Tomas Beuzen & Tiffany Timbers
-copyright: "2021"
+copyright: "2022, Licensed under CC BY-NC-SA 4.0"
 logo: images/py-pkgs-hex.png
 repository:
   url: https://github.com/py-pkgs/py-pkgs
@@ -18,7 +18,7 @@ sphinx:
   extra_extensions: [sphinx-prompt]
   config:
     bibtex_reference_style: super
-    
+
 bibtex_bibfiles:
     - references.bib
 
