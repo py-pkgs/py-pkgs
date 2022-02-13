@@ -248,7 +248,7 @@ $ jupyter notebook
 
 \newpage
 
->If you're developing your Python packages in an IDE that supports notebooks, such as VS Code or JupyterLab, feel free to create your notebooks there.
+>If you're developing your Python package in an IDE\index{integrated development environment} that natively supports Jupyter Notebooks, such as Visual Studio Code\index{Visual Studio Code} or JupyterLab, you can simply open *`docs/example.ipynb`* to edit it, without needing to run the `jupyter notebook` command above.
 
 Notebooks are made of "cells" that can contain Python code or Markdown text. Discussing how to use the Jupyter application is beyond the scope of this book, and we refer readers to the Jupyter [documentation](https://jupyter-notebook.readthedocs.io/en/latest/?badge=latest) to learn more. However, as an example, Fig. \@ref(fig:06-jupyter-example-1-fig) and Fig. \@ref(fig:06-jupyter-example-2-fig) show the example notebook that we created to support our `pycounts` package in **Section \@ref(creating-usage-examples)**.
 

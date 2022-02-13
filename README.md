@@ -37,7 +37,7 @@ A fully-rendered HTML version of the book will be built in `py-pkgs/_build/html/
 If you'd like develop and build the `py-pkgs` book to PDF:
 
 1. Install [Docker](https://docs.docker.com/get-docker/);
-2. Pull the `py-pkgs-bookdown` images: `docker pull tbeuzen/py-pkgs-bookdown`;
+2. Pull the `pypkgs/bookdown` images: `docker pull pypkgs/bookdown`;
 3. Make any desired changes to source files;
 4. Build the book using the `build_bookdown.sh` script:
 
