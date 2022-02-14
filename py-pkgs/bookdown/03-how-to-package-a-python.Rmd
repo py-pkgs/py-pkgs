@@ -264,11 +264,11 @@ Table: (\#tab:03-prompt-table) A description of the py-pkgs-cookiecutter templat
 
 |Prompt keyword|Description|
 |:---  | :---  |
-|`author_name`, `package_name`, `package_short_description`| These are self-explanatory. Note that we will be publishing our `pycounts` package to Python's main package index [PyPI](https://pypi.org/)\index{PyPI}, where names must be unique. **If you plan to follow along with this tutorial you should choose a unique name for your package**. Something like `pycounts_[your intials]` might be appropriate, but you can check if a name is already taken by searching for it on [PyPI](https://pypi.org/). We provide guidance on choosing a good package name in **Section \@ref(package-and-module-names)**. |
-|`package_version`|The version of your package. Most packages use [semantic versioning](https://semver.org)\index{semantic versioning}, where a version number consists of three integers `A.B.C`. `A` is the "major" version, `B` is the "minor" version, and `C` is the "patch" version. The first version of a package usually starts at 0.1.0 and increments from there. We'll discuss versioning in **Chapter 7: [Releasing and versioning]**.|
+|`author_name`, `package_name`, `package_short_description`| These are self-explanatory. Note that we will be publishing our `pycounts` package to Python's main package index PyPI\index{PyPI}, where names must be unique. **If you plan to follow along with this tutorial you should choose a unique name for your package**. Something like `pycounts_[your intials]` might be appropriate, but you can check if a name is already taken by searching for it on PyPI. We provide guidance on choosing a good package name in **Section \@ref(package-and-module-names)**. |
+|`package_version`|The version of your package. Most packages use semantic versioning\index{semantic versioning}, where a version number consists of three integers `A.B.C`. `A` is the "major" version, `B` is the "minor" version, and `C` is the "patch" version. The first version of a package usually starts at 0.1.0 and increments from there. We'll discuss versioning in **Chapter 7: [Releasing and versioning]**.|
 |`python_version`|The minimum version of Python your package will support. We'll talk more about versions and constraints in **Section \@ref(dependency-version-constraints)**|
-|`open_source_license`|The license\index{license} that dictates how your package can be used by others. We discuss licenses in **Section \@ref(license)**. The [MIT license](https://choosealicense.com/licenses/mit/) we chose in our example is a permissive license commonly used for open-source work. If your project will not be open source you can choose not to include a license.|
-|`include_github_actions`|An option to include continuous integration and continuous deployment files for use with [GitHub Actions](https://github.com/features/actions). We'll explore these topics in **Chapter 8: [Continuous integration and deployment]**, so for now, we recommend responding `no`.|
+|`open_source_license`|The license\index{license} that dictates how your package can be used by others. We discuss licenses in **Section \@ref(license)**. The MIT license we chose in our example is a permissive license commonly used for open-source work. If your project will not be open source you can choose not to include a license.|
+|`include_github_actions`|An option to include continuous integration and continuous deployment files for use with GitHub Actions. We'll explore these topics in **Chapter 8: [Continuous integration and deployment]**, so for now, we recommend responding `no`.|
 
 
 After responding to the `py-pkgs-cookiecutter` prompts, we have a new directory called `pycounts`, full of content suitable for building a fully-featured Python package! We'll explore each element of this directory structure as we develop our `pycounts` package throughout this chapter.
@@ -502,7 +502,7 @@ Table: (\#tab:03-toml-table) A description of the tables in the pyproject.toml.
 
 |TOML table|Description|
 |:---  | :---  |
-|`[tool.poetry]`|Defines package metadata. The `name`, `version`, `description`, and `authors` of the package are required. Additional metadata listed in the the `poetry` [documentation](https://python-poetry.org/docs/pyproject/) can be added as desired.|
+|`[tool.poetry]`|Defines package metadata. The `name`, `version`, `description`, and `authors` of the package are required.|
 |`[tool.poetry.dependencies]`|Identifies dependencies\index{dependency} of a package — that is, software that the package depends on. Our `pycounts` package only depends on Python 3.9 or higher, but we'll add other dependencies to our package later in this chapter.|
 |`[tool.poetry.dev-dependencies]`|Identifies development dependencies\index{dependency!development dependency} of a package — dependencies required for development purposes, such as running tests or building documentation. We'll add development dependencies to our `pycounts` package later in this chapter.|
 |`[build-system]`|Identifies the build tools required to build your package. We'll talk more about this in **Section \@ref(building-and-distributing-your-package)**.|
@@ -709,7 +709,7 @@ matplotlib = "^3.4.3"
 
 The caret operator is short-hand for "requires this or any higher version that does not modify the left-most non-zero version digit". For example, our package depends on any Python version >=3.9.0 and <4.0.0. Thus, examples of valid versions include 3.9.1 and 3.12.0, but 4.0.1 would be invalid. There are many other syntaxes that can be used to specify version constraints in different ways, as you can read more about in the `poetry` [documentation](https://python-poetry.org/docs/dependency-specification). So why do we care about this? The caret operator enforces an upper cap on the dependency versions our package requires. A problem with this approach is that it forces anyone depending on your package to specify the same constraints and can thus make it difficult to add and resolve dependencies.
 
-This problem is best shown by example. Version 1.21.5 of the popular `numpy` package had bound version constraints on Python, requiring version >=3.7 and <3.11 (see the [source code](https://github.com/numpy/numpy/blob/c3d0a09342c08c466984654bc4738af595fba896/setup.py#L409)). Watch what happens if we try to add this version of `numpy` to our `pycounts` package (we use the argument `--dry-run` to show what would happen here without actually executing anything):
+This problem is best shown by example. Version 1.21.5 of the popular `numpy` [@harris2020array] package had bound version constraints on Python, requiring version >=3.7 and <3.11 (see the [source code](https://github.com/numpy/numpy/blob/c3d0a09342c08c466984654bc4738af595fba896/setup.py#L409)). Watch what happens if we try to add this version of `numpy` to our `pycounts` package (we use the argument `--dry-run` to show what would happen here without actually executing anything):
 
 ```bash
 $ poetry add numpy=1.21.5 --dry-run
@@ -1270,7 +1270,7 @@ Our `py-pkgs-cookiecutter` template already created a Jupyter Notebook example d
 $ jupyter notebook
 ```
 
->If you're developing your Python package in an IDE\index{integrated development environment} that supports Jupyter Notebooks, such as VS Code\index{Visual Studio Code} or JupyterLab, feel free to edit *`docs/example.ipynb`* there.
+>If you're developing your Python package in an IDE\index{integrated development environment} that natively supports Jupyter Notebooks, such as Visual Studio Code\index{Visual Studio Code} or JupyterLab, you can simply open *`docs/example.ipynb`* to edit it, without needing to run the `jupyter notebook` command above.
 
 In the interface, navigate to and open *`docs/example.ipynb`*. As explained in the Jupyter Notebook [documentation](https://jupyter-notebook.readthedocs.io/en/stable/), notebooks are comprised of "cells", which can contain Python code or Markdown text. Our notebook currently looks like Fig. \@ref(fig:03-jupyter-example-1-fig).
 
@@ -1425,7 +1425,7 @@ If we look inside our *`docs/`* directory we see a new directory *`_build/html`*
 
 >If you make significant changes to your documentation, it can be a good idea to delete the *`_build/`* folder before building it again. You can do this easily by adding the `clean` option into the `make html` command: `make clean html`.
 
-The `sphinx-autoapi` extension extracted the docstrings we wrote for our package's functions in **[Writing docstrings]** and rendered them into our documentation. You can find the generated API reference sheet by clicking "API Reference" in the table of contents. For example, Fig. \@ref(fig:03-documentation-2-fig) shows the functions and docstrings in the `pycounts.plotting` module. The `sphinx.ext.viewcode` extension added the "source" button next to each function in our API reference sheet, which links readers directly to the source code of the function (if they want to view it).
+The `sphinx-autoapi` extension extracted the docstrings we wrote for our package's functions in **Fig. \@ref(fig:03:Writing-docstrings`** and rendered them into our documentation. You can find the generated API reference sheet by clicking "API Reference" in the table of contents. For example, {numref}`03-documentation-2-fig) shows the functions and docstrings in the `pycounts.plotting` module. The `sphinx.ext.viewcode` extension added the "source" button next to each function in our API reference sheet, which links readers directly to the source code of the function (if they want to view it).
 
 \newpage
 
@@ -1441,11 +1441,12 @@ Finally, if we navigate to the "Example usage" page, Fig. \@ref(fig:03-documenta
 knitr::include_graphics("../images/03-documentation-3.png")
 ```
 
-Ultimately, you can efficiently make beautiful and many-featured documentation with `sphinx` and its ecosystem of extensions. You can now use this documentation yourself or potentially share it with others, but it really shines when you host it on the web using a free service like [Read the Docs](https://readthedocs.org/), as we'll do in the next section. For those using version control\index{version control}, now is a good time to commit our work on our package's documentation. Be sure to run the following commands from the root package directory:
+Ultimately, you can efficiently make beautiful and many-featured documentation with `sphinx` and its ecosystem of extensions. You can now use this documentation yourself or potentially share it with others, but it really shines when you host it on the web using a free service like [Read the Docs](https://readthedocs.org/), as we'll do in the next section. For those using version control\index{version control}, now is a good time to move back to our package's root directory and commit our work using the following commands:
 
 \newpage
 
 ```bash
+$ cd ..
 $ git add README.md docs/example.ipynb
 $ git commit -m "docs: updated readme and example"
 $ git add src/pycounts/pycounts.py src/pycounts/plotting.py
@@ -1614,7 +1615,7 @@ Successfully installed pycounts-0.1.0
 
 Note in the output above how installing from an sdist requires a build step prior to installation. The sdist is first built into a wheel, which is then installed. For those interested, we discuss the nuances of building and installing packages from sdists and wheels in **Section \@ref(package-distribution-and-installation)**.
 
-Creating a distribution for our package is most useful if we make it available on an online repository like [Python Package Index (PyPI\index{PyPI})](https://pypi.org/), the official online software repository for Python. This would allow users to simply run `pip install pycounts` to install our package, without needing the sdist or wheel files locally, and we'll do this in the next section. But even if you don't intend to share your package, it can still be useful to build and install distributions for two reasons:
+Creating a distribution for our package is most useful if we make it available on an online repository like the Python Package Index (PyPI\index{PyPI}), the official online software repository for Python. This would allow users to simply run `pip install pycounts` to install our package, without needing the sdist or wheel files locally, and we'll do this in the next section. But even if you don't intend to share your package, it can still be useful to build and install distributions for two reasons:
 
 1. A distribution is a self-contained copy of your package's source files that's easy to move around and store on your computer. It makes it easy to retain distributions for different versions of your package, so that you can re-use or share them if you ever need to.
 2. Recall that `poetry` installs package in "editable mode", such that a link to the package's location is installed, rather than an independent distribution of the package itself. This is useful for *development purposes*, because it means that any changes to the source code will be immediately reflected when you next `import` the package, without the need to `poetry install` again. However, for *users* of your package (including yourself using your package in other projects), it is often better to install a "non-editable" version of the package (the default behavior when you `pip install` an sdist or wheel) because a non-editable installation will remain stable and immune to any changes made to the source files on your computer.
@@ -1647,19 +1648,12 @@ Publishing pycounts (0.1.0) to test-pypi
 Now we should be able to visit our package on TestPyPI. The URL for our `pycounts` package is: <https://test.pypi.org/project/pycounts/>. We can try installing our package using `pip` from the command line with the following command:
 
 ```bash
-$ pip install --index-url https://test.pypi.org/simple/ pycounts
-```
-
-\newpage
-
->By default `pip install` will search PyPI for the named package. However, we want to search TestPyPI because that is where we uploaded our package. The argument `--index-url` points `pip` to the TestPyPI index.
-
-Finally, it's important to note that not all developers upload their packages to TestPyPI; some only upload them directly to PyPI. If your package depends on packages that are not on TestPyPI you will have to tell `pip` to look for them on PyPI instead. To do that, you can use the argument `--extra-index-url` as below:
-
-```bash
 $ pip install --index-url https://test.pypi.org/simple/ \
-  --extra-index-url https://pypi.org/simple pycounts
+  --extra-index-url https://pypi.org/simple \
+  pycounts
 ```
+
+By default `pip install` will search PyPI for the named package. However, we want to search TestPyPI because that is where we uploaded our package. The argument `--index-url` points `pip` to the TestPyPI index. However, it's important to note that not all developers upload their packages to TestPyPI; some only upload them directly to PyPI. If your package depends on packages that are not on TestPyPI you can tell `pip` to try and look for them on PyPI instead. To do that, you can use the argument `--extra-index-url` as we do in the command above.
 <!-- #endregion -->
 
 ### Publishing to PyPI
@@ -1685,7 +1679,7 @@ This chapter provided a practical overview of the key steps required to generate
 
 Before moving onto the next chapter, let's summarize a reference list of all the steps we took to develop a Python package in this chapter:
 
-1. Create package structure using a `cookiecutter` template (**Section \@ref(creating-a-package-structure)**).
+1. Create package structure using `cookiecutter` (**Section \@ref(creating-a-package-structure)**).
 
     ```bash
     $ cookiecutter \
@@ -1743,7 +1737,8 @@ Before moving onto the next chapter, let's summarize a reference list of all the
       https://test.pypi.org/legacy/
     $ poetry publish -r test-pypi
     $ pip install --index-url https://test.pypi.org/simple/ \
-      <pkg-name>
+      --extra-index-url https://pypi.org/simple \
+      pycounts
     ```
     
 12. (Optional) Publish your distributions to [PyPI](https://pypi.org/). Your package can now be installed by anyone using `pip` (**Section \@ref(publishing-to-pypi)**).

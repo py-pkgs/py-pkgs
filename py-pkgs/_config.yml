@@ -2,12 +2,12 @@
 # Book settings
 title: Python Packages
 author: Tomas Beuzen & Tiffany Timbers
-copyright: "2021"
+copyright: "2022. CC BY-NC-SA 4.0"
 logo: images/py-pkgs-hex.png
 repository:
   url: https://github.com/py-pkgs/py-pkgs
   path_to_book: "py-pkgs/"  # A path to your book's folder, relative to the repository root.
-  branch: master  # Which branch of the repository should be used when creating links
+  branch: main  # Which branch of the repository should be used when creating links
 exclude_patterns: [bookdown, _build]
 
 latex:
@@ -18,7 +18,7 @@ sphinx:
   extra_extensions: [sphinx-prompt]
   config:
     bibtex_reference_style: super
-    
+
 bibtex_bibfiles:
     - references.bib
 
