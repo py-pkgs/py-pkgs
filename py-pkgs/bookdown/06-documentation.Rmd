@@ -267,8 +267,6 @@ In **Section \@ref(building-documentation)**, we'll show how we can use `sphinx`
 
 A docstring\index{docstring} is a string, surrounded by triple-quotes, at the start of a module, class, or function in Python (preceding any code) that provides documentation on what the object does and how to use it. Docstrings automatically become the documented object's documentation, accessible to users via the `help()` function. Docstrings are a user's first port-of-call when they are trying to use code from your package; they really are a necessity when creating packages, even for yourself.
 
-\newpage
-
 General docstring convention in Python is described in [Python Enhancement Proposal (PEP) 257 — Docstring Conventions](https://www.python.org/dev/peps/pep-0257/), but there is flexibility in how you write your docstrings. A minimal docstring contains a single line describing what the object does, and that might be sufficient for a simple function or for when your code is in the early stages of development. However, for code you intend to share with others (including your future self) a more comprehensive docstring should be written. 
 
 A typical docstring will include:

@@ -1425,7 +1425,7 @@ If we look inside our *`docs/`* directory we see a new directory *`_build/html`*
 
 >If you make significant changes to your documentation, it can be a good idea to delete the *`_build/`* folder before building it again. You can do this easily by adding the `clean` option into the `make html` command: `make clean html`.
 
-The `sphinx-autoapi` extension extracted the docstrings we wrote for our package's functions in **[Writing docstrings]** and rendered them into our documentation. You can find the generated API reference sheet by clicking "API Reference" in the table of contents. For example, Fig. \@ref(fig:03-documentation-2-fig) shows the functions and docstrings in the `pycounts.plotting` module. The `sphinx.ext.viewcode` extension added the "source" button next to each function in our API reference sheet, which links readers directly to the source code of the function (if they want to view it).
+The `sphinx-autoapi` extension extracted the docstrings we wrote for our package's functions in **Fig. \@ref(fig:03:Writing-docstrings`** and rendered them into our documentation. You can find the generated API reference sheet by clicking "API Reference" in the table of contents. For example, {numref}`03-documentation-2-fig) shows the functions and docstrings in the `pycounts.plotting` module. The `sphinx.ext.viewcode` extension added the "source" button next to each function in our API reference sheet, which links readers directly to the source code of the function (if they want to view it).
 
 \newpage
 
@@ -1648,19 +1648,12 @@ Publishing pycounts (0.1.0) to test-pypi
 Now we should be able to visit our package on TestPyPI. The URL for our `pycounts` package is: <https://test.pypi.org/project/pycounts/>. We can try installing our package using `pip` from the command line with the following command:
 
 ```bash
-$ pip install --index-url https://test.pypi.org/simple/ pycounts
-```
-
-\newpage
-
->By default `pip install` will search PyPI for the named package. However, we want to search TestPyPI because that is where we uploaded our package. The argument `--index-url` points `pip` to the TestPyPI index.
-
-Finally, it's important to note that not all developers upload their packages to TestPyPI; some only upload them directly to PyPI. If your package depends on packages that are not on TestPyPI you will have to tell `pip` to look for them on PyPI instead. To do that, you can use the argument `--extra-index-url` as below:
-
-```bash
 $ pip install --index-url https://test.pypi.org/simple/ \
-  --extra-index-url https://pypi.org/simple pycounts
+  --extra-index-url https://pypi.org/simple \
+  pycounts
 ```
+
+By default `pip install` will search PyPI for the named package. However, we want to search TestPyPI because that is where we uploaded our package. The argument `--index-url` points `pip` to the TestPyPI index. However, it's important to note that not all developers upload their packages to TestPyPI; some only upload them directly to PyPI. If your package depends on packages that are not on TestPyPI you can tell `pip` to try and look for them on PyPI instead. To do that, you can use the argument `--extra-index-url` as we do in the command above.
 <!-- #endregion -->
 
 ### Publishing to PyPI
@@ -1686,7 +1679,7 @@ This chapter provided a practical overview of the key steps required to generate
 
 Before moving onto the next chapter, let's summarize a reference list of all the steps we took to develop a Python package in this chapter:
 
-1. Create package structure using a `cookiecutter` template (**Section \@ref(creating-a-package-structure)**).
+1. Create package structure using `cookiecutter` (**Section \@ref(creating-a-package-structure)**).
 
     ```bash
     $ cookiecutter \
@@ -1744,7 +1737,8 @@ Before moving onto the next chapter, let's summarize a reference list of all the
       https://test.pypi.org/legacy/
     $ poetry publish -r test-pypi
     $ pip install --index-url https://test.pypi.org/simple/ \
-      <pkg-name>
+      --extra-index-url https://pypi.org/simple \
+      pycounts
     ```
     
 12. (Optional) Publish your distributions to [PyPI](https://pypi.org/). Your package can now be installed by anyone using `pip` (**Section \@ref(publishing-to-pypi)**).

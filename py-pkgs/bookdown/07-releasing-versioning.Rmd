@@ -371,7 +371,7 @@ The HTML pages are in _build/html.
 
 Looks like everything is working!
 
-### Step 5: Tag a release with version control
+### Step 5: tag a release with version control
 
 For those using remote version control on GitHub (or similar), it's time to tag\index{version control!tag} a new release\index{version control!release} of your repository on GitHub\index{GitHub}. If you're not using version control, you can skip to the next section. We discussed how to tag a release and why we do this in **Section \@ref(tagging-a-package-release-with-version-control)**. Recall that it's a two-step process:
 
@@ -431,10 +431,11 @@ $ poetry publish -r test-pypi
 
 >The above command assumes that you have added TestPyPI to the list of repositories `poetry` knows about via: `poetry config repositories.test-pypi https://test.pypi.org/legacy/`
 
-Now you should be able to try and download your package from TestPyPI\index{TestPyPI} with the following command:
+Now you should be able to download your package from TestPyPI\index{TestPyPI}:
 
 ```bash
-$ pip install --index-url https://test.pypi.org/simple/ pycounts
+$ pip install --index-url https://test.pypi.org/simple/ \
+  --extra-index-url https://pypi.org/simple pycounts
 ```
 
 >By default `pip` will search PyPI for the named package. The argument `--index-url` points `pip` to the TestPyPI index instead. If your package has dependencies that are not on TestPyPI, you may need to tell `pip` to also search PyPI with the following argument: `--extra-index-url https://pypi.org/simple`.

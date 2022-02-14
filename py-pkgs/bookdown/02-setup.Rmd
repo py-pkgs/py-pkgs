@@ -176,15 +176,15 @@ To develop with Docker inside Visual Studio Code, you can consult the Visual Stu
 
 7. Now, open the Visual Studio Code [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) and search for and select the command "Remote-Containers: Reopen in Container". This command will open Visual Studio Code inside a container made using the `pypkgs/vscode` Docker image. After Visual Studio Code finishes opening in the container, test that you have access to the three pre-installed pieces of packaging software we need by opening the [integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal) and trying the following commands:
 
-    ```{prompt} bash \# auto
-    # poetry --version
-    # conda --version
-    # cookiecutter --version
+    ```bash
+    $ poetry --version
+    $ conda --version
+    $ cookiecutter --version
     ```
 
 8. Your development environment is now set up, and you can work with Visual Studio Code as if everything were running locally on your machine (except now your development environment exists inside a container). If you exit Visual Studio Code, your container will stop but will persist on your machine. It can be re-opened at a later time using the “Remote-Containers: Reopen in Container” command we used in step 7.
 
-9. If you want to completely remove your development container to free up memory on your machine, first find the container's ID:
+9. If you want to completely remove your development container to free up memory on your machine, first find the container's ID:\newpage
 
     ```bash
     $ docker ps -a
@@ -206,7 +206,7 @@ To develop with Docker inside Visual Studio Code, you can consult the Visual Stu
 To develop with Docker in JupyterLab follow the instructions below. Helpful information and tutorials can also be found in the Jupyter Docker Stacks [documentation](https://jupyter-docker-stacks.readthedocs.io/en/latest/index.html).
 
 1. Install and configure Docker Desktop for your operating system following the instructions on the [official website](https://www.docker.com/get-started).
-2. Once docker is installed, open a command-line interface and pull the `pypkgs/jupyter` docker image by running the following command:
+2. Once Docker has been installed, open a command-line interface and pull the `pypkgs/jupyter` Docker image by running the `docker pull` command as follows:
 
     ```bash
     $ docker pull pypkgs/jupyter
@@ -220,7 +220,7 @@ To develop with Docker in JupyterLab follow the instructions below. Helpful info
       -v "${PWD}":/home/jovyan/work \
       pypkgs/jupyter
     ```
-    
+
     >    In the command above, `-p` binds port 8888 in the container to port 8888 on the host machine and `-v` mounts the current directory into the container at the location `/home/jovyan/work`. Windows users that run into issues with the command above may need to try double-slashes in the volume mount path, for example: `-v /$(pwd)://home//jovyan//work`. You can read more about the `docker run` command and its arguments in the Docker command-line interface [documentation](https://docs.docker.com/engine/reference/commandline/run/).
 
     

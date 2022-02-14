@@ -37,7 +37,7 @@ By reading this book, you will:
 
 **Chapter 1: [Introduction]** first gives a brief introduction to packages in Python and why you should know how to make them.
 
-**Chapter 2: [System setup]** describes how to set up your development environment to develop packages and follow along with the examples in this book.
+**Chapter 2: [System setup]** describes how to set up your development environment to develop packages and follow the examples in this book.
 
 In **Chapter 3: [How to package a Python]**, we develop an example package from beginning-to-end as a practical demonstration of the key steps involved in the packaging process. This chapter forms the foundation of the book and will act as a reference sheet for readers creating packages in the future.
 
@@ -58,8 +58,8 @@ Table: (\#tab:00-assumptions-table) Concepts this book assumes readers have basi
 | Item    | Learning resources |
 | :--- | ---: |
 | How to import Python packages with the `import` statement | Python documentation |
-| How to write conditionals (`if`/`elif`/`else`) and loops (`for`) in Python| Python documentation|
-| How to use and write simple Python functions| *Plotting and Programming in Python: Writing Functions*  [@carpentries2021] |
+| How to write conditionals (`if`/`elif`/`else`) and loops (`for`)| Python documentation|
+| How to use and write Python functions| *Plotting and Programming in Python: Writing Functions*  [@carpentries2021] |
 | (Optional) Basic familiarity with version control and Git and GitHub (or similar tools) | *Happy Git and GitHub for the useR*  [@bryan2021] or *Research Software Engineering with Python*  [@rsep2021]| 
 
 
