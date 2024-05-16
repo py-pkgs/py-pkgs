@@ -1,2 +1,2 @@
-jupyter-book
+jupyter-book==0.15.1
 sphinx-prompt==1.7.0
