@@ -1,2 +1,2 @@
 jupyter-book
-sphinx-prompt
+sphinx-prompt==1.7.0
