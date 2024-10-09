@@ -15,7 +15,7 @@ latex:
     targetname: book.tex
 
 sphinx:
-  extra_extensions: [sphinx-prompt]
+  extra_extensions: [sphinx-prompt, sphinx_copybutton]
   config:
     bibtex_reference_style: super
 
