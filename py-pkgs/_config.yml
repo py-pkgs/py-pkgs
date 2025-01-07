@@ -15,9 +15,11 @@ latex:
     targetname: book.tex
 
 sphinx:
-  extra_extensions: [sphinx-prompt]
+  recursive_update: true
   config:
     bibtex_reference_style: super
+    copybutton_prompt_text: '>>> |\$ '
+    copybutton_prompt_is_regexp: True
 
 bibtex_bibfiles:
     - references.bib
