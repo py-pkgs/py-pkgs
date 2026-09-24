@@ -2,7 +2,10 @@
 
 ![Build](https://github.com/py-pkgs/py-pkgs/workflows/Build/badge.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/aedd3981-db10-4730-b21f-a762194129f9/deploy-status)](https://app.netlify.com/sites/zen-ptolemy-4bba7d/deploys)
-[![Website](https://img.shields.io/badge/Website-https://py--pkgs.org-blue)](https://py-pkgs.org/)
+
+[![Website](https://img.shields.io/badge/%F0%9F%8C%90%20Website-https://py--pkgs.org-cyan)](https://py-pkgs.org/)
+[![Buy from CRC Press](https://img.shields.io/badge/%F0%9F%93%98%20Buy%20from-CRC%20Press-blue)](https://www.routledge.com/Python-Packages/Beuzen-Timbers/p/book/9781032029443)
+[![Buy from Amazon](https://img.shields.io/badge/%F0%9F%93%99%20Buy%20from-Amazon-orange)](https://www.amazon.com/dp/1032029447/)
 
 [Tomas Beuzen](https://www.tomasbeuzen.com/) & [Tiffany Timbers](https://www.tiffanytimbers.com/)
 
