@@ -56,6 +56,9 @@ format:
     css: _static/style.css
     code-copy: true
     include-after-body: html/copy-without-prompts.html  # copy button leaves out $ and >>> prompts
+    comments:
+      hypothesis: true  # inline annotation for reviewers (use a private Hypothesis group)
+    canonical-url: true  # every preview declares its py-pkgs.org URL, so annotations carry across previews
     code-overflow: wrap
   pdf:
     documentclass: krantz
