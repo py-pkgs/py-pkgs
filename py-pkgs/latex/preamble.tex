@@ -1,0 +1,24 @@
+% Ported from the Ed.1 bookdown preamble (bookdown/latex/preamble.tex).
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{caption}
+\captionsetup{font=bf,singlelinecheck=off}
+\usepackage[scale=.8]{sourcecodepro}
+
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+% Print links as footnotes
+\AtBeginDocument{%
+  \let\oldhref\href
+  \renewcommand{\href}[2]{#2\footnote{\url{#1}}}}
+
+\usepackage{makeidx}
+\makeindex
+
+\AtBeginDocument{\urlstyle{tt}}
+
+% krantz's \maketitle doesn't support \and between authors (Quarto emits it for author lists)
+\renewcommand{\and}{\unskip{} and }
