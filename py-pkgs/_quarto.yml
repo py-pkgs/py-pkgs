@@ -1,0 +1,75 @@
+project:
+  type: book
+  output-dir: _book
+  render:
+    - "*.qmd"
+  resources:
+    - ../robots.txt
+
+book:
+  title: "Python Packages"
+  edition: "2nd edition (draft)"
+  author:
+    - Tomas Beuzen
+    - Tiffany Timbers
+  license: "CC BY-NC-SA 4.0"
+  site-url: https://py-pkgs.org
+  repo-url: https://github.com/py-pkgs/py-pkgs
+  repo-subdir: py-pkgs
+  repo-branch: draft-2nd-edition
+  repo-actions: [issue, source]
+  favicon: images/favicon.ico
+  sidebar:
+    logo: images/py-pkgs-hex.png
+  page-footer:
+    center: >-
+      By <a href="https://www.tomasbeuzen.com/">Tomas Beuzen</a> &
+      <a href="http://tiffanytimbers.com">Tiffany Timbers</a>
+  chapters:
+    - index.qmd
+    - 00-preface.qmd
+    - 00-authors.qmd
+    - 01-introduction.qmd
+    - 02-setup.qmd
+    - 03-how-to-package-a-python.qmd
+    - 04-package-structure.qmd
+    - 05-testing.qmd
+    - 06-documentation.qmd
+    - 07-releasing-versioning.qmd
+    - 08-ci-cd.qmd
+    - 09-bibliography.qmd
+
+bibliography: references.bib
+csl: american-medical-association.csl  # numbered superscript, order of first citation (as Ed.1 web: super + unsrt)
+
+# The book contains no executable code: every Python and shell example is a static block.
+execute:
+  enabled: false
+
+number-depth: 3
+toc-depth: 3
+fig-align: center
+
+format:
+  html:
+    theme: cosmo
+    css: _static/style.css
+    code-copy: true
+    include-after-body: html/copy-without-prompts.html  # copy button leaves out $ and >>> prompts
+    code-overflow: wrap
+  pdf:
+    documentclass: krantz
+    pdf-engine: xelatex
+    toc: true
+    lof: true
+    lot: true
+    colorlinks: true
+    highlight-style: monochrome
+    include-in-header: latex/preamble.tex
+    include-before-body: latex/before_body.tex
+    include-after-body: latex/after_body.tex
+    filters:
+      - filters/drop-web-only-headings.lua
+    crossref:
+      fig-title: "FIGURE"
+      tbl-title: "TABLE"

@@ -1,0 +1,26 @@
+<script>
+// Strip shell ("$ ") and Python (">>> ", "... ") prompts from code copied with the copy button,
+// so readers can paste commands straight into a terminal or interpreter.
+// Quarto's copy button uses ClipboardJS; this wraps its constructor so the copied text is cleaned.
+(function () {
+  const Original = window.ClipboardJS;
+  if (!Original) return;
+  const PROMPT = /^(\$ |>>> |\.\.\. )/;
+  function stripPrompts(text) {
+    const lines = text.split("\n");
+    if (!lines.some((line) => PROMPT.test(line))) return text;
+    return lines.map((line) => line.replace(PROMPT, "")).join("\n");
+  }
+  function ClipboardWithoutPrompts(selector, options) {
+    options = Object.assign({}, options);
+    if (typeof options.text === "function") {
+      const getText = options.text;
+      options.text = (trigger) => stripPrompts(getText(trigger));
+    }
+    return new Original(selector, options);
+  }
+  Object.setPrototypeOf(ClipboardWithoutPrompts, Original);
+  ClipboardWithoutPrompts.prototype = Original.prototype;
+  window.ClipboardJS = ClipboardWithoutPrompts;
+})();
+</script>
