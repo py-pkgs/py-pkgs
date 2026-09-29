@@ -1,0 +1,13 @@
+# Netlify build for the Quarto (2nd edition) sources.
+# This file only exists on the 2nd-edition branches, so it overrides the UI build
+# settings for them and their PR deploy previews; `main` (Ed.1, py-pkgs.org) keeps
+# building with the settings configured in the Netlify UI.
+[build]
+  command = """
+    curl -sSL https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.tar.gz | tar -xz \
+    && ./quarto-${QUARTO_VERSION}/bin/quarto render py-pkgs --to html
+  """
+  publish = "py-pkgs/_book"
+
+[build.environment]
+  QUARTO_VERSION = "1.10.18"

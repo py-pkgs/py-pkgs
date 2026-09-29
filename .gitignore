@@ -1,2 +1,5 @@
 _build
 _book
+.quarto/
+*_files/
+/.venv/
