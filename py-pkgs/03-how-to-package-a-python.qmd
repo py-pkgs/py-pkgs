@@ -2,7 +2,7 @@
 
 In this chapter we will develop an entire example Python package from beginning-to-end to demonstrate the key steps involved in developing a package. This chapter forms the foundation of this book. It contains everything you need to know to create a Python package and can be used as a reference sheet when creating packages in the future. Later chapters explore each of the individual steps in the packaging process in further detail.
 
-The example package we are going to create in this chapter will help us calculate word counts from a text file. We'll be calling it `pycounts`, and it will be useful for calculating word usage in texts such as novels, research papers, news articles, log files, and more.
+The example package we are going to create in this chapter will help us calculate and plot growth rates of snakes from real capture-recapture data. We'll be calling it `pysnakes`, and it will take a snake's body length at two points in time and tell us how fast it's growing.
 
 ::: {.callout-tip}
 ## Instructor note: why "The Whole Game"?
@@ -12,202 +12,23 @@ The name of this chapter is a nod to a pedagogical idea called "Teaching Games f
 Hadley Wickham and Jenny Bryan use "The Whole Game" for the equivalent chapters in *R Packages* [@wickham2015] and *R for Data Science*, and we've adopted the same name and idea here: this chapter walks through packaging a project end-to-end before the following chapters break each step down in detail. We think this framing also helps R package developers, already familiar with "The Whole Game" from Wickham and Bryan's work, feel at home moving into Python packaging.
 :::
 
-## Counting words in a text file
-
-### Developing our code {#sec-03-developing-our-code}
-
-Before even thinking about making a package, we'll first develop the code we want to package up. The `pycounts` package we are going to create will help us calculate word counts from a text file. Python has a useful `Counter` object that can be used to calculate counts of a collection of elements (like a list of words) and store them in a dictionary.
-
-We can demonstrate the functionality of `Counter` by first opening up a Python interpreter at the command line:
-
-```bash
-$ uv run python3.12
-```
-
-We can then import the `Counter` class from the `collections` module:
-
-```python
->>> from collections import Counter
-```
-
-Now we will define and use a sample list of words to create a `Counter` object:
-
-```python
->>> words = ["a", "happy", "hello", "a", "world", "happy"]
->>> word_counts = Counter(words)
->>> word_counts
-```
-
-```md
-Counter({'a': 2, 'happy': 2, 'hello': 1, 'world': 1})
-```
-
-Note how the `Counter` object automatically calculated the count of each unique word in our input list and returned the result as a dictionary of `'word': count` pairs! Given this functionality, how can we use `Counter` to count the words in a text file? Well, we would need to load the file with Python, split it up into a list of words, and then create a `Counter` object from that list of words.
-
-We first need a text file to help us build this workflow. "[The Zen of Python](https://www.python.org/dev/peps/pep-0020/)" is a list of nineteen aphorisms about the Python programming language, which can be viewed by running `import this` in a Python interpreter:
-
-```python
->>> import this
-```
-
-```md
-The Zen of Python, by Tim Peters
-
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-...
-```
-
-Let's make a text file called *`zen.txt`* containing the "The Zen of Python" text above. Do this by manually copying the above output into a file in your current directory called *`zen.txt`* using an editor of your choice, or by running the following command at the command line:
-
-```bash
-$ uv run python3.12 -c "import this" > zen.txt
-```
-
-::: {.callout-note}
-In the command above, the `-c` option allows you to pass a string for Python to execute, and the `>` directs the output of the command to a file (which in our case is called "zen.txt" and is located in the current directory).
-:::
-
-Now that we have a text file to work with, we can go back to developing our word-counting workflow. To open *`zen.txt`* in Python, we can use the `open()` function to open the file and then the `.read()` method to read its contents as a Python string. The code below, run in a Python interpreter, saves the contents of *`zen.txt`* as a string in the variable `text`:
-
-```python
->>> with open("zen.txt") as file:
-        text = file.read()
-```
-
-Let's see what `text` looks like:
-
-```python
->>> text
-```
-
-```md
-"The Zen of Python, by Tim Peters\n\nBeautiful is better
-than ugly.\nExplicit is better than implicit.\nSimple is 
-better than complex.\nComplex is better than complicated
-..."
-```
-
-We can see that the `text` variable is a single string, with the `\n` symbols indicating a new line in the string.
-
-Before we split the above text into individual words for counting with `Counter`, we should lowercase all the letters and remove punctuation so that if the same word occurs multiple times with different capitalization or punctuation, it isn't treated as different words by `Counter`. For example we want "Better", "better", and "better!" to result in three counts of the word "better".
-
-To lowercase all letters in a Python string, we can use the `.lower()` method:
-
-```python
->>> text = text.lower()
-```
-
-To remove punctuation, we can find them in our string and replace them with nothing using the `.replace()` method. Python provides a collection of common punctuation marks in the `string` module:
-
-```python
->>> from string import punctuation
->>> punctuation
-```
-
-```md
-'!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
-```
-
-We can use a `for` loop to remove each of the above punctuation marks from our `text` variable by replacing it with nothing, i.e., an empty string (`""`):
-
-```python
->>> for p in punctuation:
-        text = text.replace(p, "")
-```
-
-With punctuation removed and the letters in `text` all lowercase, we can now split it up into individual words using the `.split()` method. This method splits a string into a list of strings using spaces, newlines (`\n`), and tabs (`\t`) as separators:
-
-```python
->>> words = text.split()
->>> words
-```
-
-```md
-['the', 'zen', 'of', 'python', 'by', 'tim', 'peters', 
-'beautiful', 'is', 'better', 'than', 'ugly', ...]
-```
-
-We've managed to load, pre-process, and split our *`zen.txt`* file up into individual words and can now determine the word counts by creating a `Counter` object:
-
-```python
->>> from collections import Counter
->>> word_counts = Counter(words)
->>> word_counts
-```
-
-```md
-Counter({'is': 10, 'better': 8, 'than': 8, 'the': 6, 
-'to': 5, 'of': 3, 'although': 3, 'never': 3, ... })
-```
-
-### Turning our code into functions {#sec-03-turning-our-code-into-functions}
-
-In **@sec-03-developing-our-code** we developed a workflow for counting words in a text file. But it would be a pain to run all that code every time we want to count the words in a file! To make things more efficient, let’s turn the above code into three reusable functions called `load_text()`, `clean_text()`, and `count_words()` by defining them in our Python interpreter:
-
-::: {.callout-tip}
-We've added a short documentation string (docstring) to each function here using triple quotes. We'll talk more about docstrings in **@sec-03-writing-docstrings**.
-
-You'll also notice the `: str`, `-> str`, and `-> Counter` annotations in the function signatures. These are **type hints**\index{type hints} — an optional syntax (introduced in [PEP 484](https://peps.python.org/pep-0484/)) for declaring the expected types of a function's parameters and its return value; very useful information for the users of your code. Type hints have no effect at runtime; Python ignores them when executing your code. Their value comes from static type checkers — tools like [`mypy`](https://mypy-lang.org/) or [`pyright`](https://github.com/microsoft/pyright) — that read the annotations and warn you about type mismatches before you ever run the code. When you ship a package that includes type hints, you signal this to type checkers by including a *`py.typed`* marker file in your package directory, which we'll see shortly.
-:::
-
-```python
->>> def load_text(input_file: str) -> str:
-        """Load text from a text file and return as a string."""
-        with open(input_file, "r") as file:
-            text = file.read()
-        return text
-```
-
-```python
->>> def clean_text(text: str) -> str:
-        """Lowercase and remove punctuation from a string."""
-        text = text.lower()
-        for p in punctuation:
-            text = text.replace(p, "")
-        return text
-```
-
-```python
->>> def count_words(input_file: str) -> Counter:
-        """Count unique words in a string."""
-        text = load_text(input_file)
-        text = clean_text(text)
-        words = text.split()
-        return Counter(words)
-```
-
-We can now use our word-counting functionality as follows:
-
-```python
->>> count_words("zen.txt")
-```
-
-```md
-Counter({'is': 10, 'better': 8, 'than': 8, 'the': 6, 
-'to': 5, 'of': 3, 'although': 3, 'never': 3, ... })
-```
-
-Unfortunately, if you quit from the Python interpreter, the functions we just defined will be lost and you will have to define them again in new sessions.
-
-The whole idea of a Python package is that we can store Python code, like our `load_text()`, `clean_text()`, and `count_words()` functions, in a package that we, and others, can install, `import`, and use at any time and in any project. In the remainder of this chapter, we'll work towards packaging up the code we've written into a Python package called `pycounts`.
+By the end of this chapter, `pysnakes` will be a small but complete package: a module with a few functions, a plotting module, tests, documentation, and a tagged `v0.1.0` release built and published as a distributable package. Along the way, we'll use `uv`\index{uv} for environments and dependencies, Git and GitHub for version control, `pytest` for testing, and `mkdocs` for documentation — the same core toolset you'll use for your own packages. We've also built the finished `pysnakes` package ourselves, one commit at a time, so you can follow along with a package you know actually works.
 
 ## Package structure
 
 ### A brief introduction {#sec-03-a-brief-introduction}
 
-To develop our `pycounts` package we first need to create an appropriate directory structure. Python packages consist of a specific directory structure typically including the following:
+To develop our `pysnakes` package we first need to create an appropriate directory structure. Python packages consist of a specific directory structure typically including the following:
 
-- A root directory with the name of the package, e.g., *`pycounts/`*;
-- One or more Python modules\index{module} (files with a *.py* extension that contain Python code) in a subdirectroy *`src/pycounts/`*;
+- A root directory with the name of the package, e.g., *`pysnakes/`*;
+- One or more Python modules\index{module} (files with a *.py* extension that contain Python code) in a subdirectroy *`src/pysnakes/`*;
 - Instructions on how to build and install the package on a computer in a file called *`pyproject.toml`*\index{pyproject.toml}; and,
 - Usage and development resources such as documentation, tests, a a README, LICENSE, CHANGELOG, etc
 
-An example structure for a package called "pycounts" with two modules ("moduleA" and "moduleB") is shown below. There's a lot of files here, but don't worry; packages are usually created from pre-made templates, as we'll show in the next section. At this point, we're just getting a bird's-eye view of package structure\index{package structure}. We'll create and explore each of these elements and more in this structure as we make our way through this chapter.
+An example structure for a package called "pysnakes" with two modules ("moduleA" and "moduleB") is shown below. There's a lot of files here, but don't worry; packages are usually created from pre-made templates, as we'll show in the next section. At this point, we're just getting a bird's-eye view of package structure\index{package structure}. We'll create and explore each of these elements and more in this structure as we make our way through this chapter.
 
 ```md
-pycounts
+pysnakes
 ├── CHANGELOG.md               ┐
 ├── CONDUCT.md                 │
 ├── CONTRIBUTING.md            │
@@ -217,7 +38,7 @@ pycounts
 ├── README.md                  ┘
 ├── pyproject.toml             ┐ 
 ├── src                        │
-│   └── pycounts               │ 
+│   └── pysnakes               │ 
 │       ├── __init__.py        │ Package source code, metadata,
 │       ├── moduleA.py         │ build instructions, and tests
 │       ├── moduleB.py         │
@@ -228,7 +49,7 @@ pycounts
 \newpage
 
 ::: {.callout-tip}
-It might be confusing to see two directories with the package's name (the root directory `pycounts/` and the subdirectory *`src/pycounts/`*), but this is how Python packages are typically set up. It is called the **src layout**\index{src layout}, and it is the recommended structure for Python packages. The alternative — placing your package directory at the root — is known as the flat layout. The src layout has an important practical advantage: it prevents Python from accidentally importing your package's source code directly from the project root during development, instead of the installed version. This catches a class of subtle bugs where tests pass locally but fail for users who install from PyPI. We'll explore this structure more in the rest of this chapter and discuss it in detail in **Chapter 4: [Package structure and distribution](#sec-04-package-structure-and-distribution)**.
+It might be confusing to see two directories with the package's name (the root directory `pysnakes/` and the subdirectory *`src/pysnakes/`*), but this is how Python packages are typically set up. It is called the **src layout**\index{src layout}, and it is the recommended structure for Python packages. The alternative — placing your package directory at the root — is known as the flat layout. The src layout has an important practical advantage: it prevents Python from accidentally importing your package's source code directly from the project root during development, instead of the installed version. This catches a class of subtle bugs where tests pass locally but fail for users who install from PyPI. We'll explore this structure more in the rest of this chapter and discuss it in detail in **Chapter 4: [Package structure and distribution](#sec-04-package-structure-and-distribution)**.
 :::
 
 ### Creating a package structure {#sec-03-creating-a-package-structure}
@@ -236,10 +57,10 @@ It might be confusing to see two directories with the package's name (the root d
 Most developers use a pre-made template to quickly set up the directory structure of a Python package. `uv`, which we installed in **@sec-02-install-packaging-software**, can do that for us, using the command below:
 
 ```bash
-$ uv init --lib pycounts --python 3.12
+$ uv init --lib pysnakes --python 3.12
 ```
 
-After executing this command, we have a new directory called `pycounts`, full of content suitable for building a fully-featured Python package! We'll explore each element of this directory structure, and include additional elements, as we develop our `pycounts` package throughout this chapter.
+After executing this command, we have a new directory called `pysnakes`, full of content suitable for building a fully-featured Python package! We'll explore each element of this directory structure, and include additional elements, as we develop our `pysnakes` package throughout this chapter.
 
 ::: {.callout-tip}
 The `--lib` flag is short for "library". A Python library is a collection of code that provides functionality and objects to be reused by others (including yourself). The term is often used interchangeably with "package" in the Python ecosystem, although the latter does refer to a specific structure of Python modules, as we'll discuss more in **Chapter 4: [Package structure and distribution](#sec-04-package-structure-and-distribution)**. Note that `uv init --lib` uses the src layout by default and we follow that conventtion throughout this book.
@@ -248,13 +69,13 @@ The `--lib` flag is short for "library". A Python library is a collection of cod
 \newpage
 
 ```md
-pycounts
+pysnakes
 ├── .gitignore                 ┐ 
 ├── .python-version            │ Package documentation and metadata
 ├── pyproject.toml             │
 ├── README.md                  ┘
 └── src                        ┐ 
-    └── pycounts               │ Package source code
+    └── pysnakes               │ Package source code
         ├── __init__.py        │ 
         └── py.typed           ┘ 
 ```
@@ -266,7 +87,7 @@ Here's what each of the files/folders in that structure is for:
 * `pyproject.toml` — Defines how the package is built and lists its dependencies and configuration.
 * `README.md` — Provides a human-readable description of what the package does and how to use it.
 * `src/` — Holds the actual source code for the project.
-* `pycounts/` — The main Python package directory containing the code users will import.
+* `pysnakes/` — The main Python package directory containing the code users will import.
 * `init.py` — Marks the directory as a Python package and can run setup code when imported.
 * `py.typed` — Indicates that the package includes type hints for static type checkers.
 
@@ -286,15 +107,15 @@ For this book, we assume readers have basic familiarity with Git and GitHub (or 
 
 ### Set up local version control
 
-To set up local version control\index{version control}, navigate to the root *`pycounts/`* directory and initialize a Git\index{Git} repository:
+To set up local version control\index{version control}, navigate to the root *`pysnakes/`* directory and initialize a Git\index{Git} repository:
 
 ```bash
-$ cd pycounts
+$ cd pysnakes
 $ git init
 ```
 
 ```md
-Initialized empty Git repository in /Users/tomasbeuzen/pycounts/.git/
+Initialized empty Git repository in /Users/tomasbeuzen/pysnakes/.git/
 ```
 
 ::: {.callout-note}
@@ -340,99 +161,137 @@ The commands below should be specific to your GitHub username and the name of yo
 :::
 
 ```bash
-$ git remote add origin git@github.com:TomasBeuzen/pycounts.git
+$ git remote add origin git@github.com:TomasBeuzen/pysnakes.git
 $ git branch -M main
 $ git push -u origin main
 ```
 
 ```md
 ...
-To github.com:TomasBeuzen/pycounts.git
+To github.com:TomasBeuzen/pysnakes.git
  * [new branch]      main -> main
 branch 'main' set up to track 'origin/main'.
 ```
 
+You'll notice we're prefixing our commands with `uv run`\index{uv!run}. This tells `uv` to run a command inside the project's virtual environment, creating that environment and installing the project (and its dependencies) into it first if it doesn't already exist or is out of date. We'll see `uv run` throughout this chapter — it's `uv`'s way of making sure you (and anyone else working on the package) are always running code against a consistent, up-to-date environment, without having to manually activate anything.
+
+## Growth rates of gartersnakes
+
+### Developing our code {#sec-03-developing-our-code}
+
+Before even thinking about making a package, we'll first develop the code we want to package up. Our `pysnakes` package will calculate the growth rate of a snake between two captures, given its body length (in millimetres) at each capture and the number of days between them. Growth rate is simply the change in length divided by the number of days.
+
+We can develop this logic interactively by opening up a Python interpreter at the command line:
+
+```bash
+$ uv run python3.12
+```
+
+Let's calculate a growth rate by hand first. Suppose a snake measured 500 mm at its first capture and 600 mm at a second capture, 100 days later:
+
+```python
+>>> start_mm = 500
+>>> end_mm = 600
+>>> days = 100
+>>> (end_mm - start_mm) / days
+```
+
+```md
+1.0
+```
+
+That snake grew 1 mm per day on average. The calculation is always the same: the change in length divided by the number of days between captures. Real gartersnake measurements won't line up into such round numbers, but we'll deal with that shortly.
+
+### Turning our code into functions {#sec-03-turning-our-code-into-functions}
+
+In **@sec-03-developing-our-code** we worked out the arithmetic for a single pair of measurements. But it would be a pain to retype that arithmetic every time we have a new pair of captures! To make things reusable, let's turn it into a function called `growth_rate()` by defining it in our Python interpreter:
+
+::: {.callout-tip}
+We've added a short documentation string (docstring) to the function here using triple quotes. We'll talk more about docstrings in **@sec-03-writing-docstrings**.
+
+You'll also notice the `: float`, `: int`, and `-> float` annotations in the function signature. These are **type hints**\index{type hints} — an optional syntax (introduced in [PEP 484](https://peps.python.org/pep-0484/)) for declaring the expected types of a function's parameters and its return value; very useful information for the users of your code. Type hints have no effect at runtime; Python ignores them when executing your code. Their value comes from static type checkers — tools like [`mypy`](https://mypy-lang.org/) or [`pyright`](https://github.com/microsoft/pyright) — that read the annotations and warn you about type mismatches before you ever run the code. When you ship a package that includes type hints, you signal this to type checkers by including a *`py.typed`* marker file in your package directory, which we'll see shortly.
+:::
+
+```python
+>>> def growth_rate(start_mm: float, end_mm: float, days: int) -> float:
+        """Calculate growth rate in millimetres per day between two captures."""
+        return (end_mm - start_mm) / days
+```
+
+We can now use our function as follows:
+
+```python
+>>> growth_rate(500, 600, 100)
+```
+
+```md
+1.0
+```
+
+Unfortunately, if you quit from the Python interpreter, the function we just defined will be lost and you will have to define it again in new sessions.
+
+The whole idea of a Python package is that we can store Python code, like our `growth_rate()` function, in a package that we, and others, can install, `import`, and use at any time and in any project. In the remainder of this chapter, we'll work towards packaging up the code we've written into a Python package called `pysnakes`.
+
 ## Packaging your code {#sec-03-packaging-your-code}
 
-We now have our `pycounts` package structure\index{package structure} set up, and are ready to populate our package with the `load_text()`, `clean_text()` and `count_words()` functions we developed at the beginning of the chapter in **@sec-03-turning-our-code-into-functions**. Where should we put these functions? Let's review the structure of our package:
+We now have our `pysnakes` package structure\index{package structure} set up, and are ready to populate our package with the `growth_rate()` function we developed at the beginning of the chapter in **@sec-03-turning-our-code-into-functions**. Where should we put it? Let's review the structure of our package:
 
 \newpage
 
 ```md
-pycounts
+pysnakes
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
 ├── README.md
 └── src
-    └── pycounts
+    └── pysnakes
         ├── __init__.py
         └── py.typed 
 ```
 
-The Python code for our package should live in modules\index{module} in the *`src/pycounts/`* directory. Create that file now so that your directory structure looks like the below (note that this module can be named anything, but it is common for a module to share the name of the package):
+The Python code for our package should live in modules\index{module} in the *`src/pysnakes/`* directory. Create that file now so that your directory structure looks like the below (note that this module can be named anything, but it is common for a module to share the name of the package):
 
 ``` {.md emphasize-lines="10"}
-pycounts
+pysnakes
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
 ├── README.md
 └── src
-    └── pycounts
+    └── pysnakes
         ├── __init__.py
         ├── py.typed
-        └── pycounts.py  <--- create this file
+        └── pysnakes.py  <--- create this file
 ```
 
-We'll copy the functions we created in **@sec-03-turning-our-code-into-functions** to the module *`src/pycounts/pycounts.py`* now. Our functions depends on `collections.Counter` and `string.punctuation`, so we also need to import those at the top of the file. Here's what *`src/pycounts/pycounts.py`* should now look like:
+We'll copy the function we created in **@sec-03-turning-our-code-into-functions** to the module *`src/pysnakes/pysnakes.py`* now. Here's what *`src/pysnakes/pysnakes.py`* should now look like:
 
 \newpage
 
 ```python
-from collections import Counter
-from string import punctuation
-
-def load_text(input_file: str) -> str:
-    """Load text from a text file and return as a string."""
-    with open(input_file, "r") as file:
-        text = file.read()
-    return text
-    
-def clean_text(text: str) -> str:
-    """Lowercase and remove punctuation from a string."""
-    text = text.lower()
-    for p in punctuation:
-        text = text.replace(p, "")
-    return text
-    
-def count_words(input_file: str) -> Counter:
-    """Count unique words in a string."""
-    text = load_text(input_file)
-    text = clean_text(text)
-    words = text.split()
-    return Counter(words)
+def growth_rate(start_mm: float, end_mm: float, days: int) -> float:
+    """Calculate growth rate in millimetres per day between two captures."""
+    return (end_mm - start_mm) / days
 ```
 
 ## Test drive your package code
 
 ### Create a virtual environment {#sec-03-create-a-virtual-environment}
 
-Before we install and test our package, we will set up a virtual environment\index{virtual environment}. As discussed previously in **@sec-02-install-packaging-software**, a virtual environment provides a safe and isolated space to develop and install packages. While there are several options available when it comes to creating and managing virtual environments (e.g., `conda`\index{conda} or `venv`), we'll be using `uv`.
+Before we install and test our package, we will set up a virtual environment\index{virtual environment} — an isolated, self-contained installation of Python and packages, separate from your computer's main Python installation and from any other project's environment. This matters because different projects often need different (and sometimes conflicting) versions of the same dependency; a virtual environment keeps each project's packages contained so they can't interfere with one another. We discussed virtual environments in general in **@sec-02-install-packaging-software**.
 
-In a `uv`-managed project, running `uv sync` is all you need: it resolves your dependencies, creates a virtual environment in a *`.venv/`* directory, and installs your package — all in one step. We'll run `uv sync` in the next section once our *`pyproject.toml`* is ready, so you can see how it works.
-
-You can view the packages currently installed in your virtual environment using the command `uv tree` or `uv pip list`, and you can exit your virtual environment using `deactivate`.
+There are several tools for creating and managing virtual environments, such as `conda`\index{conda} or Python's built-in `venv`. Throughout this book we use `uv`\index{uv}, since it already manages our package's dependencies and can create and manage the matching environment for us, with no separate tool or extra commands required. In a `uv`-managed project, running `uv sync` is all you need: it resolves your dependencies, creates a virtual environment in a *`.venv/`* directory, and installs your package into it — all in one step. We'll run `uv sync` in the next section once our *`pyproject.toml`* is ready, so you can see how it works.
 
 ### Installing your package {#sec-03-installing-your-package}
 
-We have our package structure set up and we've populated it with our Python code. How do we install and use our package? There are several tools available to develop installable Python packages\index{installable Python package}. Common options include `uv`, `poetry`\index{poetry}, `flit`\index{flit}, and `setuptools`\index{setuptools}, which we compare in **@sec-04-packaging-tools**. However, again, we will be using `uv` because it is a modern and extremely fast packaging tool that provides simple and efficient commands to develop, install, and distribute Python packages.
+We have our package structure set up and we've populated it with our Python code. How do we install and use our package? We will be using `uv` because it is a modern and extremely fast packaging tool that provides simple and efficient commands to develop, install, and distribute Python packages. We compare `uv` to other packaging tools in **@sec-04-packaging-tools**.
 
-In a `uv`-managed package, the *`pyproject.toml`*\index{pyproject.toml} file stores all the metadata and install instructions for the package. The *`pyproject.toml`* that the command `uv init ...` created for our `pycounts` package earlier looks like this:
+In a `uv`-managed package, the *`pyproject.toml`*\index{pyproject.toml} file stores all the metadata and install instructions for the package. The *`pyproject.toml`* that the command `uv init ...` created for our `pysnakes` package earlier looks like this:
 
 ```toml
 [project]
-name = "pycounts"
+name = "pysnakes"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -443,7 +302,7 @@ requires-python = ">=3.12"
 dependencies = []
 
 [build-system]
-requires = ["uv_build>=0.9.18,<0.10.0"]
+requires = ["uv_build>=0.13.4,<0.14.0"]
 build-backend = "uv_build"
 ```
 
@@ -473,7 +332,7 @@ $ uv sync
 Resolved 1 package in 19ms
 Prepared 1 package in 15ms
 Installed 1 package in 4ms
- + pycounts==0.1.0
+ + pysnakes==0.1.0
 ```
 
 ::: {.callout-tip}
@@ -484,37 +343,30 @@ When you run `uv sync`, `uv` creates a *`uv.lock`* file alongside your `pyprojec
 [PEP 751](https://peps.python.org/pep-0751/)\index{PEP 751} has established a standardised, tool-agnostic lockfile format called *`pylock.toml`*\index{pylock.toml}. `uv` supports both exporting to and installing from *`pylock.toml`*, but continues to use *`uv.lock`* as its native format because it carries additional metadata that enables `uv`'s internal optimisations (such as faster resolution and content-addressed caching). In practice, *`uv.lock`* is what you will work with day-to-day; *`pylock.toml`* becomes relevant when you need to share a locked environment with tools outside the `uv` ecosystem.
 :::
 
-With our package installed, we can now `import` and use it in a Python session. Before we do that, we need a text file to test our package on. Feel free to use any text file, but we'll create the same "Zen of Python" text file we used earlier in the chapter by running the following at the command line:
-
-```bash
-$ uv run python3.12 -c "import this" > zen.txt
-```
-
-Now we can open a Python interpreter and `import`\index{import} and use the `count_words()` function from our `pycounts` module with the following code:
+With our package installed, we can now `import` and use it in a Python session:
 
 ```bash
 $ uv run python3.12
 ```
 
 ```python
->>> from pycounts.pycounts import count_words
->>> count_words("zen.txt")
+>>> from pysnakes.pysnakes import growth_rate
+>>> growth_rate(500, 600, 100)
 ```
 
 ```md
-Counter({'is': 10, 'better': 8, 'than': 8, 'the': 6, 
-'to': 5, 'of': 3, 'although': 3, 'never': 3, ... })
+1.0
 ```
 
-Looks like everything is working! We have now created and installed a simple Python package!
+Looks like everything is working! We have now created and installed a simple Python package! Notice that running `uv run python3.12` here is what actually creates *`uv.lock`* — `uv run` triggers a `uv sync` behind the scenes before it starts Python, so this is the first command in the chapter where the lockfile appears.
 
 `uv` actually installs your locally-developed packages in "editable mode", which means that it installs a link to your package's code on your computer (rather than installing it as a independent piece of software). Editable installs\index{editable install} are commonly used by developers because it means that any edits made to the package's source code are immediately available the next time it is imported, without having to `uv sync` again. We'll talk more about installing packages in **@sec-03-building-and-distributing-your-package**.
 
-In the next section, we'll show how to add code to our package that depends on another package. But for those using version control, it's a good idea to commit the changes we've made to *`src/pycounts/pycounts.py`* to local and remote version control\index{version control}:
+In the next section, we'll show how to add code to our package that depends on another package. But for those using version control, it's a good idea to commit the changes we've made to *`src/pysnakes/pysnakes.py`* and the new *`uv.lock`* to local and remote version control\index{version control}:
 
 ```bash
-$ git add src/pycounts/pycounts.py
-$ git commit -m "feat: add word counting functions"
+$ git add src/pysnakes/pysnakes.py uv.lock
+$ git commit -m "feat: add growth rate function"
 $ git push
 ```
 
@@ -532,73 +384,51 @@ In this book, we use the [Angular style](https://github.com/angular/angular.js/b
 
 ## Adding dependencies to your package {#sec-03-adding-dependencies-to-your-package}
 
-Let's now add a new function to our package that can plot a bar chart of the top `n` words in a `Counter` object of word counts. Imagine we've come up with the following `plot_words()` function that does this. The function uses the convenient `.most_common()` method of the `Counter` object to return a list of tuples of the top `n` words counts in the format `(word, count)`. It then uses the Python function `zip(*...)` to unpack that list of tuples into two individual lists, `word` and `count`. Finally, the `matplotlib` [@hunter2007] package is used to plot the result (`plt.bar(...)`), which looks like @fig-03-matplotlib-figure.
+A single arithmetic function isn't much of a package. Let's make `pysnakes` actually useful by having it work with real data: a public dataset of San Francisco gartersnake (*Thamnophis sirtalis tetrataenia*) capture-recapture records, released by the USGS [@rose2022gartersnakedata; @rose2022gartersnakepaper]. Each row records a snake's body length at two captures and the days between them — exactly what `growth_rate()` needs.
 
-::: {.callout-note}
-If this code is not familiar to you, don't worry! The code itself is not overly important to our discussion of packaging. You just need to know that we are adding some new code to our package that depends on the `matplotlib` package.
-:::
+Download the dataset into your project's root directory:
 
-\newpage
+```bash
+$ curl -O https://raw.githubusercontent.com/TomasBeuzen/pysnakes/ch03/sample-data/gartersnake_growth.csv
+```
+
+Let's add two functions to *`src/pysnakes/pysnakes.py`*: `load_growth_data()`, which reads the CSV into a `pandas` [@mckinney2010] `DataFrame`, and `add_growth_rate()`, which applies our growth rate calculation to every row at once and adds the result as a new column.
 
 ```python
-from collections import Counter
+import pandas as pd
 
-import matplotlib.pyplot as plt
+def load_growth_data(path: str) -> pd.DataFrame:
+    """Load gartersnake growth data from a CSV file into a DataFrame."""
+    return pd.read_csv(path)
 
-def plot_words(word_counts: Counter, n: int = 10) -> plt.Figure:
-    """Plot a bar chart of word counts."""
-    top_n_words = word_counts.most_common(n)
-    word, count = zip(*top_n_words)
-    fig = plt.bar(range(n), count)
-    plt.xticks(range(n), labels=word, rotation=45)
-    plt.xlabel("Word")
-    plt.ylabel("Count")
-    return fig
+def add_growth_rate(data: pd.DataFrame) -> pd.DataFrame:
+    """Add a growth rate column to a gartersnake growth DataFrame."""
+    data = data.copy()
+    data["growth_rate_mm_per_day"] = (
+        data["body_length_end_mm"] - data["body_length_start_mm"]
+    ) / data["days_between_captures"]
+    return data
 ```
 
-![Example figure created from the plotting function.](images/03-matplotlib-figure.png){#fig-03-matplotlib-figure width="80%" fig-alt="Example figure created from the plotting function."}
-
-Where should we put this function in our package? You could certainly add all your package code into a single module (e.g., *`src/pycounts/pycounts.py`*), but as you add functionality to your package that module will quickly become overcrowded and hard to manage. Instead, as you write more code, it's a good idea to organize it into multiple, logical modules. With that in mind, we'll create a new module called *`src/pycounts/plotting.py`* to house our plotting function `plot_words()`. Create that new module now in an editor of your choice.
-
-Your package structure\index{package structure} should now look like this:
-
-``` {.md emphasize-lines="10"}
-pycounts
-├── .gitignore
-├── .python-version
-├── .venv
-├── README.md
-├── pyproject.toml
-├── src
-│   └── pycounts
-│       ├── __init__.py
-│       ├── plotting.py  <--- create this file
-│       ├── py.typed
-│       └── pycounts.py
-└── uv.lock
-```
-
-Open *`src/pycounts/plotting.py`* and add the `plot_words()` code from above (don't forget to add the `import matplotlib.pyplot as plt` at the top of the module).
-
-After doing this, if we tried to `import` our new function in a Python interpreter we'd get an error:
+If we try to `import` either function now, we get an error:
 
 ```bash
 $ uv run python3.12
 ```
 
 ```python
->>> from pycounts.plotting import plot_words
+>>> from pysnakes.pysnakes import load_growth_data
 ```
 
 ```md
-ModuleNotFoundError: No module named 'matplotlib'
+ModuleNotFoundError: No module named 'pandas'
 ```
 
-This is because `matplotlib` is not part of the standard Python library; we need to install it and add it as a dependency\index{dependency} of our `pycounts` package. We can do this with `uv` using the command `uv add matplotlib`. This command will install the specified dependency into the current virtual environment\index{virtual environment} and will update the `dependencies` list of the *`pyproject.toml`*\index{pyproject.toml} file:
+This is because `pandas` is not part of the standard Python library; we need to install it and add it as a dependency\index{dependency} of our `pysnakes` package. We'll also add `matplotlib`\index{matplotlib} at the same time, since we're about to use it too for a plotting function. We can do this with `uv` using the command `uv add`. This command installs the specified dependencies into the current virtual environment\index{virtual environment} and updates the `dependencies` list of the *`pyproject.toml`*\index{pyproject.toml} file:
 
 ```bash
-$ uv add matplotlib
-``` 
+$ uv add pandas matplotlib
+```
 
 ```md
 Installed 12 packages in 17ms
@@ -606,38 +436,104 @@ Installed 12 packages in 17ms
  + cycler==0.12.1
  + fonttools==4.61.1
  + kiwisolver==1.4.9
- + matplotlib==3.10.8
+ + matplotlib==3.11.2
  + numpy==2.4.1
  + packaging==25.0
+ + pandas==3.1.0
  + pillow==12.1.0
- ~ pycounts==0.1.0
+ ~ pysnakes==0.1.0
  + pyparsing==3.3.1
  + python-dateutil==2.9.0.post0
- + six==1.17.0
 ```
 
-If you open *`pyproject.toml`* file, you should now see `matplotlib` listed as a dependency under the `[project]` section:
+If you open the *`pyproject.toml`* file, you should now see both packages listed as dependencies under the `[project]` section:
 
 ```toml
 [project]
-name = "pycounts"
+name = "pysnakes"
 ...
 dependencies = [
-    "matplotlib>=3.10.8",
+    "matplotlib>=3.11.2",
+    "pandas>=3.1.0",
 ]
 ```
 
-We can now use our package in a Python interpreter as follows (be sure that the *`zen.txt`* file we created earlier is in the current directory if you're running the code below):
+We can now load the dataset and compute growth rates for every snake at once:
 
 ```bash
 $ uv run python3.12
 ```
 
 ```python
->>> from pycounts.pycounts import count_words
->>> from pycounts.plotting import plot_words
->>> counts = count_words("zen.txt")
->>> fig = plot_words(counts, 10)
+>>> from pysnakes.pysnakes import load_growth_data, add_growth_rate
+>>> data = load_growth_data("gartersnake_growth.csv")
+>>> data = add_growth_rate(data)
+>>> data["growth_rate_mm_per_day"].describe()
+```
+
+```md
+count    412.000000
+mean       0.048213
+...
+min       -0.195804
+max        0.731707
+Name: growth_rate_mm_per_day, dtype: float64
+```
+
+::: {.callout-note}
+Notice the minimum growth rate is negative — a handful of snakes measured *shorter* at their second capture, likely due to measurement error rather than the snake actually shrinking. Real data is messy like this; a well-written package doesn't need to hide that, just calculate honestly from what's there.
+:::
+
+Now let's add a plotting function, so we can see how growth rate relates to a snake's size. Where should we put it? You could certainly add all your package code into a single module (e.g., *`src/pysnakes/pysnakes.py`*), but as you add functionality to your package that module will quickly become overcrowded and hard to manage. Instead, as you write more code, it's a good idea to organize it into multiple, logical modules. With that in mind, we'll create a new module called *`src/pysnakes/plotting.py`* to house a `plot_growth_rate()` function. Create that new module now in an editor of your choice, with the following content:
+
+\newpage
+
+```python
+import matplotlib.pyplot as plt
+import pandas as pd
+
+def plot_growth_rate(data: pd.DataFrame):
+    """Plot growth rate against starting body length, coloured by sex."""
+    colors = {"male": "tab:blue", "female": "tab:orange", "unknown": "tab:gray"}
+    fig = plt.scatter(
+        data["body_length_start_mm"],
+        data["growth_rate_mm_per_day"],
+        c=data["sex"].map(colors),
+    )
+    plt.xlabel("Body length at first capture (mm)")
+    plt.ylabel("Growth rate (mm/day)")
+    return fig
+```
+
+Your package structure\index{package structure} should now look like this:
+
+``` {.md emphasize-lines="10"}
+pysnakes
+├── .gitignore
+├── .python-version
+├── .venv
+├── README.md
+├── pyproject.toml
+├── src
+│   └── pysnakes
+│       ├── __init__.py
+│       ├── plotting.py  <--- create this file
+│       ├── py.typed
+│       └── pysnakes.py
+└── uv.lock
+```
+
+We can now use our package to load the data and plot it:
+
+```bash
+$ uv run python3.12
+```
+
+```python
+>>> from pysnakes.pysnakes import load_growth_data, add_growth_rate
+>>> from pysnakes.plotting import plot_growth_rate
+>>> data = add_growth_rate(load_growth_data("gartersnake_growth.csv"))
+>>> plot_growth_rate(data)
 ```
 
 If running the above Python code in an interactive IPython shell or Jupyter Notebook, the plot will be displayed automatically. If you're running from the Python interpreter, you'll need to run the `matplotlib` command `plt.show()` to display the plot, as shown below:
@@ -647,13 +543,19 @@ If running the above Python code in an interactive IPython shell or Jupyter Note
 >>> plt.show()
 ```
 
-We've made some important changes to our package in this section by adding a new module and a dependency. Those using version control\index{version control} should commit these changes:
+The result should look something like @fig-03-matplotlib-figure.
+
+![Growth rate vs. body length at first capture, coloured by sex.](images/03-pysnakes-growth-plot.png){#fig-03-matplotlib-figure width="80%" fig-alt="Scatter plot of gartersnake growth rate against body length at first capture, coloured by sex."}
+
+We've made some important changes to our package in this section by adding two new functions, a new module, and two new dependencies. Those using version control\index{version control} should commit these changes:
 
 ```bash
-$ git add src/pycounts/plotting.py
+$ git add src/pysnakes/pysnakes.py
+$ git commit -m "feat: add growth data loading functions"
+$ git add src/pysnakes/plotting.py
 $ git commit -m "feat: add plotting module"
 $ git add pyproject.toml uv.lock
-$ git commit -m "build: add matplotlib as a dependency"
+$ git commit -m "build: add pandas and matplotlib as dependencies"
 $ git push
 ```
 
@@ -665,11 +567,12 @@ We'll talk more about versioning in **Chapter 7: [Releasing and versioning](#sec
 
 ```toml
 dependencies = [
-    "matplotlib>=3.10.8",
+    "matplotlib>=3.11.2",
+    "pandas>=3.1.0",
 ]
 ```
 
-This operator is short-hand for "requires this or any higher version". For example, our package depends on any `matplotlib` version >=3.10.8. Thus, examples of valid versions include 3.10.9 and 4.1.0. There are other syntaxes too that can be used to specify version constraints in different ways, e.g., by adding upper bounds on the version, or constraining a package to the current major version, etc. So why do we care about this? The way that developers choose to constrain the dependency versions for their package can impact a user's ability to install it. 
+This operator is short-hand for "requires this or any higher version". For example, our package depends on any `matplotlib` version >=3.11.2. Thus, examples of valid versions include 3.11.3 and 4.1.0. There are other syntaxes too that can be used to specify version constraints in different ways, e.g., by adding upper bounds on the version, or constraining a package to the current major version, etc. So why do we care about this? The way that developers choose to constrain the dependency versions for their package can impact a user's ability to install it. 
 
 You can read more about the implications and issues of version constraints in Henry Schreiner's excellent [blog post](https://iscinumpy.dev/post/bound-version-constraints/). But in general, the Python packaging community recommends specifying only a lower bound on your versions and no upper bound; unless you know for certain that a specific higher version is incompatible with your package. Fortunately, this is `uv`'s default behaviour (using the `>=` sign) so there's nothing we need to change here. However be aware that other packaging tools may behave differently; for example, `poetry` defaults to the caret operator (^) which constrains the upper bound of a dependency to the current major version (i.e., the left most digit cannot change).
 
@@ -677,7 +580,7 @@ You can read more about the implications and issues of version constraints in He
 
 ### Writing tests {#sec-03-writing-tests}
 
-At this point we have developed a package that can count words in a text file and plot the results. But how can we be certain that our package works correctly and produces reliable results?
+At this point we have developed a package that can load real data, calculate growth rates, and plot the results. But how can we be certain that our package works correctly and produces reliable results?
 
 One thing we can do is write tests\index{tests} for our package that check the package is working as expected. This is particularly important if you intend to share your package with others (you don't want to share code that doesn't work!). But even if you don't intend to share your package, writing tests can still be helpful to catch errors in your code and to write new code without breaking any tried-and-tested existing functionality. If you don't want to write to tests for your package feel free to skip to **@sec-03-package-documentation**.
 
@@ -702,72 +605,26 @@ AssertionError: Person is younger than 18!
 
 Note how the first two "ages" (32 and 19) are verified, with an "Age verified!" message printed to screen. But the third age of 9 fails the `assert`, so an error message is raised and the program terminates before checking the last age of 75.
 
-Using the `assert` statement, let's write a test for the `count_words()` function of our `pycounts` package. There are different kinds of tests used to test software (unit tests, integration tests, regression tests, etc.); we discuss these in **Chapter 5: [Testing](#sec-05-testing)**. For now, we'll write a unit test\index{tests!unit test}. Unit tests evaluate a single "unit" of software, such as a Python function, to check that it produces an expected result. A unit test consists of:
+Using the `assert` statement, let's write a test for the `growth_rate()` function of our `pysnakes` package. There are different kinds of tests used to test software (unit tests, integration tests, regression tests, etc.); we discuss these in **Chapter 5: [Testing](#sec-05-testing)**. For now, we'll write a unit test\index{tests!unit test}. Unit tests evaluate a single "unit" of software, such as a Python function, to check that it produces an expected result. A unit test consists of:
 
 1. Some data to test the code with (called a "*fixture\index{tests!fixture}*"). The fixture is typically a small or simple version of the data the function will typically process.
 2. The *actual* result that the code produces given the fixture.
 3. The *expected* result of the test, which is compared to the *actual* result using an `assert` statement.
 
-The unit test we are going to write will `assert` that the `count_words()` function produces an expected result given a certain fixture. We'll use the following quote from Albert Einstein as our fixture:
-
->*"Insanity is doing the same thing over and over and expecting different results."*
-
-The *actual* result is the result `count_words()` outputs when we input this fixture. We can get the *expected* result by manually counting the words in the quote (ignoring capitalization and punctuation):
-
-```python
-einstein_counts = {'insanity': 1, 'is': 1, 'doing': 1, 
-                   'the': 1, 'same': 1, 'thing': 1, 
-                   'over': 2, 'and': 2, 'expecting': 1,
-                   'different': 1, 'results': 1}
-```
-
-To write our unit test in Python code, let's create a text file containing the Einstein quote to use as our fixture. First, we'll create a *`tests/`* directory at the root of our package:
-
-``` {.md emphasize-lines="13"}
-pycounts
-├── .gitignore
-├── .python-version
-├── .venv
-├── README.md
-├── pyproject.toml
-├── src
-│   └── pycounts
-│       ├── __init__.py
-│       ├── plotting.py
-│       ├── py.typed
-│       └── pycounts.py
-├── tests  <----------- create this directory
-│   └── ...
-└── uv.lock
-```
-
-Now create a file called *`einstein.txt`* in the *`tests/`* directory — you can make the file manually, or you can create it from a Python session started in the root package directory using the following code:
+For `growth_rate()`, a fixture is just a set of numbers. We'll reuse the same values from **@sec-03-developing-our-code**: a snake measured at 500 mm, then 600 mm, 100 days later. We already know the *expected* result (1.0 mm/day), and the *actual* result is whatever `growth_rate(500, 600, 100)` returns:
 
 ```bash
 $ uv run python3.12
 ```
 
 ```python
->>> quote = "Insanity is doing the same thing over and over and \
-             expecting different results."
->>> with open("tests/einstein.txt", "w") as file:
-        file.write(quote)
+>>> from pysnakes.pysnakes import growth_rate
+>>> expected = 1.0
+>>> actual = growth_rate(500, 600, 100)
+>>> assert actual == expected, "Growth rate calculated incorrectly!"
 ```
 
-Now, a unit test for our `count_words()` function would look as below:
-
-```python
->>> from pycounts.pycounts import count_words
->>> from collections import Counter
->>> expected = Counter({'insanity': 1, 'is': 1, 'doing': 1, 
-                        'the': 1, 'same': 1, 'thing': 1, 
-                        'over': 2, 'and': 2, 'expecting': 1,
-                        'different': 1, 'results': 1})
->>> actual = count_words("tests/einstein.txt")
->>> assert actual == expected, "Einstein quote counted incorrectly!"
-```
-
-If the above code runs without error, our `count_words()` function is working, at least to our test specifications. In the next section, we'll discuss how we can make this testing process more efficient.
+If the above code runs without error, our `growth_rate()` function is working, at least to our test specification. In the next section, we'll discuss how we can make this testing process more efficient.
 
 ### Running tests {#sec-03-running-tests}
 
@@ -777,46 +634,37 @@ It would be tedious and inefficient to manually write and execute unit tests\ind
 2. Tests are put in files of the form *`test_*.py`* or *`*_test.py`*, and are usually placed in a directory called *`tests/`* in a package's root.
 3. Tests can be executed using the command `pytest` at the command line and pointing it to the directory your tests live in (i.e., `pytest tests/`). `pytest` will find all files of the form *`test_*.py`* or *`*_test.py`* in that directory and its sub-directories, and execute any functions with names prefixed with `test_`.
 
-We will now create a module called *`test_pycounts.py`* for us to put our tests in:
+We will now create a *`tests/`* directory and a module called *`test_pysnakes.py`* for us to put our tests in:
 
 \newpage
 
-``` {.md emphasize-lines="15"}
-pycounts
+``` {.md emphasize-lines="13-14"}
+pysnakes
 ├── .gitignore
 ├── .python-version
 ├── .venv
 ├── README.md
 ├── pyproject.toml
 ├── src
-│   └── pycounts
+│   └── pysnakes
 │       ├── __init__.py
 │       ├── plotting.py
 │       ├── py.typed
-│       └── pycounts.py
-├── tests
-│   ├── einstein.txt
-│   └── test_pycounts.py  <--- create this file
+│       └── pysnakes.py
+├── tests  <----------- create this directory
+│   └── test_pysnakes.py  <--- and this file
 └── uv.lock
 ```
 
-As mentioned above, `pytest` tests are written as functions prefixed with `test_` and which contain one or more `assert` statements that check some code functionality. Based on this format, let's add the unit test we created in **@sec-03-writing-tests** as a test function to *`tests/test_pycounts.py`* using the below Python code:
+As mentioned above, `pytest` tests are written as functions prefixed with `test_` and which contain one or more `assert` statements that check some code functionality. Based on this format, let's add the unit test we wrote in **@sec-03-writing-tests** as a test function to *`tests/test_pysnakes.py`* using the below Python code:
 
 ```python
-from pycounts.pycounts import count_words
-from collections import Counter
+from pysnakes.pysnakes import growth_rate
 
-def test_count_words():
-    """Test word counting from a file."""
-    expected = Counter({'insanity': 1, 'is': 1, 'doing': 1, 
-                        'the': 1, 'same': 1, 'thing': 1, 
-                        'over': 2, 'and': 2, 'expecting': 1,
-                        'different': 1, 'results': 1})
-    actual = count_words("tests/einstein.txt")
-    assert actual == expected, "Einstein quote counted incorrectly!"
+def test_growth_rate():
+    """Test growth rate calculation between two captures."""
+    assert growth_rate(500, 600, 100) == 1.0, "Growth rate calculated incorrectly!"
 ```
-
-\newpage
 
 Before we can use `pytest` to run our test for us we need to add it as a development dependency\index{dependency!development dependency} of our package using the command `uv add --dev pytest`. A development dependency is a package that is not required by a user to use your package but is required for development purposes (like testing):
 
@@ -829,7 +677,7 @@ If you look in the *`pyproject.toml`* file you will now see that `pytest` gets a
 ```toml
 [dependency-groups]
 dev = [
-    "pytest>=9.0.2",
+    "pytest>=9.2.0",
 ]
 ```
 
@@ -842,14 +690,14 @@ $ uv run pytest tests/
 ```md
 ========================= test session starts =========================
 ...
-collected 1 item                                                                                            
+collected 1 item
 
-tests/test_pycounts.py .                                         [100%]
+tests/test_pysnakes.py .                                         [100%]
 
 ========================== 1 passed in 0.01s ==========================
 ```
 
-From the `pytest` output we can see that our test passed! At this point, we could add more tests for our package by writing more `test_*` functions. But we'll do this in **Chapter 5: [Testing](#sec-05-testing)**. Typically you want to write enough tests to check all the core code of your package. We'll show how you can calculate how much of your package's code your tests actually check in the next section.
+From the `pytest` output we can see that our test passed! At this point, we could add more tests for our package by writing more `test_*` functions — for example, tests for `load_growth_data()` and `add_growth_rate()` that check their output against a small hand-crafted CSV. But we'll leave that for **Chapter 5: [Testing](#sec-05-testing)**. Typically you want to write enough tests to check all the core code of your package. We'll show how you can calculate how much of your package's code your tests actually check in the next section.
 
 ### Code coverage {#sec-03-code-coverage}
 
@@ -859,16 +707,16 @@ $$
   \text{coverage} = \frac{\text{lines executed}}{\text{total lines}} * 100\%
 $$
 
-There is a useful extension to `pytest`\index{tests!pytest} called `pytest-cov`\index{tests!pytest-cov}, which we can use to calculate coverage. First, we'll use `uv` to add `pytest-cov` as a development dependency\index{dependency!development dependency} of our `pycounts` package:
+There is a useful extension to `pytest`\index{tests!pytest} called `pytest-cov`\index{tests!pytest-cov}, which we can use to calculate coverage. First, we'll use `uv` to add `pytest-cov` as a development dependency\index{dependency!development dependency} of our `pysnakes` package:
 
 ```bash
 $ uv add --dev pytest-cov
 ```
 
-We can calculate the line coverage of our tests by running the following command, which tells `pytest-cov` to calculate the coverage our tests have of our `pycounts` package:
+We can calculate the line coverage of our tests by running the following command, which tells `pytest-cov` to calculate the coverage our tests have of our `pysnakes` package:
 
 ```bash
-$ uv run pytest tests/ --cov=pycounts
+$ uv run pytest tests/ --cov=pysnakes
 ```
 
 \newpage
@@ -879,24 +727,24 @@ $ uv run pytest tests/ --cov=pycounts
 
 Name                           Stmts   Miss  Cover
 --------------------------------------------------
-src/pycounts/__init__.py         2      1    50%
-src/pycounts/plotting.py        10     10     0%
-src/pycounts/pycounts.py        16      0   100%
+src/pysnakes/__init__.py         2      1    50%
+src/pysnakes/plotting.py        10     10     0%
+src/pysnakes/pysnakes.py         9      4    56%
 --------------------------------------------------
-TOTAL                           28     11    61%
+TOTAL                           21     15    32%
 
 ========================== 1 passed in 0.02s ==========================
 ```
 
-In the output above, `Stmts` is how many lines are in a module, `Miss` is how many lines were not executed during your tests, and `Cover` is the percentage of lines covered by your tests. From the above output, we can see that our tests currently don't cover any of the lines in the `pycounts.plotting` module. We'll write more tests for our package, and discuss more advanced methods of testing and calculating code coverage in **Chapter 5: [Testing](#sec-05-testing)**.
+In the output above, `Stmts` is how many lines are in a module, `Miss` is how many lines were not executed during your tests, and `Cover` is the percentage of lines covered by your tests. Our single test only exercises `growth_rate()`; the lines belonging to `load_growth_data()` and `add_growth_rate()` in *`pysnakes.py`*, and all of `plotting.py`, are never run. This is a normal state for a package in progress — total coverage will climb as we add more tests. We'll write more tests for our package, and discuss more advanced methods of testing and calculating code coverage in **Chapter 5: [Testing](#sec-05-testing)**.
 
-For those using version control, commit the changes we've made to our packages tests to local and remote version control\index{version control}:
+For those using version control, commit the changes we've made to our package's tests to local and remote version control\index{version control}:
 
 ```bash
 $ git add pyproject.toml uv.lock
 $ git commit -m "build: add pytest and pytest-cov as dev dependencies"
-$ git add tests/einstein.txt tests/test_pycounts.py
-$ git commit -m "test: add unit test for count_words"
+$ git add tests/test_pysnakes.py
+$ git commit -m "test: add unit test for growth_rate"
 $ git push
 ```
 
@@ -937,7 +785,7 @@ Documentation\index{documentation} describing what your package does and how to 
 |Changelog\index{documentation!changelog}|Root |A chronologically ordered list of notable changes to the package over time, usually organized by version.|
 |Docstrings\index{docstring}| *.py* files |Text appearing as the first statement in a function, method, class, or module in Python that describes what the code does and how to use it. Accessible to users via the `help()` command.|
 |Examples|*`docs/`* |Step-by-step, tutorial-like examples showing how the package works in more detail.|
-|Application programming interface\index{application programming interface} (API) reference|*`docs/`* | An organized list of the user-facing functionality of your package (i.e., functions, classes, etc.) along with a short description of what they do and how to use them. Typically created automatically from your package's docstrings using the `sphinx` tool as we'll discuss in **@sec-03-building-documentation**.|
+|Application programming interface\index{application programming interface} (API) reference|*`docs/`* | An organized list of the user-facing functionality of your package (i.e., functions, classes, etc.) along with a short description of what they do and how to use them. Typically created automatically from your package's docstrings using a tool like `mkdocstrings`, as we'll discuss in **@sec-03-building-documentation**.|
 
 : Typical Python package documentation. {#tbl-03-documentation}
 
@@ -947,16 +795,16 @@ The typical workflow for documenting a Python package consists of three steps:
 2. **Build documentation\index{documentation!build documentation}**: compile and render documentation into HTML using a documentation generator like `quarto`, `mkdocs` or `sphinx`.
 3. **Host documentation\index{documentation!host documentation} online**: share the built documentation online so it can be easily accessed by anyone with an internet connection, using a free service like [Read the Docs](https://readthedocs.org)\index{Read the Docs} or [GitHub Pages](https://pages.github.com)\index{GitHub Pages}.
 
-In this section, we will walk through each of these steps in detail as we develop some documentation for our `pycounts` package.
+In this section, we will walk through each of these steps in detail as we develop some documentation for our `pysnakes` package.
 
 ### Writing documentation {#sec-03-writing-documentation}
 
 Python package documentation\index{documentation} is typically written in a plain-text markup format such as [Markdown](https://en.wikipedia.org/wiki/Markdown)\index{Markdown} (*.md*) or [reStructuredText](https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html)\index{reStructuredText} (*.rst*). With a plain-text markup language, documents are written in plain-text and a special syntax is used to specify how the text should be formatted when it is rendered by a suitable tool. We'll show an example of this below, but we'll be using the Markdown language in this book because it is widely used, and we feel it has a less verbose and more intuitive syntax than reStructuredText (check out the [Markdown Guide](https://www.markdownguide.org) to learn more about Markdown syntax).
 
-Let's start with a *`README.md`*, a blank one of which was created for our `pycounts` package already when we initialized our package with `uv init ...`.
+Let's start with a *`README.md`*, a blank one of which was created for our `pysnakes` package already when we initialized our package with `uv init ...`.
 
 ``` {.md emphasize-lines="5"}
-pycounts
+pysnakes
 ├── .gitignore
 ├── .python-version
 ├── .venv
@@ -980,31 +828,36 @@ In the Markdown text below, the following syntax is used:
 :::
 
 ````xml
-# pycounts
+# pysnakes
 
-Calculate word counts in a text file!
+Calculate and plot gartersnake growth rates from capture-recapture data!
 
 ## Installation
 
 ```bash
-$ pip install pycounts
+$ pip install pysnakes
 ```
 
 ## Usage
 
-`pycounts` can be used to count words in a text file and plot results
-as follows:
+`pysnakes` can be used to load gartersnake growth data, calculate growth
+rates, and plot the results as follows:
 
 ```python
-from pycounts.pycounts import count_words
-from pycounts.plotting import plot_words
+from pysnakes.pysnakes import load_growth_data, add_growth_rate
+from pysnakes.plotting import plot_growth_rate
 import matplotlib.pyplot as plt
 
-file_path = "test.txt"  # path to your file
-counts = count_words(file_path)
-fig = plot_words(counts, n=10)
+data = load_growth_data("gartersnake_growth.csv")
+data = add_growth_rate(data)
+plot_growth_rate(data)
 plt.show()
 ```
+
+## Data
+
+The sample data in this package is derived from a USGS capture-recapture
+study of the San Francisco gartersnake (Rose et al., 2022).
 ````
 
 When we render this Markdown text later on with `mkdocs`, it will look like @fig-03-documentation-1a. We'll talk about `mkdocs` in **@sec-03-building-documentation**, but many other tools are also able to natively render Markdown documents (e.g., Jupyter, VS Code, GitHub, etc.), which is why it's so widely used.
@@ -1063,7 +916,7 @@ We'll be using `mkdocs-material` (a very user-friendly, powerful, and customisab
 $ uv add --dev mkdocs-material
 ```
 
-The source and configuration files to build documentation using `mkdocs` typically live in the *`docs/`* directory in a package's root. We can create that structure now by running the following command from the root of our `pycounts` package:
+The source and configuration files to build documentation using `mkdocs` typically live in the *`docs/`* directory in a package's root. We can create that structure now by running the following command from the root of our `pysnakes` package:
 
 ```bash
 $ uv run mkdocs new .
@@ -1072,7 +925,7 @@ $ uv run mkdocs new .
 We now have a simple documentation structure set up:
 
 ``` {.md emphasize-lines="5-7"}
-pycounts
+pysnakes
 ├── .gitignore
 ├── .python-version
 ├── .venv
@@ -1091,7 +944,7 @@ pycounts
 The `mkdocs.yml` file is a configuration file for your documentation. You can read more about how to configure and customise your `mkdocs` site in the official [documentation](https://squidfunk.github.io/mkdocs-material/creating-your-site/#configuration). We'll keep ours minimal for now and fill it with the following:
 
 ```yaml
-site_name: pycounts documentation
+site_name: pysnakes documentation
 theme:
   name: material
 nav:
@@ -1117,7 +970,7 @@ $ uv add --dev mkdocs-include-markdown-plugin
 The `mkdocs-include-markdown-plugin` allows us to include Markdwown files from outside our *`docs/`* directory in our documentation. We first need to enable the plugin by updating our `mkdocs.yml` configuration file:
 
 ``` {.yaml emphasize-lines="8"}
-site_name: pycounts documentation
+site_name: pysnakes documentation
 theme:
   name: material
 nav:
@@ -1149,9 +1002,15 @@ To build our documentation into the actual HTML, CSS and JavaScript source files
 $ uv run mkdocs build
 ```
 
-This will output your static site content into a *`site/`* directory in the root of your package. We'll demonstrate how to easily host this built documentation online for free so others can see it in **@sec-03-hosting-documentation-online**.
+This will output your static site content into a *`site/`* directory in the root of your package. Since this directory is generated and can always be recreated by re-running `mkdocs build`, add it to your *`.gitignore`* file (do this before your first build, so you don't accidentally commit it):
 
-In the next section, we'll add some more important documentation to our `pycounts` packages - docstrings and an API reference.
+```bash
+$ echo "site/" >> .gitignore
+```
+
+We'll demonstrate how to easily host this built documentation online for free so others can see it in **@sec-03-hosting-documentation-online**.
+
+In the next section, we'll add some more important documentation to our `pysnakes` packages - docstrings and an API reference.
 
 If using version control\index{version control}, commit your work using the following commands:
 
@@ -1178,7 +1037,7 @@ General docstring convention in Python is described in [Python Enhancement Propo
 5. Example usage.
 6. Potentially more.
 
-There are different "docstring styles" used in Python to organize this information, such as [numpydoc style](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard), [Google style](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings), and [sphinx style](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html#the-sphinx-docstring-format). We'll be using the numpydoc style for our `pycounts` package. In the numpydoc style:
+There are different "docstring styles" used in Python to organize this information, such as [numpydoc style](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard), [Google style](https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings), and [sphinx style](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html#the-sphinx-docstring-format). We'll be using the numpydoc style for our `pysnakes` package. In the numpydoc style:
 
 - Section headers are denoted as text underlined with dashes;
 
@@ -1196,138 +1055,136 @@ There are different "docstring styles" used in Python to organize this informati
 
 - Output values use the same syntax above, but specifying the `name` is optional.
 
-We show a numpydoc style docstring for our `count_words()` function below:
+We show a numpydoc style docstring for our `growth_rate()` function below:
 
 ```python
-def count_words(input_file: str):
-    """Count words in a text file.
-
-    Words are made lowercase and punctuation is removed 
-    before counting.
+def growth_rate(start_mm: float, end_mm: float, days: int) -> float:
+    """Calculate growth rate in millimetres per day between two captures.
 
     Parameters
     ----------
-    input_file : str
-        Path to text file.
+    start_mm : float
+        Body length in millimetres at the first capture.
+    end_mm : float
+        Body length in millimetres at the second capture.
+    days : int
+        Days between the two captures.
 
     Returns
     -------
-    collections.Counter
-        dict-like object where keys are words and values are counts.
+    float
+        Growth rate in millimetres per day.
 
     Examples
     --------
-    >>> count_words("text.txt")
+    >>> growth_rate(500, 600, 100)
+    1.0
     """
-    text = load_text(input_file)
-    text = clean_text(text)
-    words = text.split()
-    return Counter(words)
+    return (end_mm - start_mm) / days
 ```
 
-This docstrings can be accessed by users of our package by using the `help()` function in a Python interpreter:
+Notice that the example in the `Examples` section above is written exactly as it would be typed and run in a Python interpreter, including the expected output. This isn't just for readability — it also means `pytest` can run this exact docstring as a test and confirm its output stays correct. We cover this technique, called a "doctest", in **Chapter 5: [Testing](#sec-05-testing)**.
+
+This docstring can be accessed by users of our package by using the `help()` function in a Python interpreter:
 
 ```python
->>> from pycounts.pycounts import count_words
->>> help(count_words)
+>>> from pysnakes.pysnakes import growth_rate
+>>> help(growth_rate)
 ```
 
 ```md
-Help on function count_words in module pycounts.pycounts:
+Help on function growth_rate in module pysnakes.pysnakes:
 
-count_words(input_file)
-    Count words in a text file.
-    
-    Words are made lowercase and punctuation is removed 
-    before counting.
+growth_rate(start_mm: float, end_mm: float, days: int) -> float
+    Calculate growth rate in millimetres per day between two captures.
 
     Parameters
     ----------
     ...
 ```
 
-You can add information to your docstrings at your discretion — you won't always need all the sections above, and in some cases you may want to include additional sections from the numpydoc style [documentation](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). We've documented the remaining functions from our `pycounts` package as below. If you're following along with this tutorial, copy these docstrings into the functions in the `pycounts.pycounts` and `pycounts.plotting` modules:
+You can add information to your docstrings at your discretion — you won't always need all the sections above, and in some cases you may want to include additional sections from the numpydoc style [documentation](https://numpydoc.readthedocs.io/en/latest/format.html#docstring-standard). We've documented the remaining functions from our `pysnakes` package as below. If you're following along with this tutorial, copy these docstrings into the functions in the `pysnakes.pysnakes` and `pysnakes.plotting` modules:
 
 ```python
-def plot_words(word_counts: Counter, n: int = 10):
-    """Plot a bar chart of word counts.
-    
+def load_growth_data(path: str):
+    """Load gartersnake growth data from a CSV file into a DataFrame.
+
     Parameters
     ----------
-    word_counts : collections.Counter
-        Counter object of word counts.
-    n : int, optional
-        Plot the top n words. By default, 10.
+    path : str
+        Path to the growth data CSV file.
 
     Returns
     -------
-    matplotlib.container.BarContainer
-        Bar chart of word counts.
+    pandas.DataFrame
+        Gartersnake capture-recapture growth data.
 
     Examples
     --------
-    >>> from pycounts.pycounts import count_words
-    >>> from pycounts.plotting import plot_words
-    >>> counts = count_words("text.txt")
-    >>> plot_words(counts)
+    >>> load_growth_data("gartersnake_growth.csv")
     """
-    top_n_words = word_counts.most_common(n)
-    word, count = zip(*top_n_words)
-    fig = plt.bar(range(n), count)
-    plt.xticks(range(n), labels=word, rotation=45)
-    plt.xlabel("Word")
-    plt.ylabel("Count")
-    return fig
+    return pd.read_csv(path)
+```
+
+```python
+def add_growth_rate(data):
+    """Add a growth rate column to a gartersnake growth DataFrame.
+
+    Parameters
+    ----------
+    data : pandas.DataFrame
+        Must contain `body_length_start_mm`, `body_length_end_mm`,
+        and `days_between_captures` columns.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A copy of `data` with a new `growth_rate_mm_per_day` column.
+
+    Examples
+    --------
+    >>> add_growth_rate(data)
+    """
+    data = data.copy()
+    data["growth_rate_mm_per_day"] = (
+        data["body_length_end_mm"] - data["body_length_start_mm"]
+    ) / data["days_between_captures"]
+    return data
 ```
 
 \newpage
 
 ```python
-def load_text(input_file: str):
-    """Load text from a text file and return as a string.
+def plot_growth_rate(data):
+    """Plot growth rate against starting body length, coloured by sex.
 
     Parameters
     ----------
-    input_file : str
-        Path to text file.
+    data : pandas.DataFrame
+        Must contain `body_length_start_mm`, `growth_rate_mm_per_day`,
+        and `sex` columns.
 
     Returns
     -------
-    str
-        Text file contents.
+    matplotlib.collections.PathCollection
+        Scatter plot of growth rate vs. starting body length.
 
     Examples
     --------
-    >>> load_text("text.txt")
+    >>> from pysnakes.pysnakes import load_growth_data, add_growth_rate
+    >>> from pysnakes.plotting import plot_growth_rate
+    >>> data = add_growth_rate(load_growth_data("gartersnake_growth.csv"))
+    >>> plot_growth_rate(data)
     """
-    with open(input_file, "r") as file:
-        text = file.read()
-    return text
-```
-
-```python
-def clean_text(text: str):
-    """Lowercase and remove punctuation from a string.
-
-    Parameters
-    ----------
-    text : str
-        Text to clean.
-
-    Returns
-    -------
-    str
-        Cleaned text.
-
-    Examples
-    --------
-    >>> clean_text("Early optimization is the root of all evil!")
-    'early optimization is the root of all evil'
-    """
-    text = text.lower()
-    for p in punctuation:
-        text = text.replace(p, "")
-    return text
+    colors = {"male": "tab:blue", "female": "tab:orange", "unknown": "tab:gray"}
+    fig = plt.scatter(
+        data["body_length_start_mm"],
+        data["growth_rate_mm_per_day"],
+        c=data["sex"].map(colors),
+    )
+    plt.xlabel("Body length at first capture (mm)")
+    plt.ylabel("Growth rate (mm/day)")
+    return fig
 ```
 
 For the users of our package it would be helpful to compile all of our functions and docstrings into easy-to-navigate documentation, so they can access this documentation without having to `import` them and run `help()`, or search through our source code. Fortunately, there's a `mkdocs` extension, `mkdocstrings-python`, that can automatically parse our source code, extract our functions and docstrings, and create an API reference in our compiled documentation for us.
@@ -1345,7 +1202,7 @@ We then need to modify our *`mkdocs.yml`* as follows:
 3. Add an API Reference page to our `nav` configuration (using a document we are abaout to create called *`api.md`*):
 
 ``` {.yaml emphasize-lines="6, 10-15"}
-site_name: pycounts documentation
+site_name: pysnakes documentation
 theme:
   name: material
 nav:
@@ -1367,7 +1224,7 @@ Create *`api.md`* now and fill it with the following Markdwon text to populate i
 ```xml
 # API Reference
 
-::: pycounts
+::: pysnakes
 ```
 
 That's all there is to it. If we now preview our documentation again, we'll be able to see that API Reference sheet generated automatically for us!
@@ -1376,7 +1233,7 @@ That's all there is to it. If we now preview our documentation again, we'll be a
 $ uv run mkdocs serve
 ```
 
-![API reference for the pycounts package.](images/03-documentation-2.png){#fig-03-documentation-2 width="100%" fig-alt="API reference for the pycounts package."}
+![API reference for the pysnakes package.](images/03-documentation-2.png){#fig-03-documentation-2 width="100%" fig-alt="API reference for the pysnakes package."}
 
 As a final example of the power of generated documentation, we'll show how to include executable, reproducible code from Jupyter notebooks into your documentation in **@sec-03-creating-usage-examples**. But if you've seen enough already, and just want to get your documentation online, feel free to jump to **@sec-03-hosting-documentation-online**.
 
@@ -1385,7 +1242,7 @@ For those using version control\index{version control}, now is a good time to mo
 \newpage
 
 ```bash
-$ git add src/pycounts/pycounts.py src/pycounts/plotting.py
+$ git add src/pysnakes/pysnakes.py src/pysnakes/plotting.py
 $ git commit -m "docs: created docstrings for package functions"
 $ git add mkdocs.yml docs/api.md
 $ git commit -m "docs: created api reference"
@@ -1400,7 +1257,7 @@ Creating examples of how to use your package can be invaluable to new and existi
 
 You could write examples from scratch using a plain-text format like Markdown\index{Markdown}, but this can be inefficient and prone to errors. If you change the way a function works, or what it outputs, you would have to re-write your example. Instead, in this section we'll show how to use a `mkdocs` extension, `mkdocs-jupyter`, as a more efficient, interactive, and reproducible way to create usage examples for your users.
 
-The `mkdocs-jupyter` extension allows us to use Jupyter\index{Jupyter} Notebooks\index{Jupyter!notebooks} as pages in our documentation. Jupyter notebooks are interactive documents with an *.ipynb* extension that can contain code, equations, text, and visualizations. They are effective for demonstrating examples because they directly import and use code from your package; this ensures you don't make mistakes when writing out your examples, and it allows users to download, execute, and interact with the notebooks themselves (as opposed to just reading text). To create a usage example for our `pycounts` package using a Jupyter Notebook, we first need to add `mkdocs-jupyter` as a development dependency\index{dependency!development dependency}:
+The `mkdocs-jupyter` extension allows us to use Jupyter\index{Jupyter} Notebooks\index{Jupyter!notebooks} as pages in our documentation. Jupyter notebooks are interactive documents with an *.ipynb* extension that can contain code, equations, text, and visualizations. They are effective for demonstrating examples because they directly import and use code from your package; this ensures you don't make mistakes when writing out your examples, and it allows users to download, execute, and interact with the notebooks themselves (as opposed to just reading text). To create a usage example for our `pysnakes` package using a Jupyter Notebook, we first need to add `mkdocs-jupyter` as a development dependency\index{dependency!development dependency}:
 
 ```bash
 $ uv add --dev mkdocs-jupyter notebook
@@ -1409,7 +1266,7 @@ $ uv add --dev mkdocs-jupyter notebook
 Now in *`mkdocs.yml`* we'll add a new section to `nav` for our "usage example" document and add the `mkdocs-jupyter` extension to the plugins list:
 
 ``` {.yaml emphasize-lines="6, 17-18"}
-site_name: pycounts documentation
+site_name: pysnakes documentation
 theme:
   name: material
 nav:
@@ -1446,14 +1303,11 @@ If you're developing your Python package in an IDE\index{integrated development 
 Use the Jupyter interface to create a Jupyter Notebook example document at *`docs/example.ipynb`*. Copy the brief example below into a cell so you can see how the output is rendered in your documentation:
 
 ```python
-from pycounts.pycounts import count_words
+from pysnakes.pysnakes import load_growth_data, add_growth_rate
+from pysnakes.plotting import plot_growth_rate
 
-quote = """Insanity is doing the same thing 
-over and over and expecting different results."""
-with open("einstein.txt", "w") as file:
-    file.write(quote)
-counts = count_words("einstein.txt")
-print(counts)
+data = add_growth_rate(load_growth_data("../sample-data/gartersnake_growth.csv"))
+plot_growth_rate(data)
 ```
 
 Now when we build our documentation, this Jupyter Notebook(s) will be rendered into it, including any output from the cells.
@@ -1462,11 +1316,11 @@ Now when we build our documentation, this Jupyter Notebook(s) will be rendered i
 $ uv run mkdocs serve
 ```
 
-![A simple Jupyter Notebook using code from pycounts.](images/03-jupyter-example-1.png){#fig-03-jupyter-example-1 width="100%" fig-alt="A simple Jupyter Notebook using code from pycounts."}
+![A simple Jupyter Notebook using code from pysnakes.](images/03-jupyter-example-1.png){#fig-03-jupyter-example-1 width="100%" fig-alt="A simple Jupyter Notebook using code from pysnakes."}
 
-Figure @fig-03-jupyter-example-2 below shows an example of a more comprehensive notebook demonstrating the use of `pycounts`. You don't need to copy this example, but what's important to note is that the code and outputs are generated using our package itself, they have not been written manually, and you can thus generate comprehensive, and reproducible examples of using your package.
+Figure @fig-03-jupyter-example-2 below shows an example of a more comprehensive notebook demonstrating the use of `pysnakes`. You don't need to copy this example, but what's important to note is that the code and outputs are generated using our package itself, they have not been written manually, and you can thus generate comprehensive, and reproducible examples of using your package.
 
-![Jupyter Notebook demonstrating an example workflow using the pycounts package.](images/03-jupyter-example-2.png){#fig-03-jupyter-example-2 width="100%" fig-alt="Jupyter Notebook demonstrating an example workflow using the pycounts package."}
+![Jupyter Notebook demonstrating an example workflow using the pysnakes package.](images/03-jupyter-example-2.png){#fig-03-jupyter-example-2 width="100%" fig-alt="Jupyter Notebook demonstrating an example workflow using the pysnakes package."}
 
 `mkdocs` is a great, lightweight tool for generating Python docs and can be extended significantly through a wide array of extensions as we've seen in this section. However, other modern, powerful tools for creating executable and reproducible documentation also exist in the Python ecosystem, notably, [Jupyter Book](https://jupyterbook.org/stable/) and [Quarto](https://quarto.org).
 
@@ -1492,7 +1346,7 @@ $ uv run mkdocs gh-deploy --force
 
 ```md
 ...
-INFO - Your documentation should shortly be available at: https://TomasBeuzen.github.io/pycounts/
+INFO - Your documentation should shortly be available at: https://TomasBeuzen.github.io/pysnakes/
 ```
 
 Your documentation may take a minute or so to appear online, but if you still have problems, you may need to change the configuration of GitHub Pages for your repository, which you can read more about in the [official documentation](https://docs.github.com/en/pages/quickstart).
@@ -1501,7 +1355,7 @@ Your documentation may take a minute or so to appear online, but if you still ha
 
 ## Tagging a package release with version control {#sec-03-tagging-a-package-release-with-version-control}
 
-We have now created all the source files that make up version 0.1.0 of our `pycounts` package, including Python code, documentation, and tests — well done! In the next section, we'll turn all these source files into a distribution package that can be easily shared and installed by others. But for those using version control\index{version control}, it's helpful at this point to tag\index{version control!tag} a release\index{version control!release} of your package's repository. If you're not using version control, you can skip to **@sec-03-building-and-distributing-your-package**.
+We have now created all the source files that make up version 0.1.0 of our `pysnakes` package, including Python code, documentation, and tests — well done! In the next section, we'll turn all these source files into a distribution package that can be easily shared and installed by others. But for those using version control\index{version control}, it's helpful at this point to tag\index{version control!tag} a release\index{version control!release} of your package's repository. If you're not using version control, you can skip to **@sec-03-building-and-distributing-your-package**.
 
 Tagging a release means that we permanently "tag" a specific point in our repository's history, and then create a downloadable "release" of all the files in our repository in the state they were in when the tag was made. It's common to tag a release for each new version of your package, as we'll discuss more in **Chapter 7: [Releasing and versioning](#sec-07-releasing-and-versioning)**.
 
@@ -1510,30 +1364,30 @@ Tagging a release is a two-step process involving both Git and GitHub:
 1. Create a tag marking a specific point in a repository's history using the command `git tag`\index{Git}.
 2. On GitHub\index{GitHub}, create a release of all the files in your repository (usually in the form of a zipped archive like *.zip* or *.tar.gz*) based on your tag. Others can then download this release if they wish to view or use your package's source files as they existed at the time the tag was created.
 
-We'll demonstrate this process by tagging a release of v0.1.0 of our `pycounts` package (it's common to prefix a tag with "v" for "version"). First, we need to create a tag identifying the state of our repository at v0.1.0 and then push the tag to GitHub using the following `git` commands at the command line:
+We'll demonstrate this process by tagging a release of v0.1.0 of our `pysnakes` package (it's common to prefix a tag with "v" for "version"). First, we need to create a tag identifying the state of our repository at v0.1.0 and then push the tag to GitHub using the following `git` commands at the command line:
 
 ```bash
 $ git tag v0.1.0
 $ git push --tags
 ```
 
-Now if you go to the `pycounts` repository on GitHub and navigate to the "Releases" tab, you should see a tag like that shown in @fig-03-tag.
+Now if you go to the `pysnakes` repository on GitHub and navigate to the "Releases" tab, you should see a tag like that shown in @fig-03-tag.
 
 \newpage
 
-![Tag of v0.1.0 of pycounts on GitHub.](images/03-tag.png){#fig-03-tag width="100%" fig-alt="Tag of v0.1.0 of pycounts on GitHub."}
+![Tag of v0.1.0 of pysnakes on GitHub.](images/03-tag.png){#fig-03-tag width="100%" fig-alt="Tag of v0.1.0 of pysnakes on GitHub."}
 
 To create a release from this tag, click "Draft a new release". You can then identify the tag from which to create the release and optionally add some additional details about the release as shown in @fig-03-release-1.
 
 \newpage
 
-![Making a release of v0.1.0 of pycounts on GitHub.](images/03-release-1.png){#fig-03-release-1 width="100%" fig-alt="Making a release of v0.1.0 of pycounts on GitHub."}
+![Making a release of v0.1.0 of pysnakes on GitHub.](images/03-release-1.png){#fig-03-release-1 width="100%" fig-alt="Making a release of v0.1.0 of pysnakes on GitHub."}
 
 After clicking "Publish release", GitHub will automatically create a release from your tag, including compressed archives of your code in *.zip* and *.tar.gz* format, as shown in @fig-03-release-2.
 
 \newpage
 
-![Release of v0.1.0 of pycounts on GitHub.](images/03-release-2.png){#fig-03-release-2 width="100%" fig-alt="Release of v0.1.0 of pycounts on GitHub."}
+![Release of v0.1.0 of pysnakes on GitHub.](images/03-release-2.png){#fig-03-release-2 width="100%" fig-alt="Release of v0.1.0 of pysnakes on GitHub."}
 
 We'll talk more about making new versions and releases of your package as you update it (e.g., modify code, add features, fix bugs, etc.) in **Chapter 7: [Releasing and versioning](#sec-07-releasing-and-versioning)**.
 
@@ -1551,7 +1405,7 @@ The main types of distributions in Python are source distributions (known as "sd
 
 In contrast, wheels\index{distribution!wheel} are pre-built versions of a package. They are built on the developer's machine before sharing with users. They are the preferred distribution format because a user only needs to download the wheel and move it to the location on their computer where Python searches for packages; no build step is required.
 
-`pip install` can handle installation from either an sdist or a wheel, and we'll discuss these topics in much more detail in **@sec-04-package-distribution-and-installation**. What you need to know now is that when distributing a package it's common to create both sdist and wheel distributions. We can easily create an sdist and wheel of a package with `uv`\index{uv} using the command `uv build`. Let's do that now for our `pycounts` package by running the following command from our root package directory:
+`pip install` can handle installation from either an sdist or a wheel, and we'll discuss these topics in much more detail in **@sec-04-package-distribution-and-installation**. What you need to know now is that when distributing a package it's common to create both sdist and wheel distributions. We can easily create an sdist and wheel of a package with `uv`\index{uv} using the command `uv build`. Let's do that now for our `pysnakes` package by running the following command from our root package directory:
 
 ```bash
 $ uv build
@@ -1560,20 +1414,20 @@ $ uv build
 ```md
 Building source distribution (uv build backend)...
 Building wheel from source distribution (uv build backend)...
-Successfully built dist/pycounts-0.1.0.tar.gz
-Successfully built dist/pycounts-0.1.0-py3-none-any.whl
+Successfully built dist/pysnakes-0.1.0.tar.gz
+Successfully built dist/pysnakes-0.1.0-py3-none-any.whl
 ```
 
 After running this command, you'll notice a new directory in your package called *`dist/`*:
 
 ``` {.md emphasize-lines="5-7"}
-pycounts
+pysnakes
 ├── .gitignore
 ├── .python-version
 ├── .venv
 ├── dist
-│   ├── pycounts-0.1.0-py3-none-any.whl  <- wheel
-│   └── pycounts-0.1.0.tar.gz            <- sdist
+│   ├── pysnakes-0.1.0-py3-none-any.whl  <- wheel
+│   └── pysnakes-0.1.0.tar.gz            <- sdist
 ├── docs
 │   └─ ...
 ├── mkdocs.yml
@@ -1586,48 +1440,48 @@ pycounts
 └── uv.lock
 ```
 
-Those two new files are the sdist and wheel for our `pycounts` package. A user could now easily install our package\index{installable Python package} if they had one of these distributions by using `pip install`. For example, to install the wheel (the preferred distribution type), you could enter the following in a terminal:
+Those two new files are the sdist and wheel for our `pysnakes` package. A user could now easily install our package\index{installable Python package} if they had one of these distributions by using `pip install`. For example, to install the wheel (the preferred distribution type), you could enter the following in a terminal:
 
 ```bash
 $ cd dist/
-$ uv pip install pycounts-0.1.0-py3-none-any.whl
+$ uv pip install pysnakes-0.1.0-py3-none-any.whl
 ```
 
 ```md
-Processing ./pycounts-0.1.0-py3-none-any.whl
+Processing ./pysnakes-0.1.0-py3-none-any.whl
 ...
-Successfully installed pycounts-0.1.0
+Successfully installed pysnakes-0.1.0
 ```
 
 To install using the sdist, you would have to unpack the sdist archive before running `pip install`. The procedure for this varies depending on your specific operating system. For example, on Mac OS, the command line tool `tar` with argument `x` (extract the input file), `z` (gunzip the input file), `f` (apply operations to the provided input file) can be used to unpack the sdist:
 
 ```bash
-$ tar xzf pycounts-0.1.0.tar.gz
-$ uv pip install pycounts-0.1.0/
+$ tar xzf pysnakes-0.1.0.tar.gz
+$ uv pip install pysnakes-0.1.0/
 ```
 
 \newpage
 
 ```md
-Processing ./pycounts-0.1.0-py3-none-any.whl
+Processing ./pysnakes-0.1.0-py3-none-any.whl
   Installing build dependencies ... done
     Getting requirements to build wheel ... done
     Preparing wheel metadata ... done
 ...
-Successfully built pycounts
-Successfully installed pycounts-0.1.0
+Successfully built pysnakes
+Successfully installed pysnakes-0.1.0
 ```
 
 Note in the output above how installing from an sdist requires a build step prior to installation. The sdist is first built into a wheel, which is then installed. For those interested, we discuss the nuances of building and installing packages from sdists and wheels in **@sec-04-package-distribution-and-installation**.
 
-Creating a distribution for our package is most useful if we make it available on an online repository like the Python Package Index (PyPI\index{PyPI}), the official online software repository for Python. This would allow users to simply run `pip install pycounts` to install our package, without needing the sdist or wheel files locally, and we'll do this in the next section. But even if you don't intend to share your package, it can still be useful to build and install distributions for two reasons:
+Creating a distribution for our package is most useful if we make it available on an online repository like the Python Package Index (PyPI\index{PyPI}), the official online software repository for Python. This would allow users to simply run `pip install pysnakes` to install our package, without needing the sdist or wheel files locally, and we'll do this in the next section. But even if you don't intend to share your package, it can still be useful to build and install distributions for two reasons:
 
 1. A distribution is a self-contained copy of your package's source files that's easy to move around and store on your computer. It makes it easy to retain distributions for different versions of your package, so that you can re-use or share them if you ever need to.
 2. Recall that `uv` installs package in "editable mode", such that a link to the package's location is installed, rather than an independent distribution of the package itself. This is useful for *development purposes*, because it means that any changes to the source code will be immediately reflected when you next `import` the package, without the need to `uv sync` again. However, for *users* of your package (including yourself using your package in other projects), it is often better to install a "non-editable" version of the package (the default behavior when you `pip install` an sdist or wheel) because a non-editable installation will remain stable and immune to any changes made to the source files on your computer.
 
 ### Publishing to TestPyPI {#sec-03-publishing-to-testpypi}
 
-At this point, we have distributions of `pycounts` that we want to share with the world by publishing\index{publish} to [PyPI](https://pypi.org/)\index{PyPI}. However, it is good practice to do a "dry run" and check that everything works as expected by submitting to [TestPyPi](https://test.pypi.org/) first. `uv`\index{uv} has a `publish` command, which we can use to do this, however the default behavior is to publish to PyPI. So we need to add TestPyPI\index{TestPyPI} to the list of repositories\index{software repository} `uv` knows about by updating our *`pyproject.toml`* file with a `[[tool.uv.index]]` section:
+At this point, we have distributions of `pysnakes` that we want to share with the world by publishing\index{publish} to [PyPI](https://pypi.org/)\index{PyPI}. However, it is good practice to do a "dry run" and check that everything works as expected by submitting to [TestPyPi](https://test.pypi.org/) first. `uv`\index{uv} has a `publish` command, which we can use to do this, however the default behavior is to publish to PyPI. So we need to add TestPyPI\index{TestPyPI} to the list of repositories\index{software repository} `uv` knows about by updating our *`pyproject.toml`* file with a `[[tool.uv.index]]` section:
 
 ```toml
 [[tool.uv.index]]
@@ -1644,17 +1498,17 @@ $ uv publish --index testpypi --token <your-long-testpypi-token>
 ```
 
 ```md
-Publishing pycounts (0.1.0) to test-pypi
- - Uploading pycounts-0.1.0-py3-none-any.whl 100%
- - Uploading pycounts-0.1.0.tar.gz 100%
+Publishing pysnakes (0.1.0) to test-pypi
+ - Uploading pysnakes-0.1.0-py3-none-any.whl 100%
+ - Uploading pysnakes-0.1.0.tar.gz 100%
 ```
 
-Now we should be able to visit our package on TestPyPI. The URL for our `pycounts` package is: <https://test.pypi.org/project/pycounts/>. We can try installing our package using `pip` from the command line with the following command:
+Now we should be able to visit our package on TestPyPI. The URL for our `pysnakes` package is: <https://test.pypi.org/project/pysnakes/>. We can try installing our package using `pip` from the command line with the following command:
 
 ```bash
 $ uv pip install --index-url https://test.pypi.org/simple/ \
   --extra-index-url https://pypi.org/simple \
-  pycounts
+  pysnakes
 ```
 
 By default `pip install` will search PyPI for the named package. However, we want to search TestPyPI because that is where we uploaded our package. The argument `--index-url` points `pip` to the TestPyPI index. However, it's important to note that not all developers upload their packages to TestPyPI; some only upload them directly to PyPI. If your package depends on packages that are not on TestPyPI you can tell `pip` to try and look for them on PyPI instead. To do that, you can use the argument `--extra-index-url` as we do in the command above.
@@ -1677,15 +1531,15 @@ $ uv publish --token <your-long-pypi-token>
 We omitted the `--index` flag this time because the default repository for `uv publish` is PyPI.
 :::
 
-Your package will then be available on PyPI (e.g., <https://pypi.org/project/pycounts/>) and can be installed by anyone using `pip` (or if they're using `uv`, `uv pip`):
+Your package will then be available on PyPI (e.g., <https://pypi.org/project/pysnakes/>) and can be installed by anyone using `pip` (or if they're using `uv`, `uv pip`):
 
 ```bash
-$ pip install pycounts
+$ pip install pysnakes
 ```
 
 ## Summary and next steps
 
-This chapter provided a practical overview of the key steps required to generate a fully-featured Python package. In the following chapters, we'll explore each of these steps in more detail and continue to add features to our `pycounts` package. Two key workflows we have yet to discuss are:
+This chapter provided a practical overview of the key steps required to generate a fully-featured Python package. In the following chapters, we'll explore each of these steps in more detail and continue to add features to our `pysnakes` package. Two key workflows we have yet to discuss are:
 
 1. Releasing new versions of your package as you update it. We'll discuss this in **Chapter 7: [Releasing and versioning](#sec-07-releasing-and-versioning)**.
 2. Setting up continuous integration and continuous deployment (CI/CD) — that is, automated pipelines for running tests, building documentation, and deploying your package. We'll discuss CI/CD in **Chapter 8: [Continuous integration and deployment](#sec-08-continuous-integration-and-deployment)**.
